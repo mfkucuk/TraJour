@@ -1,7 +1,7 @@
 # TraJour
 Bilkent CS 102 Term Project
 
-Colloborators:
+Collaborators:
 Mehmet Feyyaz Küçük
 Selim Can Güler
 Selin Bahar Gündoğar
