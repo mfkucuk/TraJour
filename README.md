@@ -2,8 +2,8 @@
 Bilkent CS 102 Term Project
 
 Collaborators:
-Mehmet Feyyaz Küçük
-Selim Can Güler
-Selin Bahar Gündoğar
-Ahmet Alperen Yılmazyıldız
-Arda Kurtuoğlu
+Mehmet Feyyaz Küçük<br/>
+Selim Can Güler<br/>
+Selin Bahar Gündoğar<br/>
+Ahmet Alperen Yılmazyıldız<br/>
+Arda Kurtuoğlu<br/>
