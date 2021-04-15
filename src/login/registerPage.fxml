@@ -1,33 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="507.0" prefWidth="820.0" style="-fx-background-color: #00203FFF;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="750.0" style="-fx-background-color: #00203FFF;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="login.RegisterController">
    <center>
-      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" prefHeight="400.0" prefWidth="300.0" style="-fx-background-color: #ADEFD1FF; -fx-border-width: 4; -fx-border-color: black;" BorderPane.alignment="CENTER">
+      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" prefHeight="430.0" prefWidth="380.0" style="-fx-background-color: #ADEFD1FF; -fx-border-width: 4; -fx-border-color: black;" BorderPane.alignment="CENTER">
          <children>
-            <Label alignment="CENTER" layoutX="10.0" layoutY="14.0" prefHeight="70.0" prefWidth="289.0" text="Register To TraJour" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="14.0">
+            <Label alignment="CENTER" layoutX="42.0" layoutY="9.0" prefHeight="58.0" prefWidth="318.0" text="Register To TraJour" AnchorPane.leftAnchor="38.0" AnchorPane.rightAnchor="38.0" AnchorPane.topAnchor="5.0">
                <font>
                   <Font size="30.0" />
                </font>
             </Label>
-            <TextField layoutX="73.0" layoutY="90.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="180.0" promptText="First Name" AnchorPane.leftAnchor="73.0" AnchorPane.rightAnchor="71.0" AnchorPane.topAnchor="90.0" />
-            <TextField layoutX="60.0" layoutY="146.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="180.0" promptText="Last Name" AnchorPane.leftAnchor="72.0" AnchorPane.rightAnchor="72.0" AnchorPane.topAnchor="130.0" />
-            <TextField layoutX="62.0" layoutY="212.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="190.0" promptText="E-mail" AnchorPane.leftAnchor="72.0" AnchorPane.rightAnchor="72.0" AnchorPane.topAnchor="170.0" />
-            <PasswordField layoutX="76.0" layoutY="295.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="190.0" promptText="Password" AnchorPane.leftAnchor="72.0" AnchorPane.rightAnchor="72.0" AnchorPane.topAnchor="250.0" />
-            <PasswordField layoutX="64.0" layoutY="249.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="190.0" promptText="Password" AnchorPane.leftAnchor="72.0" AnchorPane.rightAnchor="72.0" AnchorPane.topAnchor="210.0" />
-            <Button alignment="CENTER" layoutX="41.0" layoutY="343.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="262.0" text="Already have an account, sign in!" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="340.0">
+            <TextField fx:id="usernameTextField" layoutX="80.0" layoutY="89.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="180.0" promptText="Username" AnchorPane.leftAnchor="70.0" AnchorPane.rightAnchor="70.0" AnchorPane.topAnchor="90.0" />
+            <TextField fx:id="emailTextField" layoutX="77.0" layoutY="141.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="190.0" promptText="E-mail" AnchorPane.leftAnchor="70.0" AnchorPane.rightAnchor="70.0" AnchorPane.topAnchor="140.0" />
+            <PasswordField fx:id="confirmPasswordField" layoutX="74.0" layoutY="240.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="190.0" promptText="Confirm Password" AnchorPane.leftAnchor="70.0" AnchorPane.rightAnchor="70.0" AnchorPane.topAnchor="240.0" />
+            <PasswordField fx:id="passwordTextField" layoutX="76.0" layoutY="187.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="190.0" promptText="Password" AnchorPane.leftAnchor="70.0" AnchorPane.rightAnchor="70.0" AnchorPane.topAnchor="190.0" />
+            <Button fx:id="cancelButton" alignment="CENTER" layoutX="113.0" layoutY="365.0" mnemonicParsing="false" onAction="#cancelButtonOnAction" prefHeight="35.0" prefWidth="192.0" style="-fx-background-color: #ff5050;" text="Cancel" textFill="WHITE" AnchorPane.leftAnchor="70.0" AnchorPane.rightAnchor="70.0" AnchorPane.topAnchor="365.0">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
             </Button>
-            <Button alignment="CENTER" layoutX="104.0" layoutY="298.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="85.0" text="Register" AnchorPane.leftAnchor="110.0" AnchorPane.rightAnchor="110.0" AnchorPane.topAnchor="290.0">
+            <Button fx:id="registerButton" alignment="CENTER" layoutX="74.0" layoutY="322.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#registerButtonOnAction" prefHeight="35.0" prefWidth="186.0" style="-fx-background-color: #ff5050;" text="Register" textFill="WHITE" AnchorPane.leftAnchor="70.0" AnchorPane.rightAnchor="70.0" AnchorPane.topAnchor="322.0">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
             </Button>
+            <Label fx:id="registrationFeedbackLabel" alignment="CENTER" layoutX="147.0" layoutY="294.0" textFill="RED" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
    </center>
@@ -38,9 +47,9 @@
       <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
    </right>
    <top>
-      <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+      <Pane prefHeight="50.0" prefWidth="700.0" BorderPane.alignment="CENTER" />
    </top>
    <bottom>
-      <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+      <Pane prefHeight="50.0" prefWidth="700.0" BorderPane.alignment="CENTER" />
    </bottom>
 </BorderPane>
