@@ -5,6 +5,7 @@ module TraJour {
     requires javafx.controls;
     requires java.sql;
     requires mysql.connector.java;
+    requires javafx.web;
 
     opens login;
 

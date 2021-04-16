@@ -11,6 +11,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -39,6 +41,9 @@ public class LoginController  {
 
     @FXML
     private Label loginFeedbackLabel;
+    
+    private WebView browser;
+    private WebEngine webEngine;
 
     /**
      * Handles and validates login
@@ -75,7 +80,9 @@ public class LoginController  {
      * @param event Event
      */
     public void openTheWebsite(ActionEvent event) {
-        // TODO Redirect to TraJour website
+        browser = new WebView();
+        webEngine = browser.getEngine();
+        webEngine.load("url goes here");
     }
 
     /**
