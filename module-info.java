@@ -7,6 +7,4 @@ module TraJour {
     requires mysql.connector.java;
     requires javafx.web;
 
-    opens login;
-
 }
