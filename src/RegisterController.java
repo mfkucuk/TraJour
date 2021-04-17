@@ -55,7 +55,6 @@ public class RegisterController {
         } else {
             register();
         }
-
     }
 
     /**
@@ -90,5 +89,15 @@ public class RegisterController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private String encryptPassword(String password) {
+        // TODO A simple encryption of the registered passwords. Encrypted version will be saved in the DB.
+        return "";
+    }
+
+    private String decyrptPassword(String password) {
+        // TODO Decyrption of the password. This may be the wrong place for the method.
+        return "";
     }
 }

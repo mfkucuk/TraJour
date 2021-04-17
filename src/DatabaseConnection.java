@@ -7,9 +7,19 @@ public class DatabaseConnection {
     private ResourceBundle reader = null;
 
     public Connection getConnection() {
+        String dbName;
+        String dbUser;
+        String dbPassword;
+        String dbUrl;
+
+        dbName = "trajour";
+        dbUser = "root";
+        dbPassword = "BilTraJour06";
+        dbUrl = "jdbc:mysql://localhost/" + dbName;
+
         try {
-            reader = ResourceBundle.getBundle("dbconfig.properties");
-            databaseLink = DriverManager.getConnection(reader.getString("db.url"), reader.getString("db.username"), reader.getString("db.password"));
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            databaseLink = DriverManager.getConnection(dbUrl, dbUser, dbPassword);
         } catch (Exception e) {
             e.printStackTrace();
             e.getCause();
