@@ -80,7 +80,7 @@ public class LoginController  {
     public void openTheWebsite(ActionEvent event) {
         browser = new WebView();
         webEngine = browser.getEngine();
-        webEngine.load("url goes here");
+        webEngine.load("../public_html");
     }
 
     /**
