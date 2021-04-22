@@ -14,6 +14,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
+import trajour.model.SingletonUserSession;
 
 import java.awt.*;
 import java.io.IOException;
@@ -55,10 +56,13 @@ public class LoginController  {
      * @param event Event
      */
     public void login(ActionEvent event)  {
+        String email = emailTextField.getText();
+        String password = passwordField.getText();
         // Check if the text fields are empty or not
-        if ( ! emailTextField.getText().isBlank() && !  passwordField.getText().isBlank()) {
-            if (validateLogin(emailTextField.getText(), passwordField.getText())) {
+        if ( ! email.isBlank() && !  password.isBlank()) {
+            if (validateLogin(email, password)) {
                 // TODO Wait for a few seconds so that the user can understand login is successful, then redirect to the the main page
+                SingletonUserSession.getInstance(email, password);
                 openMainPage(event);
             } else {
                 loginFeedbackLabel.setText("Incorrect email or password.");
@@ -92,7 +96,6 @@ public class LoginController  {
      * @param event
      */
     private void openMainPage(ActionEvent event)  {
-        // TODO Need the main page FXML file
         try {
             Parent mainPageParent = FXMLLoader.load(getClass().getResource("/trajour/view/mainPage.fxml"));
             Scene mainPageScene = new Scene(mainPageParent, Main.APPLICATION_WIDTH, Main.APPLICATION_HEIGHT);
@@ -101,9 +104,8 @@ public class LoginController  {
 
             window.setScene(mainPageScene);
             window.show();
-
-
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             e.printStackTrace();
         }
     }

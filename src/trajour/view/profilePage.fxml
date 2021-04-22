@@ -20,25 +20,25 @@
    <top>
       <ToolBar prefHeight="60.0" prefWidth="1920.0" style="-fx-background-color: #00203FFF;" BorderPane.alignment="CENTER">
         <items>
-          <Button mnemonicParsing="false" prefHeight="32.0" prefWidth="67.0" style="-fx-background-radius: 10; -fx-background-color: #ffff;">
+          <Button fx:id="homePageButton" mnemonicParsing="false" onAction="#openHomePage" prefHeight="32.0" prefWidth="67.0" style="-fx-background-radius: 10; -fx-background-color: #ffff;">
                <graphic>
-                  <ImageView fx:id="homePageButton" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../resources/home_icon.png" />
                      </image>
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="mapPageButton" layoutX="10.0" layoutY="13.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="67.0" style="-fx-background-radius: 10; -fx-background-color: #ffff;">
+            <Button fx:id="mapPageButton" layoutX="10.0" layoutY="13.0" mnemonicParsing="false" onAction="#openMapPage" prefHeight="32.0" prefWidth="67.0" style="-fx-background-radius: 10; -fx-background-color: #ffff;">
                <graphic>
-                  <ImageView fx:id="mapButton" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../resources/map_pin.png" />
                      </image>
                   </ImageView>
                </graphic>
             </Button>
-            <Button layoutX="66.0" layoutY="13.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="67.0" style="-fx-background-radius: 10; -fx-background-color: #ffff;">
+            <Button fx:id="discoveryPageButton" layoutX="66.0" layoutY="13.0" mnemonicParsing="false" onAction="#openDiscoveryPage" prefHeight="32.0" prefWidth="67.0" style="-fx-background-radius: 10; -fx-background-color: #ffff;">
                <graphic>
                   <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -47,9 +47,9 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="profilePageButton" layoutX="122.0" layoutY="13.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="67.0" style="-fx-background-radius: 10; -fx-background-color: #ffff;">
+            <Button fx:id="profilePageButton" layoutX="122.0" layoutY="13.0" mnemonicParsing="false" onAction="#openProfilePage" prefHeight="32.0" prefWidth="67.0" style="-fx-background-radius: 10; -fx-background-color: #ffff;">
                <graphic>
-                  <ImageView fx:id="profile" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../resources/user_account_icon.png" />
                      </image>
@@ -124,7 +124,7 @@
                               <Font name="System Bold" size="16.0" />
                            </font>
                         </Label>
-                        <Rectangle fx:id="friendsListView" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="232.0" layoutX="16.0" layoutY="58.0" stroke="BLACK" strokeType="INSIDE" width="299.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="58.0" />
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="232.0" layoutX="16.0" layoutY="58.0" stroke="BLACK" strokeType="INSIDE" width="299.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="58.0" />
                         <Button fx:id="addFriendButton" alignment="CENTER" layoutX="116.0" layoutY="298.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="98.0" style="-fx-background-radius: 10; -fx-background-color: #ffff;" text="Add Friend" AnchorPane.leftAnchor="116.0" AnchorPane.rightAnchor="116.0" AnchorPane.topAnchor="298.0">
                            <font>
                               <Font name="System Bold" size="13.0" />
@@ -140,10 +140,10 @@
                   </Separator>
                   <AnchorPane minHeight="-Infinity" prefHeight="150.0" prefWidth="330.0" VBox.vgrow="ALWAYS">
                      <children>
-                        <Button fx:id="signOutButton" layoutX="50.0" layoutY="91.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="79.0" style="-fx-background-radius: 5; -fx-background-color: #fff;" text="Sign Out" AnchorPane.bottomAnchor="49.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="201.0" />
-                        <Button fx:id="exitButton" layoutX="189.0" layoutY="91.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="82.0" style="-fx-background-radius: 5; -fx-background-color: #fff;" text="Exit" AnchorPane.bottomAnchor="49.0" AnchorPane.leftAnchor="189.0" AnchorPane.rightAnchor="59.0" />
-                        <Button fx:id="privacyButton" layoutX="187.0" layoutY="329.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="86.0" style="-fx-background-radius: 5; -fx-background-color: #fff;" text="Privacy" AnchorPane.bottomAnchor="98.0" AnchorPane.leftAnchor="187.0" AnchorPane.rightAnchor="57.0" />
-                        <Button fx:id="changePasswordButton" layoutX="50.0" layoutY="329.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="130.0" style="-fx-background-radius: 5; -fx-background-color: #fff;" text="Change Password" AnchorPane.bottomAnchor="98.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="150.0" />
+                        <Button fx:id="signOutButton" layoutX="50.0" layoutY="91.0" mnemonicParsing="false" onAction="#signOut" prefHeight="25.0" prefWidth="110.0" style="-fx-background-radius: 5; -fx-background-color: #fff;" text="Sign Out" AnchorPane.bottomAnchor="49.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="150.0" />
+                        <Button fx:id="exitButton" layoutX="189.0" layoutY="91.0" mnemonicParsing="false" onAction="#exit" prefHeight="25.0" prefWidth="110.0" style="-fx-background-radius: 5; -fx-background-color: #fff;" text="Exit" AnchorPane.bottomAnchor="49.0" AnchorPane.leftAnchor="189.0" />
+                        <Button fx:id="privacyButton" layoutX="187.0" layoutY="329.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="110.0" style="-fx-background-radius: 5; -fx-background-color: #fff;" text="Privacy" AnchorPane.bottomAnchor="98.0" AnchorPane.leftAnchor="187.0" />
+                        <Button fx:id="changePasswordButton" layoutX="50.0" layoutY="329.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="110.0" style="-fx-background-radius: 5; -fx-background-color: #fff;" text="Change Password" AnchorPane.bottomAnchor="98.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="150.0" />
                      </children>
                   </AnchorPane>
                </children>

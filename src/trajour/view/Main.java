@@ -7,8 +7,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class Main extends Application {
-    protected final static int APPLICATION_WIDTH = 900;
-    protected final static int APPLICATION_HEIGHT = 700;
+    protected final static int APPLICATION_WIDTH = 1400;
+    protected final static int APPLICATION_HEIGHT = 1000;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
