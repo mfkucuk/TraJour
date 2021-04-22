@@ -14,7 +14,6 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
-import trajour.model.SingletonUserSession;
 
 import java.awt.*;
 import java.io.IOException;
@@ -62,7 +61,6 @@ public class LoginController  {
         if ( ! email.isBlank() && !  password.isBlank()) {
             if (validateLogin(email, password)) {
                 // TODO Wait for a few seconds so that the user can understand login is successful, then redirect to the the main page
-                SingletonUserSession.getInstance(email, password);
                 openMainPage(event);
             } else {
                 loginFeedbackLabel.setText("Incorrect email or password.");

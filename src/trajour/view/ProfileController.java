@@ -12,12 +12,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
-import trajour.model.SingletonUserSession;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ProfileController implements Initializable {
+public class ProfileController {
     @FXML
     private Button homePageButton;
 
@@ -96,10 +95,5 @@ public class ProfileController implements Initializable {
         catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        usernameLabel.setText(SingletonUserSession.getUsername());
     }
 }
