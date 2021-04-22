@@ -62,9 +62,24 @@ public class RegisterController {
      * Handles register process by connecting to database
      */
     public void register() {
-        if ( ! usernameTextField.getText().isBlank() && ! emailTextField.getText().isBlank() && ! passwordTextField.getText().isBlank()) {
-            validateRegistry(usernameTextField.getText(), emailTextField.getText(), passwordTextField.getText());
-            registrationFeedbackLabel.setText("Welcome to TraJour!");
+        String username = usernameTextField.getText();
+        String email = emailTextField.getText();
+        String password = passwordTextField.getText();
+
+        if ( ! username.isBlank() && ! email.isBlank() && ! password.isBlank()) {
+            if (validateRegistry(username, email, password) == 1) {
+                registrationFeedbackLabel.setText("Welcome to TraJour!");
+            }
+            else if (validateRegistry(username, email, password) == -1) {
+                registrationFeedbackLabel.setText("Username is already used. Please try again.");
+            }
+            else if (validateRegistry(username, email, password) == -2) {
+                registrationFeedbackLabel.setText("Email is already used. Please try again.");
+            }
+            else {
+                registrationFeedbackLabel.setText("Registration was unsuccessful for some reason even the programmer couldn't understand!!!");
+            }
+
         } else {
             registrationFeedbackLabel.setText("Please complete all of the text fields.");
         }
