@@ -6,7 +6,6 @@ import java.util.ResourceBundle;
 
 public class DatabaseConnection {
     public Connection databaseLink;
-    private ResourceBundle reader = null;
 
     public Connection getConnection() {
         String dbName;

@@ -8,7 +8,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-import static trajour.db.DatabaseQuery.validateRegistery;
+import static trajour.db.DatabaseQuery.validateRegistry;
 
 /**
  * Controller for the register process
@@ -63,7 +63,7 @@ public class RegisterController {
      */
     public void register() {
         if ( ! usernameTextField.getText().isBlank() && ! emailTextField.getText().isBlank() && ! passwordTextField.getText().isBlank()) {
-            validateRegistery(usernameTextField.getText(), emailTextField.getText(), passwordTextField.getText());
+            validateRegistry(usernameTextField.getText(), emailTextField.getText(), passwordTextField.getText());
             registrationFeedbackLabel.setText("Welcome to TraJour!");
         } else {
             registrationFeedbackLabel.setText("Please complete all of the text fields.");

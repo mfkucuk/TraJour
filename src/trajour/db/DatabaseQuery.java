@@ -58,22 +58,17 @@ public class DatabaseQuery {
         return false;
     }
 
-    public static void validateRegistery(String username, String email, String password) {
-        String insertFieldsQuery;
-        String insertValuesQuery;
-        String registerQuery;
-        Statement query;
-
+    public static void validateRegistry(String username, String email, String password) {
         dbConnection = new DatabaseConnection();
         conn = dbConnection.getConnection();
 
         // TODO Check if the username or email already exists
-        insertFieldsQuery = "INSERT INTO users(username, email, password) ";
-        insertValuesQuery = "VALUES ('" + username + "', '" + email + "', '" + password + "');";
-        registerQuery = insertFieldsQuery + insertValuesQuery;
+        String insertFieldsQuery = "INSERT INTO users(username, email, password) ";
+        String insertValuesQuery = "VALUES ('" + username + "', '" + email + "', '" + password + "');";
+        String registerQuery = insertFieldsQuery + insertValuesQuery;
 
         try {
-            query = conn.createStatement();
+            Statement query = conn.createStatement();
             query.executeUpdate(registerQuery);
 
         } catch (Exception e) {

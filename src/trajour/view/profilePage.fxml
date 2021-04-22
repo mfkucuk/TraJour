@@ -16,24 +16,24 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <top>
-      <ToolBar prefHeight="35.0" prefWidth="800.0" style="-fx-background-color: #00203FFF;" BorderPane.alignment="CENTER">
+      <ToolBar prefHeight="60.0" prefWidth="1920.0" style="-fx-background-color: #00203FFF;" BorderPane.alignment="CENTER">
         <items>
           <Button mnemonicParsing="false" prefHeight="32.0" prefWidth="67.0" style="-fx-background-radius: 10; -fx-background-color: #ffff;">
                <graphic>
-                  <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="homePageButton" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="/resources/home_icon.png" />
+                        <Image url="@../../resources/home_icon.png" />
                      </image>
                   </ImageView>
                </graphic>
             </Button>
-            <Button layoutX="10.0" layoutY="13.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="67.0" style="-fx-background-radius: 10; -fx-background-color: #ffff;">
+            <Button fx:id="mapPageButton" layoutX="10.0" layoutY="13.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="67.0" style="-fx-background-radius: 10; -fx-background-color: #ffff;">
                <graphic>
-                  <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="mapButton" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="/resources/map_pin.png" />
+                        <Image url="@../../resources/map_pin.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -42,16 +42,16 @@
                <graphic>
                   <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="/resources/search_icon.png" />
+                        <Image url="@../../resources/search_icon.png" />
                      </image>
                   </ImageView>
                </graphic>
             </Button>
-            <Button layoutX="122.0" layoutY="13.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="67.0" style="-fx-background-radius: 10; -fx-background-color: #ffff;">
+            <Button fx:id="profilePageButton" layoutX="122.0" layoutY="13.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="67.0" style="-fx-background-radius: 10; -fx-background-color: #ffff;">
                <graphic>
-                  <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="profile" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="/resources/user_account_icon.png" />
+                        <Image url="@../../resources/user_account_icon.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -60,11 +60,11 @@
       </ToolBar>
    </top>
    <center>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #ADEFD1FF;" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="1038.0" prefWidth="1400.0" style="-fx-background-color: #ADEFD1FF;" BorderPane.alignment="CENTER">
          <children>
             <Separator orientation="VERTICAL" prefHeight="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="329.0" layoutX="163.0" layoutY="46.0" stroke="BLACK" strokeType="INSIDE" width="751.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="418.0" layoutX="163.0" layoutY="396.0" stroke="BLACK" strokeType="INSIDE" width="741.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="329.0" layoutX="163.0" layoutY="46.0" stroke="BLACK" strokeType="INSIDE" width="741.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="377.0" layoutX="163.0" layoutY="437.0" stroke="BLACK" strokeType="INSIDE" width="741.0" />
             <Text layoutX="376.0" layoutY="223.0" strokeType="OUTSIDE" strokeWidth="0.0" text="current journey here">
                <font>
                   <Font size="32.0" />
@@ -83,18 +83,18 @@
          <children>
             <VBox maxWidth="1.7976931348623157E308" prefHeight="989.0" prefWidth="330.0" style="-fx-background-color: #ADEFD1FF;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <AnchorPane minHeight="-Infinity" prefHeight="250.0" prefWidth="330.0" VBox.vgrow="ALWAYS">
+                  <AnchorPane minHeight="-Infinity" prefHeight="201.0" prefWidth="330.0" VBox.vgrow="ALWAYS">
                      <children>
-                        <ImageView id="profileImage" fitHeight="128.0" fitWidth="128.0" layoutX="101.0" layoutY="61.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="61.0" AnchorPane.leftAnchor="101.0" AnchorPane.rightAnchor="101.0" AnchorPane.topAnchor="61.0">
-                           <viewport>
-                              <Rectangle2D height="50.0" minX="5.0" minY="5.0" width="50.0" />
-                           </viewport>
-                        </ImageView>
-                        <Label id="userName" alignment="CENTER" layoutX="125.0" layoutY="219.0" prefHeight="25.0" prefWidth="80.0" text="Username" AnchorPane.leftAnchor="125.0" AnchorPane.rightAnchor="125.0">
+                        <Label id="userName" fx:id="usernameLabel" alignment="CENTER" layoutX="125.0" layoutY="219.0" prefHeight="25.0" prefWidth="80.0" text="Username" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="125.0" AnchorPane.rightAnchor="125.0">
                            <font>
                               <Font size="16.0" />
                            </font>
                         </Label>
+                        <ImageView id="profileImage" fx:id="profilePhotoView" fitHeight="128.0" fitWidth="128.0" layoutX="101.0" layoutY="61.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="61.0" AnchorPane.leftAnchor="101.0" AnchorPane.rightAnchor="101.0" AnchorPane.topAnchor="61.0">
+                           <viewport>
+                              <Rectangle2D height="50.0" minX="5.0" minY="5.0" width="50.0" />
+                           </viewport>
+                        </ImageView>
                      </children>
                   </AnchorPane>
                   <Separator prefWidth="200.0">
@@ -109,7 +109,7 @@
                               <Font name="System Bold" size="16.0" />
                            </font>
                         </Label>
-                        <ListView layoutX="16.0" layoutY="70.0" prefHeight="95.0" prefWidth="298.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="16.0" />
+                        <ListView fx:id="upcomingJourneysListView" layoutX="16.0" layoutY="56.0" prefHeight="141.0" prefWidth="298.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="16.0" />
                      </children>
                   </AnchorPane>
                   <Separator layoutX="10.0" layoutY="183.0" prefWidth="200.0">
@@ -124,12 +124,13 @@
                               <Font name="System Bold" size="16.0" />
                            </font>
                         </Label>
-                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="232.0" layoutX="16.0" layoutY="58.0" stroke="BLACK" strokeType="INSIDE" width="299.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="58.0" />
-                        <Button alignment="CENTER" layoutX="116.0" layoutY="298.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="98.0" style="-fx-background-radius: 10; -fx-background-color: #ffff;" text="Add Friend" AnchorPane.leftAnchor="116.0" AnchorPane.rightAnchor="116.0" AnchorPane.topAnchor="298.0">
+                        <Rectangle fx:id="friendsListView" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="232.0" layoutX="16.0" layoutY="58.0" stroke="BLACK" strokeType="INSIDE" width="299.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="58.0" />
+                        <Button fx:id="addFriendButton" alignment="CENTER" layoutX="116.0" layoutY="298.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="98.0" style="-fx-background-radius: 10; -fx-background-color: #ffff;" text="Add Friend" AnchorPane.leftAnchor="116.0" AnchorPane.rightAnchor="116.0" AnchorPane.topAnchor="298.0">
                            <font>
                               <Font name="System Bold" size="13.0" />
                            </font>
                         </Button>
+                        <ListView fx:id="friendsListView" layoutX="17.0" layoutY="57.0" prefHeight="233.0" prefWidth="298.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="17.0" AnchorPane.rightAnchor="17.0" AnchorPane.topAnchor="60.0" />
                      </children>
                   </AnchorPane>
                   <Separator layoutX="10.0" layoutY="298.0" prefWidth="250.0">
@@ -139,10 +140,10 @@
                   </Separator>
                   <AnchorPane minHeight="-Infinity" prefHeight="150.0" prefWidth="330.0" VBox.vgrow="ALWAYS">
                      <children>
-                        <Button layoutX="50.0" layoutY="365.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="79.0" style="-fx-background-radius: 5; -fx-background-color: #fff;" text="Sign Out" AnchorPane.bottomAnchor="62.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="201.0" />
-                        <Button layoutX="139.0" layoutY="365.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="82.0" style="-fx-background-radius: 5; -fx-background-color: #fff;" text="Exit" AnchorPane.bottomAnchor="62.0" AnchorPane.leftAnchor="139.0" AnchorPane.rightAnchor="109.0" />
-                        <Button layoutX="187.0" layoutY="329.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="86.0" style="-fx-background-radius: 5; -fx-background-color: #fff;" text="Privacy" AnchorPane.bottomAnchor="98.0" AnchorPane.leftAnchor="187.0" AnchorPane.rightAnchor="57.0" />
-                        <Button layoutX="50.0" layoutY="329.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="130.0" style="-fx-background-radius: 5; -fx-background-color: #fff;" text="Change Password" AnchorPane.bottomAnchor="98.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="150.0" />
+                        <Button fx:id="signOutButton" layoutX="50.0" layoutY="91.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="79.0" style="-fx-background-radius: 5; -fx-background-color: #fff;" text="Sign Out" AnchorPane.bottomAnchor="49.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="201.0" />
+                        <Button fx:id="exitButton" layoutX="189.0" layoutY="91.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="82.0" style="-fx-background-radius: 5; -fx-background-color: #fff;" text="Exit" AnchorPane.bottomAnchor="49.0" AnchorPane.leftAnchor="189.0" AnchorPane.rightAnchor="59.0" />
+                        <Button fx:id="privacyButton" layoutX="187.0" layoutY="329.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="86.0" style="-fx-background-radius: 5; -fx-background-color: #fff;" text="Privacy" AnchorPane.bottomAnchor="98.0" AnchorPane.leftAnchor="187.0" AnchorPane.rightAnchor="57.0" />
+                        <Button fx:id="changePasswordButton" layoutX="50.0" layoutY="329.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="130.0" style="-fx-background-radius: 5; -fx-background-color: #fff;" text="Change Password" AnchorPane.bottomAnchor="98.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="150.0" />
                      </children>
                   </AnchorPane>
                </children>
