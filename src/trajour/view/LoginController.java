@@ -1,6 +1,5 @@
-package view;
+package trajour.view;
 
-import db.DatabaseConnection;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,11 +18,8 @@ import javafx.scene.web.WebView;
 import java.awt.*;
 import java.io.IOException;
 import java.net.URI;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
 
-import static db.DatabaseQuery.validateLogin;
+import static trajour.db.DatabaseQuery.validateLogin;
 
 /**
  * Controller for the login process
@@ -58,7 +54,7 @@ public class LoginController  {
      * Handles and validates login switches to the main page if the login is successful
      * @param event Event
      */
-    public void login(ActionEvent event) throws IOException {
+    public void login(ActionEvent event)  {
         // Check if the text fields are empty or not
         if ( ! emailTextField.getText().isBlank() && !  passwordField.getText().isBlank()) {
             if (validateLogin(emailTextField.getText(), passwordField.getText())) {
@@ -79,7 +75,7 @@ public class LoginController  {
     @FXML
     private void openRegisterPage(ActionEvent event) {
         try {
-            Parent root = FXMLLoader.load((getClass().getResource("/view/registerPage.fxml")));
+            Parent root = FXMLLoader.load((getClass().getResource("/trajour/view/registerPage.fxml")));
 
             Stage registerStage = new Stage();
             registerStage.setTitle("Register");
@@ -94,12 +90,11 @@ public class LoginController  {
     /**
      * Opens the main page
      * @param event
-     * @throws IOException In case the fxml file is missing
      */
     private void openMainPage(ActionEvent event)  {
         // TODO Need the main page FXML file
         try {
-            Parent mainPageParent = FXMLLoader.load(getClass().getResource("/view/mainPage.fxml"));
+            Parent mainPageParent = FXMLLoader.load(getClass().getResource("/trajour/view/mainPage.fxml"));
             Scene mainPageScene = new Scene(mainPageParent, Main.APPLICATION_WIDTH, Main.APPLICATION_HEIGHT);
 
             Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();

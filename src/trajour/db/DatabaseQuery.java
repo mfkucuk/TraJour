@@ -1,6 +1,4 @@
-package db;
-
-import model.User;
+package trajour.db;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

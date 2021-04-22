@@ -1,7 +1,6 @@
-package model;
+package trajour.model;
 
 import java.awt.Image;
-import java.util.ArrayList;
 
 /**
  * User class.

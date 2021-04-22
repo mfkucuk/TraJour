@@ -1,7 +1,6 @@
-package model;
+package trajour.model;
 
 import javafx.scene.image.Image;
-import model.Journey;
 
 /**
  * A simple Java class!

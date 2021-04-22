@@ -1,6 +1,5 @@
-package view;
+package trajour.view;
 
-import db.DatabaseConnection;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -9,10 +8,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-import java.sql.Connection;
-import java.sql.Statement;
-
-import static db.DatabaseQuery.validateRegistery;
+import static trajour.db.DatabaseQuery.validateRegistery;
 
 /**
  * Controller for the register process

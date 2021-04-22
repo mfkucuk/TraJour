@@ -1,4 +1,4 @@
-package model;
+package trajour.model;
 
 import java.util.Date;
 

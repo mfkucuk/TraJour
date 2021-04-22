@@ -1,4 +1,4 @@
-package view;
+package trajour.view;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -12,7 +12,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("/view/loginPage.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/trajour/view/loginPage.fxml"));
         primaryStage.setTitle("TraJour");
         primaryStage.setScene(new Scene(root, APPLICATION_WIDTH, APPLICATION_HEIGHT));
         primaryStage.show();

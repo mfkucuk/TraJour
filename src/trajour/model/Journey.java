@@ -1,7 +1,6 @@
-package model;
+package trajour.model;
 
 import java.util.Date;
-import java.util.Scanner;
 
 /**
  * A simple Java class!
@@ -68,11 +67,6 @@ public class Journey implements Comparable<Journey>
 
 	@Override
 	public int compareTo(Journey o) {
-        Journey newVariable = (Journey) o;
-		if ( ( this.journeyID ==  newVariable.journeyID ) & ( this.location.equals( newVariable.location)) & ( this.description.equals( newVariable.description)) & (this.startDate.equals( newVariable.startDate) & (this.endDate.equals( newVariable.endDate))) ) {
-            return 1;
-        }
-        return 0;
+        return startDate.compareTo(endDate);
 	}
-
 }

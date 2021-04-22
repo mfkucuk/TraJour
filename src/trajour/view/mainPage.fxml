@@ -23,7 +23,7 @@
                <graphic>
                   <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../iconfinder_home_2561449%20(1).png" />
+                        <Image url="/resources/home_icon.png" />
                      </image>
                   </ImageView>
                </graphic></Button>
@@ -31,7 +31,7 @@
                <graphic>
                   <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../iconfinder_map-pin_2561463.png" />
+                        <Image url="/resources/map_pin.png" />
                      </image>
                   </ImageView>
                </graphic></Button>
@@ -39,7 +39,7 @@
                <graphic>
                   <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../iconfinder_search_2561381%20(1).png" />
+                        <Image url="/resources/search_icon.png" />
                      </image>
                   </ImageView>
                </graphic></Button>
@@ -47,7 +47,7 @@
                <graphic>
                   <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../iconfinder_user-account-profile-human-avatar-face-head-_2931147%20(1).png" />
+                        <Image url="@/resources/user_account_icon.png" />
                      </image>
                   </ImageView>
                </graphic></Button>
