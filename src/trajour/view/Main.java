@@ -18,16 +18,17 @@ public class Main extends Application {
     @Override
     public void init() {
         // Create the database if it does not exists
-        DatabaseConnection dbConnection = new DatabaseConnection();
-        Connection conn = dbConnection.getConnection();
-        try {
-            Statement statement = conn.createStatement();
-            statement.executeQuery("CREATE DATABASE IF NOT EXISTS '" + dbName + "'");
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-            e.getCause();
-        }
+//        DatabaseConnection dbConnection = new DatabaseConnection();
+//        Connection conn = dbConnection.getConnection();
+//
+//        try {
+//            Statement statement = conn.createStatement();
+//            statement.executeUpdate("CREATE DATABASE IF NOT EXISTS '" + dbName + "'");
+//        }
+//        catch (Exception e) {
+//            e.printStackTrace();
+//            e.getCause();
+//        }
         // TODO Create tables: users, journeys, friends, posts.
     }
 

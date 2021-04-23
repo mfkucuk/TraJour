@@ -7,11 +7,20 @@ import java.awt.Image;
  * @author Mehmet Feyyaz Kucuk
  */
 public class User {
-    
     // Properties
     String username;
     String email;
     Image profilePhoto;
+
+    public User(String username, String email) {
+        this.username = username;
+        this.email = email;
+    }
+
+    public User(String username, String email, Image profilePhoto) {
+        this(username, email);
+        this.profilePhoto = profilePhoto;
+    }
 
     // Methods
     /**
@@ -19,8 +28,14 @@ public class User {
      * @param username is username of the user to be added.
      * @return is the object with that username.
      */
-    public User addFriend(String username) {
-        return null;
+    public boolean addFriendByUserName(String username) {
+        // TODO Search the database, check whether a user with the given username exists or the user is already a friend
+        return false;
+    }
+
+    public boolean addFriendByEmail(String email) {
+        // TODO Search the database, check whether a user with the given username exists or the user is already a friend
+        return false;
     }
 
     /**
@@ -39,15 +54,6 @@ public class User {
      */
     public boolean shareJourney(Journey j) {
         return true;
-    }
-
-    /**
-     * Searches the database and returns the user with matching username.
-     * @param username is the username.
-     * @return is the user found by the database.
-     */
-    public User findUserbyUsername(String username) {
-        return null;
     }
 
     /**

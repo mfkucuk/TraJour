@@ -5,8 +5,7 @@ import javafx.scene.image.Image;
 /**
  * A simple Java class!
 */
-public class Post
-{
+public class Post implements Shareable{
     // Properties
     private String text;
     private Journey theJourney;
@@ -39,6 +38,7 @@ public class Post
         this.visibilityOfRating = false;
     }
     public void hideDate() {
+
         this.visibilityOfDate = false;
     }
     public void increaseLikeCount() {
@@ -48,5 +48,8 @@ public class Post
         likes--;
     }
 
-    
+    @Override
+    public void share(Journey j) {
+
+    }
 }

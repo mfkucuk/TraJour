@@ -7,9 +7,11 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import trajour.model.User;
 
 import java.util.Objects;
 
@@ -37,6 +39,16 @@ public class MainController {
 
     @FXML
     private Button achievementsButton;
+
+    @FXML
+    private Label welcomeMessage;
+
+    private User currentUser;
+
+    public void initData(User user) {
+        currentUser = user;
+        welcomeMessage.setText("Welcome to your main feed " + user.getUsername() + "!");
+    }
 
     @FXML
     public void openDiscoveryPage(ActionEvent event) {

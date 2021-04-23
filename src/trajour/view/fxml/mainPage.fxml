@@ -102,28 +102,28 @@
          <top>
             <HBox prefHeight="50.0" prefWidth="780.0" BorderPane.alignment="CENTER">
                <children>
-                  <Label graphicTextGap="6.0" text="Main Feed">
+                  <Button fx:id="shareJourneyButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="154.0" style="-fx-background-radius: 10; -fx-background-color: #00203FFF;" text="Share A Journey!" textFill="WHITE" HBox.hgrow="ALWAYS">
                      <font>
-                        <Font name="System Bold" size="20.0" />
+                        <Font size="14.0" />
                      </font>
                      <HBox.margin>
                         <Insets left="10.0" top="10.0" />
                      </HBox.margin>
-                  </Label>
-                  <Button fx:id="shareJourneyButton" mnemonicParsing="false" prefHeight="16.0" prefWidth="124.0" style="-fx-background-radius: 10; -fx-background-color: #00203FFF;" text="Share A Journey!" textFill="WHITE" HBox.hgrow="ALWAYS">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets left="25.0" right="25.0" top="10.0" />
-                     </HBox.margin>
                   </Button>
-                  <Button fx:id="achievementsButton" mnemonicParsing="false" prefHeight="16.0" prefWidth="107.0" style="-fx-background-radius: 10; -fx-background-color: #00203FFF;" text="Achievements" textFill="WHITE">
+                  <Label fx:id="welcomeMessage" graphicTextGap="6.0" prefHeight="30.0" prefWidth="381.0" text="Main Feed">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="25.0" top="10.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Button fx:id="achievementsButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="135.0" style="-fx-background-radius: 10; -fx-background-color: #00203FFF;" text="Achievements" textFill="WHITE">
                      <font>
                         <Font size="14.0" />
                      </font>
                      <HBox.margin>
-                        <Insets top="10.0" />
+                        <Insets left="200.0" right="35.0" top="10.0" />
                      </HBox.margin>
                   </Button>
                </children>

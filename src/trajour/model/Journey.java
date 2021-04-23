@@ -5,8 +5,7 @@ import java.util.Date;
 /**
  * A simple Java class!
 */
-public class Journey implements Comparable<Journey>
-{
+public class Journey implements Comparable<Journey>, Shareable {
     // Properties
     private int journeyID;
     private String location;
@@ -24,6 +23,10 @@ public class Journey implements Comparable<Journey>
     }
     
     // Methods
+    @Override
+    public void share(Journey j) {
+
+    }
     /**
      * This method returns the journey id.
      * @return journeyID 
@@ -61,9 +64,6 @@ public class Journey implements Comparable<Journey>
     public String getDescription() {
         return description;
     }
-    //public int compareTo( Journey j1, Journey j2) {
-      //  if ( j1.equals)
-    //}
 
 	@Override
 	public int compareTo(Journey o) {

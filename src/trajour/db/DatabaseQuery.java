@@ -70,6 +70,30 @@ public class DatabaseQuery {
     }
 
     /**
+     * Finds a user by checking a certain email in the database.
+     * @param email Email to search
+     * @return 1 if the user is found, 0 if the user wasn't found
+     */
+    public static String findUsernameByEmail(String email) {
+        try {
+            dbConnection = new DatabaseConnection();
+            conn = dbConnection.getConnection();
+
+            Statement statement = conn.createStatement();
+            String query = "SELECT username FROM users WHERE email = '" + email + "'";
+            ResultSet rs = statement.executeQuery(query);
+
+            while (rs.next()) {
+                return rs.getString(1);
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return "";
+    }
+
+    /**
      * Validates the login attempt by checking the entered email and password in the database.
      * @param email Entered email
      * @param password Entered password

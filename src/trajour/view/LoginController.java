@@ -3,6 +3,7 @@ package trajour.view;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -12,12 +13,14 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import javafx.scene.web.WebEngine;
-import javafx.scene.web.WebView;
+import trajour.model.User;
 
 import java.awt.*;
 import java.net.URI;
+import java.net.URL;
+import java.util.ResourceBundle;
 
+import static trajour.db.DatabaseQuery.findUsernameByEmail;
 import static trajour.db.DatabaseQuery.validateLogin;
 
 /**
@@ -25,7 +28,7 @@ import static trajour.db.DatabaseQuery.validateLogin;
  * @author Selim Can Güler
  * @version 16 April 2021
  */
-public class LoginController  {
+public class LoginController {
     @FXML
     private PasswordField passwordField;
 
@@ -44,19 +47,22 @@ public class LoginController  {
     @FXML
     private Label loginFeedbackLabel;
 
+    private User user;
 
     /**
      * Handles and validates login switches to the main page if the login is successful
      * @param event Event
      */
-    public void login(ActionEvent event)  {
+    public void handleLogin(ActionEvent event)  {
         String email = emailTextField.getText();
         String password = passwordField.getText();
         // Check if the text fields are empty or not
         if ( ! email.isBlank() && !  password.isBlank()) {
             if (validateLogin(email, password)) {
                 // TODO Wait for a few seconds so that the user can understand login is successful, then redirect to the the main page
-                openMainPage(event);
+                String username = findUsernameByEmail(email);
+                System.out.println(username);
+                openMainPage(event, new User(username, email));
             } else {
                 loginFeedbackLabel.setText("Incorrect email or password.");
             }
@@ -87,10 +93,15 @@ public class LoginController  {
     /**
      * Opens the main page
      */
-    private void openMainPage(ActionEvent event)  {
+    private void openMainPage(ActionEvent event, User user)  {
         try {
-            Parent mainPageParent = FXMLLoader.load(getClass().getResource("/trajour/view/fxml/mainPage.fxml"));
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/trajour/view/fxml/mainPage.fxml"));
+            Parent mainPageParent = loader.load();
             Scene mainPageScene = new Scene(mainPageParent, Main.APPLICATION_WIDTH, Main.APPLICATION_HEIGHT);
+
+            MainController mainWindowController = loader.getController();
+            mainWindowController.initData(user);
 
             Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
 

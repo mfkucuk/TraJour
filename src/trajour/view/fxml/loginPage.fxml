@@ -21,7 +21,7 @@
             </Label>
             <PasswordField fx:id="passwordField" layoutX="85.0" layoutY="134.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="190.0" promptText="Password" AnchorPane.leftAnchor="70.0" AnchorPane.rightAnchor="70.0" AnchorPane.topAnchor="134.0" />
             <TextField fx:id="emailTextField" layoutX="81.0" layoutY="85.0" prefHeight="30.0" prefWidth="180.0" promptText="E-mail" AnchorPane.leftAnchor="70.0" AnchorPane.rightAnchor="70.0" AnchorPane.topAnchor="85.0" />
-            <Button fx:id="loginButton" alignment="CENTER" layoutX="89.0" layoutY="219.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#login" prefHeight="30.0" prefWidth="180.0" style="-fx-background-color: #ff5050;" text="Sign in" textFill="WHITE" AnchorPane.leftAnchor="70.0" AnchorPane.rightAnchor="70.0">
+            <Button fx:id="loginButton" alignment="CENTER" layoutX="89.0" layoutY="219.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleLogin" prefHeight="30.0" prefWidth="180.0" style="-fx-background-color: #ff5050;" text="Sign in" textFill="WHITE" AnchorPane.leftAnchor="70.0" AnchorPane.rightAnchor="70.0">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
