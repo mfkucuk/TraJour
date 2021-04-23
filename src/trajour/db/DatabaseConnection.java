@@ -15,7 +15,7 @@ public class DatabaseConnection {
 
         dbName = "trajour";
         dbUser = "root";
-        dbPassword = "BilTraJour06";
+        dbPassword = "";
         dbUrl = "jdbc:mysql://localhost/" + dbName;
 
         try {

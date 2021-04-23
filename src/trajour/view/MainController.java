@@ -56,7 +56,7 @@ public class MainController {
     @FXML
     public void openProfilePage(ActionEvent event) {
         try {
-            Parent profilePageParent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/trajour/view/profilePage.fxml")));
+            Parent profilePageParent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/trajour/view/fxml/profilePage.fxml")));
             Scene profilePageScene = new Scene(profilePageParent, Main.APPLICATION_WIDTH, Main.APPLICATION_HEIGHT);
 
             Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();

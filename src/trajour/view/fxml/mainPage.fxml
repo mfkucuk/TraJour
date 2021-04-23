@@ -23,7 +23,7 @@
                <graphic>
                   <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../resources/home_icon.png" />
+                        <Image url="@../../../resources/home_icon.png" />
                      </image>
                   </ImageView>
                </graphic></Button>
@@ -31,7 +31,7 @@
                <graphic>
                   <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../resources/map_pin.png" />
+                        <Image url="@../../../resources/map_pin.png" />
                      </image>
                   </ImageView>
                </graphic></Button>
@@ -39,7 +39,7 @@
                <graphic>
                   <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../resources/search_icon.png" />
+                        <Image url="@../../../resources/search_icon.png" />
                      </image>
                   </ImageView>
                </graphic></Button>
@@ -47,7 +47,7 @@
                <graphic>
                   <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../resources/user_account_icon.png" />
+                        <Image url="@../../../resources/user_account_icon.png" />
                      </image>
                   </ImageView>
                </graphic></Button>

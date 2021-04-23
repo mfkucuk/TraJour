@@ -16,7 +16,6 @@ import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 
 import java.awt.*;
-import java.io.IOException;
 import java.net.URI;
 
 import static trajour.db.DatabaseQuery.validateLogin;
@@ -45,10 +44,6 @@ public class LoginController  {
     @FXML
     private Label loginFeedbackLabel;
 
-    @FXML
-    private WebView webView;
-
-    private WebEngine webEngine;
 
     /**
      * Handles and validates login switches to the main page if the login is successful
@@ -77,7 +72,7 @@ public class LoginController  {
     @FXML
     private void openRegisterPage(ActionEvent event) {
         try {
-            Parent root = FXMLLoader.load((getClass().getResource("/trajour/view/registerPage.fxml")));
+            Parent root = FXMLLoader.load((getClass().getResource("/trajour/view/fxml/registerPage.fxml")));
 
             Stage registerStage = new Stage();
             registerStage.setTitle("Register");
@@ -91,11 +86,10 @@ public class LoginController  {
 
     /**
      * Opens the main page
-     * @param event
      */
     private void openMainPage(ActionEvent event)  {
         try {
-            Parent mainPageParent = FXMLLoader.load(getClass().getResource("/trajour/view/mainPage.fxml"));
+            Parent mainPageParent = FXMLLoader.load(getClass().getResource("/trajour/view/fxml/mainPage.fxml"));
             Scene mainPageScene = new Scene(mainPageParent, Main.APPLICATION_WIDTH, Main.APPLICATION_HEIGHT);
 
             Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();

@@ -3,7 +3,6 @@ package trajour.view;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -13,15 +12,12 @@ import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
 public class ProfileController {
     @FXML
     private Button homePageButton;
 
     @FXML
-    private ImageView mapButton;
+    private Button mapPageButton;
 
     @FXML
     private Button discoveryPageButton;
@@ -84,7 +80,7 @@ public class ProfileController {
     @FXML
     public void signOut(ActionEvent event) {
         try {
-            Parent loginPageParent = FXMLLoader.load(getClass().getResource("/trajour/view/loginPage.fxml"));
+            Parent loginPageParent = FXMLLoader.load(getClass().getResource("/trajour/view/fxml/loginPage.fxml"));
             Scene loginPageScene = new Scene(loginPageParent, Main.APPLICATION_WIDTH, Main.APPLICATION_HEIGHT);
 
             Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
