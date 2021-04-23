@@ -87,20 +87,29 @@ public class ProfileController {
         }
     }
 
-    @FXML
-    public void openProfilePage(ActionEvent event) {
-        try {
-            Parent profilePageParent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/trajour/view/fxml/profilePage.fxml")));
-            Scene profilePageScene = new Scene(profilePageParent, Main.APPLICATION_WIDTH, Main.APPLICATION_HEIGHT);
-
-            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-            window.setScene(profilePageScene);
-            window.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+//    @FXML
+//    public void openProfilePage(ActionEvent event) {
+//        try {
+//            FXMLLoader loader = new FXMLLoader();
+//            loader.setLocation(getClass().getResource("/trajour/view/fxml/profilePage.fxml"));
+//            Parent profilePageParent = loader.load();
+//            Scene profilePageScene = new Scene(profilePageParent, Main.APPLICATION_WIDTH, Main.APPLICATION_HEIGHT);
+//
+//            // Get access to the main windows controller
+//            initData(currentUser);
+//
+//            // Get the stage and change the scene
+//            Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
+//
+//            window.setScene(profilePageScene);
+//            window.show();
+//        }
+//        catch (Exception e) {
+//            e.printStackTrace();
+//            e.getCause();
+//        }
+//
+//    }
 
     @FXML
     public void openMapPage(ActionEvent event) {
@@ -132,5 +141,4 @@ public class ProfileController {
     public void exit(ActionEvent event) {
         System.exit(1);
     }
-
 }
