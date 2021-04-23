@@ -11,6 +11,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import trajour.model.User;
+
+import java.util.Objects;
 
 public class ProfileController {
     @FXML
@@ -52,29 +55,61 @@ public class ProfileController {
     @FXML
     private Button changePasswordButton;
 
-    @FXML
-    public void exit(ActionEvent event) {
-        System.exit(1);
-    }
+    private User currentUser;
 
-    @FXML
-    public void openDiscoveryPage(ActionEvent event) {
-
+    public void initData(User user) {
+        currentUser = user;
+        usernameLabel.setText(currentUser.getUsername());
     }
 
     @FXML
     public void openHomePage(ActionEvent event) {
+        try {
+            // Get the parent and create the scene
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/trajour/view/fxml/mainPage.fxml"));
+            Parent mainPageParent = loader.load();
+            Scene mainPageScene = new Scene(mainPageParent, Main.APPLICATION_WIDTH, Main.APPLICATION_HEIGHT);
 
-    }
+            // Get access to the main windows controller
+            MainController mainWindowController = loader.getController();
+            mainWindowController.initData(currentUser);
 
-    @FXML
-    public void openMapPage(ActionEvent event) {
+            // Get the stage and change the scene
+            Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
 
+            window.setScene(mainPageScene);
+            window.show();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            e.getCause();
+        }
     }
 
     @FXML
     public void openProfilePage(ActionEvent event) {
+        try {
+            Parent profilePageParent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/trajour/view/fxml/profilePage.fxml")));
+            Scene profilePageScene = new Scene(profilePageParent, Main.APPLICATION_WIDTH, Main.APPLICATION_HEIGHT);
 
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            window.setScene(profilePageScene);
+            window.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void openMapPage(ActionEvent event) {
+        // TODO
+    }
+
+    @FXML
+    public void openDiscoveryPage(ActionEvent event) {
+        // TODO
     }
 
     @FXML
@@ -92,4 +127,10 @@ public class ProfileController {
             e.printStackTrace();
         }
     }
+
+    @FXML
+    public void exit(ActionEvent event) {
+        System.exit(1);
+    }
+
 }
