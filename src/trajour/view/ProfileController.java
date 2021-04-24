@@ -13,8 +13,6 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import trajour.model.User;
 
-import java.util.Objects;
-
 public class ProfileController {
     @FXML
     private Button homePageButton;
@@ -159,6 +157,41 @@ public class ProfileController {
         }
         catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void openAddFriendPage(ActionEvent event) {
+
+    }
+
+    @FXML
+    public void openAddPicturePage(ActionEvent event) {
+
+    }
+
+    @FXML
+    public void openChangePasswordPage(ActionEvent event) {
+        try {
+            // Get the parent and create the scene
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/trajour/view/fxml/changePassword.fxml"));
+            Parent changePasswordPageParent = loader.load();
+            Scene changePasswordPageScene = new Scene(changePasswordPageParent, 480, 327);
+
+            // Get access to the main windows controller
+            ChangePasswordController changePasswordWindowController = loader.getController();
+            changePasswordWindowController.initData(currentUser);
+
+            // Get the stage and change the scene
+            Stage window = new Stage();
+
+            window.setScene(changePasswordPageScene);
+            window.show();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            e.getCause();
         }
     }
 }

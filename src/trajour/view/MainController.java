@@ -13,8 +13,6 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import trajour.model.User;
 
-import java.util.Objects;
-
 public class MainController {
     @FXML
     private ImageView homePageButton;
@@ -105,5 +103,4 @@ public class MainController {
     public void openMapPage(ActionEvent event) {
 
     }
-
 }

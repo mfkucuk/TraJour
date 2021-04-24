@@ -90,8 +90,8 @@ public class RegisterController {
         return "";
     }
 
-    private String decyrptPassword(String password) {
-        // TODO Decyrption of the password. This may be the wrong place for the method.
+    private String decryptPassword(String password) {
+        // TODO Decryption of the password. This may be the wrong place for the method.
         return "";
     }
 }

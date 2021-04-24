@@ -28,7 +28,7 @@ public class User {
      * @param username is username of the user to be added.
      * @return is the object with that username.
      */
-    public boolean addFriendByUserName(String username) {
+    public boolean addFriendByUsername(String username) {
         // TODO Search the database, check whether a user with the given username exists or the user is already a friend
         return false;
     }
@@ -50,7 +50,7 @@ public class User {
     /**
      * Shares the specified journey to friends.
      * @param j is the shared journey.
-     * @result is the boolean indicating whether sharing was successful.
+     * @return  is the boolean indicating whether sharing was successful.
      */
     public boolean shareJourney(Journey j) {
         return true;
@@ -97,7 +97,7 @@ public class User {
 
     /**
      * Sets the profile photo.
-     * @param profilePhoto
+     * @param profilePhoto Profile photo of the user
      */
     public void setProfilePhoto(Image profilePhoto) {
         this.profilePhoto = profilePhoto;

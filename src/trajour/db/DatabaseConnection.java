@@ -2,7 +2,6 @@ package trajour.db;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.util.ResourceBundle;
 
 public class DatabaseConnection {
     public Connection databaseLink;

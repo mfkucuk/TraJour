@@ -2,6 +2,7 @@ package trajour.db;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 public class DatabaseQuery {
@@ -69,6 +70,38 @@ public class DatabaseQuery {
         return 0;
     }
 
+
+    public static int findPasswordByUsername(String username, String password) {
+        try {
+            dbConnection = new DatabaseConnection();
+            conn = dbConnection.getConnection();
+
+            Statement statement = conn.createStatement();
+            String query = "SELECT password FROM users where username = '" + username + "'";
+            ResultSet rs = statement.executeQuery(query);
+
+            while (rs.next()) {
+                if (rs.getString(1).equals(password)) {
+                    return 1;
+                }
+                else {
+                    return 0;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            e.getCause();
+        } finally {
+            try {
+                conn.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
+
+        return 0;
+    }
+
     /**
      * Finds a user by checking a certain email in the database.
      * @param email Email to search
@@ -88,9 +121,35 @@ public class DatabaseQuery {
             }
         } catch (Exception e){
             e.printStackTrace();
+        } finally {
+            try {
+                conn.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
         }
 
         return "";
+    }
+
+    public static void updatePassword(String username, String newPassword) {
+        try {
+            dbConnection = new DatabaseConnection();
+            conn = dbConnection.getConnection();
+
+            Statement statement = conn.createStatement();
+            String query = "UPDATE users SET password = '" + newPassword + "' WHERE username = '" + username + "'";
+            statement.executeUpdate(query);
+        } catch (Exception e) {
+            e.printStackTrace();
+            e.getCause();
+        } finally {
+            try {
+                conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     /**
@@ -117,6 +176,12 @@ public class DatabaseQuery {
         catch (Exception e) {
             e.printStackTrace();
             e.getCause();
+        } finally {
+            try {
+                conn.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
         }
 
         return false;
@@ -155,6 +220,12 @@ public class DatabaseQuery {
             }
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            try {
+                conn.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
         }
 
         return 0;

@@ -18,5 +18,4 @@ public class FutureJourney extends Journey {
     public CurrentJourney convertToCurrentJourney() {
         return new CurrentJourney(getJourneyID(), getLocation(), getDescription(), getStartDate(), getEndDate());
     }
-
 }
