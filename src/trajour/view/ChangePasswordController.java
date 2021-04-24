@@ -13,7 +13,6 @@ import static trajour.db.DatabaseQuery.updatePassword;
 public class ChangePasswordController {
 
 
-
     @FXML
     private PasswordField oldPasswordTextField;
 

@@ -16,7 +16,7 @@ import trajour.model.User;
 import java.awt.*;
 import java.net.URI;
 
-import static trajour.db.DatabaseQuery.findUsernameByEmail;
+import static trajour.db.DatabaseQuery.getUsernameByEmail;
 import static trajour.db.DatabaseQuery.validateLogin;
 
 /**
@@ -55,7 +55,7 @@ public class LoginController {
         if ( ! email.isBlank() && !  password.isBlank()) {
             if (validateLogin(email, password)) {
                 // TODO Wait for a few seconds so that the user can understand login is successful, then redirect to the the main page
-                String username = findUsernameByEmail(email);
+                String username = getUsernameByEmail(email);
                 System.out.println(username);
                 openMainPage(event, new User(username, email));
             }
@@ -75,7 +75,7 @@ public class LoginController {
     @FXML
     private void openRegisterPage(ActionEvent event) {
         try {
-            Parent root = FXMLLoader.load((getClass().getResource("/trajour/view/fxml/registerPage.fxml")));
+            Parent root = FXMLLoader.load((getClass().getResource("/trajour/view/fxml/register.fxml")));
 
             Stage registerStage = new Stage();
             registerStage.setTitle("Register");
@@ -95,7 +95,7 @@ public class LoginController {
     private void openMainPage(ActionEvent event, User user)  {
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/trajour/view/fxml/mainPage.fxml"));
+            loader.setLocation(getClass().getResource("/trajour/view/fxml/main.fxml"));
             Parent mainPageParent = loader.load();
             Scene mainPageScene = new Scene(mainPageParent, Main.APPLICATION_WIDTH, Main.APPLICATION_HEIGHT);
 

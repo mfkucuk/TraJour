@@ -60,7 +60,7 @@ public class MainController {
         try {
             // Get the parent and create the scene
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/trajour/view/fxml/profilePage.fxml"));
+            loader.setLocation(getClass().getResource("/trajour/view/fxml/profile.fxml"));
             Parent profilePageParent = loader.load();
             Scene profilePageScene = new Scene(profilePageParent, Main.APPLICATION_WIDTH, Main.APPLICATION_HEIGHT);
 

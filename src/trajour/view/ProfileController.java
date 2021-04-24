@@ -73,7 +73,7 @@ public class ProfileController {
         try {
             // Get the parent and create the scene
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/trajour/view/fxml/mainPage.fxml"));
+            loader.setLocation(getClass().getResource("/trajour/view/fxml/main.fxml"));
             Parent mainPageParent = loader.load();
             Scene mainPageScene = new Scene(mainPageParent, Main.APPLICATION_WIDTH, Main.APPLICATION_HEIGHT);
 
@@ -101,7 +101,7 @@ public class ProfileController {
     public void openProfilePage(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/trajour/view/fxml/profilePage.fxml"));
+            loader.setLocation(getClass().getResource("/trajour/view/fxml/profile.fxml"));
             Parent profilePageParent = loader.load();
             Scene profilePageScene = new Scene(profilePageParent, Main.APPLICATION_WIDTH, Main.APPLICATION_HEIGHT);
 
@@ -147,7 +147,7 @@ public class ProfileController {
     @FXML
     public void signOut(ActionEvent event) {
         try {
-            Parent loginPageParent = FXMLLoader.load(getClass().getResource("/trajour/view/fxml/loginPage.fxml"));
+            Parent loginPageParent = FXMLLoader.load(getClass().getResource("/trajour/view/fxml/login.fxml"));
             Scene loginPageScene = new Scene(loginPageParent, Main.APPLICATION_WIDTH, Main.APPLICATION_HEIGHT);
 
             Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
@@ -162,7 +162,27 @@ public class ProfileController {
 
     @FXML
     public void openAddFriendPage(ActionEvent event) {
+        try {
+            // Get the parent and create the scene
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/trajour/view/fxml/add_friend.fxml"));
+            Parent addFriendPageParent = loader.load();
+            Scene addFriendPageScene = new Scene(addFriendPageParent, 480, 327);
 
+            // Get access to the main windows controller
+            AddFriendController addFriendController = loader.getController();
+            addFriendController.initData(currentUser);
+
+            // Get the stage and change the scene
+            Stage window = new Stage();
+
+            window.setScene(addFriendPageScene);
+            window.show();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            e.getCause();
+        }
     }
 
     @FXML
@@ -175,7 +195,7 @@ public class ProfileController {
         try {
             // Get the parent and create the scene
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/trajour/view/fxml/changePassword.fxml"));
+            loader.setLocation(getClass().getResource("/trajour/view/fxml/change_password.fxml"));
             Parent changePasswordPageParent = loader.load();
             Scene changePasswordPageScene = new Scene(changePasswordPageParent, 480, 327);
 
