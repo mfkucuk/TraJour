@@ -33,8 +33,10 @@ public class DatabaseQuery {
         finally {
             try {
                 conn.close();
-            } catch (SQLException e) {
+            }
+            catch (SQLException e) {
                 e.printStackTrace();
+                e.getCause();
             }
         }
 
@@ -65,8 +67,10 @@ public class DatabaseQuery {
         finally {
             try {
                 conn.close();
-            } catch (SQLException e) {
+            }
+            catch (SQLException e) {
                 e.printStackTrace();
+                e.getCause();
             }
         }
 
@@ -101,8 +105,10 @@ public class DatabaseQuery {
         finally {
             try {
                 conn.close();
-            } catch (SQLException e) {
+            }
+            catch (SQLException e) {
                 e.printStackTrace();
+                e.getCause();
             }
         }
 
@@ -136,6 +142,15 @@ public class DatabaseQuery {
         catch (Exception e) {
             e.printStackTrace();
         }
+        finally {
+            try {
+                conn.close();
+            }
+            catch (SQLException e) {
+                e.printStackTrace();
+                e.getCause();
+            }
+        }
 
         return 0;
     }
@@ -165,14 +180,29 @@ public class DatabaseQuery {
                 }
             }
         }
-        catch (Exception e){
+        catch (SQLException e){
             e.printStackTrace();
+        }
+        finally {
+            try {
+                conn.close();
+            }
+            catch (SQLException e) {
+                e.printStackTrace();
+                e.getCause();
+            }
         }
 
         return 0;
     }
 
 
+    /**
+     * Compares the password parameter with the actual password stored in the database that is specific to user.
+     * @param username Username of the user
+     * @param password Password of the user
+     * @return 1 if the passwords match, 0 otherwise
+     */
     public static int findPasswordByUsername(String username, String password) {
         try {
             dbConnection = new DatabaseConnection();
@@ -191,15 +221,15 @@ public class DatabaseQuery {
                 }
             }
         }
-        catch (Exception e) {
+        catch (SQLException e) {
             e.printStackTrace();
             e.getCause();
         }
         finally {
             try {
                 conn.close();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
         }
 
@@ -242,6 +272,11 @@ public class DatabaseQuery {
         return 0;
     }
 
+    /**
+     * Searches the database by email to find a friend of the current user.
+     * @param email Email of the searched friend
+     * @return 1 if the other user is a friend of the current user, 0 otherwise
+     */
     public static int findFriendByEmail(String email) {
         dbConnection = new DatabaseConnection();
         conn = dbConnection.getConnection();
@@ -273,6 +308,11 @@ public class DatabaseQuery {
         return 0;
     }
 
+    /**
+     * Adds a new friend to the current user, by using other user's username.
+     * @param friendName Name of the friend
+     * @param username   Name of the current user
+     */
     public static void insertFriendByUsername(String friendName, String username) {
         dbConnection = new DatabaseConnection();
         conn = dbConnection.getConnection();
@@ -298,6 +338,11 @@ public class DatabaseQuery {
         }
     }
 
+    /**
+     * Adds a new friend to the current user, by using other user's email.
+     * @param friendEmail   Email of the friend
+     * @param username      Username of the friend
+     */
     public static void insertFriendByEmail(String friendEmail, String username) {
         dbConnection = new DatabaseConnection();
         conn = dbConnection.getConnection();
@@ -323,6 +368,11 @@ public class DatabaseQuery {
         }
     }
 
+    /**
+     * Updates the password of the user with the given username
+     * @param username      Username of the user
+     * @param newPassword   New password of the user
+     */
     public static void updatePassword(String username, String newPassword) {
         try {
             dbConnection = new DatabaseConnection();
@@ -420,8 +470,8 @@ public class DatabaseQuery {
         finally {
             try {
                 conn.close();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
         }
 

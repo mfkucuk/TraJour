@@ -23,6 +23,12 @@ public class AddFriendController {
     @FXML
     private Button addFriendButton;
 
+    /**
+     * Adds friend either by checking the database by username or email. If a user with the specified username or
+     * email does not exist, the user is warned. If the user exists but they are already a friend of the current user
+     * the user is warned again. If none of these apply, the user is added as a friend of the current user.
+     * @param event
+     */
     @FXML
     public void addFriend(ActionEvent event) {
 
