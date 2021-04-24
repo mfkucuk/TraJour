@@ -45,6 +45,18 @@ public class MainController {
 
     private User currentUser;
 
+    /**
+     * Initializes the user of the session.
+     * @param user Current user of the session
+     */
+    public void initData(User user) {
+        currentUser = user;
+        welcomeMessage.setText("Welcome to your main feed " + user.getUsername() + "!");
+    }
+
+    /**
+     * Opens the profile page
+     */
     @FXML
     public void openProfilePage(ActionEvent event) {
         try {
@@ -70,21 +82,25 @@ public class MainController {
         }
     }
 
-    public void initData(User user) {
-        currentUser = user;
-        welcomeMessage.setText("Welcome to your main feed " + user.getUsername() + "!");
-    }
-
+    /**
+     * Opens the discovery page.
+     */
     @FXML
     public void openDiscoveryPage(ActionEvent event) {
 
     }
 
+    /**
+     * Opens the home page.
+     */
     @FXML
     public void openHomePage(ActionEvent event) {
 
     }
 
+    /**
+     * Opens map page.
+     */
     @FXML
     public void openMapPage(ActionEvent event) {
 

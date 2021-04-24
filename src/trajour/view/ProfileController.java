@@ -57,11 +57,19 @@ public class ProfileController {
 
     private User currentUser;
 
+    /**
+     * Initializes the data related to the page
+     * @param user Current user of the session
+     */
     public void initData(User user) {
         currentUser = user;
         usernameLabel.setText(currentUser.getUsername());
     }
 
+    /**
+     * Opens the home page.
+     * @param event Event
+     */
     @FXML
     public void openHomePage(ActionEvent event) {
         try {
@@ -87,40 +95,57 @@ public class ProfileController {
         }
     }
 
-//    @FXML
-//    public void openProfilePage(ActionEvent event) {
-//        try {
-//            FXMLLoader loader = new FXMLLoader();
-//            loader.setLocation(getClass().getResource("/trajour/view/fxml/profilePage.fxml"));
-//            Parent profilePageParent = loader.load();
-//            Scene profilePageScene = new Scene(profilePageParent, Main.APPLICATION_WIDTH, Main.APPLICATION_HEIGHT);
-//
-//            // Get access to the main windows controller
-//            initData(currentUser);
-//
-//            // Get the stage and change the scene
-//            Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
-//
-//            window.setScene(profilePageScene);
-//            window.show();
-//        }
-//        catch (Exception e) {
-//            e.printStackTrace();
-//            e.getCause();
-//        }
-//
-//    }
+    /**
+     * Opens the profile page.
+     * @param event Event
+     */
+    @FXML
+    public void openProfilePage(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/trajour/view/fxml/profilePage.fxml"));
+            Parent profilePageParent = loader.load();
+            Scene profilePageScene = new Scene(profilePageParent, Main.APPLICATION_WIDTH, Main.APPLICATION_HEIGHT);
 
+            // Get access to the main windows controller
+            ProfileController profileWindowController = loader.getController();
+            profileWindowController.initData(currentUser);
+
+            // Get the stage and change the scene
+            Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
+
+            window.setScene(profilePageScene);
+            window.show();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            e.getCause();
+        }
+
+    }
+
+    /**
+     * Opens the map page
+     * @param event Event
+     */
     @FXML
     public void openMapPage(ActionEvent event) {
         // TODO
     }
 
+    /**
+     * Opens the discovery page
+     * @param event Event
+     */
     @FXML
     public void openDiscoveryPage(ActionEvent event) {
         // TODO
     }
 
+    /**
+     * Signs out and goes back to the login page
+     * @param event Event
+     */
     @FXML
     public void signOut(ActionEvent event) {
         try {
@@ -135,10 +160,5 @@ public class ProfileController {
         catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    @FXML
-    public void exit(ActionEvent event) {
-        System.exit(1);
     }
 }

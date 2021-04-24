@@ -47,7 +47,6 @@ public class LoginController {
     @FXML
     private Label loginFeedbackLabel;
 
-    private User user;
 
     /**
      * Handles and validates login switches to the main page if the login is successful
@@ -63,10 +62,12 @@ public class LoginController {
                 String username = findUsernameByEmail(email);
                 System.out.println(username);
                 openMainPage(event, new User(username, email));
-            } else {
+            }
+            else {
                 loginFeedbackLabel.setText("Incorrect email or password.");
             }
-        } else {
+        }
+        else {
             loginFeedbackLabel.setText("Please enter your email and password.");
         }
     }
@@ -83,15 +84,17 @@ public class LoginController {
             Stage registerStage = new Stage();
             registerStage.setTitle("Register");
 
-            registerStage.setScene(new Scene(root, 700, 600));
+            registerStage.setScene(new Scene(root, 800, 600));
             registerStage.show();
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     /**
      * Opens the main page
+     * @param event Event
      */
     private void openMainPage(ActionEvent event, User user)  {
         try {

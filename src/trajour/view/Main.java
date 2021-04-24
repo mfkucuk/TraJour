@@ -8,6 +8,7 @@ import javafx.stage.Stage;
 import trajour.db.DatabaseConnection;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 public class Main extends Application {
@@ -16,11 +17,12 @@ public class Main extends Application {
     private final String dbName = "trajour";
 
     @Override
-    public void init() {
+    public void init() throws SQLException {
         // Create the database if it does not exists
         DatabaseConnection dbConnection = new DatabaseConnection();
         Connection conn = dbConnection.getConnection();
 
+        // Creates the database if it does not exists
         try {
             Statement statement = conn.createStatement();
             statement.executeUpdate("CREATE DATABASE IF NOT EXISTS " + dbName);
@@ -31,16 +33,20 @@ public class Main extends Application {
         }
         // TODO Create tables: users, journeys, friends, posts.
 
-        // Create users table
+
         try {
+            // Create users table
             Statement stmt = conn.createStatement();
             stmt.executeUpdate("CREATE TABLE IF NOT EXISTS users(userId INTEGER NOT NULL UNIQUE AUTO_INCREMENT, " +
                     "username VARCHAR(20) NOT NULL UNIQUE, email VARCHAR(30) NOT NULL UNIQUE, password VARCHAR(20) NOT NULL, " +
                     "profile_photo BLOB, PRIMARY KEY(userId))");
+            // TODO Create journeys, posts, friends tables
         }
         catch (Exception e) {
             e.printStackTrace();
             e.getCause();
+        } finally {
+            conn.close();
         }
     }
 
