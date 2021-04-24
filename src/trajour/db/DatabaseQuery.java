@@ -10,6 +10,106 @@ public class DatabaseQuery {
     private static Connection conn;
 
     /**
+     * Gets the username of a user by their email
+     * @param email Email to search
+     * @return The username of the user with the specified email
+     */
+    public static String getUsernameByEmail(String email) {
+        dbConnection = new DatabaseConnection();
+        conn = dbConnection.getConnection();
+
+        try {
+            Statement statement = conn.createStatement();
+            String query = "SELECT username FROM users WHERE email = '" + email + "'";
+            ResultSet rs = statement.executeQuery(query);
+
+            while (rs.next()) {
+                return rs.getString(1);
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return "";
+    }
+
+    /**
+     * Gets the email of a user by their username
+     * @param username Username to search
+     * @return The email of the user with the specified username
+     */
+    public static String getEmailByUsername(String username) {
+        dbConnection = new DatabaseConnection();
+        conn = dbConnection.getConnection();
+
+        try {
+            Statement statement = conn.createStatement();
+            String query = "SELECT username FROM users WHERE username = '" + username + "'";
+            ResultSet rs = statement.executeQuery(query);
+
+            while (rs.next()) {
+                return rs.getString(1);
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return "";
+    }
+
+    /**
+     * Gets the userId of the user by checking their username.
+     * @param username Username of the user.
+     * @return The userId of the user with the specified username. Returns -1 if no user with the specified username exists.
+     */
+    public static int getUserIdByUsername(String username) {
+        dbConnection = new DatabaseConnection();
+        conn = dbConnection.getConnection();
+
+        try {
+            if (findUserByUsername(username) == 0) {
+                return -1;
+            }
+
+            Statement statement = conn.createStatement();
+            String query = "SELECT userId FROM users WHERE username = '" + username + "'";
+            ResultSet rs = statement.executeQuery(query);
+
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return -1;
+    }
+
+    /**
      * Finds a user by checking a certain username in the database.
      * @param username Username to search
      * @return 1 if user exists 0 if the user does not exist
@@ -107,35 +207,120 @@ public class DatabaseQuery {
     }
 
     /**
-     * Finds a user by checking a certain email in the database.
-     * @param email Email to search
-     * @return 1 if the user is found, 0 if the user wasn't found
+     *
+     * @param friendName Name of the searched friend
+     * @return 1 if a friend with the given username exists, 0 otherwise
      */
-    public static String getUsernameByEmail(String email) {
-        try {
-            dbConnection = new DatabaseConnection();
-            conn = dbConnection.getConnection();
+    public static int findFriendByUsername(String friendName) {
+        dbConnection = new DatabaseConnection();
+        conn = dbConnection.getConnection();
 
+        String query = "SELECT COUNT(*) friendName FROM users INNER JOIN friends ON users.userId = friends.userID WHERE "
+                + "friends.friendName = '" + friendName + "'";
+        try {
             Statement statement = conn.createStatement();
-            String query = "SELECT username FROM users WHERE email = '" + email + "'";
             ResultSet rs = statement.executeQuery(query);
 
             while (rs.next()) {
-                return rs.getString(1);
+                return rs.getInt(1);
             }
         }
-        catch (Exception e){
+        catch (SQLException e) {
             e.printStackTrace();
+            e.getCause();
         }
         finally {
             try {
                 conn.close();
-            } catch (SQLException e) {
+            }
+            catch (SQLException e) {
                 e.printStackTrace();
+                e.getCause();
             }
         }
 
-        return "";
+        return 0;
+    }
+
+    public static int findFriendByEmail(String email) {
+        dbConnection = new DatabaseConnection();
+        conn = dbConnection.getConnection();
+
+        String query = "SELECT COUNT(*) friendName FROM users INNER JOIN friends ON users.userId = friends.userID WHERE "
+                + "friends.friendEmail = '" + email + "'";
+        try {
+            Statement statement = conn.createStatement();
+            ResultSet rs = statement.executeQuery(query);
+
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            e.getCause();
+        }
+        finally {
+            try {
+                conn.close();
+            }
+            catch (SQLException e) {
+                e.printStackTrace();
+                e.getCause();
+            }
+        }
+
+        return 0;
+    }
+
+    public static void insertFriendByUsername(String friendName, String username) {
+        dbConnection = new DatabaseConnection();
+        conn = dbConnection.getConnection();
+
+        String query = "INSERT INTO friends(userId, friendName, friendEmail) VALUES(" + getUserIdByUsername(username) + ", "
+                + "'" + friendName + "', " + "'" + getEmailByUsername(friendName) + "')";
+        try {
+            Statement statement = conn.createStatement();
+            statement.executeUpdate(query);
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            e.getCause();
+        }
+        finally {
+            try {
+                conn.close();
+            }
+            catch (SQLException e) {
+                e.printStackTrace();
+                e.getCause();
+            }
+        }
+    }
+
+    public static void insertFriendByEmail(String friendEmail, String username) {
+        dbConnection = new DatabaseConnection();
+        conn = dbConnection.getConnection();
+
+        String query = "INSERT INTO friends(userId, friendName, friendEmail) VALUES(" + getUserIdByUsername(username) + ", "
+                + "'" + getUsernameByEmail(friendEmail) + "', " + "'" + friendEmail + "')";
+        try {
+            Statement statement = conn.createStatement();
+            statement.executeUpdate(query);
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            e.getCause();
+        }
+        finally {
+            try {
+                conn.close();
+            }
+            catch (SQLException e) {
+                e.printStackTrace();
+                e.getCause();
+            }
+        }
     }
 
     public static void updatePassword(String username, String newPassword) {
@@ -241,122 +426,5 @@ public class DatabaseQuery {
         }
 
         return 0;
-    }
-
-    /**
-     *
-     * @param friendName Name of the searched friend
-     * @return 1 if a friend with the given username exists, 0 otherwise
-     */
-    public static int findFriendByUsername(String friendName) {
-        dbConnection = new DatabaseConnection();
-        conn = dbConnection.getConnection();
-
-        String query = "SELECT COUNT(*) friendName FROM users INNER JOIN friends ON users.userId = friends.userID WHERE "
-                + "friends.friendName = '" + friendName + "'";
-        try {
-            Statement statement = conn.createStatement();
-            ResultSet rs = statement.executeQuery(query);
-
-            while (rs.next()) {
-                return rs.getInt(1);
-            }
-        }
-        catch (SQLException e) {
-            e.printStackTrace();
-            e.getCause();
-        }
-        finally {
-            try {
-                conn.close();
-            }
-            catch (SQLException e) {
-                e.printStackTrace();
-                e.getCause();
-            }
-        }
-
-        return 0;
-    }
-
-    public static int findFriendByEmail(String email) {
-        dbConnection = new DatabaseConnection();
-        conn = dbConnection.getConnection();
-
-        String query = "SELECT COUNT(*) friendName FROM users INNER JOIN friends ON users.userId = friends.userID WHERE "
-                + "friends.friendEmail = '" + email + "'";
-        try {
-            Statement statement = conn.createStatement();
-            ResultSet rs = statement.executeQuery(query);
-
-            while (rs.next()) {
-                return rs.getInt(1);
-            }
-        }
-        catch (SQLException e) {
-            e.printStackTrace();
-            e.getCause();
-        }
-        finally {
-            try {
-                conn.close();
-            }
-            catch (SQLException e) {
-                e.printStackTrace();
-                e.getCause();
-            }
-        }
-
-        return 0;
-    }
-
-    public static void insertFriendByUsername(String friendName, String username) {
-        dbConnection = new DatabaseConnection();
-        conn = dbConnection.getConnection();
-
-        String query = "INSERT INTO friends(userId, friendName, friendEmail) VALUES(" + getUserIdByName(username) + ", "
-                + "'" + friendName + "', " + "'" + getEmailByUsername(friendName) + "'";
-        try {
-            Statement statement = conn.createStatement();
-            statement.executeUpdate(query);
-        }
-        catch (SQLException e) {
-            e.printStackTrace();
-            e.getCause();
-        }
-        finally {
-            try {
-                conn.close();
-            }
-            catch (SQLException e) {
-                e.printStackTrace();
-                e.getCause();
-            }
-        }
-    }
-
-    public static void insertFriendByEmail(String email, String username) {
-        dbConnection = new DatabaseConnection();
-        conn = dbConnection.getConnection();
-
-        String query = "INSERT INTO friends(userId, friendName, friendEmail) VALUES(" + getUserIdByName(username) + ", "
-                + "'" + friendName + "', " + "'" + email + "'";
-        try {
-            Statement statement = conn.createStatement();
-            statement.executeUpdate(query);
-        }
-        catch (SQLException e) {
-            e.printStackTrace();
-            e.getCause();
-        }
-        finally {
-            try {
-                conn.close();
-            }
-            catch (SQLException e) {
-                e.printStackTrace();
-                e.getCause();
-            }
-        }
     }
 }
