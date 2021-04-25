@@ -207,9 +207,10 @@ public class ProfileController implements Initializable {
         if (selectedFile != null) {
             Image img = new Image(selectedFile.toURI().toString());
 
+            profilePhotoView.setImage(img);
             profilePhotoView.setFitHeight(180);
             profilePhotoView.setFitWidth(180);
-            profilePhotoView.setImage(img);
+
         }
     }
 
