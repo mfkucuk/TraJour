@@ -423,8 +423,6 @@ public class DatabaseQuery {
      * the entered username already exists, -2 if a user with the entered email already exists.
      */
     public static int validateRegistry(String username, String email, String password) {
-        dbConnection = new DatabaseConnection();
-        conn = dbConnection.getConnection();
 
         if (findUserByUsername(username) == true) {
             return -1;
@@ -432,6 +430,9 @@ public class DatabaseQuery {
         if (findUserByEmail(email) == true) {
             return -2;
         }
+
+        dbConnection = new DatabaseConnection();
+        conn = dbConnection.getConnection();
 
         String insertFieldsQuery = "INSERT INTO users(username, email, password) ";
         String insertValuesQuery = "VALUES ('" + username + "', '" + email + "', '" + password + "');";

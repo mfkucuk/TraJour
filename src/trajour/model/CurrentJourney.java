@@ -10,6 +10,7 @@ public class CurrentJourney extends Journey {
     // Constructor
     public CurrentJourney(int journeyID, String location, String description, Date startDate, Date endDate) {
         super(journeyID, location, description, startDate, endDate);
+        rating = -1;
     }
 
     /**

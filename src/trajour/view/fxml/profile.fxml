@@ -85,14 +85,14 @@
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <ImageView id="profileImage" fx:id="profilePhotoView" fitHeight="128.0" fitWidth="128.0" layoutX="103.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="59.0" AnchorPane.leftAnchor="103.0" AnchorPane.rightAnchor="99.0" AnchorPane.topAnchor="14.0">
+                        <ImageView id="profileImage" fx:id="profilePhotoView" fitHeight="180.0" fitWidth="180.0" layoutX="103.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="59.0" AnchorPane.leftAnchor="103.0" AnchorPane.rightAnchor="99.0" AnchorPane.topAnchor="14.0">
                            <viewport>
                               <Rectangle2D height="50.0" minX="5.0" minY="5.0" width="50.0" />
                            </viewport>
                         </ImageView>
-                        <Button fx:id="addPictureButton" layoutX="109.0" layoutY="176.0" mnemonicParsing="false" onAction="#openAddPicturePage" prefHeight="25.0" prefWidth="135.0" style="-fx-background-radius: 15; -fx-background-color: #ff5050;" text="Add Profile Picture" textFill="WHITE" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="95.0" AnchorPane.rightAnchor="95.0">
+                        <Button fx:id="addPictureButton" layoutX="109.0" layoutY="176.0" mnemonicParsing="false" onAction="#openAddPicturePage" prefHeight="25.0" prefWidth="135.0" style="-fx-background-radius: 15; -fx-background-color: #ff5050;" text="Add Profile Picture" textFill="WHITE" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="110.0" AnchorPane.rightAnchor="110.0">
                            <font>
-                              <Font name="System Bold" size="13.0" />
+                              <Font name="System Bold" size="14.0" />
                            </font>
                         </Button>
                      </children>
@@ -109,7 +109,7 @@
                               <Font name="System Bold" size="16.0" />
                            </font>
                         </Label>
-                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="135.0" layoutX="13.0" layoutY="56.0" stroke="BLACK" strokeType="INSIDE" width="283.0" AnchorPane.bottomAnchor="17.0" AnchorPane.leftAnchor="17.0" AnchorPane.rightAnchor="17.0" />
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="135.0" layoutX="50.0" layoutY="50.0" stroke="BLACK" strokeType="INSIDE" width="283.0" AnchorPane.bottomAnchor="26.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="49.0" />
                      </children>
                   </AnchorPane>
                   <Separator layoutX="10.0" layoutY="183.0" prefWidth="200.0">
@@ -124,13 +124,12 @@
                               <Font name="System Bold" size="16.0" />
                            </font>
                         </Label>
-                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="232.0" layoutX="16.0" layoutY="58.0" stroke="BLACK" strokeType="INSIDE" width="299.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="58.0" />
-                        <Button fx:id="addFriendButton" alignment="CENTER" layoutX="116.0" layoutY="298.0" mnemonicParsing="false" onAction="#openAddFriendPage" prefHeight="35.0" prefWidth="98.0" style="-fx-background-radius: 15; -fx-background-color: #ff5050;" text="Add Friend" textFill="WHITE" AnchorPane.leftAnchor="116.0" AnchorPane.rightAnchor="116.0" AnchorPane.topAnchor="298.0">
+                        <Button fx:id="addFriendButton" alignment="CENTER" layoutX="116.0" layoutY="304.0" mnemonicParsing="false" onAction="#openAddFriendPage" prefHeight="30.0" prefWidth="98.0" style="-fx-background-radius: 15; -fx-background-color: #ff5050;" text="Add Friend" textFill="WHITE" AnchorPane.leftAnchor="116.0" AnchorPane.rightAnchor="116.0" AnchorPane.topAnchor="304.0">
                            <font>
-                              <Font name="System Bold" size="13.0" />
+                              <Font name="System Bold" size="14.0" />
                            </font>
                         </Button>
-                        <TreeTableView fx:id="friendsTreeTableView" layoutX="17.0" layoutY="59.0" prefHeight="229.0" prefWidth="297.0">
+                        <TreeTableView fx:id="friendsTreeTableView" layoutX="17.0" layoutY="59.0" prefHeight="229.0" prefWidth="297.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0">
                           <columns>
                             <TreeTableColumn prefWidth="75.0" text="C1" />
                             <TreeTableColumn prefWidth="75.0" text="C2" />
@@ -147,11 +146,11 @@
                      <children>
                         <Button fx:id="signOutButton" alignment="CENTER" layoutX="85.0" layoutY="89.0" mnemonicParsing="false" onAction="#signOut" prefHeight="35.0" prefWidth="110.0" style="-fx-background-radius: 15; -fx-background-color: #ff5050;" text="Sign Out" textFill="WHITE" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="85.0" AnchorPane.rightAnchor="115.0">
                            <font>
-                              <Font name="System Bold" size="13.0" />
+                              <Font name="System Bold" size="14.0" />
                            </font></Button>
                         <Button fx:id="changePasswordButton" alignment="CENTER" layoutX="85.0" layoutY="22.0" mnemonicParsing="false" onAction="#openChangePasswordPage" prefHeight="35.0" prefWidth="110.0" style="-fx-background-radius: 15; -fx-background-color: #ff5050;" text="Change Password" textFill="WHITE" AnchorPane.leftAnchor="85.0" AnchorPane.rightAnchor="115.0" AnchorPane.topAnchor="25.0">
                            <font>
-                              <Font name="System Bold" size="13.0" />
+                              <Font name="System Bold" size="14.0" />
                            </font></Button>
                      </children>
                   </AnchorPane>

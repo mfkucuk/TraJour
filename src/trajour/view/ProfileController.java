@@ -11,10 +11,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import trajour.model.User;
 
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -50,9 +54,6 @@ public class ProfileController implements Initializable {
     private Button signOutButton;
 
     @FXML
-    private Button exitButton;
-
-    @FXML
     private Button privacyButton;
 
     @FXML
@@ -62,7 +63,7 @@ public class ProfileController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        DropShadow shadow = new DropShadow();
+        DropShadow shadow = new DropShadow(5, Color.WHITE);
         homePageButton.setOnMouseEntered(mouseEvent -> homePageButton.setEffect(shadow));
         homePageButton.setOnMouseExited(mouseEvent -> homePageButton.setEffect(null));
 
@@ -71,6 +72,19 @@ public class ProfileController implements Initializable {
 
         profilePageButton.setOnMouseEntered(mouseEvent -> profilePageButton.setEffect(shadow));
         profilePageButton.setOnMouseExited(mouseEvent -> profilePageButton.setEffect(null));
+
+        DropShadow blackShadow = new DropShadow();
+        addFriendButton.setOnMouseEntered(mouseEvent -> addFriendButton.setEffect(blackShadow));
+        addFriendButton.setOnMouseExited(mouseEvent -> addFriendButton.setEffect(null));
+
+        signOutButton.setOnMouseEntered(mouseEvent -> signOutButton.setEffect(blackShadow));
+        signOutButton.setOnMouseExited(mouseEvent -> signOutButton.setEffect(null));
+
+        changePasswordButton.setOnMouseEntered(mouseEvent -> changePasswordButton.setEffect(blackShadow));
+        changePasswordButton.setOnMouseExited(mouseEvent -> changePasswordButton.setEffect(null));
+
+        privacyButton.setOnMouseEntered(mouseEvent -> privacyButton.setEffect(blackShadow));
+        privacyButton.setOnMouseExited(mouseEvent -> privacyButton.setEffect(null));
     }
 
     /**
@@ -137,9 +151,7 @@ public class ProfileController implements Initializable {
             e.printStackTrace();
             e.getCause();
         }
-
     }
-
     /**
      * Opens the map page
      * @param event Event
@@ -156,26 +168,6 @@ public class ProfileController implements Initializable {
     @FXML
     public void openDiscoveryPage(ActionEvent event) {
         // TODO
-    }
-
-    /**
-     * Signs out and goes back to the login page
-     * @param event Event
-     */
-    @FXML
-    public void signOut(ActionEvent event) {
-        try {
-            Parent loginPageParent = FXMLLoader.load(getClass().getResource("/trajour/view/fxml/login.fxml"));
-            Scene loginPageScene = new Scene(loginPageParent, Main.APPLICATION_WIDTH, Main.APPLICATION_HEIGHT);
-
-            Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
-
-            window.setScene(loginPageScene);
-            window.show();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     @FXML
@@ -205,7 +197,20 @@ public class ProfileController implements Initializable {
 
     @FXML
     public void openAddPicturePage(ActionEvent event) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open Resource File");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif"));
 
+        Stage stage = new Stage();
+        File selectedFile = fileChooser.showOpenDialog(stage);
+
+        if (selectedFile != null) {
+            Image img = new Image(selectedFile.toURI().toString());
+
+            profilePhotoView.setFitHeight(180);
+            profilePhotoView.setFitWidth(180);
+            profilePhotoView.setImage(img);
+        }
     }
 
     @FXML
@@ -232,5 +237,26 @@ public class ProfileController implements Initializable {
             e.getCause();
         }
     }
+
+    /**
+     * Signs out and goes back to the login page
+     * @param event Event
+     */
+    @FXML
+    public void signOut(ActionEvent event) {
+        try {
+            Parent loginPageParent = FXMLLoader.load(getClass().getResource("/trajour/view/fxml/login.fxml"));
+            Scene loginPageScene = new Scene(loginPageParent, Main.APPLICATION_WIDTH, Main.APPLICATION_HEIGHT);
+
+            Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
+
+            window.setScene(loginPageScene);
+            window.show();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
 }
