@@ -87,7 +87,7 @@ public class DatabaseQuery {
         conn = dbConnection.getConnection();
 
         try {
-            if (findUserByUsername(username) == 0) {
+            if (! findUserByUsername(username)) {
                 return -1;
             }
 
@@ -95,7 +95,7 @@ public class DatabaseQuery {
             String query = "SELECT userId FROM users WHERE username = '" + username + "'";
             ResultSet rs = statement.executeQuery(query);
 
-            while (rs.next()) {
+            if (rs.next()) {
                 return rs.getInt(1);
             }
         }
@@ -118,9 +118,9 @@ public class DatabaseQuery {
     /**
      * Finds a user by checking a certain username in the database.
      * @param username Username to search
-     * @return 1 if user exists 0 if the user does not exist
+     * @return True if user exists, false if the user does not exist
      */
-    public static int findUserByUsername(String username) {
+    public static boolean findUserByUsername(String username) {
         try {
             dbConnection = new DatabaseConnection();
             conn = dbConnection.getConnection();
@@ -129,15 +129,9 @@ public class DatabaseQuery {
             String query = "SELECT COUNT(*) FROM users WHERE username = '" + username + "'";
             ResultSet rs = statement.executeQuery(query);
 
-            while (rs.next()) {
-                if (rs.getInt(1) == 1) {
-                    return 1;
-                }
-                else {
-                    return 0;
-                }
+            if (rs.next()) {
+                return rs.getInt(1) == 1;
             }
-
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -152,15 +146,15 @@ public class DatabaseQuery {
             }
         }
 
-        return 0;
+        return false;
     }
 
     /**
      * Finds a user by checking a certain email in the database.
      * @param email Email to search
-     * @return 1 if the user is found, 0 if the user wasn't found
+     * @return True if the user is found, false if the user wasn't found
      */
-    public static int findUserByEmail(String email) {
+    public static boolean findUserByEmail(String email) {
         try {
             dbConnection = new DatabaseConnection();
             conn = dbConnection.getConnection();
@@ -169,15 +163,8 @@ public class DatabaseQuery {
             String query = "SELECT COUNT(*) FROM users where email = '" + email + "'";
             ResultSet rs = statement.executeQuery(query);
 
-            while (rs.next()) {
-                if (rs.getInt(1) == 1) {
-                    System.out.println("Found user by email"); // Might delete later
-                    return 1;
-                }
-                else {
-                    System.out.println("Couldn't find user by email"); // Might delete later
-                    return 0;
-                }
+            if (rs.next()) {
+                return rs.getInt(1) == 1;
             }
         }
         catch (SQLException e){
@@ -193,7 +180,7 @@ public class DatabaseQuery {
             }
         }
 
-        return 0;
+        return false;
     }
 
 
@@ -201,9 +188,9 @@ public class DatabaseQuery {
      * Compares the password parameter with the actual password stored in the database that is specific to user.
      * @param username Username of the user
      * @param password Password of the user
-     * @return 1 if the passwords match, 0 otherwise
+     * @return True if the passwords match, false otherwise
      */
-    public static int findPasswordByUsername(String username, String password) {
+    public static boolean findPasswordByUsername(String username, String password) {
         try {
             dbConnection = new DatabaseConnection();
             conn = dbConnection.getConnection();
@@ -212,13 +199,8 @@ public class DatabaseQuery {
             String query = "SELECT password FROM users where username = '" + username + "'";
             ResultSet rs = statement.executeQuery(query);
 
-            while (rs.next()) {
-                if (rs.getString(1).equals(password)) {
-                    return 1;
-                }
-                else {
-                    return 0;
-                }
+            if (rs.next()) {
+                return rs.getString(1).equals(password);
             }
         }
         catch (SQLException e) {
@@ -233,15 +215,15 @@ public class DatabaseQuery {
             }
         }
 
-        return 0;
+        return false;
     }
 
     /**
      *
      * @param friendName Name of the searched friend
-     * @return 1 if a friend with the given username exists, 0 otherwise
+     * @return True if a friend with the given username exists, false otherwise
      */
-    public static int findFriendByUsername(String friendName) {
+    public static boolean findFriendByUsername(String friendName) {
         dbConnection = new DatabaseConnection();
         conn = dbConnection.getConnection();
 
@@ -251,8 +233,8 @@ public class DatabaseQuery {
             Statement statement = conn.createStatement();
             ResultSet rs = statement.executeQuery(query);
 
-            while (rs.next()) {
-                return rs.getInt(1);
+            if (rs.next()) {
+                return rs.getInt(1) == 1;
             }
         }
         catch (SQLException e) {
@@ -269,15 +251,15 @@ public class DatabaseQuery {
             }
         }
 
-        return 0;
+        return false;
     }
 
     /**
      * Searches the database by email to find a friend of the current user.
      * @param email Email of the searched friend
-     * @return 1 if the other user is a friend of the current user, 0 otherwise
+     * @return True if the other user is a friend of the current user, false otherwise
      */
-    public static int findFriendByEmail(String email) {
+    public static boolean findFriendByEmail(String email) {
         dbConnection = new DatabaseConnection();
         conn = dbConnection.getConnection();
 
@@ -287,8 +269,8 @@ public class DatabaseQuery {
             Statement statement = conn.createStatement();
             ResultSet rs = statement.executeQuery(query);
 
-            while (rs.next()) {
-                return rs.getInt(1);
+            if (rs.next()) {
+                return rs.getInt(1) == 1;
             }
         }
         catch (SQLException e) {
@@ -305,7 +287,7 @@ public class DatabaseQuery {
             }
         }
 
-        return 0;
+        return false;
     }
 
     /**
@@ -444,10 +426,10 @@ public class DatabaseQuery {
         dbConnection = new DatabaseConnection();
         conn = dbConnection.getConnection();
 
-        if (findUserByUsername(username) == 1) {
+        if (findUserByUsername(username) == true) {
             return -1;
         }
-        if (findUserByEmail(email) == 1) {
+        if (findUserByEmail(email) == true) {
             return -2;
         }
 

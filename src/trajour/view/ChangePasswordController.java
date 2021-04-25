@@ -41,8 +41,8 @@ public class ChangePasswordController {
                 feedbackLabel.setText("Your new passwords do not match.");
             }
             else {
-                int result = findPasswordByUsername(currentUser.getUsername(), oldPasswordTextField.getText());
-                if (result == 1) {
+                boolean result = findPasswordByUsername(currentUser.getUsername(), oldPasswordTextField.getText());
+                if (result) {
                     updatePassword(currentUser.getUsername(), newPasswordTextField.getText());
                     feedbackLabel.setText("Password successfully changed.");
                 }
