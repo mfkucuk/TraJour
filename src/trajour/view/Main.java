@@ -16,6 +16,9 @@ public class Main extends Application {
     protected final static int APPLICATION_HEIGHT = 1000;
     private final String dbName = "trajour";
 
+    /**
+     * Initializes database
+     */
     @Override
     public void init() throws SQLException {
         // Create the database if it does not exists
@@ -31,8 +34,7 @@ public class Main extends Application {
             e.printStackTrace();
             e.getCause();
         }
-        // TODO Create tables: users, journeys, friends, posts.
-
+        // TODO Create tables: friends
 
         try {
             // Create users table
@@ -40,7 +42,24 @@ public class Main extends Application {
             stmt.executeUpdate("CREATE TABLE IF NOT EXISTS users(userId INTEGER NOT NULL UNIQUE AUTO_INCREMENT, " +
                     "username VARCHAR(20) NOT NULL UNIQUE, email VARCHAR(30) NOT NULL UNIQUE, password VARCHAR(20) NOT NULL, " +
                     "profile_photo BLOB, PRIMARY KEY(userId))");
-            // TODO Create journeys, posts, friends tables
+
+            // Create journeys
+            stmt.executeUpdate("CREATE TABLE IF NOT EXISTS `trajour`.`journeys`" +  "( \t`journeyId` INT NOT NULL AUTO_INCREMENT," +
+                    "\t`userId` INT NOT NULL,   `location` VARCHAR(57) NOT NULL,\t`description` TEXT(250) " +
+                    "NOT NULL, `startDate` DATE NOT NULL, \t`endDate` DATE NOT NULL, FOREIGN KEY (userId) " +
+                    "REFERENCES users(userId), PRIMARY KEY (`journeyId`), UNIQUE INDEX `journeyId_UNIQUE` " +
+                    "(`journeyId` ASC) VISIBLE);");
+
+            // Create posts
+            stmt.executeUpdate("CREATE TABLE IF NOT EXISTS `trajour`.`posts` (\n" +
+                    "  `postId` INT NOT NULL AUTO_INCREMENT,\n" +
+                    "  `userId` INT NOT NULL,\n" +
+                    "  `post_comments` TEXT(250) NOT NULL,\n" +
+                    "  `post_image` BLOB NOT NULL,\n" +
+                    "  `post_rating` INT NOT NULL,\n" +
+                    "  FOREIGN KEY (userId) REFERENCES users(userId),\n" +
+                    "  PRIMARY KEY (`postId`),\n" +
+                    "  UNIQUE INDEX `postId_UNIQUE` (`postId` ASC) VISIBLE);\n");
         }
         catch (Exception e) {
             e.printStackTrace();

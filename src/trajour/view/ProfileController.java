@@ -30,6 +30,9 @@ public class ProfileController implements Initializable {
     private Button mapPageButton;
 
     @FXML
+    private Button addPictureButton;
+
+    @FXML
     private Button discoveryPageButton;
 
     @FXML
@@ -85,6 +88,9 @@ public class ProfileController implements Initializable {
 
         privacyButton.setOnMouseEntered(mouseEvent -> privacyButton.setEffect(blackShadow));
         privacyButton.setOnMouseExited(mouseEvent -> privacyButton.setEffect(null));
+
+        addPictureButton.setOnMouseEntered(mouseEvent -> addPictureButton.setEffect(blackShadow));
+        addPictureButton.setOnMouseExited(mouseEvent -> addPictureButton.setEffect(null));
     }
 
     /**
@@ -198,7 +204,7 @@ public class ProfileController implements Initializable {
     @FXML
     public void openAddPicturePage(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Open Resource File");
+        fileChooser.setTitle("Choose Profile Image");
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif"));
 
         Stage stage = new Stage();
@@ -210,7 +216,6 @@ public class ProfileController implements Initializable {
             profilePhotoView.setImage(img);
             profilePhotoView.setFitHeight(180);
             profilePhotoView.setFitWidth(180);
-
         }
     }
 

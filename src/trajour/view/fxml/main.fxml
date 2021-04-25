@@ -103,7 +103,7 @@
          <top>
             <HBox prefHeight="50.0" prefWidth="780.0" BorderPane.alignment="CENTER">
                <children>
-                  <Button fx:id="shareJourneyButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="154.0" style="-fx-background-radius: 10; -fx-background-color: #00203FFF;" text="Share A Journey!" textFill="WHITE" HBox.hgrow="ALWAYS">
+                  <Button fx:id="shareJourneyButton" mnemonicParsing="false" onAction="#openShareJourneyPage" prefHeight="30.0" prefWidth="154.0" style="-fx-background-radius: 10; -fx-background-color: #00203FFF;" text="Share A Journey!" textFill="WHITE" HBox.hgrow="ALWAYS">
                      <font>
                         <Font size="14.0" />
                      </font>

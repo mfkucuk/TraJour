@@ -35,38 +35,49 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:controller="trajour.view.MainController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="619.0" prefWidth="377.0" style="-fx-background-color: #ADEFD1FF;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="480.0" style="-fx-background-color: #ADEFD1FF;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trajour.view.ShareJourneyController">
    <children>
-      <Label layoutX="5.0" layoutY="2.0" prefHeight="31.0" prefWidth="115.0" text="Share Journey" textFill="#00203f" AnchorPane.bottomAnchor="586.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="257.0" AnchorPane.topAnchor="2.0">
+      <Label layoutX="2.0" layoutY="4.0" prefHeight="39.0" prefWidth="140.0" text="Share Journey" textFill="#00203f" AnchorPane.bottomAnchor="757.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="338.0" AnchorPane.topAnchor="4.0">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-      <ComboBox layoutX="111.0" layoutY="92.0" prefHeight="31.0" prefWidth="150.0" />
-      <Button layoutX="167.0" layoutY="563.0" mnemonicParsing="false" style="-fx-background-radius: 10; -fx-background-color: #00203FFF;" text="Share" textFill="WHITE" />
-      <Button layoutX="147.0" layoutY="157.0" mnemonicParsing="false" style="-fx-background-radius: 10; -fx-background-color: #00203FFF;" text="Add a Picture" textFill="WHITE" />
-      <Label layoutX="111.0" layoutY="69.0" text="Pick a journey:" textFill="#00203f">
+      <ComboBox fx:id="journeyComboBox" layoutX="134.0" layoutY="95.0" prefHeight="31.0" prefWidth="150.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" />
+      <Button fx:id="shareButton" layoutX="238.0" layoutY="728.0" mnemonicParsing="false" onAction="#shareJourney" prefHeight="30.0" prefWidth="40.0" style="-fx-background-radius: 10; -fx-background-color: #00203FFF;" text="Share" textFill="WHITE" AnchorPane.leftAnchor="190.0" AnchorPane.rightAnchor="190.0">
          <font>
-            <Font name="System Bold" size="12.0" />
+            <Font name="System Bold" size="14.0" />
+         </font></Button>
+      <Button fx:id="addPictureButton" layoutX="177.0" layoutY="426.0" mnemonicParsing="false" onAction="#addJourneyPicture" prefHeight="30.0" style="-fx-background-radius: 10; -fx-background-color: #00203FFF;" text="Add a Picture" textFill="WHITE" AnchorPane.leftAnchor="170.0" AnchorPane.rightAnchor="170.0">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Button>
+      <Label layoutX="132.0" layoutY="62.0" text="Pick a journey:" textFill="#00203f" AnchorPane.leftAnchor="83.0">
+         <font>
+            <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <TextArea layoutX="90.0" layoutY="401.0" prefHeight="148.0" prefWidth="200.0" />
-      <Label layoutX="90.0" layoutY="376.0" prefHeight="25.0" prefWidth="75.0" text="Comments:" textFill="#00203f">
+      <TextArea fx:id="commentsTextArea" layoutX="83.0" layoutY="523.0" prefHeight="148.0" prefWidth="240.0" AnchorPane.leftAnchor="83.0" AnchorPane.rightAnchor="57.0" />
+      <Label layoutX="83.0" layoutY="489.0" prefHeight="25.0" prefWidth="75.0" text="Comments:" textFill="#00203f" AnchorPane.leftAnchor="83.0">
          <font>
-            <Font name="System Bold" size="12.0" />
+            <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="91.0" layoutY="228.0" pickOnBounds="true" preserveRatio="true" />
-      <Label layoutX="90.0" layoutY="202.0" text="Uploaded Picture:" textFill="#00203f">
+      <ImageView fx:id="journeyImageView" fitHeight="200.0" fitWidth="200.0" layoutX="121.0" layoutY="212.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="140.0" AnchorPane.rightAnchor="140.0" />
+      <Label layoutX="70.0" layoutY="204.0" text="Upload Picture:" textFill="#00203f" AnchorPane.leftAnchor="83.0">
          <font>
-            <Font name="System Bold" size="12.0" />
+            <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <Label layoutX="141.0" layoutY="295.0" text="No picture available" />
+      <Label fx:id="pictureFeedBackLabel" layoutX="168.0" layoutY="304.0" text="No picture available" AnchorPane.leftAnchor="180.0" AnchorPane.rightAnchor="180.0" />
+      <Separator layoutX="2.0" layoutY="165.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+      <Separator layoutY="479.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+      <Separator layoutX="2.0" layoutY="705.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+      <Separator layoutX="2.0" layoutY="42.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
    </children>
 </AnchorPane>

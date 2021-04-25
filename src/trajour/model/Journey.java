@@ -84,6 +84,11 @@ public class Journey implements Comparable<Journey>, Shareable {
         this.description = description;
     }
 
+    @Override
+    public String toString() {
+        return "Location: " + getLocation() + ", Start-End Date: " + (1900 + startDate.getYear()) + "/" + startDate.getMonth()
+                + "/" + startDate.getDay() + " - " + (1900 + endDate.getYear()) + "/" + endDate.getMonth() + "/" + endDate.getDay();
+    }
 	@Override
 	public int compareTo(Journey o) {
         return startDate.compareTo(endDate);

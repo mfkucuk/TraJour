@@ -129,10 +129,10 @@
                               <Font name="System Bold" size="14.0" />
                            </font>
                         </Button>
-                        <TreeTableView fx:id="friendsTreeTableView" layoutX="17.0" layoutY="59.0" prefHeight="229.0" prefWidth="297.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0">
+                        <TreeTableView fx:id="friendsTreeTableView" layoutX="17.0" layoutY="59.0" prefHeight="229.0" prefWidth="300.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
                           <columns>
-                            <TreeTableColumn prefWidth="75.0" text="C1" />
-                            <TreeTableColumn prefWidth="75.0" text="C2" />
+                            <TreeTableColumn minWidth="50.0" prefWidth="170.0" text="Friend Name" />
+                            <TreeTableColumn maxWidth="200.0" minWidth="50.0" prefWidth="170.0" text="Email" />
                           </columns>
                         </TreeTableView>
                      </children>

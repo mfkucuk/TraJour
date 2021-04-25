@@ -1,11 +1,19 @@
 package trajour.db;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import javafx.beans.Observable;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import trajour.model.Journey;
+import trajour.model.User;
 
-public class DatabaseQuery {
+import java.sql.*;
+
+/**
+ * Helper class for database queries
+ * @author Selim Can Güler
+ * @version 25 April 2021
+ */
+public final class DatabaseQuery {
     private static DatabaseConnection dbConnection;
     private static Connection conn;
 
@@ -83,13 +91,13 @@ public class DatabaseQuery {
      * @return The userId of the user with the specified username. Returns -1 if no user with the specified username exists.
      */
     public static int getUserIdByUsername(String username) {
-        dbConnection = new DatabaseConnection();
-        conn = dbConnection.getConnection();
-
         try {
             if (! findUserByUsername(username)) {
                 return -1;
             }
+
+            dbConnection = new DatabaseConnection();
+            conn = dbConnection.getConnection();
 
             Statement statement = conn.createStatement();
             String query = "SELECT userId FROM users WHERE username = '" + username + "'";
@@ -113,6 +121,37 @@ public class DatabaseQuery {
         }
 
         return -1;
+    }
+
+    public static ObservableList<Journey> getJourneysOfTheUser(User user) {
+        dbConnection = new DatabaseConnection();
+        conn = dbConnection.getConnection();
+
+        ObservableList<Journey> result = FXCollections.observableArrayList();
+        try {
+            Statement statement = conn.createStatement();
+            String query = "SELECT * FROM journeys WHERE userId = " + getUserIdByUsername(user.getUsername());
+            ResultSet rs = statement.executeQuery(query);
+
+            while(rs.next()) {
+                int journeyId = rs.getInt("journeyId");
+                String location = rs.getString("location");
+                String description = rs.getString("description");
+                Date startDate = rs.getDate("startDate");
+                Date endDate = rs.getDate("endDate");
+
+                Journey j = new Journey(journeyId, location, description, startDate, endDate);
+                result.add(j);
+            }
+
+            return result;
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            e.getCause();
+        }
+
+        return null;
     }
 
     /**
@@ -424,10 +463,10 @@ public class DatabaseQuery {
      */
     public static int validateRegistry(String username, String email, String password) {
 
-        if (findUserByUsername(username) == true) {
+        if (findUserByUsername(username)) {
             return -1;
         }
-        if (findUserByEmail(email) == true) {
+        if (findUserByEmail(email)) {
             return -2;
         }
 

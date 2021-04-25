@@ -13,7 +13,7 @@ import static trajour.db.DatabaseQuery.validateRegistry;
 /**
  * Controller for the register process
  * @author Selim Can Güler
- * @version 16 April 2021
+ * @version 25 April 2021
  */
 public class RegisterController {
     @FXML

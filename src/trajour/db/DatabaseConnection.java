@@ -22,8 +22,8 @@ public final class DatabaseConnection {
             Class.forName("com.mysql.cj.jdbc.Driver");
             databaseLink = DriverManager.getConnection(dbUrl, dbUser, dbPassword);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Can't load database", "Database Error. " +
-                    "Be sure that the database url, database user, and password is correct", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Can't load database. Be sure that the database" +
+                    " url, database user, and password is correct", "Database Error.", JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
             e.getCause();
             System.exit(0);

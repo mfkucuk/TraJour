@@ -18,6 +18,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import trajour.model.User;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -28,9 +29,6 @@ public class MainController implements Initializable {
 
     @FXML
     private Button mapPageButton;
-
-    @FXML
-    private Button discoveryPageButton;
 
     @FXML
     private Button profilePageButton;
@@ -54,7 +52,7 @@ public class MainController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        DropShadow shadow = new DropShadow(5, Color.WHITE);
+        DropShadow shadow = new DropShadow(10, Color.WHITE);
         homePageButton.setOnMouseEntered(mouseEvent -> homePageButton.setEffect(shadow));
         homePageButton.setOnMouseExited(mouseEvent -> homePageButton.setEffect(null));
 
@@ -64,7 +62,8 @@ public class MainController implements Initializable {
         profilePageButton.setOnMouseEntered(mouseEvent -> profilePageButton.setEffect(shadow));
         profilePageButton.setOnMouseExited(mouseEvent -> profilePageButton.setEffect(null));
 
-        shareJourneyButton.setOnMouseEntered(mouseEvent -> shareJourneyButton.setEffect(shadow));
+        DropShadow blackShadow = new DropShadow();
+        shareJourneyButton.setOnMouseEntered(mouseEvent -> shareJourneyButton.setEffect(blackShadow));
         shareJourneyButton.setOnMouseExited(mouseEvent -> shareJourneyButton.setEffect(null));
     }
     /**
@@ -128,4 +127,28 @@ public class MainController implements Initializable {
 
     }
 
+    @FXML
+    public void openShareJourneyPage(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/trajour/view/fxml/share_journey.fxml"));
+
+            Parent shareJourneyPageParent = loader.load();
+            Scene shareJourneyPageScene = new Scene(shareJourneyPageParent, 480, 800);
+
+            // Get access to the main windows controller
+            ShareJourneyController shareJourneyController = loader.getController();
+            shareJourneyController.initData(currentUser);
+
+            // Get the stage and change the scene
+            Stage window = new Stage();
+
+            window.setScene(shareJourneyPageScene);
+            window.show();
+        }
+        catch (IOException e) {
+            e.getCause();
+            System.out.println("Something wrong with the fxml file");
+        }
+    }
 }
