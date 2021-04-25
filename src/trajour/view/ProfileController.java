@@ -3,17 +3,22 @@ package trajour.view;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import trajour.model.User;
 
-public class ProfileController {
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class ProfileController implements Initializable {
     @FXML
     private Button homePageButton;
 
@@ -54,6 +59,19 @@ public class ProfileController {
     private Button changePasswordButton;
 
     private User currentUser;
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        DropShadow shadow = new DropShadow();
+        homePageButton.setOnMouseEntered(mouseEvent -> homePageButton.setEffect(shadow));
+        homePageButton.setOnMouseExited(mouseEvent -> homePageButton.setEffect(null));
+
+        mapPageButton.setOnMouseEntered(mouseEvent -> mapPageButton.setEffect(shadow));
+        mapPageButton.setOnMouseExited(mouseEvent -> mapPageButton.setEffect(null));
+
+        profilePageButton.setOnMouseEntered(mouseEvent -> profilePageButton.setEffect(shadow));
+        profilePageButton.setOnMouseExited(mouseEvent -> profilePageButton.setEffect(null));
+    }
 
     /**
      * Initializes the data related to the page
@@ -214,4 +232,5 @@ public class ProfileController {
             e.getCause();
         }
     }
+
 }

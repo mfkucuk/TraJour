@@ -19,7 +19,7 @@
    <top>
       <ToolBar prefHeight="60.0" prefWidth="839.0" style="-fx-background-color: #00203FFF;" BorderPane.alignment="CENTER">
          <items>
-            <Button mnemonicParsing="false" onAction="#openHomePage" prefHeight="32.0" prefWidth="67.0" style="-fx-background-radius: 10; -fx-background-color: white;" textAlignment="JUSTIFY">
+            <Button fx:id="homePageButton" mnemonicParsing="false" onAction="#openHomePage" prefHeight="32.0" prefWidth="67.0" style="-fx-background-radius: 10; -fx-background-color: white;" textAlignment="JUSTIFY">
                <graphic>
                   <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -27,14 +27,15 @@
                      </image>
                   </ImageView>
                </graphic></Button>
-            <Button mnemonicParsing="false" onAction="#openMapPage" prefHeight="32.0" prefWidth="67.0" style="-fx-background-radius: 10; -fx-background-color: white;">
+            <Button fx:id="mapPageButton" mnemonicParsing="false" onAction="#openMapPage" prefHeight="32.0" prefWidth="67.0" style="-fx-background-radius: 10; -fx-background-color: white;">
                <graphic>
                   <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../../resources/map_pin.png" />
                      </image>
                   </ImageView>
-               </graphic></Button>
+               </graphic>
+            </Button>
             <Button fx:id="discoveryPageButton" mnemonicParsing="false" onAction="#openDiscoveryPage" prefHeight="32.0" prefWidth="67.0" style="-fx-background-radius: 10; -fx-background-color: white;">
                <graphic>
                   <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
@@ -43,7 +44,7 @@
                      </image>
                   </ImageView>
                </graphic></Button>
-            <Button mnemonicParsing="false" onAction="#openProfilePage" prefHeight="32.0" prefWidth="67.0" style="-fx-background-radius: 10; -fx-background-color: white;">
+            <Button fx:id="profilePageButton" mnemonicParsing="false" onAction="#openProfilePage" prefHeight="32.0" prefWidth="67.0" style="-fx-background-radius: 10; -fx-background-color: white;">
                <graphic>
                   <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                      <image>

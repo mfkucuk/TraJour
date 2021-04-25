@@ -1,9 +1,10 @@
 package trajour.db;
 
+import javax.swing.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
-public class DatabaseConnection {
+public final class DatabaseConnection {
     public Connection databaseLink;
 
     public Connection getConnection() {
@@ -21,8 +22,11 @@ public class DatabaseConnection {
             Class.forName("com.mysql.cj.jdbc.Driver");
             databaseLink = DriverManager.getConnection(dbUrl, dbUser, dbPassword);
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Can't load database", "Database Error. " +
+                    "Be sure that the database url, database user, and password is correct", JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
             e.getCause();
+            System.exit(0);
         }
 
         return databaseLink;

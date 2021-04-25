@@ -3,6 +3,7 @@ package trajour.view;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -10,11 +11,15 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.*;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import trajour.model.User;
 
 import java.awt.*;
 import java.net.URI;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 import static trajour.db.DatabaseQuery.getUsernameByEmail;
 import static trajour.db.DatabaseQuery.validateLogin;
@@ -24,7 +29,7 @@ import static trajour.db.DatabaseQuery.validateLogin;
  * @author Selim Can Güler
  * @version 16 April 2021
  */
-public class LoginController {
+public class LoginController implements Initializable {
     @FXML
     private PasswordField passwordField;
 
@@ -43,6 +48,38 @@ public class LoginController {
     @FXML
     private Label loginFeedbackLabel;
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        // Button effects
+        DropShadow shadow = new DropShadow();
+
+        // Event listeners for text fields and buttons
+        emailTextField.requestFocus();
+
+        loginButton.setOnMouseEntered(mouseEvent -> loginButton.setEffect(shadow));
+        loginButton.setOnMouseExited(mouseEvent -> loginButton.setEffect(null));
+
+        registerButton.setOnMouseEntered(mouseEvent -> registerButton.setEffect(shadow));
+        registerButton.setOnMouseExited(mouseEvent -> registerButton.setEffect(null));
+
+        passwordField.setOnAction((ActionEvent e) -> {
+            if (!emailTextField.getText().isBlank() && !passwordField.getText().isBlank()) {
+                handleLogin(e);
+            }
+            else {
+                loginFeedbackLabel.setText("Please enter your email and password.");
+            }
+        });
+
+        emailTextField.setOnAction((ActionEvent e) -> {
+            if (!emailTextField.getText().isBlank() && !passwordField.getText().isBlank()) {
+                handleLogin(e);
+            }
+            else {
+                loginFeedbackLabel.setText("Please enter your email and password.");
+            }
+        });
+    }
 
     /**
      * Handles and validates login switches to the main page if the login is successful

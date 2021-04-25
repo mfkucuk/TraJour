@@ -1,30 +1,39 @@
 package trajour.view;
 
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import trajour.model.User;
 
-public class MainController {
-    @FXML
-    private ImageView homePageButton;
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class MainController implements Initializable {
 
     @FXML
-    private ImageView mapPageButton;
+    private Button homePageButton;
+
+    @FXML
+    private Button mapPageButton;
 
     @FXML
     private Button discoveryPageButton;
 
     @FXML
-    private ImageView profilePageButton;
+    private Button profilePageButton;
 
     @FXML
     private TableView<?> futureJourneysTable;
@@ -43,6 +52,21 @@ public class MainController {
 
     private User currentUser;
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        DropShadow shadow = new DropShadow(5, Color.WHITE);
+        homePageButton.setOnMouseEntered(mouseEvent -> homePageButton.setEffect(shadow));
+        homePageButton.setOnMouseExited(mouseEvent -> homePageButton.setEffect(null));
+
+        mapPageButton.setOnMouseEntered(mouseEvent -> mapPageButton.setEffect(shadow));
+        mapPageButton.setOnMouseExited(mouseEvent -> mapPageButton.setEffect(null));
+
+        profilePageButton.setOnMouseEntered(mouseEvent -> profilePageButton.setEffect(shadow));
+        profilePageButton.setOnMouseExited(mouseEvent -> profilePageButton.setEffect(null));
+
+        shareJourneyButton.setOnMouseEntered(mouseEvent -> shareJourneyButton.setEffect(shadow));
+        shareJourneyButton.setOnMouseExited(mouseEvent -> shareJourneyButton.setEffect(null));
+    }
     /**
      * Initializes the user of the session.
      * @param user Current user of the session
@@ -103,4 +127,5 @@ public class MainController {
     public void openMapPage(ActionEvent event) {
 
     }
+
 }
