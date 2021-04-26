@@ -2,9 +2,12 @@ package trajour.db;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.image.Image;
 import trajour.model.Journey;
+import trajour.model.Post;
 import trajour.model.User;
 
+import java.io.*;
 import java.sql.*;
 import java.time.LocalDate;
 
@@ -149,6 +152,43 @@ public final class DatabaseQuery {
         catch (SQLException e) {
             e.printStackTrace();
             e.getCause();
+        }
+
+        return null;
+    }
+
+    public static File getProfilePhotoFile(User user) {
+        dbConnection = new DatabaseConnection();
+        conn = dbConnection.getConnection();
+
+        InputStream input = null;
+        FileOutputStream output;
+
+        try {
+            Statement statement = conn.createStatement();
+            String query = "SELECT profile_photo FROM users where userId = " + user.getUserId() + " AND profile_photo IS NOT NULL";
+
+            ResultSet rs = statement.executeQuery(query);
+
+            File newFile = new File("D:/Selim/TraJour/src/resources/profile_photo_" + user.getUserId() + ".png");
+            output = new FileOutputStream(newFile);
+
+            if (rs.next()) {
+                input = rs.getBinaryStream("profile_photo");
+
+                byte[] buffer = new byte[1024];
+                while (input.read(buffer) > 0) {
+                    output.write(buffer);
+                }
+            }
+
+            return newFile;
+        }
+        catch (SQLException | FileNotFoundException e) {
+            e.printStackTrace();
+            e.getCause();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
         return null;
@@ -387,6 +427,32 @@ public final class DatabaseQuery {
                 e.getCause();
             }
         }
+    }
+
+    public static void insertPost(Post post) {
+
+    }
+
+    public static void updateImage(File img, User user) {
+        dbConnection = new DatabaseConnection();
+        conn = dbConnection.getConnection();
+
+        String query = "UPDATE users SET profile_photo=? WHERE userId = " + user.getUserId();
+        try {
+            PreparedStatement ps = conn.prepareStatement(query);
+
+            File theFile = new File(img.getAbsolutePath());
+            FileInputStream inputStream = new FileInputStream(theFile);
+
+            ps.setBinaryStream(1, inputStream);
+
+            ps.executeUpdate();
+        }
+        catch (SQLException | FileNotFoundException e) {
+            e.getCause();
+            e.printStackTrace();
+        }
+
     }
 
     /**

@@ -22,7 +22,9 @@ import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ProfileController implements Initializable {
+import static trajour.db.DatabaseQuery.*;
+
+public class ProfileController {
     @FXML
     private Button homePageButton;
 
@@ -63,9 +65,12 @@ public class ProfileController implements Initializable {
     private Button changePasswordButton;
 
     private User currentUser;
+    private File profilePhotoFile;
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    public void initData(User user) {
+        currentUser = user;
+        usernameLabel.setText(currentUser.getUsername());
+
         DropShadow shadow = new DropShadow(5, Color.WHITE);
         homePageButton.setOnMouseEntered(mouseEvent -> homePageButton.setEffect(shadow));
         homePageButton.setOnMouseExited(mouseEvent -> homePageButton.setEffect(null));
@@ -91,15 +96,10 @@ public class ProfileController implements Initializable {
 
         addPictureButton.setOnMouseEntered(mouseEvent -> addPictureButton.setEffect(blackShadow));
         addPictureButton.setOnMouseExited(mouseEvent -> addPictureButton.setEffect(null));
-    }
 
-    /**
-     * Initializes the data related to the page
-     * @param user Current user of the session
-     */
-    public void initData(User user) {
-        currentUser = user;
-        usernameLabel.setText(currentUser.getUsername());
+        profilePhotoFile = getProfilePhotoFile(currentUser);
+        Image profileImage = new Image(profilePhotoFile.toURI().toString(), 40, 40, false, false);
+        profilePhotoView.setImage(profileImage);
     }
 
     /**
@@ -209,13 +209,15 @@ public class ProfileController implements Initializable {
 
         Stage stage = new Stage();
         File selectedFile = fileChooser.showOpenDialog(stage);
-
         if (selectedFile != null) {
-            Image img = new Image(selectedFile.toURI().toString());
+            Image img = new Image(selectedFile.toURI().toString(), 40, 40, false, false);
 
             profilePhotoView.setImage(img);
-            profilePhotoView.setFitHeight(180);
-            profilePhotoView.setFitWidth(180);
+
+            updateImage(selectedFile, currentUser);
+        }
+        else {
+
         }
     }
 

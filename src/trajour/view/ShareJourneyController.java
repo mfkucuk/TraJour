@@ -84,6 +84,8 @@ public class ShareJourneyController {
 
             // Add the post to the database
             // TODO Add the post to database
+
+
             newPost.share(currentUser);
             ((Stage) ((Node) event.getSource()).getScene().getWindow()).close();
         }
