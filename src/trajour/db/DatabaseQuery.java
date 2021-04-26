@@ -1,6 +1,5 @@
 package trajour.db;
 
-import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import trajour.model.Journey;
@@ -31,7 +30,7 @@ public final class DatabaseQuery {
             String query = "SELECT username FROM users WHERE email = '" + email + "'";
             ResultSet rs = statement.executeQuery(query);
 
-            while (rs.next()) {
+            if (rs.next()) {
                 return rs.getString(1);
             }
         }
@@ -65,7 +64,7 @@ public final class DatabaseQuery {
             String query = "SELECT username FROM users WHERE username = '" + username + "'";
             ResultSet rs = statement.executeQuery(query);
 
-            while (rs.next()) {
+            if (rs.next()) {
                 return rs.getString(1);
             }
         }

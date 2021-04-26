@@ -12,7 +12,7 @@
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane prefHeight="478.0" prefWidth="774.0" style="-fx-background-color: #ADEFD1FF;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:controller="trajour.view.AddJourneyController" prefHeight="478.0" prefWidth="774.0" style="-fx-background-color: #ADEFD1FF;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Label layoutX="14.0" layoutY="14.0" text="Add Journey" textFill="#00203f" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="14.0">
          <font>
@@ -33,7 +33,7 @@
       <DatePicker layoutX="152.0" layoutY="106.0" prefHeight="25.0" prefWidth="165.0" promptText="Start Date" AnchorPane.leftAnchor="152.0" AnchorPane.topAnchor="106.0" />
       <DatePicker layoutX="152.0" layoutY="137.0" prefHeight="25.0" prefWidth="165.0" promptText="End Date" AnchorPane.leftAnchor="152.0" AnchorPane.topAnchor="137.0" />
       <TextArea layoutX="63.0" layoutY="179.0" prefHeight="202.0" prefWidth="254.0" promptText="Description of journey" AnchorPane.leftAnchor="63.0" AnchorPane.topAnchor="179.0" />
-      <Button fx:id="addJourney" layoutX="78.0" layoutY="400.0" mnemonicParsing="false" onAction="#addJourney" style="-fx-background-radius: 10; -fx-background-color: #00203FFF;" text="Add Journey" textFill="WHITE" AnchorPane.leftAnchor="78.0" AnchorPane.topAnchor="400.0">
+      <Button fx:id="addJourneyButton" layoutX="78.0" layoutY="400.0" mnemonicParsing="false" onAction="#addJourney" style="-fx-background-radius: 10; -fx-background-color: #00203FFF;" text="Add Journey" textFill="WHITE" AnchorPane.leftAnchor="78.0" AnchorPane.topAnchor="400.0">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>

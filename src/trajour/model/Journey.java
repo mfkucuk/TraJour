@@ -24,8 +24,9 @@ public class Journey implements Comparable<Journey>, Shareable {
     
     // Methods
     @Override
-    public void share(Journey j) {
+    public Post share(Journey j) {
 
+        return null;
     }
     /**
      * This method returns the journey id.

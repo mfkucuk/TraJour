@@ -1,6 +1,6 @@
 package trajour.model;
 
-import java.awt.Image;
+import java.awt.*;
 
 /**
  * User class.

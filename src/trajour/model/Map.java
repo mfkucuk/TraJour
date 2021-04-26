@@ -1,6 +1,6 @@
 package trajour.model;
 
-import javax.swing.JComponent;
+import javax.swing.*;
 
 /**
  * A simple Java class!

@@ -49,7 +49,7 @@ public class Post implements Shareable{
     }
 
     @Override
-    public void share(Journey j) {
-
+    public Post share(Journey j) {
+        return null;
     }
 }

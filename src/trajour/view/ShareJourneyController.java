@@ -1,6 +1,5 @@
 package trajour.view;
 
-import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -18,9 +17,6 @@ import trajour.model.Journey;
 import trajour.model.User;
 
 import java.io.File;
-import java.time.LocalDate;
-import java.util.Calendar;
-import java.util.Date;
 
 import static trajour.db.DatabaseQuery.getJourneysOfTheUser;
 
@@ -58,7 +54,7 @@ public class ShareJourneyController {
     }
 
     @FXML
-    void addJourneyPicture(ActionEvent event) {
+    public void addJourneyPicture(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Resource File");
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif"));
@@ -77,7 +73,7 @@ public class ShareJourneyController {
     }
 
     @FXML
-    void shareJourney(ActionEvent event) {
+    public void shareJourney(ActionEvent event) {
         // TODO Add the post to database
 
         ((Stage) ((Node) event.getSource()).getScene().getWindow()).close();
