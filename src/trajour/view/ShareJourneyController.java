@@ -14,6 +14,7 @@ import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import trajour.model.Journey;
+import trajour.model.Post;
 import trajour.model.User;
 
 import java.io.File;
@@ -38,6 +39,9 @@ public class ShareJourneyController {
 
     @FXML
     private Label pictureFeedBackLabel;
+
+    @FXML
+    private Label feedBacklabel;
 
     private User currentUser;
     private ObservableList<Journey> journeysOfCurrentUser;
@@ -68,14 +72,24 @@ public class ShareJourneyController {
             journeyImageView.setImage(img);
             journeyImageView.setFitHeight(180);
             journeyImageView.setFitWidth(180);
-
         }
     }
 
     @FXML
     public void shareJourney(ActionEvent event) {
-        // TODO Add the post to database
+        if (!commentsTextArea.getText().isBlank() && !journeyComboBox.getSelectionModel().isEmpty() && journeyImageView.getImage() != null) {
+            // Create the post
+            Journey selectedJourney = journeyComboBox.getSelectionModel().getSelectedItem();
+            Post newPost = selectedJourney.post(commentsTextArea.getText(), journeyImageView.getImage());
 
-        ((Stage) ((Node) event.getSource()).getScene().getWindow()).close();
+            // Add the post to the database
+            // TODO Add the post to database
+            newPost.share(currentUser);
+            ((Stage) ((Node) event.getSource()).getScene().getWindow()).close();
+        }
+        else {
+            feedBacklabel.setText("Make sure that you have completed all the forms.");
+        }
+
     }
 }

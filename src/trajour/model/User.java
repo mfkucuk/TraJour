@@ -8,17 +8,19 @@ import java.awt.*;
  */
 public class User {
     // Properties
-    String username;
-    String email;
-    Image profilePhoto;
+    private int userId;
+    private String username;
+    private String email;
+    private Image profilePhoto;
 
-    public User(String username, String email) {
+    public User(int userId, String username, String email) {
+        this.userId = userId;
         this.username = username;
         this.email = email;
     }
 
-    public User(String username, String email, Image profilePhoto) {
-        this(username, email);
+    public User(int userId, String username, String email, Image profilePhoto) {
+        this(userId, username, email);
         this.profilePhoto = profilePhoto;
     }
 
@@ -89,17 +91,14 @@ public class User {
     }
 
     /**
-     * Displays all the users in the friends list.
-     */
-    public void displayFriends() {
-        // Do something here
-    }
-
-    /**
      * Sets the profile photo.
      * @param profilePhoto Profile photo of the user
      */
     public void setProfilePhoto(Image profilePhoto) {
         this.profilePhoto = profilePhoto;
+    }
+
+    public int getUserId() {
+        return userId;
     }
 }

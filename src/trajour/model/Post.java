@@ -9,47 +9,41 @@ public class Post implements Shareable{
     // Properties
     private String text;
     private Journey theJourney;
-    private boolean visibilityOfRating;
-    private boolean visibilityOfDate;
-    private int likes;
     private Image journeyPhoto;
-    // Constructors
-    
-    public Post( Journey theJourney, String text, boolean visibilityOfRating, boolean visibilityOfDate ) {
-        this.theJourney = theJourney;
-        this.text = text;
-        this.visibilityOfRating = visibilityOfRating;
-        this.visibilityOfDate = visibilityOfDate;
-        this.likes = 0;
-    }
-    
-    // Methods
-    public String getComments() {
+
+    public String getText() {
         return text;
     }
-    
-    public void setComments( String comment ) {
-        this.text = comment;
-    }
-    public void setJourneyPhoto( Image photo) {
-        this.journeyPhoto = photo;
-    }
-    public void hideRating() {
-        this.visibilityOfRating = false;
-    }
-    public void hideDate() {
 
-        this.visibilityOfDate = false;
+    public void setText(String text) {
+        this.text = text;
     }
-    public void increaseLikeCount() {
-        likes++;
+
+    public Journey getTheJourney() {
+        return theJourney;
     }
-    public void decreaseLikeCount() {
-        likes--;
+
+    public void setTheJourney(Journey theJourney) {
+        this.theJourney = theJourney;
+    }
+
+    public Image getJourneyPhoto() {
+        return journeyPhoto;
+    }
+
+    public void setJourneyPhoto(Image journeyPhoto) {
+        this.journeyPhoto = journeyPhoto;
+    }
+
+    // Constructor
+    public Post( Journey theJourney, String text, Image journeyPhoto ) {
+        this.theJourney = theJourney;
+        this.text = text;
+        this.journeyPhoto = journeyPhoto;
     }
 
     @Override
-    public Post share(Journey j) {
+    public Post share(User user) {
         return null;
     }
 }

@@ -1,6 +1,6 @@
 package trajour.model;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 /**
  * A subclass of journey for future journeys of the user.
@@ -8,7 +8,7 @@ import java.util.Date;
 public class FutureJourney extends Journey {
     
     // Constructor
-    public FutureJourney(int journeyID, String location, String description, Date startDate, Date endDate) {
+    public FutureJourney(int journeyID, String location, String description, LocalDate startDate, LocalDate endDate) {
         super(journeyID, location, description, startDate, endDate);
     }
 

@@ -6,6 +6,7 @@ import trajour.model.Journey;
 import trajour.model.User;
 
 import java.sql.*;
+import java.time.LocalDate;
 
 /**
  * Helper class for database queries
@@ -129,15 +130,15 @@ public final class DatabaseQuery {
         ObservableList<Journey> result = FXCollections.observableArrayList();
         try {
             Statement statement = conn.createStatement();
-            String query = "SELECT * FROM journeys WHERE userId = " + getUserIdByUsername(user.getUsername());
+            String query = "SELECT * FROM journeys WHERE userId = " + user.getUserId();
             ResultSet rs = statement.executeQuery(query);
 
             while(rs.next()) {
                 int journeyId = rs.getInt("journeyId");
                 String location = rs.getString("location");
                 String description = rs.getString("description");
-                Date startDate = rs.getDate("startDate");
-                Date endDate = rs.getDate("endDate");
+                LocalDate startDate = rs.getDate("startDate").toLocalDate();
+                LocalDate endDate = rs.getDate("endDate").toLocalDate();
 
                 Journey j = new Journey(journeyId, location, description, startDate, endDate);
                 result.add(j);
@@ -426,7 +427,7 @@ public final class DatabaseQuery {
         dbConnection = new DatabaseConnection();
         conn = dbConnection.getConnection();
 
-        String verifyLoginQuery = "SELECT COUNT(*) FROM users WHERE email = '" + email + "' AND password = '" + password + "';";
+        String verifyLoginQuery = "SELECT COUNT(*) FROM users WHERE email = '" + email + "' AND password = '" + password + "'";
         try {
             Statement statement = conn.createStatement();
             ResultSet queryResult = statement.executeQuery(verifyLoginQuery);

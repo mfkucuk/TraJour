@@ -13,6 +13,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
 import javafx.stage.Stage;
+import trajour.db.DatabaseConnection;
 import trajour.model.User;
 
 import java.awt.*;
@@ -20,8 +21,7 @@ import java.net.URI;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import static trajour.db.DatabaseQuery.getUsernameByEmail;
-import static trajour.db.DatabaseQuery.validateLogin;
+import static trajour.db.DatabaseQuery.*;
 
 /**
  * Controller for the login process
@@ -47,8 +47,12 @@ public class LoginController implements Initializable {
     @FXML
     private Label loginFeedbackLabel;
 
+    private DatabaseConnection dbConnection;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        dbConnection = new DatabaseConnection();
         // Button effects
         DropShadow shadow = new DropShadow();
 
@@ -93,7 +97,7 @@ public class LoginController implements Initializable {
                 // TODO Wait for a few seconds so that the user can understand login is successful, then redirect to the the main page
                 String username = getUsernameByEmail(email);
                 System.out.println(username);
-                openMainPage(event, new User(username, email));
+                openMainPage(event, new User(getUserIdByUsername(username), username, email));
             }
             else {
                 loginFeedbackLabel.setText("Incorrect email or password.");

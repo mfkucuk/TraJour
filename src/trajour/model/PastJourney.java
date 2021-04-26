@@ -1,5 +1,6 @@
 package trajour.model;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class PastJourney extends Journey {
@@ -8,7 +9,7 @@ public class PastJourney extends Journey {
     private int rating;
 
     // Constructor
-    public PastJourney(int journeyID, String location, String description, Date startDate, Date endDate, int rating) {
+    public PastJourney(int journeyID, String location, String description, LocalDate startDate, LocalDate endDate, int rating) {
         super(journeyID, location, description, startDate, endDate);
         this.rating = rating;
     }
