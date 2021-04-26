@@ -1,9 +1,12 @@
 package trajour.model;
 
 import javafx.scene.image.Image;
+import trajour.db.DatabaseQuery;
 
 import java.time.LocalDate;
 import java.util.Date;
+
+import static trajour.db.DatabaseQuery.insertNewJourney;
 
 /**
  * A simple Java class!
@@ -23,6 +26,14 @@ public class Journey implements Comparable<Journey>, Postable {
         this.description = description;
         this.startDate = startDate;
         this.endDate = endDate;
+    }
+
+    public void addNewJourney(User user) {
+        insertNewJourney(this, user);
+    }
+
+    public boolean removeJourney() {
+        return DatabaseQuery.removeJourney(this);
     }
     
     // Methods

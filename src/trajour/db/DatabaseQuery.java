@@ -544,8 +544,8 @@ public final class DatabaseQuery {
         String registerQuery = insertFieldsQuery + insertValuesQuery;
 
         try {
-            Statement query = conn.createStatement();
-            int result = query.executeUpdate(registerQuery);
+            Statement statement = conn.createStatement();
+            int result = statement.executeUpdate(registerQuery);
             if (result >= 1) {
                 return 1;
             } else {
@@ -564,5 +564,51 @@ public final class DatabaseQuery {
         }
 
         return 0;
+    }
+
+    public static boolean insertNewJourney(Journey j, User user) {
+        dbConnection = new DatabaseConnection();
+        conn = dbConnection.getConnection();
+
+        int userId = user.getUserId();
+        String location = j.getLocation();
+        String description = j.getDescription();
+        String startDate = j.getStartDate().getYear() + "/" + j.getStartDate().getMonthValue() + "/" + j.getStartDate().getDayOfYear();
+        String endDate = j.getEndDate().getYear() + "/" + j.getEndDate().getMonthValue() + "/" + j.getEndDate().getDayOfYear();
+
+        String query = "INSERT INTO journeys(userId, location, description, startDate, endDate) VALUES(" + userId +
+                ", '" + location + "', '" + description + "', '" + startDate + "', '" + endDate + "')";
+
+        try {
+            Statement statement = conn.createStatement();
+            int result = statement.executeUpdate(query);
+            return result > 0;
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            e.getCause();
+        }
+
+        return false;
+    }
+
+    public static boolean removeJourney(Journey j) {
+        dbConnection = new DatabaseConnection();
+        conn = dbConnection.getConnection();
+
+        String query = "DELETE FROM journeys WHERE journeyId = " + j.getJourneyID();
+
+        try {
+            Statement statement = conn.createStatement();
+            int result = statement.executeUpdate(query);
+
+            return result > 0;
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            e.getCause();
+        }
+
+        return false;
     }
 }

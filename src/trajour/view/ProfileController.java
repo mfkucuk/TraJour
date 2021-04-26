@@ -265,6 +265,4 @@ public class ProfileController {
             e.printStackTrace();
         }
     }
-
-
 }

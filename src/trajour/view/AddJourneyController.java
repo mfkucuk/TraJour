@@ -71,7 +71,7 @@ public class AddJourneyController {
 
     @FXML
     void handleAddJourney(ActionEvent event) {
-
+        String country = countriesComboBox.getSelectionModel().getSelectedItem();
     }
 
 
