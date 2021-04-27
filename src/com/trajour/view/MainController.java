@@ -173,7 +173,7 @@ public class MainController implements Initializable {
             initData(currentUser);
 
             // Get the stage and change the scene
-            Stage window = new Stage();
+            Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
 
             window.setScene(mainPageScene);
             window.show();
@@ -190,18 +190,18 @@ public class MainController implements Initializable {
     @FXML
     public void openMapPage(ActionEvent event) {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/com/trajour/view/fxml/map.fxml"));
+        loader.setLocation(getClass().getResource("/com/trajour/view/fxml/mapxz.fxml"));
 
         try {
             Parent mapPageParent = loader.load();
             Scene mapPageScene = new Scene(mapPageParent, Main.APPLICATION_WIDTH, Main.APPLICATION_HEIGHT);
 
-            // Get access to the map windows controller
-//            MapController mapController = loader.getController();
-//            mapController.initData(currentUser);
+             // Get access to the map windows controller
+             MapController mapController = loader.getController();
+             mapController.initData(currentUser);
 
             // Get the stage and change the scene
-            Stage window = new Stage();
+            Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
 
             window.setScene(mapPageScene);
             window.show();

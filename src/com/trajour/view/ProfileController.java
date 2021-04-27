@@ -1,9 +1,5 @@
 package com.trajour.view;
 
-import com.sun.source.tree.Tree;
-import javafx.beans.Observable;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -20,9 +16,9 @@ import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import com.trajour.model.User;
-import javafx.util.Callback;
 
 import java.io.File;
+import java.io.IOException;
 
 import static com.trajour.db.DatabaseQuery.*;
 
@@ -35,9 +31,6 @@ public class ProfileController {
 
     @FXML
     private Button addPictureButton;
-
-    @FXML
-    private Button discoveryPageButton;
 
     @FXML
     private Button profilePageButton;
@@ -176,16 +169,27 @@ public class ProfileController {
      */
     @FXML
     public void openMapPage(ActionEvent event) {
-        // TODO
-    }
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/com/trajour/view/fxml/mapxz.fxml"));
 
-    /**
-     * Opens the discovery page
-     * @param event Event
-     */
-    @FXML
-    public void openDiscoveryPage(ActionEvent event) {
-        // TODO
+        try {
+            Parent mapPageParent = loader.load();
+            Scene mapPageScene = new Scene(mapPageParent, Main.APPLICATION_WIDTH, Main.APPLICATION_HEIGHT);
+
+            // Get access to the map windows controller
+            MapController mapController = loader.getController();
+            mapController.initData(currentUser);
+
+            // Get the stage and change the scene
+            Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
+
+            window.setScene(mapPageScene);
+            window.show();
+        }
+        catch (IOException e) {
+            e.getCause();
+            e.printStackTrace();
+        }
     }
 
     @FXML

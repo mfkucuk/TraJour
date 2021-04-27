@@ -39,15 +39,6 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="discoveryPageButton" layoutX="66.0" layoutY="13.0" mnemonicParsing="false" onAction="#openDiscoveryPage" prefHeight="32.0" prefWidth="67.0" style="-fx-background-radius: 10; -fx-background-color: #ffff;">
-               <graphic>
-                  <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../../../resources/search_icon.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
             <Button fx:id="profilePageButton" layoutX="122.0" layoutY="13.0" mnemonicParsing="false" onAction="#openProfilePage" prefHeight="32.0" prefWidth="67.0" style="-fx-background-radius: 10; -fx-background-color: #ffff;">
                <graphic>
                   <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
