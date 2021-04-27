@@ -6,6 +6,7 @@ import com.trajour.journey.Journey;
 import com.trajour.journey.Post;
 import com.trajour.model.User;
 
+import javax.swing.plaf.nimbus.State;
 import java.io.*;
 import java.sql.*;
 import java.time.LocalDate;
@@ -18,6 +19,35 @@ import java.time.LocalDate;
 public final class DatabaseQuery {
     private static DatabaseConnection dbConnection;
     private static Connection conn;
+
+
+    public static ObservableList<String> getAllFriendsOfUser(User user) {
+        dbConnection = new DatabaseConnection();
+        conn = dbConnection.getConnection();
+
+        ObservableList result = FXCollections.observableArrayList();
+        try {
+            Statement statement = conn.createStatement();
+            String query = "SELECT friendName, friendEmail FROM friends WHERE userID = " + user.getUserId();
+            ResultSet rs = statement.executeQuery(query);
+
+            while (rs.next()) {
+                String name = rs.getString("friendName");
+                String email = rs.getString("friendEmail");
+
+                // TODO make it look nicer
+                result.add(name + " - " + email);
+            }
+
+            return result;
+        }
+        catch (SQLException e) {
+            e.getCause();
+            e.printStackTrace();
+        }
+
+        return result;
+    }
 
     /**
      * Gets the username of a user by their email
@@ -109,13 +139,12 @@ public final class DatabaseQuery {
             ResultSet rs = statement.executeQuery(query);
 
             while(rs.next()) {
-                int journeyId = rs.getInt("journeyId");
                 String location = rs.getString("location");
                 String description = rs.getString("description");
                 LocalDate startDate = rs.getDate("startDate").toLocalDate();
                 LocalDate endDate = rs.getDate("endDate").toLocalDate();
 
-                Journey j = new Journey(journeyId, location, description, startDate, endDate);
+                Journey j = new Journey(location, description, startDate, endDate);
                 result.add(j);
             }
 
@@ -482,17 +511,18 @@ public final class DatabaseQuery {
         return false;
     }
 
+    // TODO How the hell are we going to do this???
     public static boolean removeJourney(Journey j) {
         dbConnection = new DatabaseConnection();
         conn = dbConnection.getConnection();
 
-        String query = "DELETE FROM journeys WHERE journeyId = " + j.getJourneyID();
+        // String query = "DELETE FROM journeys WHERE journeyId = " + j.getJourneyID();
 
         try {
             Statement statement = conn.createStatement();
-            int result = statement.executeUpdate(query);
+            // int result = statement.executeUpdate(query);
 
-            return result > 0;
+            // return result > 0;
         }
         catch (SQLException e) {
             e.printStackTrace();

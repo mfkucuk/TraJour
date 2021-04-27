@@ -1,18 +1,15 @@
 package com.trajour.view;
 
 import com.trajour.db.DatabaseQuery;
-import com.trajour.model.Friend;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import com.trajour.model.User;
 
-import javax.xml.crypto.Data;
-
 public class AddFriendController {
 
     private User currentUser;
-
+    private TreeTableView friendsTreeTableView;
 
     @FXML
     private TextField friendEmailTextField;
@@ -26,12 +23,8 @@ public class AddFriendController {
     @FXML
     private Label addFriendFeedbackLabel;
 
-    @FXML
-    private TreeTableView friendsTreeTableView;
-
     public void initData(User user) {
-
-        currentUser = user;
+        currentUser = user;;
     }
 
     /**
@@ -48,10 +41,9 @@ public class AddFriendController {
         else if ( ! friendUsernameTextField.getText().isBlank()) {
             if (DatabaseQuery.findUserByUsername(friendUsernameTextField.getText())) {
                 if ( ! DatabaseQuery.findFriendByUsername(friendUsernameTextField.getText())) {
-                    TreeItem<Friend> friend = new TreeItem<>(new Friend(friendUsernameTextField.getText(), DatabaseQuery.getEmailByUsername(friendUsernameTextField.getText())));
-                    ProfileController.rootItem.getChildren().add(friend);
                     DatabaseQuery.insertFriendByUsername(friendUsernameTextField.getText(), currentUser);
                     addFriendFeedbackLabel.setText("Friend successfully added.");
+
                 }
                 else {
                     addFriendFeedbackLabel.setText("You are already friends.");
@@ -61,8 +53,6 @@ public class AddFriendController {
         else if ( ! friendEmailTextField.getText().isBlank()) {
             if (DatabaseQuery.findUserByEmail(friendEmailTextField.getText())) {
                 if ( ! DatabaseQuery.findFriendByEmail(friendEmailTextField.getText())) {
-                    TreeItem<Friend> friend = new TreeItem<>(new Friend(DatabaseQuery.getUsernameByEmail(friendEmailTextField.getText()), friendEmailTextField.getText()));
-                    ProfileController.rootItem.getChildren().add(friend);
                     DatabaseQuery.insertFriendByEmail(friendEmailTextField.getText(), currentUser.getUsername());
                     addFriendFeedbackLabel.setText("Friend successfully added.");
                 }

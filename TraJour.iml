@@ -11,7 +11,16 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/mysql-connector-java-8.0.23/mysql-connector-java-8.0.23.jar!/" />
+          <root url="jar://$MODULE_DIR$/../external_jars/controlsfx-11.1.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../external_jars/mysql-connector-java-8.0.23/mysql-connector-java-8.0.23.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

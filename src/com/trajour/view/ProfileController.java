@@ -1,16 +1,18 @@
 package com.trajour.view;
 
-import com.trajour.model.Friend;
+import com.sun.source.tree.Tree;
+import javafx.beans.Observable;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TreeTableView;
+import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -18,6 +20,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import com.trajour.model.User;
+import javafx.util.Callback;
 
 import java.io.File;
 
@@ -52,9 +55,6 @@ public class ProfileController {
     private Button addFriendButton;
 
     @FXML
-    private ListView<?> friendsListView;
-
-    @FXML
     private Button signOutButton;
 
     @FXML
@@ -64,11 +64,13 @@ public class ProfileController {
     private Button changePasswordButton;
 
     @FXML
-    private TreeTableView friendsTreeTableView;
+    private ListView<String> friendsListView;
+
+    @FXML
+    private MenuItem refreshMenuItem;
 
     private User currentUser;
     private File profilePhotoFile;
-    public static Friend rootItem = new Friend("Friends", "...");
 
     public void initData(User user) {
         currentUser = user;
@@ -104,7 +106,12 @@ public class ProfileController {
         Image profileImage = new Image(profilePhotoFile.toURI().toString(), 40, 40, false, false);
         profilePhotoView.setImage(profileImage);
 
-        friendsTreeTableView.setRoot(rootItem);
+        ObservableList<String> friends = FXCollections.observableArrayList();
+        friends = getAllFriendsOfUser(currentUser);
+
+        friendsListView.setItems(friends);
+
+        refreshMenuItem.setOnAction(actionEvent -> initData(currentUser));
     }
 
     /**

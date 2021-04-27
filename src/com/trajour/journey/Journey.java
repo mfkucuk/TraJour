@@ -8,20 +8,21 @@ import java.time.LocalDate;
 
 import static com.trajour.db.DatabaseQuery.insertNewJourney;
 
+
+
 /**
  * A simple Java class!
 */
 public class Journey implements Comparable<Journey>, Postable {
     // Properties
-    private int journeyID;
     private String location;
     private String description;
     private LocalDate startDate;
     private LocalDate endDate;
+    private static int id;
 
     // Constructors
-    public Journey( int journeyID, String location, String description, LocalDate startDate, LocalDate endDate) {
-        this.journeyID = journeyID;
+    public Journey(String location, String description, LocalDate startDate, LocalDate endDate) {
         this.location = location;
         this.description = description;
         this.startDate = startDate;
@@ -40,14 +41,7 @@ public class Journey implements Comparable<Journey>, Postable {
     public Post post(String comments, Image image) {
         return new Post(this, comments, image);
     }
-    /**
-     * This method returns the journey id.
-     * @return journeyID 
-    */
-    public int getJourneyID() {
-        return journeyID;
-    }
-    
+
     /**
      * This method returns the location.
      * @return location 

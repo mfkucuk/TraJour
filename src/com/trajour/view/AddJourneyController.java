@@ -6,7 +6,6 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import com.trajour.model.User;
-import org.controlsfx.control.WorldMapView;
 
 import java.time.LocalDate;
 

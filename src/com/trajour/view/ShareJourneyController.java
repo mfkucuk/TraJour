@@ -78,20 +78,15 @@ public class ShareJourneyController {
     @FXML
     public void shareJourney(ActionEvent event) {
         if (!commentsTextArea.getText().isBlank() && !journeyComboBox.getSelectionModel().isEmpty() && journeyImageView.getImage() != null) {
-            // Create the post
             Journey selectedJourney = journeyComboBox.getSelectionModel().getSelectedItem();
             Post newPost = selectedJourney.post(commentsTextArea.getText(), journeyImageView.getImage());
 
-            // Add the post to the database
             // TODO Add the post to database
-
-
             newPost.share(currentUser);
             ((Stage) ((Node) event.getSource()).getScene().getWindow()).close();
         }
         else {
             feedBackLabel.setText("Make sure that you have completed all the forms.");
         }
-
     }
 }
