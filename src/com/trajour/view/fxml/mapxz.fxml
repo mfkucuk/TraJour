@@ -38,6 +38,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -85,7 +86,7 @@
                   <Insets left="50.0" />
                </padding>
             </Label>
-            <Slider fx:id="zoomSlider" prefHeight="14.0" prefWidth="265.0">
+            <Slider fx:id="zoomSlider" majorTickUnit="2.0" max="10.0" prefHeight="14.0" prefWidth="265.0" showTickLabels="true" showTickMarks="true">
                <padding>
                   <Insets left="10.0" />
                </padding>
@@ -97,7 +98,7 @@
       <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
             <WorldMapView fx:id="worldMapView" prefHeight="942.0" prefWidth="1400.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-            <AnchorPane layoutX="29.0" layoutY="470.0" prefHeight="437.0" prefWidth="265.0" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="25.0">
+            <AnchorPane layoutY="493.0" prefHeight="439.0" prefWidth="268.0">
                <children>
                   <Button fx:id="addJourneyButton" layoutX="88.0" layoutY="415.0" mnemonicParsing="false" onAction="#handleAddJourney" style="-fx-background-radius: 10; -fx-background-color: #00203FFF;" text="Add Journey" textFill="WHITE" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="88.0" AnchorPane.rightAnchor="94.0" AnchorPane.topAnchor="415.0" />
                   <DatePicker fx:id="startDatePicker" layoutX="46.0" layoutY="108.0" AnchorPane.bottomAnchor="308.0" AnchorPane.leftAnchor="46.0" AnchorPane.rightAnchor="45.0" AnchorPane.topAnchor="108.0" />
@@ -110,6 +111,7 @@
                         <Font name="System Bold" size="15.0" />
                      </font>
                   </Label>
+                  <TextField fx:id="selectedCountryField" editable="false" layoutX="46.0" layoutY="43.0" promptText="Selected Country" />
                </children>
             </AnchorPane>
          </children>

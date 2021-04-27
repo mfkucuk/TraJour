@@ -126,7 +126,7 @@ public class MainController implements Initializable {
 
         pastJourneysList = selectPastJourneys(currentUser);
 
-
+        // TODO show the past journeys on the main page tables
     }
 
     /**
@@ -244,8 +244,6 @@ public class MainController implements Initializable {
 
         for (Journey j : allJourneys) {
             if (j.getEndDate().compareTo(LocalDate.now()) < 0) {
-
-                // result.add(j);
             }
         }
         return null;

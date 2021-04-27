@@ -6,17 +6,22 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import javafx.util.Duration;
+import org.controlsfx.control.Notifications;
 import org.controlsfx.control.WorldMapView;
 
 import javax.swing.*;
 import java.io.IOException;
 import java.time.LocalDate;
+
+import static com.trajour.db.DatabaseQuery.insertNewJourney;
 
 public class MapController {
     @FXML
@@ -45,6 +50,9 @@ public class MapController {
 
     @FXML
     private TextArea journeyDescriptionTextArea;
+
+    @FXML
+    private TextField selectedCountryTextField;
 
     private User currentUser;
 
@@ -83,6 +91,7 @@ public class MapController {
     void handleAddJourney(ActionEvent event) {
         ObservableList<WorldMapView.Country> selectedCountry = worldMapView.getSelectedCountries();
 
+        // Check whether the user chose only 1 country
         if (selectedCountry.size() > 1) {
             JOptionPane.showMessageDialog(null, "Please choose only 1 country.",
                     "Selection Error", JOptionPane.INFORMATION_MESSAGE);
@@ -93,10 +102,26 @@ public class MapController {
                             " on a country on the map.", "Selection Error", JOptionPane.INFORMATION_MESSAGE);
         }
 
+        // Add the journey to the database
         String journeyDesc = journeyDescriptionTextArea.getText();
+        LocalDate start = startDatePicker.getValue();
+        LocalDate end = endDatePicker.getValue();
+        String country = selectedCountry.get(0).name();
 
+        Journey j = new Journey(country, journeyDesc, start, end);
 
-            // TODO Add journey to database
+        insertNewJourney(j, currentUser);
+
+        // Build notification
+        Notifications notificationBuilder = Notifications.create()
+                .title("Added Journey!")
+                .text("Journey is successfully added.")
+                .graphic(null)
+                .hideAfter(Duration.seconds(5))
+                .position(Pos.BOTTOM_RIGHT);
+
+        notificationBuilder.showConfirm();
+
     }
 
     @FXML

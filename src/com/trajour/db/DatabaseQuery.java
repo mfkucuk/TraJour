@@ -523,8 +523,8 @@ public final class DatabaseQuery {
         int userId = user.getUserId();
         String location = j.getLocation();
         String description = j.getDescription();
-        String startDate = j.getStartDate().getYear() + "/" + j.getStartDate().getMonthValue() + "/" + j.getStartDate().getDayOfYear();
-        String endDate = j.getEndDate().getYear() + "/" + j.getEndDate().getMonthValue() + "/" + j.getEndDate().getDayOfYear();
+        LocalDate startDate = j.getStartDate();
+        LocalDate endDate = j.getEndDate();
 
         String query = "INSERT INTO journeys(userId, location, description, startDate, endDate) VALUES(" + userId +
                 ", '" + location + "', '" + description + "', '" + startDate + "', '" + endDate + "')";
