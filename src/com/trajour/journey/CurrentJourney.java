@@ -8,8 +8,8 @@ public class CurrentJourney extends Journey {
     private int rating;
 
     // Constructor
-    public CurrentJourney(int journeyID, String location, String description, LocalDate startDate, LocalDate endDate) {
-        super(journeyID, location, description, startDate, endDate);
+    public CurrentJourney(String location, String description, LocalDate startDate, LocalDate endDate) {
+        super(location, description, startDate, endDate);
         rating = -1;
     }
 
@@ -33,7 +33,7 @@ public class CurrentJourney extends Journey {
      * Converts future journey to a current one.
      */
     public PastJourney convertToPastJourney(int rating) {
-        return new PastJourney(getJourneyID(), getLocation(), getDescription(), getStartDate(), getEndDate(), rating);
+        return new PastJourney(getLocation(), getDescription(), getStartDate(), getEndDate(), rating);
     }
 
 }

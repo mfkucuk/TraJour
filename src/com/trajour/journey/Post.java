@@ -1,12 +1,13 @@
 package com.trajour.journey;
 
 import com.trajour.model.User;
+import javafx.scene.Node;
 import javafx.scene.image.Image;
 
 /**
  * A simple Java class!
 */
-public class Post implements Shareable{
+public class Post extends Node implements Shareable {
     // Properties
     private String text;
     private Journey theJourney;
@@ -47,4 +48,14 @@ public class Post implements Shareable{
     public Post share(User user) {
         return null;
     }
+
+    // MapView, Add Journey
+
+    // Share journey
+
+    // Show posts on main feed
+
+    // Show journeys on profile and main page
+
+    // Achievements
 }

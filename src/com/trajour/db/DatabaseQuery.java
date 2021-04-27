@@ -6,7 +6,6 @@ import com.trajour.journey.Journey;
 import com.trajour.journey.Post;
 import com.trajour.model.User;
 
-import javax.swing.plaf.nimbus.State;
 import java.io.*;
 import java.sql.*;
 import java.time.LocalDate;
