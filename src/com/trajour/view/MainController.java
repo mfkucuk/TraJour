@@ -196,11 +196,14 @@ public class MainController implements Initializable {
 
     private ObservableList<PastJourney> selectPastJourneys() {
        //  ObservableList<Journey> allJourneys = getAllJourneysOfUser(currentUser);
+        return null;
     }
 
     private ObservableList<FutureJourney> selectFutureJourney() {
         // ObservableList<Journey> allJourneys = getALlJourneysOfUser(currentUser);
 
         // TODO check each journey and
+
+        return null;
     }
 }
