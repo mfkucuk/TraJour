@@ -6,6 +6,7 @@ import com.trajour.journey.Journey;
 import com.trajour.journey.Post;
 import com.trajour.model.User;
 
+import javax.swing.plaf.nimbus.State;
 import java.io.*;
 import java.sql.*;
 import java.time.LocalDate;
@@ -19,12 +20,43 @@ public final class DatabaseQuery {
     private static DatabaseConnection dbConnection;
     private static Connection conn;
 
+    public static ObservableList<Journey> getAllJourneysOfUser(User user) {
+        dbConnection = new DatabaseConnection();
+        conn = dbConnection.getConnection();
+
+        ObservableList<Journey> result = FXCollections.observableArrayList();
+
+        String query = "SELECT userId, location, description, startDate, endDate FROM journeys WHERE userId = " + user.getUserId();
+
+        try {
+            Statement statement = conn.createStatement();
+            ResultSet rs = statement.executeQuery(query);
+
+            while (rs.next()) {
+                String country = rs.getString("location");
+                String description = rs.getString("description");
+                LocalDate startDate = rs.getDate("startDate").toLocalDate();
+                LocalDate endDate = rs.getDate("endDate").toLocalDate();
+
+                Journey j = new Journey(country, description, startDate, endDate);
+                result.add(j);
+            }
+
+            return result;
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            e.getCause();
+        }
+
+        return result;
+    }
 
     public static ObservableList<String> getAllFriendsOfUser(User user) {
         dbConnection = new DatabaseConnection();
         conn = dbConnection.getConnection();
 
-        ObservableList result = FXCollections.observableArrayList();
+        ObservableList<String> result = FXCollections.observableArrayList();
         try {
             Statement statement = conn.createStatement();
             String query = "SELECT friendName, friendEmail FROM friends WHERE userID = " + user.getUserId();

@@ -59,10 +59,10 @@
             </Label>
             <TableView fx:id="futureJourneysTable" prefHeight="330.0" prefWidth="495.0" style="-fx-border-width: 2; -fx-border-color: #000;" VBox.vgrow="ALWAYS">
               <columns>
-                <TableColumn prefWidth="123.0" text="Country" />
-                <TableColumn prefWidth="123.0" text="Description" />
-                  <TableColumn prefWidth="123.0" text="Start Date" />
-                  <TableColumn prefWidth="123.0" text="End Date" />
+                <TableColumn fx:id="futureJourneysCountryColumn" prefWidth="123.0" text="Country" />
+                <TableColumn fx:id="futureJourneysDescriptionColumn" prefWidth="123.0" text="Description" />
+                  <TableColumn fx:id="futureJourneysStartDateColumn" prefWidth="123.0" text="Start Date" />
+                  <TableColumn fx:id="futureJourneysEndDateColumn" prefWidth="123.0" text="End Date" />
               </columns>
                <VBox.margin>
                   <Insets right="5.0" top="5.0" />
@@ -78,11 +78,11 @@
             </Label>
             <TableView fx:id="pastJourneysTable" prefHeight="330.0" prefWidth="495.0" style="-fx-border-width: 2; -fx-border-color: #000;" VBox.vgrow="ALWAYS">
               <columns>
-                <TableColumn prefWidth="98.0" text="Country" />
-                <TableColumn prefWidth="98.0" text="Rating" />
-                  <TableColumn prefWidth="98.0" text="Description" />
-                  <TableColumn prefWidth="98.0" text="Start Date" />
-                  <TableColumn prefWidth="98.0" text="End Date" />
+                <TableColumn fx:id="pastJourneysCountryColumn" prefWidth="98.0" text="Country" />
+                <TableColumn fx:id="pastJourneysRatingColumn" prefWidth="98.0" text="Rating" />
+                  <TableColumn fx:id="pastJourneysDescriptionColumn" prefWidth="98.0" text="Description" />
+                  <TableColumn fx:id="pastJourneysStartDateColumn" prefWidth="98.0" text="Start Date" />
+                  <TableColumn fx:id="pastJourneysEndDateColumn" prefWidth="98.0" text="End Date" />
               </columns>
                <VBox.margin>
                   <Insets bottom="5.0" right="5.0" />

@@ -1,5 +1,6 @@
 package com.trajour.view;
 
+import com.trajour.journey.Journey;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -39,7 +40,6 @@ public class AddJourneyController {
 
     public void initData(User user) {
         currentUser = user;
-        // TODO Initialize countries combo box
         // countriesComboBox.setItems();
 
         // From the JavaFX tutorial in Oracle's website, disables the cells that corresponds to the date
@@ -72,12 +72,18 @@ public class AddJourneyController {
     @FXML
     void handleAddJourney(ActionEvent event) {
         String country = countriesComboBox.getSelectionModel().getSelectedItem();
+        String journeyDesc = journeyDescription.getText();
+
+        if (!countriesComboBox.getSelectionModel().isEmpty() && journeyDesc.isBlank()) {
+            Journey j = new Journey(country, journeyDesc, startDate.getValue(), endDate.getValue());
+            // TODO Add journey to database
+        }
     }
 
 
     @FXML
     void handleRemoveLastJourney(ActionEvent event) {
-
+        // TODO Remove the latest journey from database
     }
 
     @FXML
