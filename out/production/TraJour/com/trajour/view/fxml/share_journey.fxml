@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  Copyright (c) 2015, 2019, Gluon and/or its affiliates.
+  All rights reserved. Use is subject to license terms.
+
+  This file is available and licensed under the following license:
+
+  Redistribution and use in source and binary forms, with or without
+  modification, are permitted provided that the following conditions
+  are met:
+
+  - Redistributions of source code must retain the above copyright
+    notice, this list of conditions and the following disclaimer.
+  - Redistributions in binary form must reproduce the above copyright
+    notice, this list of conditions and the following disclaimer in
+    the documentation and/or other materials provided with the distribution.
+  - Neither the name of Oracle Corporation nor the names of its
+    contributors may be used to endorse or promote products derived
+    from this software without specific prior written permission.
+
+  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+-->
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="480.0" style="-fx-background-color: #ADEFD1FF;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.trajour.view.ShareJourneyController">
+   <children>
+      <Label layoutX="2.0" layoutY="4.0" prefHeight="39.0" prefWidth="140.0" text="Share Journey" textFill="#00203f" AnchorPane.bottomAnchor="757.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="338.0" AnchorPane.topAnchor="4.0">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="journeyComboBox" layoutX="134.0" layoutY="95.0" prefHeight="31.0" prefWidth="150.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" />
+      <Button fx:id="shareButton" layoutX="190.0" layoutY="756.0" mnemonicParsing="false" onAction="#shareJourney" prefHeight="30.0" prefWidth="40.0" style="-fx-background-radius: 10; -fx-background-color: #00203FFF;" text="Share" textFill="WHITE" AnchorPane.leftAnchor="190.0" AnchorPane.rightAnchor="190.0">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Button>
+      <Button fx:id="addPictureButton" layoutX="177.0" layoutY="426.0" mnemonicParsing="false" onAction="#addJourneyPicture" prefHeight="30.0" style="-fx-background-radius: 10; -fx-background-color: #00203FFF;" text="Add a Picture" textFill="WHITE" AnchorPane.leftAnchor="170.0" AnchorPane.rightAnchor="170.0">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Button>
+      <Label layoutX="132.0" layoutY="62.0" text="Pick a journey:" textFill="#00203f" AnchorPane.leftAnchor="83.0">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <TextArea fx:id="commentsTextArea" layoutX="83.0" layoutY="523.0" prefHeight="148.0" prefWidth="240.0" AnchorPane.leftAnchor="83.0" AnchorPane.rightAnchor="57.0" />
+      <Label layoutX="83.0" layoutY="489.0" prefHeight="25.0" prefWidth="75.0" text="Comments:" textFill="#00203f" AnchorPane.leftAnchor="83.0">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="journeyImageView" fitHeight="200.0" fitWidth="200.0" layoutX="121.0" layoutY="212.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="140.0" AnchorPane.rightAnchor="140.0" />
+      <Label layoutX="70.0" layoutY="204.0" text="Upload Picture:" textFill="#00203f" AnchorPane.leftAnchor="83.0">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="pictureFeedBackLabel" layoutX="168.0" layoutY="304.0" text="No picture available" AnchorPane.leftAnchor="180.0" AnchorPane.rightAnchor="180.0" />
+      <Separator layoutX="2.0" layoutY="165.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+      <Separator layoutY="479.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+      <Separator layoutX="2.0" layoutY="705.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+      <Separator layoutX="2.0" layoutY="42.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+      <Label fx:id="feedBackLabel" layoutX="226.0" layoutY="726.0" textFill="RED" AnchorPane.leftAnchor="120.0" AnchorPane.rightAnchor="120.0">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
