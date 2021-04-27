@@ -40,15 +40,6 @@ public final class DatabaseQuery {
         catch (Exception e){
             e.printStackTrace();
         }
-        finally {
-            try {
-                conn.close();
-            }
-            catch (SQLException e) {
-                e.printStackTrace();
-                e.getCause();
-            }
-        }
 
         return "";
     }
@@ -73,15 +64,6 @@ public final class DatabaseQuery {
         }
         catch (Exception e){
             e.printStackTrace();
-        }
-        finally {
-            try {
-                conn.close();
-            }
-            catch (SQLException e) {
-                e.printStackTrace();
-                e.getCause();
-            }
         }
 
         return "";
@@ -111,15 +93,6 @@ public final class DatabaseQuery {
         }
         catch (Exception e){
             e.printStackTrace();
-        }
-        finally {
-            try {
-                conn.close();
-            }
-            catch (SQLException e) {
-                e.printStackTrace();
-                e.getCause();
-            }
         }
 
         return -1;
@@ -214,15 +187,6 @@ public final class DatabaseQuery {
         catch (Exception e) {
             e.printStackTrace();
         }
-        finally {
-            try {
-                conn.close();
-            }
-            catch (SQLException e) {
-                e.printStackTrace();
-                e.getCause();
-            }
-        }
 
         return false;
     }
@@ -247,15 +211,6 @@ public final class DatabaseQuery {
         }
         catch (SQLException e){
             e.printStackTrace();
-        }
-        finally {
-            try {
-                conn.close();
-            }
-            catch (SQLException e) {
-                e.printStackTrace();
-                e.getCause();
-            }
         }
 
         return false;
@@ -285,13 +240,6 @@ public final class DatabaseQuery {
             e.printStackTrace();
             e.getCause();
         }
-        finally {
-            try {
-                conn.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
 
         return false;
     }
@@ -318,15 +266,6 @@ public final class DatabaseQuery {
         catch (SQLException e) {
             e.printStackTrace();
             e.getCause();
-        }
-        finally {
-            try {
-                conn.close();
-            }
-            catch (SQLException e) {
-                e.printStackTrace();
-                e.getCause();
-            }
         }
 
         return false;
@@ -355,15 +294,6 @@ public final class DatabaseQuery {
             e.printStackTrace();
             e.getCause();
         }
-        finally {
-            try {
-                conn.close();
-            }
-            catch (SQLException e) {
-                e.printStackTrace();
-                e.getCause();
-            }
-        }
 
         return false;
     }
@@ -371,13 +301,13 @@ public final class DatabaseQuery {
     /**
      * Adds a new friend to the current user, by using other user's username.
      * @param friendName Name of the friend
-     * @param username   Name of the current user
+     * @param currentUser Current user
      */
-    public static void insertFriendByUsername(String friendName, String username) {
+    public static void insertFriendByUsername(String friendName, User currentUser) {
         dbConnection = new DatabaseConnection();
         conn = dbConnection.getConnection();
 
-        String query = "INSERT INTO friends(userId, friendName, friendEmail) VALUES(" + getUserIdByUsername(username) + ", "
+        String query = "INSERT INTO friends(userId, friendName, friendEmail) VALUES(" + currentUser.getUserId() + ", "
                 + "'" + friendName + "', " + "'" + getEmailByUsername(friendName) + "')";
         try {
             Statement statement = conn.createStatement();
@@ -387,15 +317,7 @@ public final class DatabaseQuery {
             e.printStackTrace();
             e.getCause();
         }
-        finally {
-            try {
-                conn.close();
-            }
-            catch (SQLException e) {
-                e.printStackTrace();
-                e.getCause();
-            }
-        }
+
     }
 
     /**
@@ -416,15 +338,6 @@ public final class DatabaseQuery {
         catch (SQLException e) {
             e.printStackTrace();
             e.getCause();
-        }
-        finally {
-            try {
-                conn.close();
-            }
-            catch (SQLException e) {
-                e.printStackTrace();
-                e.getCause();
-            }
         }
     }
 
@@ -472,14 +385,6 @@ public final class DatabaseQuery {
             e.printStackTrace();
             e.getCause();
         }
-        finally {
-            try {
-                conn.close();
-            }
-            catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
     }
 
     /**
@@ -506,13 +411,6 @@ public final class DatabaseQuery {
         catch (Exception e) {
             e.printStackTrace();
             e.getCause();
-        }
-        finally {
-            try {
-                conn.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
 
         return false;
@@ -553,13 +451,6 @@ public final class DatabaseQuery {
         }
         catch (Exception e) {
             e.printStackTrace();
-        }
-        finally {
-            try {
-                conn.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
 
         return 0;

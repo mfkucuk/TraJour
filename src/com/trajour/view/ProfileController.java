@@ -64,7 +64,7 @@ public class ProfileController {
     private Button changePasswordButton;
 
     @FXML
-    private TreeTableView friendTreeTableView;
+    private TreeTableView friendsTreeTableView;
 
     private User currentUser;
     private File profilePhotoFile;
@@ -104,7 +104,7 @@ public class ProfileController {
         Image profileImage = new Image(profilePhotoFile.toURI().toString(), 40, 40, false, false);
         profilePhotoView.setImage(profileImage);
 
-        friendTreeTableView.setRoot(rootItem);
+        friendsTreeTableView.setRoot(rootItem);
     }
 
     /**

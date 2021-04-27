@@ -41,7 +41,7 @@ public class ShareJourneyController {
     private Label pictureFeedBackLabel;
 
     @FXML
-    private Label feedBacklabel;
+    private Label feedBackLabel;
 
     private User currentUser;
     private ObservableList<Journey> journeysOfCurrentUser;
@@ -70,8 +70,8 @@ public class ShareJourneyController {
             Image img = new Image(selectedFile.toURI().toString());
 
             journeyImageView.setImage(img);
-            journeyImageView.setFitHeight(180);
-            journeyImageView.setFitWidth(180);
+            journeyImageView.setFitHeight(40);
+            journeyImageView.setFitWidth(40);
         }
     }
 
@@ -90,7 +90,7 @@ public class ShareJourneyController {
             ((Stage) ((Node) event.getSource()).getScene().getWindow()).close();
         }
         else {
-            feedBacklabel.setText("Make sure that you have completed all the forms.");
+            feedBackLabel.setText("Make sure that you have completed all the forms.");
         }
 
     }
