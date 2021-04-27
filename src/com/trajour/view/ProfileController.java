@@ -214,7 +214,7 @@ public class ProfileController {
             updateImage(selectedFile, currentUser);
         }
         else {
-            // TODO Warn the user with a popup?
+            // TODO Warn the user with a popup or use ControlsFX notifications?
         }
     }
 

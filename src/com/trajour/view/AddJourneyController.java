@@ -6,6 +6,7 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import com.trajour.model.User;
+import org.controlsfx.control.WorldMapView;
 
 import java.time.LocalDate;
 
@@ -40,6 +41,7 @@ public class AddJourneyController {
     public void initData(User user) {
         currentUser = user;
         // TODO Initialize countries combo box
+        // countriesComboBox.setItems();
 
         // From the JavaFX tutorial in Oracle's website, disables the cells that corresponds to the date
         // selected in the startDate and all the cells corresponding to the preceding dates

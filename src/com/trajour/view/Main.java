@@ -14,7 +14,7 @@ import java.sql.Statement;
 public class Main extends Application {
     protected final static int APPLICATION_WIDTH = 1400;
     protected final static int APPLICATION_HEIGHT = 1000;
-    private final String dbName = "com/trajour";
+    private final String dbName = "trajour";
 
     /**
      * Initializes database

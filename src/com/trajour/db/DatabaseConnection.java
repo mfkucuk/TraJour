@@ -13,7 +13,7 @@ public final class DatabaseConnection {
         String dbPassword;
         String dbUrl;
 
-        dbName = "com/trajour";
+        dbName = "trajour";
         dbUser = "root";
         dbPassword = "BilTraJour06";
         dbUrl = "jdbc:mysql://localhost/" + dbName;
