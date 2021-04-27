@@ -8,7 +8,7 @@ import java.time.LocalDate;
 public class FutureJourney extends Journey {
     
     // Constructor
-    public FutureJourney(int journeyID, String location, String description, LocalDate startDate, LocalDate endDate) {
+    public FutureJourney(String location, String description, LocalDate startDate, LocalDate endDate) {
         super(location, description, startDate, endDate);
     }
 

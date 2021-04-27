@@ -1,5 +1,9 @@
 package com.trajour.view;
 
+import com.trajour.journey.FutureJourney;
+import com.trajour.journey.Journey;
+import com.trajour.journey.PastJourney;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,8 +13,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableView;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import com.trajour.model.User;
@@ -40,10 +46,16 @@ public class MainController implements Initializable {
     private Button shareJourneyButton;
 
     @FXML
+    private Label welcomeMessage;
+
+    @FXML
     private Button achievementsButton;
 
     @FXML
-    private Label welcomeMessage;
+    private ScrollPane mainScrollPane;
+
+    @FXML
+    private VBox vboxMainFeed;
 
     private User currentUser;
 
@@ -70,6 +82,8 @@ public class MainController implements Initializable {
     public void initData(User user) {
         currentUser = user;
         welcomeMessage.setText("Welcome to your main feed " + user.getUsername() + "!");
+
+        // Initialize journeys
     }
 
     /**
@@ -101,19 +115,30 @@ public class MainController implements Initializable {
     }
 
     /**
-     * Opens the discovery page.
-     */
-    @FXML
-    public void openDiscoveryPage(ActionEvent event) {
-
-    }
-
-    /**
      * Opens the home page.
      */
     @FXML
     public void openHomePage(ActionEvent event) {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/com/trajour/view/fxml/main.fxml"));
 
+        try {
+            Parent mainPageParent = loader.load();
+            Scene mainPageScene = new Scene(mainPageParent, Main.APPLICATION_WIDTH, Main.APPLICATION_HEIGHT);
+
+            // Get access to the main windows controller
+            initData(currentUser);
+
+            // Get the stage and change the scene
+            Stage window = new Stage();
+
+            window.setScene(mainPageScene);
+            window.show();
+        }
+        catch (IOException e) {
+            e.getCause();
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -121,7 +146,27 @@ public class MainController implements Initializable {
      */
     @FXML
     public void openMapPage(ActionEvent event) {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/com/trajour/view/fxml/map.fxml"));
 
+        try {
+            Parent mapPageParent = loader.load();
+            Scene mapPageScene = new Scene(mapPageParent, Main.APPLICATION_WIDTH, Main.APPLICATION_HEIGHT);
+
+            // Get access to the main windows controller
+//            MapController mapController = loader.getController();
+//            mapController.initData(currentUser);
+
+            // Get the stage and change the scene
+            Stage window = new Stage();
+
+            window.setScene(mapPageScene);
+            window.show();
+        }
+        catch (IOException e) {
+            e.getCause();
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -145,7 +190,17 @@ public class MainController implements Initializable {
         }
         catch (IOException e) {
             e.getCause();
-            System.out.println("Something wrong with the fxml file");
+            e.printStackTrace();
         }
+    }
+
+    private ObservableList<PastJourney> selectPastJourneys() {
+       //  ObservableList<Journey> allJourneys = getAllJourneysOfUser(currentUser);
+    }
+
+    private ObservableList<FutureJourney> selectFutureJourney() {
+        // ObservableList<Journey> allJourneys = getALlJourneysOfUser(currentUser);
+
+        // TODO check each journey and
     }
 }

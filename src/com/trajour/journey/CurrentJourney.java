@@ -35,5 +35,4 @@ public class CurrentJourney extends Journey {
     public PastJourney convertToPastJourney(int rating) {
         return new PastJourney(getLocation(), getDescription(), getStartDate(), getEndDate(), rating);
     }
-
 }
