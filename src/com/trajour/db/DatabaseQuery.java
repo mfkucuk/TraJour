@@ -64,7 +64,7 @@ public final class DatabaseQuery {
 
         try {
             Statement statement = conn.createStatement();
-            String query = "SELECT username FROM users WHERE username = '" + username + "'";
+            String query = "SELECT email FROM users WHERE username = '" + username + "'";
             ResultSet rs = statement.executeQuery(query);
 
             if (rs.next()) {

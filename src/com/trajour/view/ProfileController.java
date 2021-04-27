@@ -1,5 +1,6 @@
 package com.trajour.view;
 
+import com.trajour.model.Friend;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TreeTableView;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -61,8 +63,12 @@ public class ProfileController {
     @FXML
     private Button changePasswordButton;
 
+    @FXML
+    private TreeTableView friendTreeTableView;
+
     private User currentUser;
     private File profilePhotoFile;
+    public static Friend rootItem = new Friend("Friends", "...");
 
     public void initData(User user) {
         currentUser = user;
@@ -97,6 +103,8 @@ public class ProfileController {
         profilePhotoFile = getProfilePhotoFile(currentUser);
         Image profileImage = new Image(profilePhotoFile.toURI().toString(), 40, 40, false, false);
         profilePhotoView.setImage(profileImage);
+
+        friendTreeTableView.setRoot(rootItem);
     }
 
     /**
