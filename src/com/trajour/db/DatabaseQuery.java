@@ -6,7 +6,6 @@ import com.trajour.journey.Journey;
 import com.trajour.journey.Post;
 import com.trajour.model.User;
 
-import javax.swing.plaf.nimbus.State;
 import java.io.*;
 import java.sql.*;
 import java.time.LocalDate;
@@ -189,17 +188,58 @@ public final class DatabaseQuery {
         return null;
     }
 
+    public static String getJourneyRating(Journey j, User user) {
+        dbConnection = new DatabaseConnection();
+        conn = dbConnection.getConnection();
+
+        String query = "SELECT rating FROM journeys WHERE userId = " + user.getUserId() + " AND location = '" +
+                j.getLocation() + "' AND description = '" + j.getDescription() + "' AND startDate = '" +
+                Date.valueOf(j.getStartDate()) + "' AND endDate = '" + Date.valueOf(j.getEndDate()) + "'";
+        try {
+            Statement statement = conn.createStatement();
+            ResultSet rs = statement.executeQuery(query);
+
+            if (rs.next()) {
+                return rs.getString("rating");
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            e.getCause();
+        }
+
+        return "-";
+    }
+
+    public static boolean updateJourneyRating(Journey j, User user, String rating) {
+        dbConnection = new DatabaseConnection();
+        conn = dbConnection.getConnection();
+
+        String query = "UPDATE journeys SET rating = '" + rating + "' WHERE userId = " + user.getUserId() +
+                " AND location = '" + j.getLocation() + "' AND description = '" + j.getDescription() + "' AND startDate = '" +
+                Date.valueOf(j.getStartDate()) + "' AND endDate = '" + Date.valueOf(j.getEndDate()) + "'";
+        try {
+            Statement statement = conn.createStatement();
+            return statement.executeUpdate(query) > 0;
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            e.getCause();
+        }
+
+        return false;
+    }
+
     public static File getProfilePhotoFile(User user) {
         dbConnection = new DatabaseConnection();
         conn = dbConnection.getConnection();
 
         InputStream input;
         FileOutputStream output;
+        String query = "SELECT profile_photo FROM users where userId = " + user.getUserId() + " AND profile_photo IS NOT NULL";
 
         try {
             Statement statement = conn.createStatement();
-            String query = "SELECT profile_photo FROM users where userId = " + user.getUserId() + " AND profile_photo IS NOT NULL";
-
             ResultSet rs = statement.executeQuery(query);
 
             File newFile = new File("D:/Selim/TraJour/src/resources/profile_photo_" + user.getUserId() + ".png");
@@ -402,6 +442,7 @@ public final class DatabaseQuery {
     }
 
     public static void insertPost(Post post, User user) {
+        // TODO
 //        dbConnection = new DatabaseConnection();
 //        conn = dbConnection.getConnection();
 //
@@ -533,7 +574,7 @@ public final class DatabaseQuery {
         LocalDate endDate = j.getEndDate();
 
         String query = "INSERT INTO journeys(userId, location, description, startDate, endDate) VALUES(" + userId +
-                ", '" + location + "', '" + description + "', '" + startDate + "', '" + endDate + "')";
+                ", '" + location + "', '" + description + "', '" + Date.valueOf(startDate) + "', '" + Date.valueOf(endDate) + "')";
 
         try {
             Statement statement = conn.createStatement();
@@ -549,7 +590,7 @@ public final class DatabaseQuery {
     }
 
     // TODO How the hell are we going to do this???
-    public static boolean removeJourney(Journey j) {
+    public static boolean deleteJourney(Journey j, User user) {
         dbConnection = new DatabaseConnection();
         conn = dbConnection.getConnection();
 

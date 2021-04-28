@@ -26,6 +26,7 @@ import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 import static com.trajour.db.DatabaseQuery.getAllJourneysOfUser;
+import static com.trajour.db.DatabaseQuery.getJourneyRating;
 
 public class MainController implements Initializable {
 
@@ -60,7 +61,7 @@ public class MainController implements Initializable {
     private TableColumn<PastJourney, String> pastJourneysCountryColumn;
 
     @FXML
-    private TableColumn<PastJourney, Integer> pastJourneysRatingColumn;
+    private TableColumn<PastJourney, String> pastJourneysRatingColumn;
 
     @FXML
     private TableColumn<PastJourney, String> pastJourneysDescriptionColumn;
@@ -106,7 +107,7 @@ public class MainController implements Initializable {
         shareJourneyButton.setOnMouseEntered(mouseEvent -> shareJourneyButton.setEffect(blackShadow));
         shareJourneyButton.setOnMouseExited(mouseEvent -> shareJourneyButton.setEffect(null));
 
-        // TODO Add context menu to refresh and edit the table view
+        // TODO Add context menu to refresh the table view, delete journeys, add journeys, add rating
     }
     /**
      * Initializes the user of the session.
@@ -128,7 +129,13 @@ public class MainController implements Initializable {
 
         pastJourneysList = selectPastJourneys(currentUser);
 
-        // TODO show the past journeys on the main page tables
+        pastJourneysCountryColumn.setCellValueFactory(new PropertyValueFactory<>("location"));
+        pastJourneysRatingColumn.setCellValueFactory(new PropertyValueFactory<>("rating"));
+        pastJourneysDescriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
+        pastJourneysStartDateColumn.setCellValueFactory(new PropertyValueFactory<>("startDate"));
+        pastJourneysEndDateColumn.setCellValueFactory(new PropertyValueFactory<>("endDate"));
+
+        pastJourneysTable.setItems(pastJourneysList);
     }
 
     /**
@@ -242,13 +249,15 @@ public class MainController implements Initializable {
     private ObservableList<PastJourney> selectPastJourneys(User user) {
         ObservableList<PastJourney> result = FXCollections.observableArrayList();
         ObservableList<Journey> allJourneys = getAllJourneysOfUser(user);
-        // TODO check each journey and add the ones that have an end date before LocalDate.now() to the result list
 
         for (Journey j : allJourneys) {
             if (j.getEndDate().compareTo(LocalDate.now()) < 0) {
+                PastJourney pastJourney = new PastJourney(j.getLocation(), j.getDescription(), j.getStartDate(), j.getEndDate(), getJourneyRating(j, user));
+                result.add(pastJourney);
             }
         }
-        return null;
+
+        return result;
     }
 
     private ObservableList<FutureJourney> selectFutureJourneys(User user) {

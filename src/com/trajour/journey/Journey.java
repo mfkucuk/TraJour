@@ -34,10 +34,6 @@ public class Journey implements Comparable<Journey>, Postable {
         insertNewJourney(this, user);
     }
 
-    public boolean removeJourney() {
-        return DatabaseQuery.removeJourney(this);
-    }
-    
     // Methods
     public Post post(String comments, Image image) {
         return new Post(this, comments, image);

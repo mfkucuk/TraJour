@@ -5,10 +5,10 @@ import java.time.LocalDate;
 public class PastJourney extends Journey {
 
     // Properties
-    private int rating;
+    private String rating;
 
     // Constructor
-    public PastJourney(String location, String description, LocalDate startDate, LocalDate endDate, int rating) {
+    public PastJourney(String location, String description, LocalDate startDate, LocalDate endDate, String rating) {
         super(location, description, startDate, endDate);
         this.rating = rating;
     }
@@ -17,7 +17,7 @@ public class PastJourney extends Journey {
      * Returns the rating of the past journey.
      * @return is the rating.
      */
-    public int getRating() {
+    public String getRating() {
         return rating;
     }
 
@@ -25,7 +25,7 @@ public class PastJourney extends Journey {
      * Sets the rating of the past journey.
      * @param rating is the rating.
      */
-    public void setRating(int rating) {
+    public void setRating(String rating) {
         this.rating = rating;
     }
     

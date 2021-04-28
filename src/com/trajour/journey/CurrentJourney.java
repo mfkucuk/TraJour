@@ -28,11 +28,4 @@ public class CurrentJourney extends Journey {
     public void setRating(int rating) {
         this.rating = rating;    
     }
-    
-    /**
-     * Converts future journey to a current one.
-     */
-    public PastJourney convertToPastJourney(int rating) {
-        return new PastJourney(getLocation(), getDescription(), getStartDate(), getEndDate(), rating);
-    }
 }
