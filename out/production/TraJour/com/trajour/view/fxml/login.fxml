@@ -12,7 +12,7 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="1400.0" style="-fx-background-color: #ADEFD1FF;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.trajour.view.LoginController">
    <center>
-      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" prefHeight="500.0" prefWidth="500.0" style="-fx-background-color: #d4bb7e; -fx-border-color: black; -fx-border-width: 1;" BorderPane.alignment="CENTER">
+      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" prefHeight="450.0" prefWidth="450.0" style="-fx-background-color: #d4bb7e; -fx-border-color: black; -fx-border-width: 1;" BorderPane.alignment="CENTER">
          <children>
             <Label alignment="CENTER" layoutX="10.0" layoutY="8.0" prefHeight="56.0" prefWidth="338.0" text="Welcome To TraJour" textFill="WHITE" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="4.0">
                <font>
@@ -27,12 +27,12 @@
                <font>
                   <Font size="13.0" />
                </font></TextField>
-            <Button fx:id="loginButton" alignment="CENTER" layoutX="89.0" layoutY="219.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleLogin" prefHeight="40.0" prefWidth="180.0" style="-fx-background-color: #ff5050;" text="Sign in" textFill="WHITE" AnchorPane.bottomAnchor="210.0" AnchorPane.leftAnchor="70.0" AnchorPane.rightAnchor="70.0">
+            <Button fx:id="loginButton" alignment="CENTER" layoutX="73.0" layoutY="221.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleLogin" prefHeight="40.0" prefWidth="180.0" style="-fx-background-color: #ff5050;" text="Sign in" textFill="WHITE" AnchorPane.bottomAnchor="189.0" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="80.0">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
             </Button>
-            <Button fx:id="registerButton" alignment="CENTER" layoutX="75.0" layoutY="281.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#openRegisterPage" prefHeight="40.0" prefWidth="180.0" style="-fx-background-color: #ff5050;" text="Register" textFill="WHITE" AnchorPane.bottomAnchor="155.0" AnchorPane.leftAnchor="70.0" AnchorPane.rightAnchor="70.0">
+            <Button fx:id="registerButton" alignment="CENTER" layoutX="83.0" layoutY="281.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#openRegisterPage" prefHeight="40.0" prefWidth="180.0" style="-fx-background-color: #ff5050;" text="Register" textFill="WHITE" AnchorPane.bottomAnchor="129.0" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="80.0">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>

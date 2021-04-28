@@ -105,12 +105,14 @@ public class LoginController implements Initializable {
             if (validateLogin(email, password)) {
                 // TODO Wait for a few seconds so that the user can understand login is successful, then redirect to the the main page
                 String username = getUsernameByEmail(email);
-                System.out.println(username);
+                int userId = getUserIdByUsername(username);
+
+                User currentUser = new User(userId, username, email);
 
                 // Build and show notification
                 Notifications notificationBuilder = Notifications.create()
                         .title("Login Successful!")
-                        .text("Welcome to TraJour, you can navigate through the main page, map page and your profile via" +
+                        .text("Welcome to TraJour, " + currentUser.getUsername() + ", you can navigate through the main page, map page and your profile via" +
                                 " the menu bar at the top!")
                         .graphic(null)
                         .hideAfter(Duration.seconds(10))
@@ -118,7 +120,7 @@ public class LoginController implements Initializable {
                 notificationBuilder.showConfirm();
 
                 // Redirect to main page
-                openMainPage(event, new User(getUserIdByUsername(username), username, email));
+                openMainPage(event, currentUser);
             }
             else {
                 loginFeedbackLabel.setText("Incorrect email or password.");
