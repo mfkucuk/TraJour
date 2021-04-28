@@ -219,7 +219,7 @@ public class MainController implements Initializable {
             loader.setLocation(getClass().getResource("/com/trajour/view/fxml/share_journey.fxml"));
 
             Parent shareJourneyPageParent = loader.load();
-            Scene shareJourneyPageScene = new Scene(shareJourneyPageParent, 478, 774);
+            Scene shareJourneyPageScene = new Scene(shareJourneyPageParent, 480, 800);
 
             // Get access to the main windows controller
             ShareJourneyController shareJourneyController = loader.getController();

@@ -18,8 +18,11 @@ import org.controlsfx.control.Notifications;
 import org.controlsfx.control.WorldMapView;
 
 import javax.swing.*;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.Scanner;
 
 import static com.trajour.db.DatabaseQuery.insertNewJourney;
 
@@ -52,7 +55,7 @@ public class MapController {
     private TextArea journeyDescriptionTextArea;
 
     @FXML
-    private TextField selectedCountryTextField;
+    private TextField selectedCountryField;
 
     private User currentUser;
 
@@ -85,10 +88,18 @@ public class MapController {
         endDatePicker.setDayCellFactory(dayCellFactory);
 
         endDatePicker.setValue(startDatePicker.getValue().plusDays(1));
+
+        worldMapView.setOnMouseClicked(mouseEvent -> {
+            try {
+                selectedCountryField.setText(countryCodeToCountryName(worldMapView.getSelectedCountries().get(0).name()));
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     @FXML
-    void handleAddJourney(ActionEvent event) {
+    void handleAddJourney(ActionEvent event) throws FileNotFoundException {
         ObservableList<WorldMapView.Country> selectedCountry = worldMapView.getSelectedCountries();
 
         // Check whether the user chose only 1 country
@@ -106,7 +117,7 @@ public class MapController {
         String journeyDesc = journeyDescriptionTextArea.getText();
         LocalDate start = startDatePicker.getValue();
         LocalDate end = endDatePicker.getValue();
-        String country = selectedCountry.get(0).name();
+        String country = countryCodeToCountryName(selectedCountry.get(0).name());
 
         Journey j = new Journey(country, journeyDesc, start, end);
 
@@ -196,5 +207,22 @@ public class MapController {
             e.printStackTrace();
             e.getCause();
         }
+    }
+
+    private String countryCodeToCountryName(String code) throws FileNotFoundException {
+        Scanner in = new Scanner(new File("src/resources/countries_with_codes.csv"));
+
+        // TODO Possible errors with countries with multiple names
+        while (in.hasNextLine()) {
+            String line = in.next();
+            String[] pieces = line.split(",");
+            if (pieces.length > 1) {
+                if (pieces[1].equals(code)) {
+                    return pieces[0];
+                }
+            }
+        }
+
+        return "";
     }
 }
