@@ -55,7 +55,7 @@ public class MainController implements Initializable {
     private ScrollPane mainScrollPane;
 
     @FXML
-    private VBox vboxMainFeed;
+    private static VBox vboxMainFeed;
 
     private User currentUser;
 
@@ -202,5 +202,9 @@ public class MainController implements Initializable {
         // ObservableList<Journey> allJourneys = getALlJourneysOfUser(currentUser);
 
         // TODO check each journey and
+    }
+
+    public static VBox getVBoxMainFeed() {
+        return vboxMainFeed;
     }
 }

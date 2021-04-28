@@ -1,17 +1,30 @@
 package com.trajour.journey;
 
 import com.trajour.model.User;
+import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.VBox;
+
 
 /**
  * A simple Java class!
 */
-public class Post extends Node implements Shareable {
+public class Post extends FlowPane implements Shareable {
     // Properties
     private String text;
     private Journey theJourney;
     private Image journeyPhoto;
+
+    // Components
+    private ImageView journeyPhotoView;
+    private Label journeyLocationLabel;
+    private Label usernameLabel;
+    private Label dateLabel;
+    private Label ratingLabel;
 
     public String getText() {
         return text;
@@ -45,17 +58,21 @@ public class Post extends Node implements Shareable {
     }
 
     @Override
-    public Post share(User user) {
-        return null;
+    public Post share(User user, VBox mainFeed) {
+        journeyLocationLabel = new Label(theJourney.getLocation());
+        usernameLabel = new Label(user.getUsername());
+        dateLabel = new Label(theJourney.getStartDate() + "-" + theJourney.getEndDate());
+        ratingLabel = new Label( "" + ((PastJourney) theJourney).getRating());
+        journeyPhotoView = new ImageView();
+
+        getChildren().add(journeyLocationLabel);
+        getChildren().add(usernameLabel);
+        getChildren().add(dateLabel);
+        getChildren().add(ratingLabel);
+        getChildren().add(journeyPhotoView);
+
+        mainFeed.getChildren().add(this);
+        return this;
     }
 
-    // MapView, Add Journey
-
-    // Share journey
-
-    // Show posts on main feed
-
-    // Show journeys on profile and main page
-
-    // Achievements
 }

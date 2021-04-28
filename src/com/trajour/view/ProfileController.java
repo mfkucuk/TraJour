@@ -69,6 +69,9 @@ public class ProfileController {
     @FXML
     private MenuItem refreshMenuItem;
 
+    @FXML
+    private Label friendsLabel;
+
     private User currentUser;
     private File profilePhotoFile;
 
@@ -110,6 +113,7 @@ public class ProfileController {
         friends = getAllFriendsOfUser(currentUser);
 
         friendsListView.setItems(friends);
+        friendsLabel.setText("Friends (" + friends.size() + ")");
 
         refreshMenuItem.setOnAction(actionEvent -> initData(currentUser));
     }

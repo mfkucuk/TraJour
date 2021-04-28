@@ -82,7 +82,7 @@ public class ShareJourneyController {
             Post newPost = selectedJourney.post(commentsTextArea.getText(), journeyImageView.getImage());
 
             // TODO Add the post to database
-            newPost.share(currentUser);
+            newPost.share(currentUser, MainController.getVBoxMainFeed());
             ((Stage) ((Node) event.getSource()).getScene().getWindow()).close();
         }
         else {
