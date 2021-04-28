@@ -401,7 +401,13 @@ public final class DatabaseQuery {
         }
     }
 
-    public static void insertPost(Post post) {
+    public static void insertPost(Post post, User user) {
+//        dbConnection = new DatabaseConnection();
+//        conn = dbConnection.getConnection();
+//
+//        String imageQuery = "UPDATE posts SET post_image=? WHERE "
+//        String query = "INSERT INTO posts(userId, postComments, postRating) VALUES(" + user.getUserId() + ", '"
+//                + post.getText() + "', " +  post.getRating();
 
     }
 

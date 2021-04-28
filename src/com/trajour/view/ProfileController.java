@@ -198,6 +198,8 @@ public class ProfileController {
 
     @FXML
     public void openAddFriendPage(ActionEvent event) {
+        // TODO add remove friend
+
         try {
             // Get the parent and create the scene
             FXMLLoader loader = new FXMLLoader();

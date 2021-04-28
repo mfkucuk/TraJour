@@ -53,7 +53,6 @@ public class ShareJourneyController {
         currentUser = user;
         vbox = v;
 
-        // TODO Init journeys of the user in 'journeyComboBox'
         journeysOfCurrentUser = FXCollections.observableArrayList();
         journeysOfCurrentUser = getJourneysOfTheUser(currentUser);
         System.out.println(journeysOfCurrentUser.toString());

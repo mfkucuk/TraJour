@@ -75,7 +75,6 @@ public class Post extends FlowPane implements Shareable {
         getChildren().add(journeyPhotoView);
         getChildren().add(commentLabel);
 
-
         mainFeed.getChildren().add(this);
         return this;
     }

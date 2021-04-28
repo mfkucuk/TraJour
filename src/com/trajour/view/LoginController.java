@@ -103,7 +103,6 @@ public class LoginController implements Initializable {
         if ( ! email.isBlank() && !  password.isBlank()) {
             // Login is successful
             if (validateLogin(email, password)) {
-                // TODO Wait for a few seconds so that the user can understand login is successful, then redirect to the the main page
                 String username = getUsernameByEmail(email);
                 int userId = getUserIdByUsername(username);
 
