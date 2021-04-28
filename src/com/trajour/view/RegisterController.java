@@ -2,11 +2,16 @@ package com.trajour.view;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+
+import java.net.URL;
+import java.util.ResourceBundle;
 
 import static com.trajour.db.DatabaseQuery.validateRegistry;
 
@@ -15,7 +20,7 @@ import static com.trajour.db.DatabaseQuery.validateRegistry;
  * @author Selim Can Güler
  * @version 25 April 2021
  */
-public class RegisterController {
+public class RegisterController implements Initializable {
     @FXML
     private TextField usernameTextField;
 
@@ -37,6 +42,15 @@ public class RegisterController {
     @FXML
     private Label registrationFeedbackLabel;
 
+    @Override
+    public void initialize( URL url, ResourceBundle resourceBundle){
+        //Event listeners for buttons
+        registerButton.setOnMouseEntered( mouseEvent -> registerButton.setTextFill(Color.BLACK));
+        registerButton.setOnMouseExited( mouseEvent -> registerButton.setTextFill(Color.WHITE));
+
+        cancelButton.setOnMouseEntered( mouseEvent -> cancelButton.setTextFill(Color.BLACK));
+        cancelButton.setOnMouseExited( mouseEvent -> cancelButton.setTextFill(Color.WHITE));
+    }
     /**
      * Closes the register window
      * @param event Event
@@ -51,6 +65,7 @@ public class RegisterController {
      * @param event Event
      */
     public void registerButtonOnAction(ActionEvent event) {
+
         if ( ! passwordTextField.getText().equals(confirmPasswordField.getText())) {
             registrationFeedbackLabel.setText("Passwords do not match.");
         } else {

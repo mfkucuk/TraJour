@@ -3,6 +3,7 @@ package com.trajour.journey;
 import com.trajour.model.User;
 import javafx.scene.image.Image;
 import com.trajour.db.DatabaseQuery;
+import javafx.scene.image.ImageView;
 
 import java.time.LocalDate;
 

@@ -24,7 +24,7 @@ public class AddFriendController {
     private Label addFriendFeedbackLabel;
 
     public void initData(User user) {
-        currentUser = user;;
+        currentUser = user;
     }
 
     /**
