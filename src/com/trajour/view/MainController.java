@@ -3,6 +3,7 @@ package com.trajour.view;
 import com.trajour.journey.FutureJourney;
 import com.trajour.journey.Journey;
 import com.trajour.journey.PastJourney;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,10 +12,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -23,7 +22,10 @@ import com.trajour.model.User;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
+
+import static com.trajour.db.DatabaseQuery.getAllJourneysOfUser;
 
 public class MainController implements Initializable {
 
@@ -37,10 +39,37 @@ public class MainController implements Initializable {
     private Button profilePageButton;
 
     @FXML
-    private TableView<?> futureJourneysTable;
+    private TableView<FutureJourney> futureJourneysTable;
 
     @FXML
-    private TableView<?> pastJourneysTable;
+    private TableView<PastJourney> pastJourneysTable;
+
+    @FXML
+    private TableColumn<FutureJourney, String> futureJourneysCountryColumn;
+
+    @FXML
+    private TableColumn<FutureJourney, String> futureJourneysDescriptionColumn;
+
+    @FXML
+    private TableColumn<FutureJourney, LocalDate> futureJourneysStartDateColumn;
+
+    @FXML
+    private TableColumn<FutureJourney, LocalDate> futureJourneysEndDateColumn;
+
+    @FXML
+    private TableColumn<PastJourney, String> pastJourneysCountryColumn;
+
+    @FXML
+    private TableColumn<PastJourney, Integer> pastJourneysRatingColumn;
+
+    @FXML
+    private TableColumn<PastJourney, String> pastJourneysDescriptionColumn;
+
+    @FXML
+    private TableColumn<PastJourney, LocalDate> pastJourneysStartDateColumn;
+
+    @FXML
+    private TableColumn<PastJourney, LocalDate> pastJourneysEndDateColumn;
 
     @FXML
     private Button shareJourneyButton;
@@ -58,6 +87,8 @@ public class MainController implements Initializable {
     private static VBox vboxMainFeed;
 
     private User currentUser;
+    private ObservableList<FutureJourney> futureJourneysList;
+    private ObservableList<PastJourney> pastJourneysList;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -83,7 +114,19 @@ public class MainController implements Initializable {
         currentUser = user;
         welcomeMessage.setText("Welcome to your main feed " + user.getUsername() + "!");
 
-        // Initialize journeys
+        futureJourneysList = selectFutureJourneys(currentUser);
+
+        futureJourneysCountryColumn.setCellValueFactory(new PropertyValueFactory<FutureJourney, String>("location"));
+        futureJourneysDescriptionColumn.setCellValueFactory(new PropertyValueFactory<FutureJourney, String>("description"));
+        futureJourneysStartDateColumn.setCellValueFactory(new PropertyValueFactory<FutureJourney, LocalDate>("startDate"));
+        futureJourneysEndDateColumn.setCellValueFactory(new PropertyValueFactory<FutureJourney, LocalDate>("endDate"));
+
+        futureJourneysTable.setItems(futureJourneysList);
+
+
+        pastJourneysList = selectPastJourneys(currentUser);
+
+        // TODO show the past journeys on the main page tables
     }
 
     /**
@@ -98,7 +141,7 @@ public class MainController implements Initializable {
             Parent profilePageParent = loader.load();
             Scene profilePageScene = new Scene(profilePageParent, Main.APPLICATION_WIDTH, Main.APPLICATION_HEIGHT);
 
-            // Get access to the main windows controller
+            // Get access to the profile windows controller
             ProfileController profileWindowController = loader.getController();
             profileWindowController.initData(currentUser);
 
@@ -130,7 +173,7 @@ public class MainController implements Initializable {
             initData(currentUser);
 
             // Get the stage and change the scene
-            Stage window = new Stage();
+            Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
 
             window.setScene(mainPageScene);
             window.show();
@@ -147,18 +190,18 @@ public class MainController implements Initializable {
     @FXML
     public void openMapPage(ActionEvent event) {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/com/trajour/view/fxml/map.fxml"));
+        loader.setLocation(getClass().getResource("/com/trajour/view/fxml/mapxz.fxml"));
 
         try {
             Parent mapPageParent = loader.load();
             Scene mapPageScene = new Scene(mapPageParent, Main.APPLICATION_WIDTH, Main.APPLICATION_HEIGHT);
 
-            // Get access to the main windows controller
-//            MapController mapController = loader.getController();
-//            mapController.initData(currentUser);
+             // Get access to the map windows controller
+             MapController mapController = loader.getController();
+             mapController.initData(currentUser);
 
             // Get the stage and change the scene
-            Stage window = new Stage();
+            Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
 
             window.setScene(mapPageScene);
             window.show();
@@ -194,14 +237,30 @@ public class MainController implements Initializable {
         }
     }
 
-    private ObservableList<PastJourney> selectPastJourneys() {
-       //  ObservableList<Journey> allJourneys = getAllJourneysOfUser(currentUser);
+    private ObservableList<PastJourney> selectPastJourneys(User user) {
+        ObservableList<PastJourney> result = FXCollections.observableArrayList();
+        ObservableList<Journey> allJourneys = getAllJourneysOfUser(user);
+        // TODO check each journey and add the ones that have an end date before LocalDate.now() to the result list
+
+        for (Journey j : allJourneys) {
+            if (j.getEndDate().compareTo(LocalDate.now()) < 0) {
+            }
+        }
+        return null;
     }
 
-    private ObservableList<FutureJourney> selectFutureJourney() {
-        // ObservableList<Journey> allJourneys = getALlJourneysOfUser(currentUser);
+    private ObservableList<FutureJourney> selectFutureJourneys(User user) {
+        ObservableList<FutureJourney> result = FXCollections.observableArrayList();
+        ObservableList<Journey> allJourneys = getAllJourneysOfUser(user);
 
-        // TODO check each journey and
+        for (Journey j : allJourneys) {
+            if (j.getStartDate().compareTo(LocalDate.now()) > 0) {
+                FutureJourney futureJourney = new FutureJourney(j.getLocation(), j.getDescription(), j.getStartDate(), j.getEndDate());
+                result.add(futureJourney);
+            }
+        }
+
+        return result;
     }
 
     public static VBox getVBoxMainFeed() {
