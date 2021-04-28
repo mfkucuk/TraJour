@@ -12,6 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import com.trajour.db.DatabaseConnection;
 import com.trajour.model.User;
@@ -54,14 +55,18 @@ public class LoginController implements Initializable {
 
         dbConnection = new DatabaseConnection();
         // Button effects
-        DropShadow shadow = new DropShadow();
+        DropShadow shadow = new DropShadow(10, Color.WHITE);
 
         // Event listeners for text fields and buttons
         emailTextField.requestFocus();
 
+//        loginButton.setOnMouseEntered(mouseEvent -> loginButton.setTextFill(Color.BLACK) );
+//        loginButton.setOnMouseExited(mouseEvent -> loginButton.setTextFill(Color.WHITE));
         loginButton.setOnMouseEntered(mouseEvent -> loginButton.setEffect(shadow));
         loginButton.setOnMouseExited(mouseEvent -> loginButton.setEffect(null));
 
+//        registerButton.setOnMouseEntered(mouseEvent -> registerButton.setTextFill(Color.BLACK) );
+//        registerButton.setOnMouseExited(mouseEvent -> registerButton.setTextFill(Color.WHITE));
         registerButton.setOnMouseEntered(mouseEvent -> registerButton.setEffect(shadow));
         registerButton.setOnMouseExited(mouseEvent -> registerButton.setEffect(null));
 
