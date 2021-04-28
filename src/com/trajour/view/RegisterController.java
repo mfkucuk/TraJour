@@ -68,8 +68,15 @@ public class RegisterController implements Initializable {
      * @param event Event
      */
     public void registerButtonOnAction(ActionEvent event) {
-
         if ( ! passwordTextField.getText().equals(confirmPasswordField.getText())) {
+            Notifications notificationBuilder = Notifications.create()
+                    .title("Registration Unsuccessful!")
+                    .text("Passwords do not match.")
+                    .graphic(null)
+                    .hideAfter(Duration.seconds(5))
+                    .position(Pos.CENTER);
+            notificationBuilder.showError();
+
             registrationFeedbackLabel.setText("Passwords do not match.");
         } else {
             register();

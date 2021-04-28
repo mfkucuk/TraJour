@@ -24,6 +24,7 @@ public class Post extends FlowPane implements Shareable {
     private Label journeyLocationLabel;
     private Label usernameLabel;
     private Label dateLabel;
+    private Label commentLabel;
     private Label ratingLabel;
 
     public String getText() {
@@ -55,21 +56,25 @@ public class Post extends FlowPane implements Shareable {
         this.theJourney = theJourney;
         this.text = text;
         this.journeyPhoto = journeyPhoto;
+        this.journeyPhotoView = new ImageView();
     }
 
     @Override
     public Post share(User user, VBox mainFeed) {
         journeyLocationLabel = new Label(theJourney.getLocation());
         usernameLabel = new Label(user.getUsername());
+        commentLabel = new Label(theJourney.getDescription());
         dateLabel = new Label(theJourney.getStartDate() + "-" + theJourney.getEndDate());
-        ratingLabel = new Label( "" + ((PastJourney) theJourney).getRating());
-        journeyPhotoView = new ImageView();
+        // ratingLabel = new Label( "" + ((PastJourney) theJourney).getRating());
+        journeyPhotoView.setImage(journeyPhoto);
 
         getChildren().add(journeyLocationLabel);
         getChildren().add(usernameLabel);
         getChildren().add(dateLabel);
-        getChildren().add(ratingLabel);
+        // getChildren().add(ratingLabel);
         getChildren().add(journeyPhotoView);
+        getChildren().add(commentLabel);
+
 
         mainFeed.getChildren().add(this);
         return this;

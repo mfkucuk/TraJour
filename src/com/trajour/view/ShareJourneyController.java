@@ -11,6 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import com.trajour.journey.Journey;
@@ -43,11 +44,14 @@ public class ShareJourneyController {
     @FXML
     private Label feedBackLabel;
 
+    private VBox vbox;
+
     private User currentUser;
     private ObservableList<Journey> journeysOfCurrentUser;
 
-    public void initData(User user) {
+    public void initData(User user, VBox v) {
         currentUser = user;
+        vbox = v;
 
         // TODO Init journeys of the user in 'journeyComboBox'
         journeysOfCurrentUser = FXCollections.observableArrayList();
@@ -67,11 +71,9 @@ public class ShareJourneyController {
         File selectedFile = fileChooser.showOpenDialog(stage);
 
         if (selectedFile != null) {
-            Image img = new Image(selectedFile.toURI().toString());
+            Image img = new Image(selectedFile.toURI().toString(), 40, 40, false, false);
 
             journeyImageView.setImage(img);
-            journeyImageView.setFitHeight(40);
-            journeyImageView.setFitWidth(40);
         }
     }
 
@@ -82,7 +84,7 @@ public class ShareJourneyController {
             Post newPost = selectedJourney.post(commentsTextArea.getText(), journeyImageView.getImage());
 
             // TODO Add the post to database
-            newPost.share(currentUser, MainController.getVBoxMainFeed());
+            newPost.share(currentUser, vbox);
             ((Stage) ((Node) event.getSource()).getScene().getWindow()).close();
         }
         else {

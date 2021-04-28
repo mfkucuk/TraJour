@@ -151,7 +151,7 @@ public class MapController implements Initializable {
                 .text("Journey is successfully added.")
                 .graphic(null)
                 .hideAfter(Duration.seconds(5))
-                .position(Pos.BOTTOM_RIGHT);
+                .position(Pos.BASELINE_CENTER);
 
         notificationBuilder.showConfirm();
 

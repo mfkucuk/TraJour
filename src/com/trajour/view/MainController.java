@@ -84,7 +84,7 @@ public class MainController implements Initializable {
     private ScrollPane mainScrollPane;
 
     @FXML
-    private static VBox vboxMainFeed;
+    private VBox vboxMainFeed;
 
     private User currentUser;
     private ObservableList<FutureJourney> futureJourneysList;
@@ -225,7 +225,7 @@ public class MainController implements Initializable {
 
             // Get access to the main windows controller
             ShareJourneyController shareJourneyController = loader.getController();
-            shareJourneyController.initData(currentUser);
+            shareJourneyController.initData(currentUser, vboxMainFeed);
 
             // Get the stage and change the scene
             Stage window = new Stage();
@@ -265,7 +265,4 @@ public class MainController implements Initializable {
         return result;
     }
 
-    public static VBox getVBoxMainFeed() {
-        return vboxMainFeed;
-    }
 }

@@ -116,8 +116,11 @@ public class LoginController implements Initializable {
                                 " the menu bar at the top!")
                         .graphic(null)
                         .hideAfter(Duration.seconds(10))
-                        .position(Pos.CENTER);
+                        .position(Pos.CENTER)
+                        .onAction(actionEvent -> {});
+
                 notificationBuilder.showConfirm();
+
 
                 // Redirect to main page
                 openMainPage(event, currentUser);
