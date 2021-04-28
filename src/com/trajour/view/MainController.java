@@ -9,6 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -19,6 +20,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import com.trajour.model.User;
+import javafx.util.Duration;
+import org.controlsfx.control.Notifications;
 
 import java.io.IOException;
 import java.net.URL;
@@ -106,6 +109,24 @@ public class MainController implements Initializable {
 
     @FXML
     private MenuItem contextItemAddPastRating;
+
+    @FXML
+    private Button addFutureJourneyButton;
+
+    @FXML
+    private Button removeFutureJourneyButton;
+
+    @FXML
+    private Button addPastJourneyButton;
+
+    @FXML
+    private Button removePastJourneyButton;
+
+    @FXML
+    private TextField ratingTextField;
+
+    @FXML
+    private Button setPastJourneyRatingButton;
 
     private User currentUser;
     private ObservableList<FutureJourney> futureJourneysList;
@@ -330,8 +351,43 @@ public class MainController implements Initializable {
         }
     }
 
+    @FXML
+    void handleAddFutureJourney(ActionEvent event) {
+
+    }
+
+    @FXML
+    void handleAddPastJourney(ActionEvent event) {
+
+    }
+
+    @FXML
+    void handleRemovePastJourney(ActionEvent event) {
+
+    }
+
+    @FXML
+    void handleSetRatingOfPastJourney(ActionEvent event) {
+
+    }
+
     void handleAddRatingToTable() {
-        futureJourneysTable.getSelectionModel().getSelectedItem();
+        PastJourney pj = pastJourneysTable.getSelectionModel().getSelectedItem();
+        if (ratingTextField.getText().isBlank()) {
+            Notifications notificationBuilder = Notifications.create()
+                    .title("Couldn't Rate Journey")
+                    .text("Please write a value between 0 and 10")
+                    .graphic(null)
+                    .hideAfter(Duration.seconds(5))
+                    .position(Pos.BASELINE_CENTER)
+                    .onAction(actionEvent -> {});
+            notificationBuilder.darkStyle();
+            notificationBuilder.showWarning();
+
+        }
+        updateJourneyRating(pj, currentUser, ratingTextField.getText());
+
+        pastJourneysTable.getItems().removeAll(pj);
     }
 
     void handleDeleteJourneyFromFutureJourneys() {

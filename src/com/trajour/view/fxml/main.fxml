@@ -6,29 +6,45 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.trajour.view.MainController">
    <top>
-      <ToolBar prefHeight="60.0" prefWidth="839.0" style="-fx-background-color: #00203FFF;" BorderPane.alignment="CENTER">
+      <ToolBar prefHeight="80.0" prefWidth="839.0" style="-fx-background-color: #00203FFF;" BorderPane.alignment="CENTER">
          <items>
-            <Button fx:id="homePageButton" mnemonicParsing="false" onAction="#openHomePage" prefHeight="32.0" prefWidth="67.0" style="-fx-background-radius: 10; -fx-background-color: white;" textAlignment="JUSTIFY">
+            <Separator orientation="VERTICAL" prefHeight="80.0" style="fx: #00203FFF;">
+               <padding>
+                  <Insets right="50.0" />
+               </padding>
+            </Separator>
+            <Button fx:id="homePageButton" mnemonicParsing="false" onAction="#openHomePage" prefHeight="55.0" prefWidth="90.0" style="-fx-background-radius: 10; -fx-background-color: white;" textAlignment="JUSTIFY">
                <graphic>
                   <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../../../resources/home_icon.png" />
                      </image>
                   </ImageView>
-               </graphic></Button>
-            <Button fx:id="mapPageButton" mnemonicParsing="false" onAction="#openMapPage" prefHeight="32.0" prefWidth="67.0" style="-fx-background-radius: 10; -fx-background-color: white;">
+               </graphic>
+            </Button>
+            <Separator orientation="VERTICAL" prefHeight="80.0">
+               <padding>
+                  <Insets left="50.0" right="50.0" />
+               </padding>
+            </Separator>
+            <Button fx:id="mapPageButton" mnemonicParsing="false" onAction="#openMapPage" prefHeight="55.0" prefWidth="90.0" style="-fx-background-radius: 10; -fx-background-color: white;">
                <graphic>
                   <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -37,14 +53,25 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="profilePageButton" mnemonicParsing="false" onAction="#openProfilePage" prefHeight="32.0" prefWidth="67.0" style="-fx-background-radius: 10; -fx-background-color: white;">
+            <Separator orientation="VERTICAL" prefHeight="80.0">
+               <padding>
+                  <Insets left="50.0" right="50.0" />
+               </padding>
+            </Separator>
+            <Button fx:id="profilePageButton" mnemonicParsing="false" onAction="#openProfilePage" prefHeight="55.0" prefWidth="90.0" style="-fx-background-radius: 10; -fx-background-color: white;">
                <graphic>
                   <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../../../resources/user_account_icon.png" />
                      </image>
                   </ImageView>
-               </graphic></Button>
+               </graphic>
+            </Button>
+            <Separator orientation="VERTICAL" prefHeight="80.0">
+               <padding>
+                  <Insets left="50.0" />
+               </padding>
+            </Separator>
          </items>
       </ToolBar>
    </top>
@@ -67,18 +94,47 @@
                   <TableColumn fx:id="futureJourneysEndDateColumn" prefWidth="123.0" text="End Date" />
               </columns>
                <VBox.margin>
-                  <Insets right="5.0" top="5.0" />
+                  <Insets bottom="10.0" right="5.0" top="5.0" />
                </VBox.margin>
                <contextMenu>
                   <ContextMenu>
                     <items>
                       <MenuItem fx:id="contextItemRefreshFutureTable" mnemonicParsing="false" text="Refresh" />
-                        <MenuItem fx:id="contextItemAddFutureJourney" mnemonicParsing="false"  text="Add Journey" />
-                        <MenuItem fx:id="contextItemDeleteFutureJourney" mnemonicParsing="false"  text="Delete Journey" />
+                        <MenuItem fx:id="contextItemAddFutureJourney" mnemonicParsing="false" text="Add Journey" />
+                        <MenuItem fx:id="contextItemDeleteFutureJourney" mnemonicParsing="false" text="Delete Journey" />
                     </items>
                   </ContextMenu>
                </contextMenu>
             </TableView>
+            <GridPane prefHeight="80.0" prefWidth="500.0" vgap="10.0">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <Button fx:id="addFutureJourneyButton" mnemonicParsing="false" onAction="#handleAddFutureJourney" prefHeight="35.0" prefWidth="110.0" style="-fx-background-color: #C00000; -fx-background-radius: 8;" text="Add Journey" textFill="WHITE">
+                     <GridPane.margin>
+                        <Insets left="80.0" />
+                     </GridPane.margin>
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="removeFutureJourneyButton" mnemonicParsing="false" onAction="#handleRemovePastJourney" prefHeight="35.0" prefWidth="135.0" style="-fx-background-color: #C00000; -fx-background-radius: 8;" text="Remove Journey" textFill="WHITE" GridPane.columnIndex="1">
+                     <GridPane.margin>
+                        <Insets left="60.0" />
+                     </GridPane.margin>
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Button>
+                  <Separator orientation="VERTICAL" prefHeight="80.0" GridPane.columnIndex="1" />
+               </children>
+            </GridPane>
+            <Separator prefWidth="200.0" />
             <Label text="Past Journeys">
                <font>
                   <Font name="System Bold" size="20.0" />
@@ -87,7 +143,7 @@
                   <Insets bottom="5.0" left="5.0" top="5.0" />
                </VBox.margin>
             </Label>
-            <TableView fx:id="pastJourneysTable" prefHeight="330.0" prefWidth="495.0" style="-fx-border-width: 2; -fx-border-color: #000;" VBox.vgrow="ALWAYS">
+            <TableView fx:id="pastJourneysTable" prefHeight="328.0" prefWidth="495.0" style="-fx-border-width: 2; -fx-border-color: #000;" VBox.vgrow="ALWAYS">
               <columns>
                 <TableColumn fx:id="pastJourneysCountryColumn" prefWidth="98.0" text="Country" />
                 <TableColumn fx:id="pastJourneysRatingColumn" prefWidth="98.0" text="Rating" />
@@ -96,19 +152,71 @@
                   <TableColumn fx:id="pastJourneysEndDateColumn" prefWidth="98.0" text="End Date" />
               </columns>
                <VBox.margin>
-                  <Insets bottom="5.0" right="5.0" />
+                  <Insets bottom="10.0" right="5.0" />
                </VBox.margin>
                <contextMenu>
                   <ContextMenu>
                      <items>
                         <MenuItem fx:id="contextItemRefreshPastTable" mnemonicParsing="false" text="Refresh" />
                         <MenuItem fx:id="contextItemAddPastJourney" mnemonicParsing="false" text="Add Journey" />
-                        <MenuItem fx:id="contextItemDeletePastJourney" mnemonicParsing="false"  text="Delete Journey" />
+                        <MenuItem fx:id="contextItemDeletePastJourney" mnemonicParsing="false" text="Delete Journey" />
                         <MenuItem fx:id="contextItemAddPastRating" mnemonicParsing="false" text="Add Rating" />
                      </items>
                   </ContextMenu>
                </contextMenu>
             </TableView>
+            <GridPane prefHeight="135.0" prefWidth="500.0" vgap="10.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Button fx:id="addPastJourneyButton" mnemonicParsing="false" onAction="#handleAddPastJourney" prefHeight="35.0" prefWidth="130.0" style="-fx-background-color: #C00000; -fx-background-radius: 8;" text="Add Journey" textFill="WHITE">
+                     <GridPane.margin>
+                        <Insets left="75.0" />
+                     </GridPane.margin>
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="removePastJourneyButton" mnemonicParsing="false" onAction="#handleRemovePastJourney" prefHeight="35.0" prefWidth="130.0" style="-fx-background-color: #C00000; -fx-background-radius: 8;" text="Remove Journey" textFill="WHITE" GridPane.rowIndex="1">
+                     <GridPane.margin>
+                        <Insets bottom="5.0" left="75.0" />
+                     </GridPane.margin>
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Button>
+                  <TextField fx:id="ratingTextField" prefHeight="25.0" prefWidth="196.0" promptText="0-10" GridPane.columnIndex="1">
+                     <GridPane.margin>
+                        <Insets left="110.0" right="90.0" top="10.0" />
+                     </GridPane.margin>
+                  </TextField>
+                  <Button fx:id="setPastJourneyRatingButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleSetRatingOfPastJourney" prefHeight="35.0" prefWidth="130.0" style="-fx-background-color: #C00000; -fx-background-radius: 8;" text="Set Rating" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <GridPane.margin>
+                        <Insets bottom="5.0" left="65.0" />
+                     </GridPane.margin>
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Button>
+                  <Label text="Rating:" GridPane.columnIndex="1">
+                     <GridPane.margin>
+                        <Insets left="50.0" top="10.0" />
+                     </GridPane.margin>
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Label>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="15.0" />
+               </VBox.margin>
+            </GridPane>
          </children>
          <BorderPane.margin>
             <Insets />
@@ -120,9 +228,9 @@
          <top>
             <HBox prefHeight="50.0" prefWidth="780.0" BorderPane.alignment="CENTER">
                <children>
-                  <Button fx:id="shareJourneyButton" mnemonicParsing="false" onAction="#openShareJourneyPage" prefHeight="30.0" prefWidth="154.0" style="-fx-background-radius: 10; -fx-background-color: #00203FFF;" text="Share A Journey!" textFill="WHITE" HBox.hgrow="ALWAYS">
+                  <Button fx:id="shareJourneyButton" mnemonicParsing="false" onAction="#openShareJourneyPage" prefHeight="30.0" prefWidth="154.0" style="-fx-background-radius: 8; -fx-background-color: #C00000;" text="Share A Journey!" textFill="WHITE" HBox.hgrow="ALWAYS">
                      <font>
-                        <Font size="14.0" />
+                        <Font name="System Bold" size="14.0" />
                      </font>
                      <HBox.margin>
                         <Insets left="10.0" top="10.0" />
@@ -136,9 +244,9 @@
                         <Insets left="25.0" top="10.0" />
                      </HBox.margin>
                   </Label>
-                  <Button fx:id="achievementsButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="135.0" style="-fx-background-radius: 10; -fx-background-color: #00203FFF;" text="Achievements" textFill="WHITE">
+                  <Button fx:id="achievementsButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="135.0" style="-fx-background-radius: 8; -fx-background-color: #C00000;" text="Achievements" textFill="WHITE">
                      <font>
-                        <Font size="14.0" />
+                        <Font name="System Bold" size="14.0" />
                      </font>
                      <HBox.margin>
                         <Insets left="200.0" right="35.0" top="10.0" />
