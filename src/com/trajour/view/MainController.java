@@ -87,6 +87,27 @@ public class MainController implements Initializable {
     @FXML
     private VBox vboxMainFeed;
 
+    @FXML
+    private MenuItem contextItemRefreshFutureTable;
+
+    @FXML
+    private MenuItem contextItemAddFutureJourney;
+
+    @FXML
+    private MenuItem contextItemDeleteFutureJourney;
+
+    @FXML
+    private MenuItem contextItemRefreshPastTable;
+
+    @FXML
+    private MenuItem contextItemAddPastJourney;
+
+    @FXML
+    private MenuItem contextItemDeletePastJourney;
+
+    @FXML
+    private MenuItem contextItemAddPastRating;
+
     private User currentUser;
     private ObservableList<FutureJourney> futureJourneysList;
     private ObservableList<PastJourney> pastJourneysList;
@@ -107,6 +128,8 @@ public class MainController implements Initializable {
         shareJourneyButton.setOnMouseEntered(mouseEvent -> shareJourneyButton.setEffect(blackShadow));
         shareJourneyButton.setOnMouseExited(mouseEvent -> shareJourneyButton.setEffect(null));
 
+
+
         // TODO Add context menu to refresh the table view, delete journeys, add journeys, add rating
     }
     /**
@@ -117,6 +140,7 @@ public class MainController implements Initializable {
         currentUser = user;
         welcomeMessage.setText("Welcome to your main feed " + user.getUsername() + "!");
 
+        // Init future journeys table
         futureJourneysList = selectFutureJourneys(currentUser);
 
         futureJourneysCountryColumn.setCellValueFactory(new PropertyValueFactory<FutureJourney, String>("location"));
@@ -126,7 +150,7 @@ public class MainController implements Initializable {
 
         futureJourneysTable.setItems(futureJourneysList);
 
-
+        // Init past journeys table
         pastJourneysList = selectPastJourneys(currentUser);
 
         pastJourneysCountryColumn.setCellValueFactory(new PropertyValueFactory<>("location"));
@@ -136,6 +160,18 @@ public class MainController implements Initializable {
         pastJourneysEndDateColumn.setCellValueFactory(new PropertyValueFactory<>("endDate"));
 
         pastJourneysTable.setItems(pastJourneysList);
+
+        // Context Items
+        contextItemRefreshPastTable.setOnAction(actionEvent -> initData(currentUser));
+        contextItemRefreshFutureTable.setOnAction(actionEvent -> initData(currentUser));
+
+        contextItemAddFutureJourney.setOnAction(actionEvent -> handleOpenMapPage());
+        contextItemAddPastJourney.setOnAction(actionEvent -> handleOpenMapPage());
+
+        contextItemAddPastRating.setOnAction(actionEvent -> handleAddRatingToTable());
+
+        contextItemDeleteFutureJourney.setOnAction(actionEvent -> handleDeleteJourneyFromFutureJourneys());
+        contextItemDeletePastJourney.setOnAction(actionEvent -> handleDeleteJourneyFromPastJourneys());
     }
 
     /**
@@ -275,4 +311,19 @@ public class MainController implements Initializable {
         return result;
     }
 
+    void handleOpenMapPage() {
+
+    }
+
+    void handleAddRatingToTable() {
+
+    }
+
+    void handleDeleteJourneyFromFutureJourneys() {
+
+    }
+
+    void handleDeleteJourneyFromPastJourneys() {
+
+    }
 }
