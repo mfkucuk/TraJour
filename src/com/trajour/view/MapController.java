@@ -192,7 +192,8 @@ public class MapController implements Initializable {
             Scene mapPageScene = new Scene(mapPageParent, Main.APPLICATION_WIDTH, Main.APPLICATION_HEIGHT);
 
             // Get access to the map window controller
-            initData(currentUser);
+            MapController mapController = loader.getController();
+            mapController.initData(currentUser);
 
             // Get the stage and change the scene
             Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
@@ -231,7 +232,7 @@ public class MapController implements Initializable {
         }
     }
 
-    private String countryCodeToCountryName(String code) throws FileNotFoundException {
+    public static String countryCodeToCountryName(String code) throws FileNotFoundException {
         Scanner in = new Scanner(new File("src/resources/countries_with_codes.csv"));
 
         // TODO Possible errors with countries with multiple names

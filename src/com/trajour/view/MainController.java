@@ -179,7 +179,8 @@ public class MainController implements Initializable {
             Scene mainPageScene = new Scene(mainPageParent, Main.APPLICATION_WIDTH, Main.APPLICATION_HEIGHT);
 
             // Get access to the main windows controller
-            initData(currentUser);
+            MainController mainController = loader.getController();
+            mainController.initData(currentUser);
 
             // Get the stage and change the scene
             Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
