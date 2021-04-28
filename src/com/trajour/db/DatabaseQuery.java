@@ -452,9 +452,13 @@ public final class DatabaseQuery {
 
     }
 
-    public static void updateImage(File img, User user) {
+    public static boolean updateImage(File img, User user) {
         dbConnection = new DatabaseConnection();
         conn = dbConnection.getConnection();
+
+        // File too large
+        if (img.length() > 5000000)
+            return false;
 
         String query = "UPDATE users SET profile_photo=? WHERE userId = " + user.getUserId();
         try {
@@ -466,12 +470,14 @@ public final class DatabaseQuery {
             ps.setBinaryStream(1, inputStream);
 
             ps.executeUpdate();
+            return true;
         }
         catch (SQLException | FileNotFoundException e) {
             e.getCause();
             e.printStackTrace();
         }
 
+        return false;
     }
 
     /**

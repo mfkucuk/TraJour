@@ -2,6 +2,8 @@ package com.trajour.view;
 
 import com.trajour.journey.Journey;
 import com.trajour.model.User;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,6 +15,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -79,6 +82,14 @@ public class MapController implements Initializable {
         DropShadow blackShadow = new DropShadow();
         addJourneyButton.setOnMouseEntered(mouseEvent -> addJourneyButton.setEffect(blackShadow));
         addJourneyButton.setOnMouseExited(mouseEvent -> addJourneyButton.setEffect(null));
+
+        // Zoom in and out
+        zoomSlider.valueProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
+                worldMapView.setZoomFactor(zoomSlider.getValue());
+            }
+        });
     }
 
     public void initData(User user) {
@@ -111,12 +122,20 @@ public class MapController implements Initializable {
 
         endDatePicker.setValue(startDatePicker.getValue().plusDays(1));
 
+        // Map zoom functionality
         worldMapView.setOnMouseClicked(mouseEvent -> {
             try {
-                selectedCountryField.setText(countryCodeToCountryName(worldMapView.getSelectedCountries().get(0).name()));
+                if (!worldMapView.getSelectedCountries().isEmpty()) {
+                    selectedCountryField.setText(countryCodeToCountryName(worldMapView.getSelectedCountries().get(0).name()));
+                }
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
+        });
+
+        worldMapView.addEventHandler(ScrollEvent.SCROLL, scrollEvent -> {
+            double movement = scrollEvent.getDeltaY() / 40;
+            zoomSlider.setValue(zoomSlider.getValue() + movement);
         });
     }
 
@@ -232,20 +251,24 @@ public class MapController implements Initializable {
         }
     }
 
-    public static String countryCodeToCountryName(String code) throws FileNotFoundException {
+    private String countryCodeToCountryName(String code) throws FileNotFoundException {
         Scanner in = new Scanner(new File("src/resources/countries_with_codes.csv"));
+        StringBuilder result = new StringBuilder();
 
         // TODO Possible errors with countries with multiple names
         while (in.hasNextLine()) {
-            String line = in.next();
+            String line = in.nextLine();
             String[] pieces = line.split(",");
+
             if (pieces.length > 1) {
-                if (pieces[1].equals(code)) {
-                    return pieces[0];
+                if (pieces[pieces.length - 1].equals(code)) {
+                    for (int i = 0; i < pieces.length - 1; i++) {
+                        result.append(pieces[i] + " ");
+                    }
                 }
             }
         }
 
-        return "";
+        return result.toString();
     }
 }

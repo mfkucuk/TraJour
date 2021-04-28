@@ -232,7 +232,7 @@ public class ProfileController {
         Stage stage = new Stage();
         File selectedFile = fileChooser.showOpenDialog(stage);
         if (selectedFile != null) {
-            Image img = new Image(selectedFile.toURI().toString(), 40, 40, false, false);
+            Image img = new Image(selectedFile.toURI().toString(), 180, 180, false, false);
 
             profilePhotoView.setImage(img);
 
