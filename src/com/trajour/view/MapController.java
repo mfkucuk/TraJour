@@ -17,6 +17,7 @@ import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import javafx.util.Duration;
@@ -29,6 +30,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 
@@ -98,6 +100,7 @@ public class MapController implements Initializable {
 
         // From the JavaFX tutorial in Oracle's website, disables the cells that corresponds to the date
         // selected in the startDate and all the cells corresponding to the preceding dates
+        // https://docs.oracle.com/javase/8/javafx/user-interface-tutorial/date-picker.htm#CCHHJBEA
         startDatePicker.setValue(LocalDate.now());
         final Callback<DatePicker, DateCell> dayCellFactory =
                 new Callback<DatePicker, DateCell>() {
@@ -114,6 +117,14 @@ public class MapController implements Initializable {
                                     setDisable(true);
                                     setStyle("-fx-background-color: #ffc0cb;");
                                 }
+                                long p = ChronoUnit.DAYS.between(
+                                        startDatePicker.getValue(), item
+                                );
+
+                                Tooltip tt = (new Tooltip("You're about to stay for " + p + " days"));
+                                tt.setFont(new Font(14));
+
+                                setTooltip(tt);
                             }
                         };
                     }
@@ -143,15 +154,30 @@ public class MapController implements Initializable {
     void handleAddJourney(ActionEvent event) throws FileNotFoundException {
         ObservableList<WorldMapView.Country> selectedCountry = worldMapView.getSelectedCountries();
 
+
         // Check whether the user chose only 1 country
         if (selectedCountry.size() > 1) {
-            JOptionPane.showMessageDialog(null, "Please choose only 1 country.",
-                    "Selection Error", JOptionPane.INFORMATION_MESSAGE);
+            Notifications notificationBuilder = Notifications.create()
+                    .title("Selection Error")
+                    .text("Please choose only 1 country.")
+                    .graphic(null)
+                    .hideAfter(Duration.seconds(10))
+                    .position(Pos.BASELINE_CENTER)
+                    .onAction(actionEvent -> {});
+            notificationBuilder.darkStyle();
+            notificationBuilder.showConfirm();
         }
 
         if (selectedCountry.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Please choose at least 1 country by left clicking" +
-                            " on a country on the map.", "Selection Error", JOptionPane.INFORMATION_MESSAGE);
+            Notifications notificationBuilder = Notifications.create()
+                    .title("Selection Error")
+                    .text("Please choose at least 1 country by left clicking on a country on the map.")
+                    .graphic(null)
+                    .hideAfter(Duration.seconds(10))
+                    .position(Pos.BASELINE_CENTER)
+                    .onAction(actionEvent -> {});
+            notificationBuilder.darkStyle();
+            notificationBuilder.showConfirm();
         }
 
         // Add the journey to the database
@@ -161,7 +187,7 @@ public class MapController implements Initializable {
         String country = countryCodeToCountryName(selectedCountry.get(0).name());
 
         Journey j = new Journey(country, journeyDesc, start, end);
-
+       // TODO Do not add journey if the same journey exists.
         insertNewJourney(j, currentUser);
 
         // Build notification
@@ -171,7 +197,7 @@ public class MapController implements Initializable {
                 .graphic(null)
                 .hideAfter(Duration.seconds(5))
                 .position(Pos.BASELINE_CENTER);
-
+        notificationBuilder.darkStyle();
         notificationBuilder.showConfirm();
 
     }

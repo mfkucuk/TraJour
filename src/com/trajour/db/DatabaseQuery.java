@@ -600,13 +600,15 @@ public final class DatabaseQuery {
         dbConnection = new DatabaseConnection();
         conn = dbConnection.getConnection();
 
-        // String query = "DELETE FROM journeys WHERE journeyId = " + j.getJourneyID();
+        String query = "DELETE FROM journeys WHERE userId = " + user.getUserId() + " AND location = '" + j.getLocation()
+                + "' AND description = '" + j.getDescription() + "' AND startDate = '" + Date.valueOf(j.getStartDate())
+                + "' AND endDate = '" + Date.valueOf(j.getEndDate()) + "'";
 
         try {
             Statement statement = conn.createStatement();
-            // int result = statement.executeUpdate(query);
+            int result = statement.executeUpdate(query);
 
-            // return result > 0;
+            return result > 0;
         }
         catch (SQLException e) {
             e.printStackTrace();

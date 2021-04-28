@@ -62,6 +62,7 @@ public class ShareJourneyController {
 
     @FXML
     public void addJourneyPicture(ActionEvent event) {
+        // TODO Multiple files
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Resource File");
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif"));

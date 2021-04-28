@@ -25,8 +25,7 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
-import static com.trajour.db.DatabaseQuery.getAllJourneysOfUser;
-import static com.trajour.db.DatabaseQuery.getJourneyRating;
+import static com.trajour.db.DatabaseQuery.*;
 
 public class MainController implements Initializable {
 
@@ -127,10 +126,6 @@ public class MainController implements Initializable {
         DropShadow blackShadow = new DropShadow();
         shareJourneyButton.setOnMouseEntered(mouseEvent -> shareJourneyButton.setEffect(blackShadow));
         shareJourneyButton.setOnMouseExited(mouseEvent -> shareJourneyButton.setEffect(null));
-
-
-
-        // TODO Add context menu to refresh the table view, delete journeys, add journeys, add rating
     }
     /**
      * Initializes the user of the session.
@@ -312,18 +307,46 @@ public class MainController implements Initializable {
     }
 
     void handleOpenMapPage() {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/com/trajour/view/fxml/mapxz.fxml"));
 
+        try {
+            Parent mapPageParent = loader.load();
+            Scene mapPageScene = new Scene(mapPageParent, Main.APPLICATION_WIDTH, Main.APPLICATION_HEIGHT);
+
+            // Get access to the map windows controller
+            MapController mapController = loader.getController();
+            mapController.initData(currentUser);
+
+            // Get the stage and change the scene
+            Stage window = (Stage) homePageButton.getScene().getWindow();
+
+            window.setScene(mapPageScene);
+            window.show();
+        }
+        catch (IOException e) {
+            e.getCause();
+            e.printStackTrace();
+        }
     }
 
     void handleAddRatingToTable() {
-
+        futureJourneysTable.getSelectionModel().getSelectedItem();
     }
 
     void handleDeleteJourneyFromFutureJourneys() {
+        FutureJourney j = futureJourneysTable.getSelectionModel().getSelectedItem();
+        deleteJourney(j, currentUser);
 
+        futureJourneysTable.getItems().removeAll(j);
     }
 
     void handleDeleteJourneyFromPastJourneys() {
+        PastJourney j = pastJourneysTable.getSelectionModel().getSelectedItem();
+        deleteJourney(j, currentUser);
+
+        pastJourneysTable.getItems().removeAll(j);
+
 
     }
 }

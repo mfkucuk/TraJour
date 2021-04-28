@@ -114,10 +114,10 @@ public class LoginController implements Initializable {
                         .text("Welcome to TraJour, " + currentUser.getUsername() + ", you can navigate through the main page, map page and your profile via" +
                                 " the menu bar at the top!")
                         .graphic(null)
-                        .hideAfter(Duration.seconds(10))
+                        .hideAfter(Duration.seconds(8))
                         .position(Pos.CENTER)
                         .onAction(actionEvent -> {});
-
+                notificationBuilder.darkStyle();
                 notificationBuilder.showConfirm();
 
 
