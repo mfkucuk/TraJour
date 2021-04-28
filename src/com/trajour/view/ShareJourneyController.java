@@ -71,9 +71,10 @@ public class ShareJourneyController {
         File selectedFile = fileChooser.showOpenDialog(stage);
 
         if (selectedFile != null) {
-            Image img = new Image(selectedFile.toURI().toString(), 40, 40, false, false);
+            Image img = new Image(selectedFile.toURI().toString(), 180, 180, false, false);
 
             journeyImageView.setImage(img);
+            pictureFeedBackLabel.setText("");
         }
     }
 
