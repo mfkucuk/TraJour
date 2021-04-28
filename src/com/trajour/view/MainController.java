@@ -92,7 +92,7 @@ public class MainController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        DropShadow shadow = new DropShadow(10, Color.WHITE);
+        DropShadow shadow = new DropShadow(7, Color.WHITE);
         homePageButton.setOnMouseEntered(mouseEvent -> homePageButton.setEffect(shadow));
         homePageButton.setOnMouseExited(mouseEvent -> homePageButton.setEffect(null));
 
@@ -105,6 +105,8 @@ public class MainController implements Initializable {
         DropShadow blackShadow = new DropShadow();
         shareJourneyButton.setOnMouseEntered(mouseEvent -> shareJourneyButton.setEffect(blackShadow));
         shareJourneyButton.setOnMouseExited(mouseEvent -> shareJourneyButton.setEffect(null));
+
+        // TODO Add context menu to refresh and edit the table view
     }
     /**
      * Initializes the user of the session.

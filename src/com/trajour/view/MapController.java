@@ -6,11 +6,14 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import javafx.util.Duration;
@@ -21,12 +24,14 @@ import javax.swing.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URL;
 import java.time.LocalDate;
+import java.util.ResourceBundle;
 import java.util.Scanner;
 
 import static com.trajour.db.DatabaseQuery.insertNewJourney;
 
-public class MapController {
+public class MapController implements Initializable {
     @FXML
     private Button homePageButton;
 
@@ -58,6 +63,23 @@ public class MapController {
     private TextField selectedCountryField;
 
     private User currentUser;
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        DropShadow shadow = new DropShadow(7, Color.WHITE);
+        homePageButton.setOnMouseEntered(mouseEvent -> homePageButton.setEffect(shadow));
+        homePageButton.setOnMouseExited(mouseEvent -> homePageButton.setEffect(null));
+
+        mapPageButton.setOnMouseEntered(mouseEvent -> mapPageButton.setEffect(shadow));
+        mapPageButton.setOnMouseExited(mouseEvent -> mapPageButton.setEffect(null));
+
+        profilePageButton.setOnMouseEntered(mouseEvent -> profilePageButton.setEffect(shadow));
+        profilePageButton.setOnMouseExited(mouseEvent -> profilePageButton.setEffect(null));
+
+        DropShadow blackShadow = new DropShadow();
+        addJourneyButton.setOnMouseEntered(mouseEvent -> addJourneyButton.setEffect(blackShadow));
+        addJourneyButton.setOnMouseExited(mouseEvent -> addJourneyButton.setEffect(null));
+    }
 
     public void initData(User user) {
         currentUser = user;

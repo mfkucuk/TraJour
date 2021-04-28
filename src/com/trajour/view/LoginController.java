@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -16,6 +17,8 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import com.trajour.db.DatabaseConnection;
 import com.trajour.model.User;
+import javafx.util.Duration;
+import org.controlsfx.control.Notifications;
 
 import java.awt.*;
 import java.net.URI;
@@ -98,10 +101,23 @@ public class LoginController implements Initializable {
         String password = passwordField.getText();
         // Check if the text fields are empty or not
         if ( ! email.isBlank() && !  password.isBlank()) {
+            // Login is successful
             if (validateLogin(email, password)) {
                 // TODO Wait for a few seconds so that the user can understand login is successful, then redirect to the the main page
                 String username = getUsernameByEmail(email);
                 System.out.println(username);
+
+                // Build and show notification
+                Notifications notificationBuilder = Notifications.create()
+                        .title("Login Successful!")
+                        .text("Welcome to TraJour, you can navigate through the main page, map page and your profile via" +
+                                " the menu bar at the top!")
+                        .graphic(null)
+                        .hideAfter(Duration.seconds(10))
+                        .position(Pos.CENTER);
+                notificationBuilder.showConfirm();
+
+                // Redirect to main page
                 openMainPage(event, new User(getUserIdByUsername(username), username, email));
             }
             else {
