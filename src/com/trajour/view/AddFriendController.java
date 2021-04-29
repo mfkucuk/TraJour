@@ -4,12 +4,18 @@ import com.trajour.db.DatabaseQuery;
 import com.trajour.model.Friend;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import com.trajour.model.User;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.paint.Color;
+
+import java.net.URL;
+import java.util.ResourceBundle;
 
 import static com.trajour.db.DatabaseQuery.*;
 
-public class AddFriendController {
+public class AddFriendController implements Initializable {
 
     private User currentUser;
 
@@ -79,5 +85,12 @@ public class AddFriendController {
                 addFriendFeedbackLabel.setText("No such user exists.");
             }
         }
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        DropShadow whiteShadow = new DropShadow(10, Color.WHITE);
+        addFriendButton.setOnMouseEntered(mouseEvent -> addFriendButton.setEffect(whiteShadow));
+        addFriendButton.setOnMouseExited(mouseEvent -> addFriendButton.setEffect(null));
     }
 }
