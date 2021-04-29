@@ -148,6 +148,8 @@ public class MainController implements Initializable {
         DropShadow blackShadow = new DropShadow();
         shareJourneyButton.setOnMouseEntered(mouseEvent -> shareJourneyButton.setEffect(blackShadow));
         shareJourneyButton.setOnMouseExited(mouseEvent -> shareJourneyButton.setEffect(null));
+
+        mainScrollPane.setFitToWidth(false);
     }
     /**
      * Initializes the user of the session.
