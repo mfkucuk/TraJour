@@ -76,7 +76,7 @@
       </ToolBar>
    </top>
    <center>
-      <BorderPane prefHeight="1036.0" prefWidth="1165.0" style="-fx-background-color: #E0FFFF;" BorderPane.alignment="CENTER">
+      <BorderPane prefHeight="1036.0" prefWidth="1165.0" style="-fx-background-color: #BFFCC6;" BorderPane.alignment="CENTER">
          <top>
             <HBox prefHeight="50.0" prefWidth="780.0" BorderPane.alignment="CENTER">
                <children>
@@ -120,7 +120,7 @@
       </BorderPane>
    </center>
    <right>
-      <VBox maxHeight="1045.0" maxWidth="500.0" prefHeight="500.0" prefWidth="500.0" style="-fx-background-color: #E0FFFF;" BorderPane.alignment="CENTER">
+      <VBox maxHeight="1045.0" maxWidth="500.0" prefHeight="500.0" prefWidth="500.0" style="-fx-background-color: #BFFCC6;" BorderPane.alignment="CENTER">
          <children>
             <Label alignment="CENTER" text="Future Journeys">
                <font>
