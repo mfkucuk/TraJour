@@ -35,6 +35,13 @@ public class AddFriendController implements Initializable {
         currentUser = user;
     }
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        DropShadow shadow = new DropShadow();
+        addFriendButton.setOnMouseEntered(mouseEvent -> addFriendButton.setEffect(shadow));
+        addFriendButton.setOnMouseExited(mouseEvent -> addFriendButton.setEffect(null));
+    }
+
     /**
      * Adds friend either by checking the database by username or email. If a user with the specified username or
      * email does not exist, the user is warned. If the user exists but they are already a friend of the current user
@@ -87,10 +94,5 @@ public class AddFriendController implements Initializable {
         }
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        DropShadow whiteShadow = new DropShadow(10, Color.WHITE);
-        addFriendButton.setOnMouseEntered(mouseEvent -> addFriendButton.setEffect(whiteShadow));
-        addFriendButton.setOnMouseExited(mouseEvent -> addFriendButton.setEffect(null));
-    }
+
 }

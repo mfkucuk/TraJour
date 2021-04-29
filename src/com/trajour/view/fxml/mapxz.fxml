@@ -42,6 +42,7 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -150,22 +151,24 @@
                   <TextField fx:id="selectedCountryField" editable="false" layoutX="46.0" layoutY="43.0" promptText="Selected Country" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="35.0" />
                </children>
             </AnchorPane>
-            <CheckBox fx:id="showLocationsCheckBox" layoutX="550.0" layoutY="824.0" mnemonicParsing="false" onAction="#handleShowLocations" text="Show Locations" AnchorPane.bottomAnchor="66.0" AnchorPane.leftAnchor="550.0" AnchorPane.rightAnchor="728.0">
+            <CheckBox fx:id="showLocationsCheckBox" layoutX="549.0" layoutY="808.0" mnemonicParsing="false" onAction="#handleShowLocations" text="Show Locations" AnchorPane.bottomAnchor="82.0" AnchorPane.leftAnchor="549.0" AnchorPane.rightAnchor="729.0">
                <font>
                   <Font size="14.0" />
                </font>
             </CheckBox>
-            <Button fx:id="pickRandomCountryButton" layoutX="738.0" layoutY="814.0" mnemonicParsing="false" onAction="#handlePickRandomCountry" prefHeight="40.0" prefWidth="175.0" style="-fx-background-color: #C00000; -fx-background-radius: 10;" text="Pick Random Countries" textFill="WHITE" AnchorPane.bottomAnchor="56.0" AnchorPane.leftAnchor="738.0" AnchorPane.rightAnchor="482.0">
+            <Button fx:id="pickRandomCountryButton" layoutX="717.0" layoutY="840.0" mnemonicParsing="false" onAction="#handlePickRandomCountry" prefHeight="40.0" prefWidth="175.0" style="-fx-background-color: #C00000; -fx-background-radius: 10;" text="Pick Random Country" textFill="WHITE" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="717.0" AnchorPane.rightAnchor="503.0">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <Button fx:id="showDistanceButton" layoutX="550.0" layoutY="860.0" mnemonicParsing="false" onAction="#handleShowDistance" prefHeight="40.0" prefWidth="120.0" style="-fx-background-color: #C00000; -fx-background-radius: 10;" text="Show Distance" textFill="WHITE" AnchorPane.bottomAnchor="10.0">
+            <Button fx:id="showDistanceButton" layoutX="543.0" layoutY="840.0" mnemonicParsing="false" onAction="#handleShowDistance" prefHeight="40.0" prefWidth="120.0" style="-fx-background-color: #C00000; -fx-background-radius: 10;" text="Show Distance" textFill="WHITE" AnchorPane.bottomAnchor="30.0">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
+               <tooltip>
+                  <Tooltip text="Pick 2 countries and click this to see the distance between them." />
+               </tooltip>
             </Button>
-            <TextField fx:id="countryNumberTextField" layoutX="744.0" layoutY="868.0" promptText="How many countries?" />
          </children>
       </AnchorPane>
    </center>

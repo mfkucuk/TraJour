@@ -2,9 +2,7 @@ package com.trajour.view;
 
 import com.trajour.journey.Journey;
 import com.trajour.model.User;
-import javafx.beans.Observable;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -22,15 +20,12 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import javafx.util.Duration;
 import org.controlsfx.control.Notifications;
 import org.controlsfx.control.WorldMapView;
 
-import javax.swing.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -110,6 +105,19 @@ public class MapController implements Initializable {
 
         showDistanceButton.setOnMouseEntered(mouseEvent -> showDistanceButton.setEffect(blackShadow));
         showDistanceButton.setOnMouseExited(mouseEvent -> showDistanceButton.setEffect(null));
+
+//        worldMapView.setCountryViewFactory(country -> {
+//            WorldMapView.CountryView view = new WorldMapView.CountryView(country);
+//            view.setOnMouseEntered(mouseEvent -> view.setStyle("-fx-background-color: #000000;"));
+//            return view; });
+//
+//        worldMapView.setLocationViewFactory(location -> {
+//            Circle circle = new Circle();
+//            circle.getStyleClass().add("location");
+//            circle.setRadius(4);
+//            circle.setTranslateX(-4); // translate to center node on location
+//            circle.setTranslateY(-4);
+//            return circle; });
 
         // Zoom in and out
         zoomSlider.valueProperty().addListener((observableValue, number, t1) -> worldMapView.setZoomFactor(zoomSlider.getValue()));

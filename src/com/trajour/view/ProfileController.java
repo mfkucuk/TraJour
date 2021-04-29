@@ -110,6 +110,9 @@ public class ProfileController {
         addPictureButton.setOnMouseEntered(mouseEvent -> addPictureButton.setEffect(blackShadow));
         addPictureButton.setOnMouseExited(mouseEvent -> addPictureButton.setEffect(null));
 
+        removeFriendButton.setOnMouseEntered(mouseEvent -> removeFriendButton.setEffect(blackShadow));
+        removeFriendButton.setOnMouseExited(mouseEvent -> removeFriendButton.setEffect(null));
+
         profilePhotoFile = getProfilePhotoFile(currentUser);
         Image profileImage = new Image(profilePhotoFile.toURI().toString(), 180, 180, false, false);
         profilePhotoView.setImage(profileImage);
