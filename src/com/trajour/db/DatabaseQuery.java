@@ -43,8 +43,7 @@ public final class DatabaseQuery {
             }
 
             return result;
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
             e.getCause();
         }
@@ -71,8 +70,7 @@ public final class DatabaseQuery {
             }
 
             return result;
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             e.getCause();
             e.printStackTrace();
         }
@@ -97,8 +95,7 @@ public final class DatabaseQuery {
             if (rs.next()) {
                 return rs.getString(1);
             }
-        }
-        catch (Exception e){
+        } catch (Exception e){
             e.printStackTrace();
         }
 
@@ -122,8 +119,7 @@ public final class DatabaseQuery {
             if (rs.next()) {
                 return rs.getString(1);
             }
-        }
-        catch (Exception e){
+        } catch (Exception e){
             e.printStackTrace();
         }
 
@@ -151,8 +147,7 @@ public final class DatabaseQuery {
             if (rs.next()) {
                 return rs.getInt(1);
             }
-        }
-        catch (Exception e){
+        } catch (Exception e){
             e.printStackTrace();
         }
 
@@ -180,8 +175,7 @@ public final class DatabaseQuery {
             }
 
             return result;
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
             e.getCause();
         }
@@ -203,8 +197,7 @@ public final class DatabaseQuery {
             if (rs.next()) {
                 return rs.getString("rating");
             }
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
             e.getCause();
         }
@@ -237,8 +230,7 @@ public final class DatabaseQuery {
             }
 
             return newFile;
-        }
-        catch (SQLException | FileNotFoundException e) {
+        } catch (SQLException | FileNotFoundException e) {
             e.printStackTrace();
             e.getCause();
         } catch (IOException e) {
@@ -258,8 +250,7 @@ public final class DatabaseQuery {
         try {
             Statement statement = conn.createStatement();
             return statement.executeUpdate(query) > 0;
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
             e.getCause();
         }
@@ -286,8 +277,7 @@ public final class DatabaseQuery {
             if (rs.next()) {
                 return rs.getInt(1) == 1;
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -311,8 +301,7 @@ public final class DatabaseQuery {
             if (rs.next()) {
                 return rs.getInt(1) == 1;
             }
-        }
-        catch (SQLException e){
+        } catch (SQLException e){
             e.printStackTrace();
         }
 
@@ -338,8 +327,7 @@ public final class DatabaseQuery {
             if (rs.next()) {
                 return rs.getString(1).equals(password);
             }
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
             e.getCause();
         }
@@ -364,8 +352,7 @@ public final class DatabaseQuery {
             if (rs.next()) {
                 return rs.getInt(1) == 1;
             }
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
             e.getCause();
         }
@@ -390,8 +377,7 @@ public final class DatabaseQuery {
             if (rs.next()) {
                 return rs.getInt(1) == 1;
             }
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
             e.getCause();
         }
@@ -432,8 +418,7 @@ public final class DatabaseQuery {
         try {
             Statement statement = conn.createStatement();
             statement.executeUpdate(query);
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
             e.getCause();
         }
@@ -449,8 +434,7 @@ public final class DatabaseQuery {
         try {
             Statement statement = conn.createStatement();
             statement.executeUpdate(query);
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
             e.getCause();
         }
@@ -486,8 +470,7 @@ public final class DatabaseQuery {
 
             ps.executeUpdate();
             return true;
-        }
-        catch (SQLException | FileNotFoundException e) {
+        } catch (SQLException | FileNotFoundException e) {
             e.getCause();
             e.printStackTrace();
         }
@@ -508,8 +491,7 @@ public final class DatabaseQuery {
             Statement statement = conn.createStatement();
             String query = "UPDATE users SET password = '" + newPassword + "' WHERE username = '" + username + "'";
             statement.executeUpdate(query);
-        }
-        catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
             e.getCause();
         }
@@ -535,8 +517,7 @@ public final class DatabaseQuery {
                     return true;
                 }
             }
-        }
-        catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
             e.getCause();
         }
@@ -576,8 +557,7 @@ public final class DatabaseQuery {
             } else {
                 return 0;
             }
-        }
-        catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
@@ -601,8 +581,7 @@ public final class DatabaseQuery {
             Statement statement = conn.createStatement();
             int result = statement.executeUpdate(query);
             return result > 0;
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
             e.getCause();
         }
@@ -624,8 +603,27 @@ public final class DatabaseQuery {
             int result = statement.executeUpdate(query);
 
             return result > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            e.getCause();
         }
-        catch (SQLException e) {
+
+        return false;
+    }
+
+    public static boolean removeFriend(Friend f, User user) {
+        dbConnection = new DatabaseConnection();
+        conn = dbConnection.getConnection();
+
+        String query = "DELETE FROM friends WHERE userId = " + user.getUserId() + " AND friendName = '"
+                + f.getFriendName() + "' AND friendEmail = '" + f.getFriendEmail() + "'";
+
+        try {
+            Statement statement = conn.createStatement();
+            int result = statement.executeUpdate(query);
+
+            return result > 0;
+        } catch (SQLException e) {
             e.printStackTrace();
             e.getCause();
         }
