@@ -9,7 +9,6 @@ import com.trajour.model.User;
 public class AddFriendController {
 
     private User currentUser;
-    private TreeTableView friendsTreeTableView;
 
     @FXML
     private TextField friendEmailTextField;
@@ -40,7 +39,7 @@ public class AddFriendController {
         }
         else if ( ! friendUsernameTextField.getText().isBlank()) {
             if (DatabaseQuery.findUserByUsername(friendUsernameTextField.getText())) {
-                if ( ! DatabaseQuery.findFriendByUsername(friendUsernameTextField.getText())) {
+                if ( ! DatabaseQuery.findFriendByUsername(friendUsernameTextField.getText(), currentUser)) {
                     DatabaseQuery.insertFriendByUsername(friendUsernameTextField.getText(), currentUser);
                     addFriendFeedbackLabel.setText("Friend successfully added.");
 
@@ -52,7 +51,7 @@ public class AddFriendController {
         }
         else if ( ! friendEmailTextField.getText().isBlank()) {
             if (DatabaseQuery.findUserByEmail(friendEmailTextField.getText())) {
-                if ( ! DatabaseQuery.findFriendByEmail(friendEmailTextField.getText())) {
+                if ( ! DatabaseQuery.findFriendByEmail(friendEmailTextField.getText(), currentUser)) {
                     DatabaseQuery.insertFriendByEmail(friendEmailTextField.getText(), currentUser.getUsername());
                     addFriendFeedbackLabel.setText("Friend successfully added.");
                 }

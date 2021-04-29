@@ -34,6 +34,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 
+import static com.trajour.db.DatabaseQuery.findJourneyByUser;
 import static com.trajour.db.DatabaseQuery.insertNewJourney;
 
 public class MapController implements Initializable {
@@ -67,6 +68,9 @@ public class MapController implements Initializable {
     @FXML
     private TextField selectedCountryField;
 
+    @FXML
+    private CheckBox showLocationsCheckBox;
+
     private User currentUser;
 
     @Override
@@ -86,12 +90,7 @@ public class MapController implements Initializable {
         addJourneyButton.setOnMouseExited(mouseEvent -> addJourneyButton.setEffect(null));
 
         // Zoom in and out
-        zoomSlider.valueProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
-                worldMapView.setZoomFactor(zoomSlider.getValue());
-            }
-        });
+        zoomSlider.valueProperty().addListener((observableValue, number, t1) -> worldMapView.setZoomFactor(zoomSlider.getValue()));
     }
 
     public void initData(User user) {
@@ -154,51 +153,48 @@ public class MapController implements Initializable {
     void handleAddJourney(ActionEvent event) throws FileNotFoundException {
         ObservableList<WorldMapView.Country> selectedCountry = worldMapView.getSelectedCountries();
 
-
         // Check whether the user chose only 1 country
         if (selectedCountry.size() > 1) {
-            Notifications notificationBuilder = Notifications.create()
-                    .title("Selection Error")
-                    .text("Please choose only 1 country.")
-                    .graphic(null)
-                    .hideAfter(Duration.seconds(10))
-                    .position(Pos.BASELINE_CENTER)
-                    .onAction(actionEvent -> {});
-            notificationBuilder.darkStyle();
-            notificationBuilder.showConfirm();
+            Notifications notification = buildNotification("Selection Error", "Please choose only 1 country.", 8, Pos.BASELINE_CENTER);
+            notification.showError();
+            return;
         }
 
-        if (selectedCountry.isEmpty()) {
-            Notifications notificationBuilder = Notifications.create()
-                    .title("Selection Error")
-                    .text("Please choose at least 1 country by left clicking on a country on the map.")
-                    .graphic(null)
-                    .hideAfter(Duration.seconds(10))
-                    .position(Pos.BASELINE_CENTER)
-                    .onAction(actionEvent -> {});
-            notificationBuilder.darkStyle();
-            notificationBuilder.showConfirm();
+        if (selectedCountry.size() == 0) {
+            Notifications notification = buildNotification("Selection Error", "Please choose at least" +
+                    " 1 country by left clicking on a country on the map.", 8, Pos.BASELINE_CENTER);
+            notification.showError();
+            return;
         }
 
         // Add the journey to the database
         String journeyDesc = journeyDescriptionTextArea.getText();
         LocalDate start = startDatePicker.getValue();
         LocalDate end = endDatePicker.getValue();
+
         String country = countryCodeToCountryName(selectedCountry.get(0).name());
 
         Journey j = new Journey(country, journeyDesc, start, end);
-       // TODO Do not add journey if the same journey exists.
-        insertNewJourney(j, currentUser);
+        // TODO Do not add journey if the same journey exists.
+        if (findJourneyByUser(j, currentUser)) {
+            Notifications notification = buildNotification("Journey Already Exists", "A journey with the " +
+                    "exact same specifications already exists in your journeys list. ", 8, Pos.BASELINE_CENTER);
+            notification.showError();
+        }
+        else {
+            insertNewJourney(j, currentUser);
 
-        // Build notification
-        Notifications notificationBuilder = Notifications.create()
-                .title("Added Journey!")
-                .text("Journey is successfully added.")
-                .graphic(null)
-                .hideAfter(Duration.seconds(5))
-                .position(Pos.BASELINE_CENTER);
-        notificationBuilder.darkStyle();
-        notificationBuilder.showConfirm();
+            // Build notification
+            Notifications notificationBuilder = buildNotification("Added Journey!", "Journey is successfully " +
+                    "added.", 8, Pos.BASELINE_CENTER);
+
+            notificationBuilder.showConfirm();
+        }
+
+    }
+
+    @FXML
+    void handleShowLocations(ActionEvent e) {
 
     }
 
@@ -277,6 +273,8 @@ public class MapController implements Initializable {
         }
     }
 
+
+
     private String countryCodeToCountryName(String code) throws FileNotFoundException {
         Scanner in = new Scanner(new File("src/resources/countries_with_codes.csv"));
         StringBuilder result = new StringBuilder();
@@ -289,7 +287,7 @@ public class MapController implements Initializable {
             if (pieces.length > 1) {
                 if (pieces[pieces.length - 1].equals(code)) {
                     for (int i = 0; i < pieces.length - 1; i++) {
-                        result.append(pieces[i] + " ");
+                        result.append(pieces[i]).append(" ");
                     }
                 }
             }
@@ -297,4 +295,18 @@ public class MapController implements Initializable {
 
         return result.toString();
     }
+
+    private Notifications buildNotification(String title, String text, int duration, Pos pos) {
+        Notifications notificationBuilder = Notifications.create()
+                .title(title)
+                .text(text)
+                .graphic(null)
+                .hideAfter(Duration.seconds(duration))
+                .position(pos);
+        notificationBuilder.darkStyle();
+
+        return notificationBuilder;
+    }
+
+
 }

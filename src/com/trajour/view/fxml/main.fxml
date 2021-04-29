@@ -75,8 +75,52 @@
          </items>
       </ToolBar>
    </top>
+   <center>
+      <BorderPane prefHeight="1036.0" prefWidth="1165.0" style="-fx-background-color: #E0FFFF;" BorderPane.alignment="CENTER">
+         <top>
+            <HBox prefHeight="50.0" prefWidth="780.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Button fx:id="shareJourneyButton" mnemonicParsing="false" onAction="#openShareJourneyPage" prefHeight="30.0" prefWidth="154.0" style="-fx-background-radius: 10; -fx-background-color: #C00000;" text="Share A Journey!" textFill="WHITE" HBox.hgrow="ALWAYS">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="10.0" top="10.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Label fx:id="welcomeMessage" graphicTextGap="6.0" prefHeight="30.0" prefWidth="381.0" text="Main Feed">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="25.0" top="10.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Button fx:id="achievementsButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="135.0" style="-fx-background-radius: 10; -fx-background-color: #C00000;" text="Achievements" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="200.0" right="35.0" top="10.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
+         </top>
+         <center>
+            <ScrollPane fx:id="mainScrollPane" hbarPolicy="NEVER" prefHeight="500.0" prefWidth="392.0" style="-fx-background-color: #ADEFD1FF; -fx-border-color: #000; -fx-border-width: 2;" BorderPane.alignment="CENTER">
+               <BorderPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" />
+               </BorderPane.margin>
+               <content>
+                  <VBox fx:id="vboxMainFeed" prefHeight="955.0" prefWidth="883.0" />
+               </content>
+            </ScrollPane>
+         </center>
+      </BorderPane>
+   </center>
    <right>
-      <VBox maxHeight="1045.0" maxWidth="500.0" prefHeight="500.0" prefWidth="500.0" style="-fx-background-color: #ADEFD1FF;" BorderPane.alignment="CENTER">
+      <VBox maxHeight="1045.0" maxWidth="500.0" prefHeight="500.0" prefWidth="500.0" style="-fx-background-color: #E0FFFF;" BorderPane.alignment="CENTER">
          <children>
             <Label alignment="CENTER" text="Future Journeys">
                <font>
@@ -115,7 +159,7 @@
                   <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <Button fx:id="addFutureJourneyButton" mnemonicParsing="false" onAction="#handleAddFutureJourney" prefHeight="35.0" prefWidth="110.0" style="-fx-background-color: #C00000; -fx-background-radius: 8;" text="Add Journey" textFill="WHITE">
+                  <Button fx:id="addFutureJourneyButton" mnemonicParsing="false" onAction="#handleAddFutureJourney" prefHeight="35.0" prefWidth="110.0" style="-fx-background-color: #C00000; -fx-background-radius: 10;" text="Add Journey" textFill="WHITE">
                      <GridPane.margin>
                         <Insets left="80.0" />
                      </GridPane.margin>
@@ -123,7 +167,7 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Button>
-                  <Button fx:id="removeFutureJourneyButton" mnemonicParsing="false" onAction="#handleRemovePastJourney" prefHeight="35.0" prefWidth="135.0" style="-fx-background-color: #C00000; -fx-background-radius: 8;" text="Remove Journey" textFill="WHITE" GridPane.columnIndex="1">
+                  <Button fx:id="removeFutureJourneyButton" mnemonicParsing="false" onAction="#handleRemovePastJourney" prefHeight="35.0" prefWidth="135.0" style="-fx-background-color: #C00000; -fx-background-radius: 10;" text="Remove Journey" textFill="WHITE" GridPane.columnIndex="1">
                      <GridPane.margin>
                         <Insets left="60.0" />
                      </GridPane.margin>
@@ -175,7 +219,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button fx:id="addPastJourneyButton" mnemonicParsing="false" onAction="#handleAddPastJourney" prefHeight="35.0" prefWidth="130.0" style="-fx-background-color: #C00000; -fx-background-radius: 8;" text="Add Journey" textFill="WHITE">
+                  <Button fx:id="addPastJourneyButton" mnemonicParsing="false" onAction="#handleAddPastJourney" prefHeight="35.0" prefWidth="130.0" style="-fx-background-color: #C00000; -fx-background-radius: 10;" text="Add Journey" textFill="WHITE">
                      <GridPane.margin>
                         <Insets left="75.0" />
                      </GridPane.margin>
@@ -183,7 +227,7 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Button>
-                  <Button fx:id="removePastJourneyButton" mnemonicParsing="false" onAction="#handleRemovePastJourney" prefHeight="35.0" prefWidth="130.0" style="-fx-background-color: #C00000; -fx-background-radius: 8;" text="Remove Journey" textFill="WHITE" GridPane.rowIndex="1">
+                  <Button fx:id="removePastJourneyButton" mnemonicParsing="false" onAction="#handleRemovePastJourney" prefHeight="35.0" prefWidth="130.0" style="-fx-background-color: #C00000; -fx-background-radius: 10;" text="Remove Journey" textFill="WHITE" GridPane.rowIndex="1">
                      <GridPane.margin>
                         <Insets bottom="5.0" left="75.0" />
                      </GridPane.margin>
@@ -196,7 +240,7 @@
                         <Insets left="110.0" right="90.0" top="10.0" />
                      </GridPane.margin>
                   </TextField>
-                  <Button fx:id="setPastJourneyRatingButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleSetRatingOfPastJourney" prefHeight="35.0" prefWidth="130.0" style="-fx-background-color: #C00000; -fx-background-radius: 8;" text="Set Rating" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                  <Button fx:id="setPastJourneyRatingButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleSetRatingOfPastJourney" prefHeight="35.0" prefWidth="130.0" style="-fx-background-color: #C00000; -fx-background-radius: 10;" text="Set Rating" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <GridPane.margin>
                         <Insets bottom="5.0" left="65.0" />
                      </GridPane.margin>
@@ -223,48 +267,4 @@
          </BorderPane.margin>
       </VBox>
    </right>
-   <center>
-      <BorderPane prefHeight="1036.0" prefWidth="1165.0" style="-fx-background-color: #ADEFD1FF;" BorderPane.alignment="CENTER">
-         <top>
-            <HBox prefHeight="50.0" prefWidth="780.0" BorderPane.alignment="CENTER">
-               <children>
-                  <Button fx:id="shareJourneyButton" mnemonicParsing="false" onAction="#openShareJourneyPage" prefHeight="30.0" prefWidth="154.0" style="-fx-background-radius: 8; -fx-background-color: #C00000;" text="Share A Journey!" textFill="WHITE" HBox.hgrow="ALWAYS">
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets left="10.0" top="10.0" />
-                     </HBox.margin>
-                  </Button>
-                  <Label fx:id="welcomeMessage" graphicTextGap="6.0" prefHeight="30.0" prefWidth="381.0" text="Main Feed">
-                     <font>
-                        <Font name="System Bold" size="20.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets left="25.0" top="10.0" />
-                     </HBox.margin>
-                  </Label>
-                  <Button fx:id="achievementsButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="135.0" style="-fx-background-radius: 8; -fx-background-color: #C00000;" text="Achievements" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets left="200.0" right="35.0" top="10.0" />
-                     </HBox.margin>
-                  </Button>
-               </children>
-            </HBox>
-         </top>
-         <center>
-            <ScrollPane fx:id="mainScrollPane" hbarPolicy="NEVER" prefHeight="500.0" prefWidth="392.0" style="-fx-background-color: #ADEFD1FF; -fx-border-color: #000; -fx-border-width: 2;" BorderPane.alignment="CENTER">
-               <BorderPane.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0" />
-               </BorderPane.margin>
-               <content>
-                  <VBox fx:id="vboxMainFeed" prefHeight="955.0" prefWidth="883.0" />
-               </content>
-            </ScrollPane>
-         </center>
-      </BorderPane>
-   </center>
 </BorderPane>

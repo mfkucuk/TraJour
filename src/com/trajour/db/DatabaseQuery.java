@@ -211,25 +211,6 @@ public final class DatabaseQuery {
         return "-";
     }
 
-    public static boolean updateJourneyRating(Journey j, User user, String rating) {
-        dbConnection = new DatabaseConnection();
-        conn = dbConnection.getConnection();
-
-        String query = "UPDATE journeys SET rating = '" + rating + "' WHERE userId = " + user.getUserId() +
-                " AND location = '" + j.getLocation() + "' AND description = '" + j.getDescription() + "' AND startDate = '" +
-                Date.valueOf(j.getStartDate()) + "' AND endDate = '" + Date.valueOf(j.getEndDate()) + "'";
-        try {
-            Statement statement = conn.createStatement();
-            return statement.executeUpdate(query) > 0;
-        }
-        catch (SQLException e) {
-            e.printStackTrace();
-            e.getCause();
-        }
-
-        return false;
-    }
-
     public static File getProfilePhotoFile(User user) {
         dbConnection = new DatabaseConnection();
         conn = dbConnection.getConnection();
@@ -265,6 +246,27 @@ public final class DatabaseQuery {
 
         return null;
     }
+
+    public static boolean updateJourneyRating(Journey j, User user, String rating) {
+        dbConnection = new DatabaseConnection();
+        conn = dbConnection.getConnection();
+
+        String query = "UPDATE journeys SET rating = '" + rating + "' WHERE userId = " + user.getUserId() +
+                " AND location = '" + j.getLocation() + "' AND description = '" + j.getDescription() + "' AND startDate = '" +
+                Date.valueOf(j.getStartDate()) + "' AND endDate = '" + Date.valueOf(j.getEndDate()) + "'";
+        try {
+            Statement statement = conn.createStatement();
+            return statement.executeUpdate(query) > 0;
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            e.getCause();
+        }
+
+        return false;
+    }
+
+
 
     /**
      * Finds a user by checking a certain username in the database.
@@ -349,7 +351,7 @@ public final class DatabaseQuery {
      * @param friendName Name of the searched friend
      * @return True if a friend with the given username exists, false otherwise
      */
-    public static boolean findFriendByUsername(String friendName) {
+    public static boolean findFriendByUsername(String friendName, User u) {
         dbConnection = new DatabaseConnection();
         conn = dbConnection.getConnection();
 
@@ -376,7 +378,7 @@ public final class DatabaseQuery {
      * @param email Email of the searched friend
      * @return True if the other user is a friend of the current user, false otherwise
      */
-    public static boolean findFriendByEmail(String email) {
+    public static boolean findFriendByEmail(String email, User u) {
         dbConnection = new DatabaseConnection();
         conn = dbConnection.getConnection();
 
@@ -391,6 +393,30 @@ public final class DatabaseQuery {
             }
         }
         catch (SQLException e) {
+            e.printStackTrace();
+            e.getCause();
+        }
+
+        return false;
+    }
+
+    public static boolean findJourneyByUser(Journey j, User u) {
+        dbConnection = new DatabaseConnection();
+        conn = dbConnection.getConnection();
+
+        String query = "SELECT COUNT(*) journeyId FROM journeys WHERE userId = " + u.getUserId() + " AND location = '" +
+                j.getLocation() + "' AND description = '" + j.getDescription() + "' AND startDate = '" +
+                Date.valueOf(j.getStartDate()) + "' AND endDate = '" + Date.valueOf(j.getEndDate()) + "'";
+
+        try {
+            Statement statement = conn.createStatement();
+            ResultSet rs = statement.executeQuery(query);
+
+            if (rs.next()) {
+                return rs.getInt(1) == 1;
+            }
+
+        } catch (SQLException e) {
             e.printStackTrace();
             e.getCause();
         }
