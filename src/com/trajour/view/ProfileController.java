@@ -99,11 +99,10 @@ public class ProfileController {
         addPictureButton.setOnMouseExited(mouseEvent -> addPictureButton.setEffect(null));
 
         profilePhotoFile = getProfilePhotoFile(currentUser);
-        Image profileImage = new Image(profilePhotoFile.toURI().toString(), 40, 40, false, false);
+        Image profileImage = new Image(profilePhotoFile.toURI().toString(), 180, 180, false, false);
         profilePhotoView.setImage(profileImage);
 
-        ObservableList<String> friends = FXCollections.observableArrayList();
-        friends = getAllFriendsOfUser(currentUser);
+        ObservableList<String> friends = getAllFriendsOfUser(currentUser);
 
         friendsListView.setItems(friends);
         friendsLabel.setText("Friends (" + friends.size() + ")");
@@ -232,7 +231,7 @@ public class ProfileController {
         Stage stage = new Stage();
         File selectedFile = fileChooser.showOpenDialog(stage);
         if (selectedFile != null) {
-            Image img = new Image(selectedFile.toURI().toString(), 40, 40, false, false);
+            Image img = new Image(selectedFile.toURI().toString(), 180, 180, false, false);
 
             profilePhotoView.setImage(img);
 

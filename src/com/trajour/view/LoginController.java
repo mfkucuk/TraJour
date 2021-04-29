@@ -13,7 +13,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import com.trajour.db.DatabaseConnection;
 import com.trajour.model.User;
@@ -58,7 +57,7 @@ public class LoginController implements Initializable {
 
         dbConnection = new DatabaseConnection();
         // Button effects
-        DropShadow shadow = new DropShadow(10, Color.WHITE);
+        DropShadow shadow = new DropShadow();
 
         // Event listeners for text fields and buttons
         emailTextField.requestFocus();
@@ -114,12 +113,11 @@ public class LoginController implements Initializable {
                         .text("Welcome to TraJour, " + currentUser.getUsername() + ", you can navigate through the main page, map page and your profile via" +
                                 " the menu bar at the top!")
                         .graphic(null)
-                        .hideAfter(Duration.seconds(10))
+                        .hideAfter(Duration.seconds(8))
                         .position(Pos.CENTER)
                         .onAction(actionEvent -> {});
-
+                notificationBuilder.darkStyle();
                 notificationBuilder.showConfirm();
-
 
                 // Redirect to main page
                 openMainPage(event, currentUser);
