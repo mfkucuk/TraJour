@@ -8,6 +8,7 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -56,12 +57,25 @@
          <children>
             <Separator orientation="VERTICAL" prefHeight="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="300.0" layoutX="163.0" layoutY="46.0" stroke="BLACK" strokeType="INSIDE" width="500.0" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="70.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="300.0" layoutX="50.0" layoutY="517.0" stroke="BLACK" strokeType="INSIDE" width="500.0" AnchorPane.bottomAnchor="73.0" AnchorPane.leftAnchor="50.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="300.0" layoutX="50.0" layoutY="517.0" stroke="BLACK" strokeType="INSIDE" width="500.0" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="50.0" />
             <Button fx:id="privacyButton" layoutX="812.0" layoutY="903.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="110.0" style="-fx-background-radius: 5; -fx-background-color: #a6f1ff;" text="Privacy" textFill="#110000" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="30.0">
                <font>
                   <Font size="13.0" />
                </font>
             </Button>
+            <ListView fx:id="wishlistListView" layoutX="650.0" layoutY="567.0" prefHeight="303.0" prefWidth="272.0" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="648.0" AnchorPane.rightAnchor="70.0" />
+            <Label layoutX="650.0" layoutY="517.0" text="Your Wishlist" AnchorPane.bottomAnchor="400.0" AnchorPane.rightAnchor="245.0">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+            <ListView fx:id="searchedJourneysListView" layoutX="635.0" layoutY="159.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.leftAnchor="648.0" AnchorPane.rightAnchor="70.0" />
+            <Label layoutX="649.0" layoutY="88.0" text="Search a Journey:">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+            <TextField fx:id="searchJourneyTextField" layoutX="649.0" layoutY="121.0" prefHeight="25.0" prefWidth="270.0" promptText="Enter journey" />
          </children>
       </AnchorPane>
    </center>
@@ -129,7 +143,7 @@
                                 </items>
                               </ContextMenu>
                            </contextMenu></ListView>
-                        <Button fx:id="addFriendButton1" alignment="CENTER" layoutX="215.0" layoutY="304.0" mnemonicParsing="false" onAction="#handleRemoveFriend" prefHeight="30.0" prefWidth="120.0" style="-fx-background-radius: 10; -fx-background-color: #C00000;" text="Remove Friend" textFill="WHITE">
+                        <Button fx:id="removeFriendButton" alignment="CENTER" layoutX="215.0" layoutY="304.0" mnemonicParsing="false" onAction="#handleRemoveFriend" prefHeight="30.0" prefWidth="120.0" style="-fx-background-radius: 10; -fx-background-color: #C00000;" text="Remove Friend" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>

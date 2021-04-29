@@ -65,6 +65,18 @@ public class ProfileController {
     @FXML
     private Label friendsLabel;
 
+    @FXML
+    private ListView<?> wishlistListView;
+
+    @FXML
+    private ListView<?> searchedJourneysListView;
+
+    @FXML
+    private TextField searchJourneyTextField;
+
+    @FXML
+    private Button removeFriendButton;
+
     private User currentUser;
     private File profilePhotoFile;
 
