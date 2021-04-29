@@ -134,6 +134,7 @@ public class MainController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        // Styling of buttons
         DropShadow shadow = new DropShadow(7, Color.WHITE);
         homePageButton.setOnMouseEntered(mouseEvent -> homePageButton.setEffect(shadow));
         homePageButton.setOnMouseExited(mouseEvent -> homePageButton.setEffect(null));
@@ -188,6 +189,8 @@ public class MainController implements Initializable {
 
         contextItemDeleteFutureJourney.setOnAction(actionEvent -> handleDeleteJourneyFromFutureJourneys());
         contextItemDeletePastJourney.setOnAction(actionEvent -> handleDeleteJourneyFromPastJourneys());
+
+        // Shared journeys should be saved into the database and shown in the main feed
     }
 
     /**
@@ -299,6 +302,31 @@ public class MainController implements Initializable {
         }
     }
 
+    @FXML
+    private void handleAddFutureJourney(ActionEvent event) {
+        // TODO Wait for a few seconds
+        openMapPage(event);
+    }
+
+    @FXML
+    private void handleAddPastJourney(ActionEvent event) {
+        // TODO Wait for a few seconds
+        openMapPage(event);
+    }
+
+    @FXML
+    public void handleRemoveFutureJourney(ActionEvent actionEvent) {
+        handleDeleteJourneyFromFutureJourneys();
+    }
+    @FXML
+    private void handleRemovePastJourney(ActionEvent event) {
+        handleDeleteJourneyFromPastJourneys();
+    }
+
+    @FXML
+    private void handleSetRatingOfPastJourney(ActionEvent event) {
+        handleAddRatingToTable();
+    }
     private ObservableList<PastJourney> selectPastJourneys(User user) {
         ObservableList<PastJourney> result = FXCollections.observableArrayList();
         ObservableList<Journey> allJourneys = getAllJourneysOfUser(user);
@@ -327,6 +355,69 @@ public class MainController implements Initializable {
         return result;
     }
 
+
+    private void handleAddRatingToTable() {
+        ObservableList<PastJourney> chosenJourneys = pastJourneysTable.getSelectionModel().getSelectedItems();
+
+        // TODO What if the user enters a string or a value less then 0 or a value more than 10?
+        if (ratingTextField.getText().isBlank()) {
+            Notifications notificationBuilder = buildNotification("Couldn't Rate Journey", "Please write a value between 0 and 10,",
+                    5, Pos.BASELINE_CENTER);
+
+            notificationBuilder.showWarning();
+            return;
+        } else if (chosenJourneys.isEmpty()) {
+            Notifications notificationBuilder = buildNotification("Country Not Chosen", "Please choose a country",
+                    5, Pos.BASELINE_CENTER);
+
+            notificationBuilder.showWarning();
+            return;
+        } else {
+            for (PastJourney pj : chosenJourneys) {
+                updateJourneyRating(pj, currentUser, ratingTextField.getText());
+            }
+
+            pastJourneysTable.getItems().removeAll(chosenJourneys);
+        }
+
+        handleOpenMainPage();
+    }
+
+    private void handleDeleteJourneyFromFutureJourneys() {
+        ObservableList<FutureJourney> chosenJourneys = futureJourneysTable.getSelectionModel().getSelectedItems();
+
+        if ( ! chosenJourneys.isEmpty()) {
+            for (FutureJourney fj : chosenJourneys) {
+                deleteJourney(fj, currentUser);
+            }
+
+            futureJourneysTable.getItems().removeAll(chosenJourneys);
+        } else {
+            Notifications notificationBuilder = buildNotification("Couldn't Delete Journey", "Please choose a " +
+                    "journey or multiple journeys to delete.", 5, Pos.BASELINE_CENTER);
+
+            notificationBuilder.showWarning();
+        }
+    }
+
+    private void handleDeleteJourneyFromPastJourneys() {
+        ObservableList<PastJourney> chosenJourneys = pastJourneysTable.getSelectionModel().getSelectedItems();
+
+        if ( ! chosenJourneys.isEmpty() ) {
+            for (PastJourney pj : chosenJourneys) {
+                deleteJourney(pj, currentUser);
+            }
+
+            pastJourneysTable.getItems().removeAll(chosenJourneys);
+        } else {
+            Notifications notificationBuilder = buildNotification("Couldn't Delete Journey",
+                    "Please choose a journey or multiple journeys to delete.", 5, Pos.BASELINE_CENTER);
+            notificationBuilder.showWarning();
+        }
+
+        handleOpenMainPage();
+    }
+
     private void handleOpenMapPage() {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/com/trajour/view/fxml/mapxz.fxml"));
@@ -351,88 +442,39 @@ public class MainController implements Initializable {
         }
     }
 
-    @FXML
-    private void handleAddFutureJourney(ActionEvent event) {
-        openMapPage(event);
-    }
+    private void handleOpenMainPage() {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/com/trajour/view/fxml/main.fxml"));
 
-    @FXML
-    private void handleAddPastJourney(ActionEvent event) {
-        openMapPage(event);
-    }
+        try {
+            Parent mapPageParent = loader.load();
+            Scene mapPageScene = new Scene(mapPageParent, Main.APPLICATION_WIDTH, Main.APPLICATION_HEIGHT);
 
-    @FXML
-    public void handleRemoveFutureJourney(ActionEvent actionEvent) {
-        handleDeleteJourneyFromFutureJourneys();
-    }
-    @FXML
-    private void handleRemovePastJourney(ActionEvent event) {
-        handleDeleteJourneyFromPastJourneys();
-    }
+            // Get access to the map windows controller
+            MainController mainController = loader.getController();
+            mainController.initData(currentUser);
 
-    @FXML
-    private void handleSetRatingOfPastJourney(ActionEvent event) {
-        ObservableList<PastJourney> selectedJourneys = pastJourneysTable.getSelectionModel().getSelectedItems();
+            // Get the stage and change the scene
+            Stage window = (Stage) homePageButton.getScene().getWindow();
 
-        if (!selectedJourneys.isEmpty()) {
-            for (PastJourney j : selectedJourneys) {
-                updateJourneyRating(j, currentUser, ratingTextField.getText());
-            }
-
-            Notifications notificationBuilder = Notifications.create()
-                    .title("Setting Ratings Successful")
-                    .text("You have set the ratings for some of your past journeys successfully!")
-                    .graphic(null)
-                    .hideAfter(Duration.seconds(5))
-                    .position(Pos.BASELINE_CENTER);
-            notificationBuilder.darkStyle();
-            notificationBuilder.showConfirm();
+            window.setScene(mapPageScene);
+            window.show();
         }
-        else {
-            Notifications notificationBuilder = Notifications.create()
-                    .title("Country Not Chosen")
-                    .text("Please choose a country")
-                    .graphic(null)
-                    .hideAfter(Duration.seconds(5))
-                    .position(Pos.BASELINE_CENTER);
-            notificationBuilder.darkStyle();
-            notificationBuilder.showWarning();
+        catch (IOException e) {
+            e.getCause();
+            e.printStackTrace();
         }
-
-        openHomePage(event);
     }
 
-    private void handleAddRatingToTable() {
-        PastJourney pj = pastJourneysTable.getSelectionModel().getSelectedItem();
-        if (ratingTextField.getText().isBlank()) {
-            Notifications notificationBuilder = Notifications.create()
-                    .title("Couldn't Rate Journey")
-                    .text("Please write a value between 0 and 10")
-                    .graphic(null)
-                    .hideAfter(Duration.seconds(5))
-                    .position(Pos.BASELINE_CENTER);
-            notificationBuilder.darkStyle();
-            notificationBuilder.showWarning();
+    public static Notifications buildNotification(String title, String text, int duration, Pos pos) {
+        Notifications notificationBuilder = Notifications.create()
+                .title(title)
+                .text(text)
+                .graphic(null)
+                .hideAfter(Duration.seconds(duration))
+                .position(pos);
+        notificationBuilder.darkStyle();
 
-        }
-        updateJourneyRating(pj, currentUser, ratingTextField.getText());
-
-        pastJourneysTable.getItems().removeAll(pj);
+        return notificationBuilder;
     }
-
-    private void handleDeleteJourneyFromFutureJourneys() {
-        FutureJourney j = futureJourneysTable.getSelectionModel().getSelectedItem();
-        deleteJourney(j, currentUser);
-
-        futureJourneysTable.getItems().removeAll(j);
-    }
-
-    private void handleDeleteJourneyFromPastJourneys() {
-        PastJourney j = pastJourneysTable.getSelectionModel().getSelectedItem();
-        deleteJourney(j, currentUser);
-
-        pastJourneysTable.getItems().removeAll(j);
-    }
-
-
 }

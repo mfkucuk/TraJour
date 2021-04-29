@@ -36,6 +36,7 @@ import java.util.Scanner;
 
 import static com.trajour.db.DatabaseQuery.findJourneyByUser;
 import static com.trajour.db.DatabaseQuery.insertNewJourney;
+import static com.trajour.view.MainController.buildNotification;
 
 public class MapController implements Initializable {
     @FXML
@@ -296,17 +297,7 @@ public class MapController implements Initializable {
         return result.toString();
     }
 
-    private Notifications buildNotification(String title, String text, int duration, Pos pos) {
-        Notifications notificationBuilder = Notifications.create()
-                .title(title)
-                .text(text)
-                .graphic(null)
-                .hideAfter(Duration.seconds(duration))
-                .position(pos);
-        notificationBuilder.darkStyle();
 
-        return notificationBuilder;
-    }
 
 
 }

@@ -13,7 +13,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import com.trajour.db.DatabaseConnection;
 import com.trajour.model.User;
@@ -119,7 +118,6 @@ public class LoginController implements Initializable {
                         .onAction(actionEvent -> {});
                 notificationBuilder.darkStyle();
                 notificationBuilder.showConfirm();
-
 
                 // Redirect to main page
                 openMainPage(event, currentUser);
