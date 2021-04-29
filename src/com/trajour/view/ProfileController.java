@@ -1,6 +1,6 @@
 package com.trajour.view;
 
-import javafx.collections.FXCollections;
+import com.trajour.model.Friend;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -57,7 +57,7 @@ public class ProfileController {
     private Button changePasswordButton;
 
     @FXML
-    private ListView<String> friendsListView;
+    private ListView<Friend> friendsListView;
 
     @FXML
     private MenuItem refreshMenuItem;
@@ -114,7 +114,7 @@ public class ProfileController {
         Image profileImage = new Image(profilePhotoFile.toURI().toString(), 180, 180, false, false);
         profilePhotoView.setImage(profileImage);
 
-        ObservableList<String> friends = getAllFriendsOfUser(currentUser);
+        ObservableList<Friend> friends = getAllFriendsOfUser(currentUser);
 
         friendsListView.setItems(friends);
         friendsLabel.setText("Friends (" + friends.size() + ")");

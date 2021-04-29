@@ -1,5 +1,6 @@
 package com.trajour.db;
 
+import com.trajour.model.Friend;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import com.trajour.journey.Journey;
@@ -51,11 +52,11 @@ public final class DatabaseQuery {
         return result;
     }
 
-    public static ObservableList<String> getAllFriendsOfUser(User user) {
+    public static ObservableList<Friend> getAllFriendsOfUser(User user) {
         dbConnection = new DatabaseConnection();
         conn = dbConnection.getConnection();
 
-        ObservableList<String> result = FXCollections.observableArrayList();
+        ObservableList<Friend> result = FXCollections.observableArrayList();
         try {
             Statement statement = conn.createStatement();
             String query = "SELECT friendName, friendEmail FROM friends WHERE userID = " + user.getUserId();
@@ -65,8 +66,8 @@ public final class DatabaseQuery {
                 String name = rs.getString("friendName");
                 String email = rs.getString("friendEmail");
 
-                // TODO make it look nicer
-                result.add(name + " - " + email);
+                Friend f = new Friend(name, email);
+                result.add(f);
             }
 
             return result;
@@ -422,17 +423,12 @@ public final class DatabaseQuery {
         return false;
     }
 
-    /**
-     * Adds a new friend to the current user, by using other user's username.
-     * @param friendName Name of the friend
-     * @param currentUser Current user
-     */
-    public static void insertFriendByUsername(String friendName, User currentUser) {
+    public static void insertFriendByUsername(Friend friend, User currentUser) {
         dbConnection = new DatabaseConnection();
         conn = dbConnection.getConnection();
 
         String query = "INSERT INTO friends(userId, friendName, friendEmail) VALUES(" + currentUser.getUserId() + ", "
-                + "'" + friendName + "', " + "'" + getEmailByUsername(friendName) + "')";
+                + "'" + friend.getFriendName() + "', " + "'" + friend.getFriendEmail() + "')";
         try {
             Statement statement = conn.createStatement();
             statement.executeUpdate(query);
@@ -444,17 +440,12 @@ public final class DatabaseQuery {
 
     }
 
-    /**
-     * Adds a new friend to the current user, by using other user's email.
-     * @param friendEmail   Email of the friend
-     * @param username      Username of the friend
-     */
-    public static void insertFriendByEmail(String friendEmail, String username) {
+    public static void insertFriendByEmail(Friend friend, String username) {
         dbConnection = new DatabaseConnection();
         conn = dbConnection.getConnection();
 
         String query = "INSERT INTO friends(userId, friendName, friendEmail) VALUES(" + getUserIdByUsername(username) + ", "
-                + "'" + getUsernameByEmail(friendEmail) + "', " + "'" + friendEmail + "')";
+                + "'" + friend.getFriendEmail() + "', " + "'" + friend.getFriendName() + "')";
         try {
             Statement statement = conn.createStatement();
             statement.executeUpdate(query);

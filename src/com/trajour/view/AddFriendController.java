@@ -1,10 +1,13 @@
 package com.trajour.view;
 
 import com.trajour.db.DatabaseQuery;
+import com.trajour.model.Friend;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import com.trajour.model.User;
+
+import static com.trajour.db.DatabaseQuery.*;
 
 public class AddFriendController {
 
@@ -37,28 +40,44 @@ public class AddFriendController {
         if (friendEmailTextField.getText().isBlank() && friendUsernameTextField.getText().isBlank()) {
             addFriendFeedbackLabel.setText("Fill out one of the text fields.");
         }
+        else if ( ! friendEmailTextField.getText().isBlank() && ! friendUsernameTextField.getText().isBlank()) {
+            addFriendFeedbackLabel.setText("Use only one of the text fields.");
+        }
         else if ( ! friendUsernameTextField.getText().isBlank()) {
             if (DatabaseQuery.findUserByUsername(friendUsernameTextField.getText())) {
-                if ( ! DatabaseQuery.findFriendByUsername(friendUsernameTextField.getText(), currentUser)) {
-                    DatabaseQuery.insertFriendByUsername(friendUsernameTextField.getText(), currentUser);
+                if (friendUsernameTextField.getText().equals(currentUser.getUsername())) {
+                    addFriendFeedbackLabel.setText("I'm afraid you cannot be friends with yourself.");
+                }
+                else if ( ! findFriendByUsername(friendUsernameTextField.getText(), currentUser)) {
+                    Friend friend = new Friend(friendUsernameTextField.getText(), getEmailByUsername(friendUsernameTextField.getText()));
+                    DatabaseQuery.insertFriendByUsername(friend, currentUser);
                     addFriendFeedbackLabel.setText("Friend successfully added.");
-
                 }
                 else {
                     addFriendFeedbackLabel.setText("You are already friends.");
                 }
             }
-        }
-        else if ( ! friendEmailTextField.getText().isBlank()) {
-            if (DatabaseQuery.findUserByEmail(friendEmailTextField.getText())) {
-                if ( ! DatabaseQuery.findFriendByEmail(friendEmailTextField.getText(), currentUser)) {
-                    DatabaseQuery.insertFriendByEmail(friendEmailTextField.getText(), currentUser.getUsername());
-                    addFriendFeedbackLabel.setText("Friend successfully added.");
-                }
+            else {
+                addFriendFeedbackLabel.setText("No such user exists.");
             }
         }
-        else {
-            addFriendFeedbackLabel.setText("Use only one of the text fields.");
+        else if ( ! friendEmailTextField.getText().isBlank()) {
+            if (findUserByEmail(friendEmailTextField.getText())) {
+                if (friendEmailTextField.getText().equals(currentUser.getEmail())) {
+                    addFriendFeedbackLabel.setText("I'm afraid you cannot be friends with yourself.");
+                }
+                else if ( ! findFriendByEmail(friendEmailTextField.getText(), currentUser)) {
+                    Friend friend = new Friend(getUsernameByEmail(friendEmailTextField.getText()), friendEmailTextField.getText());
+                    insertFriendByEmail(friend, currentUser.getUsername());
+                    addFriendFeedbackLabel.setText("Friend successfully added.");
+                }
+                else {
+                    addFriendFeedbackLabel.setText("You are already friends.");
+                }
+            }
+            else {
+                addFriendFeedbackLabel.setText("No such user exists.");
+            }
         }
     }
 }
