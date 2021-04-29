@@ -242,7 +242,7 @@ public final class DatabaseQuery {
             Statement statement = conn.createStatement();
             ResultSet rs = statement.executeQuery(query);
 
-            File newFile = new File("D:/Selim/TraJour/src/resources/profile_photo_" + user.getUserId() + ".png");
+            File newFile = new File("src/resources/profile_photo" + user.getUserId() + ".png");
             output = new FileOutputStream(newFile);
 
             if (rs.next()) {
