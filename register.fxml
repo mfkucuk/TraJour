@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="750.0" style="-fx-background-color: #E0FFFF;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.trajour.view.RegisterController">
+   <center>
+      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" prefHeight="430.0" prefWidth="380.0" style="-fx-background-color: #F5F5F5; -fx-border-width: 4;" BorderPane.alignment="CENTER">
+         <children>
+            <Label alignment="CENTER" layoutX="42.0" layoutY="9.0" prefHeight="58.0" prefWidth="318.0" text="Register To TraJour" AnchorPane.leftAnchor="38.0" AnchorPane.rightAnchor="38.0" AnchorPane.topAnchor="5.0">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Label>
+            <TextField fx:id="usernameTextField" layoutX="80.0" layoutY="89.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="180.0" promptText="Username" AnchorPane.leftAnchor="70.0" AnchorPane.rightAnchor="70.0" AnchorPane.topAnchor="90.0" />
+            <TextField fx:id="emailTextField" layoutX="77.0" layoutY="141.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="190.0" promptText="E-mail" AnchorPane.leftAnchor="70.0" AnchorPane.rightAnchor="70.0" AnchorPane.topAnchor="140.0" />
+            <PasswordField fx:id="confirmPasswordField" layoutX="74.0" layoutY="240.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="190.0" promptText="Confirm Password" AnchorPane.leftAnchor="70.0" AnchorPane.rightAnchor="70.0" AnchorPane.topAnchor="240.0" />
+            <PasswordField fx:id="passwordTextField" layoutX="76.0" layoutY="187.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="190.0" promptText="Password" AnchorPane.leftAnchor="70.0" AnchorPane.rightAnchor="70.0" AnchorPane.topAnchor="190.0" />
+            <Button fx:id="cancelButton" alignment="CENTER" layoutX="113.0" layoutY="365.0" mnemonicParsing="false" onAction="#cancelButtonOnAction" prefHeight="35.0" prefWidth="192.0" style="-fx-background-color: #E6E6FA;" text="Cancel" textFill="#545454" underline="true" AnchorPane.leftAnchor="70.0" AnchorPane.rightAnchor="70.0" AnchorPane.topAnchor="365.0">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Button>
+            <Button fx:id="registerButton" alignment="CENTER" layoutX="74.0" layoutY="322.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#registerButtonOnAction" prefHeight="35.0" prefWidth="186.0" style="-fx-background-color: #E6E6FA;" text="Register" textFill="#5e5e5e" underline="true" AnchorPane.leftAnchor="70.0" AnchorPane.rightAnchor="70.0" AnchorPane.topAnchor="322.0">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Button>
+            <Label fx:id="registrationFeedbackLabel" alignment="CENTER" layoutX="147.0" layoutY="294.0" textFill="RED" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Label>
+            <Line endX="100.0" layoutX="175.0" layoutY="63.0" startX="-100.0" />
+            <Line endX="100.0" layoutX="175.0" layoutY="302.0" startX="-100.0" />
+         </children>
+      </AnchorPane>
+   </center>
+   <left>
+      <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #E0FFFF;" BorderPane.alignment="CENTER" />
+   </left>
+   <right>
+      <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #E0FFFF;" BorderPane.alignment="CENTER" />
+   </right>
+   <top>
+      <Pane prefHeight="50.0" prefWidth="700.0" style="-fx-background-color: #E0FFFF;" BorderPane.alignment="CENTER" />
+   </top>
+   <bottom>
+      <Pane prefHeight="50.0" prefWidth="700.0" style="-fx-background-color: #E0FFFF;" BorderPane.alignment="CENTER" />
+   </bottom>
+</BorderPane>
