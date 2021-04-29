@@ -124,7 +124,17 @@ public class ProfileController {
 
     @FXML
     void handleRemoveFriend(ActionEvent e) {
+        ObservableList<Friend> friends = friendsListView.getSelectionModel().getSelectedItems();
 
+        if ( ! friends.isEmpty()) {
+            for (Friend f : friends) {
+                removeFriend(f, currentUser);
+            }
+
+            friendsListView.getItems().removeAll(friends);
+        }
+
+        openProfilePage(e);
     }
 
     /**
