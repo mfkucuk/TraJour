@@ -355,7 +355,7 @@ public final class DatabaseQuery {
         dbConnection = new DatabaseConnection();
         conn = dbConnection.getConnection();
 
-        String query = "SELECT COUNT(*) friendName FROM friends WHERE userId = " + u.getUserId() + " friendName = '" + friendName + "'";
+        String query = "SELECT COUNT(*) friendName FROM friends WHERE userId = " + u.getUserId() + " AND friendName = '" + friendName + "'";
         try {
             Statement statement = conn.createStatement();
             ResultSet rs = statement.executeQuery(query);
@@ -381,7 +381,7 @@ public final class DatabaseQuery {
         dbConnection = new DatabaseConnection();
         conn = dbConnection.getConnection();
 
-        String query = "SELECT COUNT(*) friendName FROM friends WHERE userId = " + u.getUserId() + " friendName = '" + email + "'";
+        String query = "SELECT COUNT(*) friendName FROM friends WHERE userId = " + u.getUserId() + " AND friendName = '" + email + "'";
         try {
             Statement statement = conn.createStatement();
             ResultSet rs = statement.executeQuery(query);
