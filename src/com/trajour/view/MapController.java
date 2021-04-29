@@ -2,8 +2,10 @@ package com.trajour.view;
 
 import com.trajour.journey.Journey;
 import com.trajour.model.User;
+import javafx.beans.Observable;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -28,9 +30,12 @@ import javax.swing.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 
@@ -72,10 +77,20 @@ public class MapController implements Initializable {
     @FXML
     private CheckBox showLocationsCheckBox;
 
+    @FXML
+    private Button pickRandomCountryButton;
+
+    @FXML
+    private Button showDistanceButton;
+
+    @FXML
+    private TextField countryNumberTextField;
+
     private User currentUser;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        // Initialize button styling
         DropShadow shadow = new DropShadow(7, Color.WHITE);
         homePageButton.setOnMouseEntered(mouseEvent -> homePageButton.setEffect(shadow));
         homePageButton.setOnMouseExited(mouseEvent -> homePageButton.setEffect(null));
@@ -90,13 +105,18 @@ public class MapController implements Initializable {
         addJourneyButton.setOnMouseEntered(mouseEvent -> addJourneyButton.setEffect(blackShadow));
         addJourneyButton.setOnMouseExited(mouseEvent -> addJourneyButton.setEffect(null));
 
+        pickRandomCountryButton.setOnMouseEntered(mouseEvent -> pickRandomCountryButton.setEffect(blackShadow));
+        pickRandomCountryButton.setOnMouseExited(mouseEvent -> pickRandomCountryButton.setEffect(null));
+
+        showDistanceButton.setOnMouseEntered(mouseEvent -> showDistanceButton.setEffect(blackShadow));
+        showDistanceButton.setOnMouseExited(mouseEvent -> showDistanceButton.setEffect(null));
+
         // Zoom in and out
         zoomSlider.valueProperty().addListener((observableValue, number, t1) -> worldMapView.setZoomFactor(zoomSlider.getValue()));
     }
 
     public void initData(User user) {
         currentUser = user;
-        // countriesComboBox.setItems();
 
         // From the JavaFX tutorial in Oracle's website, disables the cells that corresponds to the date
         // selected in the startDate and all the cells corresponding to the preceding dates
@@ -129,6 +149,7 @@ public class MapController implements Initializable {
                         };
                     }
                 };
+
         endDatePicker.setDayCellFactory(dayCellFactory);
 
         endDatePicker.setValue(startDatePicker.getValue().plusDays(1));
@@ -148,6 +169,23 @@ public class MapController implements Initializable {
             double movement = scrollEvent.getDeltaY() / 40;
             zoomSlider.setValue(zoomSlider.getValue() + movement);
         });
+    }
+
+    @FXML
+    void handlePickRandomCountry(ActionEvent event) {
+        String selectedCountryName = getRandomCountry();
+
+        selectedCountryField.setText(selectedCountryName);
+    }
+
+    @FXML
+    void handleShowDistance(ActionEvent event) {
+
+    }
+
+    @FXML
+    void handleShowLocations(ActionEvent event) {
+
     }
 
     @FXML
@@ -176,7 +214,7 @@ public class MapController implements Initializable {
         String country = countryCodeToCountryName(selectedCountry.get(0).name());
 
         Journey j = new Journey(country, journeyDesc, start, end);
-        // TODO Do not add journey if the same journey exists.
+
         if (findJourneyByUser(j, currentUser)) {
             Notifications notification = buildNotification("Journey Already Exists", "A journey with the " +
                     "exact same specifications already exists in your journeys list. ", 8, Pos.BASELINE_CENTER);
@@ -187,16 +225,11 @@ public class MapController implements Initializable {
 
             // Build notification
             Notifications notificationBuilder = buildNotification("Added Journey!", "Journey is successfully " +
-                    "added.", 8, Pos.BASELINE_CENTER);
+                    "added. Journey details: \nCountry: " + j.getLocation() + ", Description: " + j.getDescription() +
+                    ", Dates: " + j.getStartDate() + " - " + j.getEndDate(), 8, Pos.BASELINE_CENTER);
 
             notificationBuilder.showConfirm();
         }
-
-    }
-
-    @FXML
-    void handleShowLocations(ActionEvent e) {
-
     }
 
     @FXML
@@ -274,8 +307,6 @@ public class MapController implements Initializable {
         }
     }
 
-
-
     private String countryCodeToCountryName(String code) throws FileNotFoundException {
         Scanner in = new Scanner(new File("src/resources/countries_with_codes.csv"));
         StringBuilder result = new StringBuilder();
@@ -297,7 +328,96 @@ public class MapController implements Initializable {
         return result.toString();
     }
 
+//    @FXML
+//    void handlePickRandomCountry(ActionEvent event) {
+//        ObservableList<WorldMapView.Country> selectedCountries = FXCollections.observableArrayList();
+//        ObservableList<String> selectedCountryNames = getRandomCountries(Integer.valueOf(countryNumberTextField.getText()));
+//
+//        for (String s : selectedCountryNames) {
+//            selectedCountries.add(WorldMapView.Country.valueOf(s));
+//        }
+//
+//        worldMapView.setCountrySelectionMode(WorldMapView.SelectionMode.MULTIPLE);
+//        worldMapView.setSelectedCountries(selectedCountries);
+//    }
+//
+    private int getRandomNumber() {
+        return getRandomNumber(173, 2);
+    }
 
+    private int getRandomNumber(final int MAX, final int MIN) {
+        ArrayList<Integer> result = new ArrayList<>();
+        Random rand = new Random();
 
+        final int MAX_NUM = MAX;
+        final int MIN_NUM = MIN;
 
+        int randNum = rand.nextInt(MAX - MIN + 1) + MIN;
+
+        return randNum;
+    }
+
+    private String getRandomCountry() {
+        try {
+            ObservableList<String> countries = FXCollections.observableArrayList();
+            int randomNum = getRandomNumber();
+
+            Scanner in = new Scanner(new File("src/resources/countries.csv"));
+            while (in.hasNextLine()) {
+                for (int i = 1; i < randomNum; i++) {
+                    in.nextLine();
+                }
+
+                String line = in.nextLine();
+                String[] pieces = line.split(",");
+                return pieces[3];
+            }
+        } catch (FileNotFoundException e) {
+            e.getCause();
+            e.printStackTrace();
+        }
+
+        return "";
+    }
+
+//    private ObservableList<String> getRandomCountries(int numberOfRandomCountries) {
+//        try {
+//            if (numberOfRandomCountries > 246) {
+//                throw new IllegalArgumentException("There are only 246 countries");
+//            }
+//
+//            ObservableList<String> countries = FXCollections.observableArrayList();
+//            ArrayList<Integer> randomNums = getRandomNumber(numberOfRandomCountries);
+//
+//            Scanner in = new Scanner(new File("src/resources/countries.csv"));
+//            while (in.hasNextLine()) {
+//                for (int i = 0; i < numberOfRandomCountries; i++) {
+//                    in = new Scanner(new File("src/resources/countries.csv"));
+//                    int j = randomNums.get(i);
+//
+//                    while (j > 1) {
+//                        in.nextLine();
+//                        j--;
+//                    }
+//
+//                    String line = in.nextLine();
+//                    String[] pieces = line.split(",");
+//                    countries.add(pieces[3]);
+//
+//                    if (i == numberOfRandomCountries - 1)
+//                        break;
+//                }
+//
+//                break;
+//            }
+//
+//            in.close();
+//            return countries;
+//        } catch (FileNotFoundException e) {
+//            e.getCause();
+//            e.printStackTrace();
+//        }
+//
+//        return FXCollections.observableArrayList();
+//    }
 }

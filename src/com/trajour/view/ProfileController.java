@@ -110,6 +110,11 @@ public class ProfileController {
         refreshMenuItem.setOnAction(actionEvent -> initData(currentUser));
     }
 
+    @FXML
+    void handleRemoveFriend(ActionEvent e) {
+
+    }
+
     /**
      * Opens the home page.
      * @param event Event

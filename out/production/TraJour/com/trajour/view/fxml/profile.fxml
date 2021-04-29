@@ -52,11 +52,11 @@
       </ToolBar>
    </top>
    <center>
-      <AnchorPane prefHeight="1038.0" prefWidth="1400.0" style="-fx-background-color: #E0FFFF;" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="1038.0" prefWidth="1400.0" style="-fx-background-color: #BFFCC6;" BorderPane.alignment="CENTER">
          <children>
             <Separator orientation="VERTICAL" prefHeight="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="350.0" layoutX="163.0" layoutY="46.0" stroke="BLACK" strokeType="INSIDE" width="741.0" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="70.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="350.0" layoutX="163.0" layoutY="437.0" stroke="BLACK" strokeType="INSIDE" width="741.0" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="50.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="300.0" layoutX="163.0" layoutY="46.0" stroke="BLACK" strokeType="INSIDE" width="500.0" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="70.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="300.0" layoutX="50.0" layoutY="517.0" stroke="BLACK" strokeType="INSIDE" width="500.0" AnchorPane.bottomAnchor="73.0" AnchorPane.leftAnchor="50.0" />
             <Button fx:id="privacyButton" layoutX="812.0" layoutY="903.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="110.0" style="-fx-background-radius: 5; -fx-background-color: #a6f1ff;" text="Privacy" textFill="#110000" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="30.0">
                <font>
                   <Font size="13.0" />
@@ -66,9 +66,9 @@
       </AnchorPane>
    </center>
    <left>
-      <AnchorPane prefHeight="957.0" prefWidth="313.0" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="940.0" prefWidth="410.0" BorderPane.alignment="CENTER">
          <children>
-            <VBox maxWidth="1.7976931348623157E308" prefHeight="989.0" prefWidth="330.0" style="-fx-background-color: #E0FFFF;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <VBox maxWidth="1.7976931348623157E308" prefHeight="989.0" prefWidth="382.0" style="-fx-background-color: #BFFCC6;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <AnchorPane minHeight="-Infinity" prefHeight="201.0" prefWidth="330.0" VBox.vgrow="ALWAYS">
                      <children>
@@ -116,7 +116,7 @@
                               <Font name="System Bold" size="16.0" />
                            </font>
                         </Label>
-                        <Button fx:id="addFriendButton" alignment="CENTER" layoutX="116.0" layoutY="304.0" mnemonicParsing="false" onAction="#openAddFriendPage" prefHeight="30.0" prefWidth="98.0" style="-fx-background-radius: 10; -fx-background-color: #C00000;" text="Add Friend" textFill="WHITE" AnchorPane.leftAnchor="116.0" AnchorPane.rightAnchor="116.0" AnchorPane.topAnchor="304.0">
+                        <Button fx:id="addFriendButton" alignment="CENTER" layoutX="58.0" layoutY="304.0" mnemonicParsing="false" onAction="#openAddFriendPage" prefHeight="30.0" prefWidth="120.0" style="-fx-background-radius: 10; -fx-background-color: #C00000;" text="Add Friend" textFill="WHITE" AnchorPane.leftAnchor="58.0" AnchorPane.topAnchor="304.0">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
@@ -129,6 +129,11 @@
                                 </items>
                               </ContextMenu>
                            </contextMenu></ListView>
+                        <Button fx:id="addFriendButton1" alignment="CENTER" layoutX="215.0" layoutY="304.0" mnemonicParsing="false" onAction="#handleRemoveFriend" prefHeight="30.0" prefWidth="120.0" style="-fx-background-radius: 10; -fx-background-color: #C00000;" text="Remove Friend" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Button>
                      </children>
                   </AnchorPane>
                   <Separator layoutX="10.0" layoutY="298.0" prefWidth="250.0">

@@ -37,6 +37,7 @@
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
@@ -50,35 +51,55 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.trajour.view.MapController">
    <top>
-      <ToolBar prefHeight="61.0" prefWidth="1393.0" style="-fx-background-color: #00203FFF;" BorderPane.alignment="CENTER">
+      <ToolBar prefHeight="80.0" prefWidth="1400.0" style="-fx-background-color: #00203FFF;" BorderPane.alignment="CENTER">
          <items>
-            <Button fx:id="homePageButton" mnemonicParsing="false" onAction="#openHomePage" prefHeight="32.0" prefWidth="67.0" style="-fx-background-radius: 10; -fx-background-color: white;" textAlignment="JUSTIFY">
+            <Separator orientation="VERTICAL" prefHeight="80.0">
+               <padding>
+                  <Insets right="50.0" />
+               </padding>
+            </Separator>
+            <Button fx:id="homePageButton" mnemonicParsing="false" onAction="#openHomePage" prefHeight="55.0" prefWidth="90.0" style="-fx-background-radius: 10; -fx-background-color: white;" textAlignment="JUSTIFY">
                <graphic>
-                  <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="36.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@/resources/home_icon.png" />
                      </image>
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="mapPageButton" mnemonicParsing="false" onAction="#openMapPage" prefHeight="32.0" prefWidth="67.0" style="-fx-background-radius: 10; -fx-background-color: white;">
+            <Separator orientation="VERTICAL" prefHeight="80.0">
+               <padding>
+                  <Insets left="50.0" right="50.0" />
+               </padding>
+            </Separator>
+            <Button fx:id="mapPageButton" mnemonicParsing="false" onAction="#openMapPage" prefHeight="55.0" prefWidth="90.0" style="-fx-background-radius: 10; -fx-background-color: white;">
                <graphic>
-                  <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="36.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@/resources/map_pin.png" />
                      </image>
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="profilePageButton" mnemonicParsing="false" onAction="#openProfilePage" prefHeight="32.0" prefWidth="67.0" style="-fx-background-radius: 10; -fx-background-color: white;">
+            <Separator orientation="VERTICAL" prefHeight="80.0">
+               <padding>
+                  <Insets left="50.0" right="50.0" />
+               </padding>
+            </Separator>
+            <Button fx:id="profilePageButton" mnemonicParsing="false" onAction="#openProfilePage" prefHeight="55.0" prefWidth="90.0" style="-fx-background-radius: 10; -fx-background-color: white;">
                <graphic>
-                  <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="36.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@/resources/user_account_icon.png" />
                      </image>
                   </ImageView>
                </graphic>
             </Button>
+            <Separator orientation="VERTICAL" prefHeight="80.0">
+               <padding>
+                  <Insets left="50.0" right="100.0" />
+               </padding>
+            </Separator>
             <Label text="Zoom:" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="14.0" />
@@ -93,18 +114,24 @@
                </padding>
             </Slider>
          </items>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
       </ToolBar>
    </top>
    <center>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <WorldMapView fx:id="worldMapView" prefHeight="942.0" prefWidth="1400.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-            <AnchorPane layoutY="493.0" prefHeight="439.0" prefWidth="268.0">
+            <WorldMapView fx:id="worldMapView" prefHeight="910.0" prefWidth="1400.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+            <AnchorPane layoutY="493.0" prefHeight="430.0" prefWidth="265.0" AnchorPane.bottomAnchor="10.0">
                <children>
-                  <Button fx:id="addJourneyButton" layoutX="88.0" layoutY="415.0" mnemonicParsing="false" onAction="#handleAddJourney" prefHeight="35.0" prefWidth="80.0" style="-fx-background-radius: 10; -fx-background-color: #C00000;" text="Add Journey" textFill="WHITE" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="80.0" />
+                  <Button fx:id="addJourneyButton" layoutX="88.0" layoutY="415.0" mnemonicParsing="false" onAction="#handleAddJourney" prefHeight="35.0" prefWidth="80.0" style="-fx-background-radius: 10; -fx-background-color: #C00000;" text="Add Journey" textFill="WHITE" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="80.0">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font></Button>
                   <DatePicker fx:id="startDatePicker" layoutX="46.0" layoutY="108.0" promptText="Start Date" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="45.0" AnchorPane.topAnchor="108.0" />
                   <DatePicker fx:id="endDatePicker" layoutX="46.0" layoutY="141.0" promptText="End Date" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="45.0" AnchorPane.topAnchor="141.0" />
-                  <TextArea fx:id="journeyDescriptionTextArea" layoutX="18.0" layoutY="202.0" prefHeight="187.0" prefWidth="226.0" promptText="Your description of journey" AnchorPane.bottomAnchor="52.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="24.0" AnchorPane.topAnchor="202.0">
+                  <TextArea fx:id="journeyDescriptionTextArea" layoutX="18.0" layoutY="202.0" prefHeight="180.0" prefWidth="180.0" promptText="Your description of journey" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="24.0" AnchorPane.topAnchor="202.0">
                      <font>
                         <Font size="13.0" />
                      </font></TextArea>
@@ -123,11 +150,22 @@
                   <TextField fx:id="selectedCountryField" editable="false" layoutX="46.0" layoutY="43.0" promptText="Selected Country" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="35.0" />
                </children>
             </AnchorPane>
-            <CheckBox fx:id="showLocationsCheckBox" layoutX="20.0" layoutY="21.0" mnemonicParsing="false" onAction="#handleShowLocations" text="Show Locations">
+            <CheckBox fx:id="showLocationsCheckBox" layoutX="550.0" layoutY="824.0" mnemonicParsing="false" onAction="#handleShowLocations" text="Show Locations" AnchorPane.bottomAnchor="66.0" AnchorPane.leftAnchor="550.0" AnchorPane.rightAnchor="728.0">
                <font>
                   <Font size="14.0" />
                </font>
             </CheckBox>
+            <Button fx:id="pickRandomCountryButton" layoutX="738.0" layoutY="814.0" mnemonicParsing="false" onAction="#handlePickRandomCountry" prefHeight="40.0" prefWidth="175.0" style="-fx-background-color: #C00000; -fx-background-radius: 10;" text="Pick Random Countries" textFill="WHITE" AnchorPane.bottomAnchor="56.0" AnchorPane.leftAnchor="738.0" AnchorPane.rightAnchor="482.0">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Button>
+            <Button fx:id="showDistanceButton" layoutX="550.0" layoutY="860.0" mnemonicParsing="false" onAction="#handleShowDistance" prefHeight="40.0" prefWidth="120.0" style="-fx-background-color: #C00000; -fx-background-radius: 10;" text="Show Distance" textFill="WHITE" AnchorPane.bottomAnchor="10.0">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Button>
+            <TextField fx:id="countryNumberTextField" layoutX="744.0" layoutY="868.0" promptText="How many countries?" />
          </children>
       </AnchorPane>
    </center>

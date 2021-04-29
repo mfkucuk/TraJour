@@ -32,7 +32,7 @@
             </Separator>
             <Button fx:id="homePageButton" mnemonicParsing="false" onAction="#openHomePage" prefHeight="55.0" prefWidth="90.0" style="-fx-background-radius: 10; -fx-background-color: white;" textAlignment="JUSTIFY">
                <graphic>
-                  <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="36.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../../../resources/home_icon.png" />
                      </image>
@@ -46,7 +46,7 @@
             </Separator>
             <Button fx:id="mapPageButton" mnemonicParsing="false" onAction="#openMapPage" prefHeight="55.0" prefWidth="90.0" style="-fx-background-radius: 10; -fx-background-color: white;">
                <graphic>
-                  <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="36.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../../../resources/map_pin.png" />
                      </image>
@@ -60,7 +60,7 @@
             </Separator>
             <Button fx:id="profilePageButton" mnemonicParsing="false" onAction="#openProfilePage" prefHeight="55.0" prefWidth="90.0" style="-fx-background-radius: 10; -fx-background-color: white;">
                <graphic>
-                  <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="36.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../../../resources/user_account_icon.png" />
                      </image>
@@ -76,7 +76,7 @@
       </ToolBar>
    </top>
    <center>
-      <BorderPane prefHeight="1036.0" prefWidth="1165.0" style="-fx-background-color: #E0FFFF;" BorderPane.alignment="CENTER">
+      <BorderPane prefHeight="1036.0" prefWidth="1165.0" style="-fx-background-color: #BFFCC6;" BorderPane.alignment="CENTER">
          <top>
             <HBox prefHeight="50.0" prefWidth="780.0" BorderPane.alignment="CENTER">
                <children>
@@ -120,7 +120,7 @@
       </BorderPane>
    </center>
    <right>
-      <VBox maxHeight="1045.0" maxWidth="500.0" prefHeight="500.0" prefWidth="500.0" style="-fx-background-color: #E0FFFF;" BorderPane.alignment="CENTER">
+      <VBox maxHeight="1045.0" maxWidth="500.0" prefHeight="500.0" prefWidth="500.0" style="-fx-background-color: #BFFCC6;" BorderPane.alignment="CENTER">
          <children>
             <Label alignment="CENTER" text="Future Journeys">
                <font>
