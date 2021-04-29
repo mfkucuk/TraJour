@@ -327,7 +327,7 @@ public class MainController implements Initializable {
         return result;
     }
 
-    void handleOpenMapPage() {
+    private void handleOpenMapPage() {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/com/trajour/view/fxml/mapxz.fxml"));
 
@@ -352,26 +352,57 @@ public class MainController implements Initializable {
     }
 
     @FXML
-    void handleAddFutureJourney(ActionEvent event) {
-
+    private void handleAddFutureJourney(ActionEvent event) {
+        openMapPage(event);
     }
 
     @FXML
-    void handleAddPastJourney(ActionEvent event) {
-
+    private void handleAddPastJourney(ActionEvent event) {
+        openMapPage(event);
     }
 
     @FXML
-    void handleRemovePastJourney(ActionEvent event) {
-
+    public void handleRemoveFutureJourney(ActionEvent actionEvent) {
+        handleDeleteJourneyFromFutureJourneys();
+    }
+    @FXML
+    private void handleRemovePastJourney(ActionEvent event) {
+        handleDeleteJourneyFromPastJourneys();
     }
 
     @FXML
-    void handleSetRatingOfPastJourney(ActionEvent event) {
+    private void handleSetRatingOfPastJourney(ActionEvent event) {
+        ObservableList<PastJourney> selectedJourneys = pastJourneysTable.getSelectionModel().getSelectedItems();
 
+        if (!selectedJourneys.isEmpty()) {
+            for (PastJourney j : selectedJourneys) {
+                updateJourneyRating(j, currentUser, ratingTextField.getText());
+            }
+
+            Notifications notificationBuilder = Notifications.create()
+                    .title("Setting Ratings Successful")
+                    .text("You have set the ratings for some of your past journeys successfully!")
+                    .graphic(null)
+                    .hideAfter(Duration.seconds(5))
+                    .position(Pos.BASELINE_CENTER);
+            notificationBuilder.darkStyle();
+            notificationBuilder.showConfirm();
+        }
+        else {
+            Notifications notificationBuilder = Notifications.create()
+                    .title("Country Not Chosen")
+                    .text("Please choose a country")
+                    .graphic(null)
+                    .hideAfter(Duration.seconds(5))
+                    .position(Pos.BASELINE_CENTER);
+            notificationBuilder.darkStyle();
+            notificationBuilder.showWarning();
+        }
+
+        openHomePage(event);
     }
 
-    void handleAddRatingToTable() {
+    private void handleAddRatingToTable() {
         PastJourney pj = pastJourneysTable.getSelectionModel().getSelectedItem();
         if (ratingTextField.getText().isBlank()) {
             Notifications notificationBuilder = Notifications.create()
@@ -379,8 +410,7 @@ public class MainController implements Initializable {
                     .text("Please write a value between 0 and 10")
                     .graphic(null)
                     .hideAfter(Duration.seconds(5))
-                    .position(Pos.BASELINE_CENTER)
-                    .onAction(actionEvent -> {});
+                    .position(Pos.BASELINE_CENTER);
             notificationBuilder.darkStyle();
             notificationBuilder.showWarning();
 
@@ -390,19 +420,19 @@ public class MainController implements Initializable {
         pastJourneysTable.getItems().removeAll(pj);
     }
 
-    void handleDeleteJourneyFromFutureJourneys() {
+    private void handleDeleteJourneyFromFutureJourneys() {
         FutureJourney j = futureJourneysTable.getSelectionModel().getSelectedItem();
         deleteJourney(j, currentUser);
 
         futureJourneysTable.getItems().removeAll(j);
     }
 
-    void handleDeleteJourneyFromPastJourneys() {
+    private void handleDeleteJourneyFromPastJourneys() {
         PastJourney j = pastJourneysTable.getSelectionModel().getSelectedItem();
         deleteJourney(j, currentUser);
 
         pastJourneysTable.getItems().removeAll(j);
-
-
     }
+
+
 }

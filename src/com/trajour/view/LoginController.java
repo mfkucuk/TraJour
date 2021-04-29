@@ -58,7 +58,7 @@ public class LoginController implements Initializable {
 
         dbConnection = new DatabaseConnection();
         // Button effects
-        DropShadow shadow = new DropShadow(10, Color.WHITE);
+        DropShadow shadow = new DropShadow();
 
         // Event listeners for text fields and buttons
         emailTextField.requestFocus();

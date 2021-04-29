@@ -52,7 +52,7 @@
       </ToolBar>
    </top>
    <center>
-      <AnchorPane prefHeight="1038.0" prefWidth="1400.0" style="-fx-background-color: #ADEFD1FF;" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="1038.0" prefWidth="1400.0" style="-fx-background-color: #E0FFFF;" BorderPane.alignment="CENTER">
          <children>
             <Separator orientation="VERTICAL" prefHeight="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="350.0" layoutX="163.0" layoutY="46.0" stroke="BLACK" strokeType="INSIDE" width="741.0" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="70.0" />
@@ -68,7 +68,7 @@
    <left>
       <AnchorPane prefHeight="957.0" prefWidth="313.0" BorderPane.alignment="CENTER">
          <children>
-            <VBox maxWidth="1.7976931348623157E308" prefHeight="989.0" prefWidth="330.0" style="-fx-background-color: #ADEFD1FF;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <VBox maxWidth="1.7976931348623157E308" prefHeight="989.0" prefWidth="330.0" style="-fx-background-color: #E0FFFF;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <AnchorPane minHeight="-Infinity" prefHeight="201.0" prefWidth="330.0" VBox.vgrow="ALWAYS">
                      <children>
