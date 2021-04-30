@@ -1,5 +1,6 @@
 package com.trajour.view;
 
+import com.trajour.journey.Journey;
 import com.trajour.model.Friend;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -15,10 +16,13 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.controlsfx.control.textfield.AutoCompletionBinding;
 import com.trajour.model.User;
+import org.controlsfx.control.textfield.TextFields;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import static com.trajour.db.DatabaseQuery.*;
 
@@ -69,7 +73,7 @@ public class ProfileController {
     private ListView<?> wishlistListView;
 
     @FXML
-    private ListView<?> searchedJourneysListView;
+    private ListView<Journey> searchedJourneysListView;
 
     @FXML
     private TextField searchJourneyTextField;
@@ -77,8 +81,14 @@ public class ProfileController {
     @FXML
     private Button removeFriendButton;
 
+    @FXML
+    private Button searchButton;
+
     private User currentUser;
     private File profilePhotoFile;
+
+    private AutoCompletionBinding<String> autoComplete;
+    private ArrayList<String> suggestions = new ArrayList<String>();
 
     public void initData(User user) {
         currentUser = user;
@@ -118,6 +128,16 @@ public class ProfileController {
         profilePhotoView.setImage(profileImage);
 
         ObservableList<Friend> friends = getAllFriendsOfUser(currentUser);
+        ObservableList<Journey> journeys = getAllJourneysOfUser(currentUser);
+
+        // Adding search box suggestions
+        for (int i = 0; i < journeys.size() ; i++) {
+            suggestions.add( i, journeys.get(i).getTitle() );
+        }
+
+        TextFields.bindAutoCompletion(searchJourneyTextField, suggestions);
+
+        //TODO if we initialize searchedJourneysListView here, it shows all of the journeys
 
         friendsListView.setItems(friends);
         friendsLabel.setText("Friends (" + friends.size() + ")");
@@ -140,6 +160,21 @@ public class ProfileController {
         openProfilePage(e);
     }
 
+    @FXML
+    void searchJourneyByTitle(ActionEvent e ){
+        ObservableList<Journey> journeys = getAllJourneysOfUser(currentUser);
+        String journeyTitle = searchJourneyTextField.getText();
+
+        for( Journey j: journeys ){
+            if( j.getTitle().equals(journeyTitle) )
+            {
+                //TODO it don't show the searched journey
+                searchedJourneysListView.getItems().add(j);
+            }
+        }
+
+        openProfilePage(e);
+    }
     /**
      * Opens the home page.
      * @param event Event
