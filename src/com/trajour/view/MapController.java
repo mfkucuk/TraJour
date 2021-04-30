@@ -81,9 +81,6 @@ public class MapController implements Initializable {
     private Button showDistanceButton;
 
     @FXML
-    private TextField countryNumberTextField;
-
-    @FXML
     private TextField journeyTitleTextField;
 
     private User currentUser;
@@ -125,7 +122,7 @@ public class MapController implements Initializable {
         worldMapView.setLocationViewFactory(location -> {
             Circle circle = new Circle();
             circle.setRadius(4);
-            circle.setTranslateX(-4); // translate to center node on location
+            circle.setTranslateX(-4);
             circle.setTranslateY(-4);
             circle.setOnMouseEntered(mouseEvent -> tooltip.setText(location.getName() + " - " + location.getLatitude()));
             Tooltip.install(circle, tooltip);
@@ -176,12 +173,8 @@ public class MapController implements Initializable {
 
         // Map zoom functionality
         worldMapView.setOnMouseClicked(mouseEvent -> {
-            try {
-                if (!worldMapView.getSelectedCountries().isEmpty()) {
-                    selectedCountryField.setText(countryCodeToCountryName(worldMapView.getSelectedCountries().get(0).name()));
-                }
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
+            if (!worldMapView.getSelectedCountries().isEmpty()) {
+                    selectedCountryField.setText(worldMapView.getSelectedCountries().get(0).getLocale().getDisplayCountry());
             }
         });
 
@@ -191,12 +184,7 @@ public class MapController implements Initializable {
         });
     }
 
-    @FXML
-    void handlePickRandomCountry(ActionEvent event) {
-        String selectedCountryName = getRandomCountry();
-
-        selectedCountryField.setText(selectedCountryName);
-    }
+//
 
     @FXML
     void handleShowDistance(ActionEvent event) {
@@ -231,10 +219,9 @@ public class MapController implements Initializable {
         String title = journeyTitleTextField.getText();
         LocalDate start = startDatePicker.getValue();
         LocalDate end = endDatePicker.getValue();
+        String location = selectedCountry.get(0).getLocale().getDisplayCountry();
 
-        String country = countryCodeToCountryName(selectedCountry.get(0).name());
-
-        Journey j = new Journey(country, title, journeyDesc, start, end);
+        Journey j = new Journey(location, title, journeyDesc, start, end);
 
         if (findJourneyByUser(j, currentUser)) {
             Notifications notification = buildNotification("Journey Already Exists", "A journey with the " +
@@ -351,6 +338,16 @@ public class MapController implements Initializable {
 
 //    @FXML
 //    void handlePickRandomCountry(ActionEvent event) {
+//        String selectedCountryName = getRandomCountry();
+//        ObservableList<WorldMapView.Country> selectedCountries = FXCollections.observableArrayList();
+//        selectedCountries.add(WorldMapView.Country.valueOf(selectedCountryName));
+//
+//        worldMapView.setSelectedCountries(selectedCountries);
+//        selectedCountryField.setText(selectedCountryName);
+//    }
+
+//    @FXML
+//    void handlePickRandomCountry(ActionEvent event) {
 //        ObservableList<WorldMapView.Country> selectedCountries = FXCollections.observableArrayList();
 //        ObservableList<String> selectedCountryNames = getRandomCountries(Integer.valueOf(countryNumberTextField.getText()));
 //
@@ -362,44 +359,45 @@ public class MapController implements Initializable {
 //        worldMapView.setSelectedCountries(selectedCountries);
 //    }
 //
-    private int getRandomNumber() {
-        return getRandomNumber(173, 2);
-    }
-
-    private int getRandomNumber(final int MAX, final int MIN) {
-        ArrayList<Integer> result = new ArrayList<>();
-        Random rand = new Random();
-
-        final int MAX_NUM = MAX;
-        final int MIN_NUM = MIN;
-
-        int randNum = rand.nextInt(MAX - MIN + 1) + MIN;
-
-        return randNum;
-    }
-
-    private String getRandomCountry() {
-        try {
-            ObservableList<String> countries = FXCollections.observableArrayList();
-            int randomNum = getRandomNumber();
-
-            Scanner in = new Scanner(new File("src/resources/countries.csv"));
-            while (in.hasNextLine()) {
-                for (int i = 1; i < randomNum; i++) {
-                    in.nextLine();
-                }
-
-                String line = in.nextLine();
-                String[] pieces = line.split(",");
-                return pieces[3];
-            }
-        } catch (FileNotFoundException e) {
-            e.getCause();
-            e.printStackTrace();
-        }
-
-        return "";
-    }
+//    private int getRandomNumber() {
+//        return getRandomNumber(173, 2);
+//    }
+//
+//    private int getRandomNumber(final int MAX, final int MIN) {
+//        ArrayList<Integer> result = new ArrayList<>();
+//        Random rand = new Random();
+//
+//        final int MAX_NUM = MAX;
+//        final int MIN_NUM = MIN;
+//
+//        int randNum = rand.nextInt(MAX - MIN + 1) + MIN;
+//
+//        return randNum;
+//    }
+//
+//
+//    private String getRandomCountry() {
+//        try {
+//            ObservableList<String> countries = FXCollections.observableArrayList();
+//            int randomNum = getRandomNumber();
+//
+//            Scanner in = new Scanner(new File("src/resources/countries.csv"));
+//            while (in.hasNextLine()) {
+//                for (int i = 1; i < randomNum; i++) {
+//                    in.nextLine();
+//                }
+//
+//                String line = in.nextLine();
+//                String[] pieces = line.split(",");
+//                return pieces[3];
+//            }
+//        } catch (FileNotFoundException e) {
+//            e.getCause();
+//            e.printStackTrace();
+//        }
+//
+//        return "";
+//    }
 
 //    private ObservableList<String> getRandomCountries(int numberOfRandomCountries) {
 //        try {

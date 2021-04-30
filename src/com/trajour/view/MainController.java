@@ -51,6 +51,9 @@ public class MainController implements Initializable {
     private TableColumn<FutureJourney, String> futureJourneysCountryColumn;
 
     @FXML
+    private TableColumn<FutureJourney, String> futureJourneysTitleColumn;
+
+    @FXML
     private TableColumn<FutureJourney, String> futureJourneysDescriptionColumn;
 
     @FXML
@@ -61,6 +64,9 @@ public class MainController implements Initializable {
 
     @FXML
     private TableColumn<PastJourney, String> pastJourneysCountryColumn;
+
+    @FXML
+    private TableColumn<PastJourney, String> pastJourneysTitleColumn;
 
     @FXML
     private TableColumn<PastJourney, String> pastJourneysRatingColumn;
@@ -163,6 +169,7 @@ public class MainController implements Initializable {
         futureJourneysList = selectFutureJourneys(currentUser);
 
         futureJourneysCountryColumn.setCellValueFactory(new PropertyValueFactory<FutureJourney, String>("location"));
+        futureJourneysTitleColumn.setCellValueFactory(new PropertyValueFactory<FutureJourney, String >("title"));
         futureJourneysDescriptionColumn.setCellValueFactory(new PropertyValueFactory<FutureJourney, String>("description"));
         futureJourneysStartDateColumn.setCellValueFactory(new PropertyValueFactory<FutureJourney, LocalDate>("startDate"));
         futureJourneysEndDateColumn.setCellValueFactory(new PropertyValueFactory<FutureJourney, LocalDate>("endDate"));
@@ -173,6 +180,7 @@ public class MainController implements Initializable {
         pastJourneysList = selectPastJourneys(currentUser);
 
         pastJourneysCountryColumn.setCellValueFactory(new PropertyValueFactory<>("location"));
+        pastJourneysTitleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
         pastJourneysRatingColumn.setCellValueFactory(new PropertyValueFactory<>("rating"));
         pastJourneysDescriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
         pastJourneysStartDateColumn.setCellValueFactory(new PropertyValueFactory<>("startDate"));
@@ -365,16 +373,16 @@ public class MainController implements Initializable {
         if (ratingTextField.getText().isBlank()) {
             Notifications notificationBuilder = buildNotification("Couldn't Rate Journey", "Please write a value between 0 and 10,",
                     5, Pos.BASELINE_CENTER);
-
             notificationBuilder.showWarning();
             return;
-        } else if (chosenJourneys.isEmpty()) {
+        }
+        else if (chosenJourneys.isEmpty()) {
             Notifications notificationBuilder = buildNotification("Country Not Chosen", "Please choose a country",
                     5, Pos.BASELINE_CENTER);
-
             notificationBuilder.showWarning();
             return;
-        } else {
+        }
+        else {
             for (PastJourney pj : chosenJourneys) {
                 updateJourneyRating(pj, currentUser, ratingTextField.getText());
             }
