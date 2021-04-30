@@ -159,7 +159,7 @@ public final class DatabaseQuery {
         dbConnection = new DatabaseConnection();
         conn = dbConnection.getConnection();
 
-        String query = "SELECT rating FROM journeys WHERE userId = " + user.getUserId() + "AND title = '" + j.getTitle()
+        String query = "SELECT rating FROM journeys WHERE userId = " + user.getUserId() + " AND title = '" + j.getTitle()
                 + "' AND location = '" + j.getLocation() + "' AND description = '" + j.getDescription() + "' AND startDate = '" +
                 Date.valueOf(j.getStartDate()) + "' AND endDate = '" + Date.valueOf(j.getEndDate()) + "'";
         try {
@@ -217,7 +217,7 @@ public final class DatabaseQuery {
         conn = dbConnection.getConnection();
 
         String query = "UPDATE journeys SET rating = '" + rating + "' WHERE userId = " + user.getUserId() +
-                "AND title = '" + j.getTitle() + "' AND location = '" + j.getLocation() + "' AND description = '"
+                " AND title = '" + j.getTitle() + "' AND location = '" + j.getLocation() + "' AND description = '"
                 + j.getDescription() + "' AND startDate = '" + Date.valueOf(j.getStartDate()) + "' AND endDate = '" +
                 Date.valueOf(j.getEndDate()) + "'";
         try {

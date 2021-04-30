@@ -182,7 +182,6 @@ public class MainController implements Initializable {
 
         // Init future journeys table
         futureJourneysList = selectFutureJourneys(currentUser);
-        System.out.println(futureJourneysList.toString());
 
         futureJourneysCountryColumn.setCellValueFactory(new PropertyValueFactory<FutureJourney, String>("location"));
         futureJourneysTitleColumn.setCellValueFactory(new PropertyValueFactory<FutureJourney, String >("title"));
@@ -330,13 +329,11 @@ public class MainController implements Initializable {
 
     @FXML
     private void handleAddFutureJourney(ActionEvent event) {
-        // TODO Wait for a few seconds
         openMapPage(event);
     }
 
     @FXML
     private void handleAddPastJourney(ActionEvent event) {
-        // TODO Wait for a few seconds
         openMapPage(event);
     }
 
@@ -359,7 +356,7 @@ public class MainController implements Initializable {
 
         for (Journey j : allJourneys) {
             if (j.getEndDate().compareTo(LocalDate.now()) < 0) {
-                PastJourney pastJourney = new PastJourney(j.getLocation(),j.getTitle(), j.getDescription(), j.getStartDate(), j.getEndDate(), getJourneyRating(j, user));
+                PastJourney pastJourney = new PastJourney(j.getLocation(), j.getTitle(), j.getDescription(), j.getStartDate(), j.getEndDate(), getJourneyRating(j, user));
                 result.add(pastJourney);
             }
         }
@@ -370,7 +367,6 @@ public class MainController implements Initializable {
     private ObservableList<FutureJourney> selectFutureJourneys(User user) {
         ObservableList<FutureJourney> result = FXCollections.observableArrayList();
         ObservableList<Journey> allJourneys = getAllJourneysOfUser(user);
-        System.out.println(allJourneys.toString());
 
         for (Journey j : allJourneys) {
             if (j.getStartDate().compareTo(LocalDate.now()) > 0) {
@@ -387,14 +383,23 @@ public class MainController implements Initializable {
         ObservableList<PastJourney> chosenJourneys = pastJourneysTable.getSelectionModel().getSelectedItems();
 
         // TODO What if the user enters a string or a value less then 0 or a value more than 10?
-        if (ratingTextField.getText().isBlank()) {
+        if ( ! isNumeric(ratingTextField.getText())) {
+            Notifications notificationBuilder = buildNotification("Couldn't Rate Journey", "Please write a nuemric value between 0 and 10,",
+                    5, Pos.BASELINE_CENTER);
+            notificationBuilder.showWarning();
+        }
+        else if (ratingTextField.getText().isBlank()) {
             Notifications notificationBuilder = buildNotification("Couldn't Rate Journey", "Please write a value between 0 and 10,",
                     5, Pos.BASELINE_CENTER);
             notificationBuilder.showWarning();
-            return;
+        }
+        else if (Integer.parseInt(ratingTextField.getText()) > 10 || Integer.parseInt(ratingTextField.getText()) < 0) {
+            Notifications notificationBuilder = buildNotification("Couldn't Rate Journey", "Please write a value between 0 and 10,",
+                    5, Pos.BASELINE_CENTER);
+            notificationBuilder.showWarning();
         }
         else if (chosenJourneys.isEmpty()) {
-            Notifications notificationBuilder = buildNotification("Country Not Chosen", "Please choose a country",
+            Notifications notificationBuilder = buildNotification("Couldn't Rate Journey", "Please choose a country",
                     5, Pos.BASELINE_CENTER);
             notificationBuilder.showWarning();
             return;
@@ -405,6 +410,10 @@ public class MainController implements Initializable {
             }
 
             pastJourneysTable.getItems().removeAll(chosenJourneys);
+
+            Notifications notificationBuilder = buildNotification("Rated Journey", "Rated the journey successfully!",
+                    5, Pos.BASELINE_CENTER);
+            notificationBuilder.showConfirm();
         }
 
         handleOpenMainPage();
@@ -503,5 +512,15 @@ public class MainController implements Initializable {
         notificationBuilder.darkStyle();
 
         return notificationBuilder;
+    }
+
+    private boolean isNumeric(String str) {
+        try {
+            Integer.parseInt(str);
+            return true;
+        }
+        catch (NumberFormatException e) {
+            return false;
+        }
     }
 }
