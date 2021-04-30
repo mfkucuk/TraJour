@@ -17,12 +17,14 @@ import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import org.controlsfx.control.Notifications;
 import org.controlsfx.control.WorldMapView;
 
+import javax.tools.Tool;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -106,18 +108,25 @@ public class MapController implements Initializable {
         showDistanceButton.setOnMouseEntered(mouseEvent -> showDistanceButton.setEffect(blackShadow));
         showDistanceButton.setOnMouseExited(mouseEvent -> showDistanceButton.setEffect(null));
 
+        ObservableList<WorldMapView.Location> locations = FXCollections.observableArrayList();
+        WorldMapView.Location aLocation = new WorldMapView.Location("Ankara",39.93333, 32.86667);
+        locations.add(aLocation);
+        worldMapView.setLocations(locations);
+
 //        worldMapView.setCountryViewFactory(country -> {
 //            WorldMapView.CountryView view = new WorldMapView.CountryView(country);
 //            view.setOnMouseEntered(mouseEvent -> view.setStyle("-fx-background-color: #000000;"));
 //            return view; });
 //
-//        worldMapView.setLocationViewFactory(location -> {
-//            Circle circle = new Circle();
-//            circle.getStyleClass().add("location");
-//            circle.setRadius(4);
-//            circle.setTranslateX(-4); // translate to center node on location
-//            circle.setTranslateY(-4);
-//            return circle; });
+        Tooltip tooltip = new Tooltip();
+        worldMapView.setLocationViewFactory(location -> {
+            Circle circle = new Circle();
+            circle.setRadius(4);
+            circle.setTranslateX(-4); // translate to center node on location
+            circle.setTranslateY(-4);
+            circle.setOnMouseEntered(mouseEvent -> tooltip.setText(location.getName() + " - " + location.getLatitude()));
+            Tooltip.install(circle, tooltip);
+            return circle; });
 
         // Zoom in and out
         zoomSlider.valueProperty().addListener((observableValue, number, t1) -> worldMapView.setZoomFactor(zoomSlider.getValue()));
