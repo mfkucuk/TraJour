@@ -105,9 +105,7 @@ public class MapController implements Initializable {
         showDistanceButton.setOnMouseEntered(mouseEvent -> showDistanceButton.setEffect(blackShadow));
         showDistanceButton.setOnMouseExited(mouseEvent -> showDistanceButton.setEffect(null));
 
-        ObservableList<WorldMapView.Location> locations = FXCollections.observableArrayList();
-        WorldMapView.Location aLocation = new WorldMapView.Location("Ankara",39.93333, 32.86667);
-        locations.add(aLocation);
+        ObservableList<WorldMapView.Location> locations = readCountryCapitals();
         worldMapView.setLocations(locations);
 
 //        worldMapView.setCountryViewFactory(country -> {
@@ -118,7 +116,7 @@ public class MapController implements Initializable {
         Tooltip tooltip = new Tooltip();
         worldMapView.setLocationViewFactory(location -> {
             Circle circle = new Circle();
-            circle.setRadius(4);
+            circle.setRadius(2);
             circle.setTranslateX(-4);
             circle.setTranslateY(-4);
             circle.setOnMouseEntered(mouseEvent -> tooltip.setText(location.getName() + " - " + location.getLatitude()));
@@ -310,6 +308,33 @@ public class MapController implements Initializable {
             e.printStackTrace();
             e.getCause();
         }
+    }
+
+    private ObservableList<WorldMapView.Location> readCountryCapitals() {
+        ObservableList<WorldMapView.Location> result = FXCollections.observableArrayList();
+
+        try {
+            Scanner in = new Scanner(new File("src/resources/country-capitals.csv"));
+
+            while (in.hasNextLine()) {
+                String line = in.nextLine();
+                String[] pieces = line.split(",");
+
+                String name = pieces[1];
+                double latitude = Double.parseDouble(pieces[2]);
+                double altitude = Double.parseDouble(pieces[3]);
+
+                result.add(new WorldMapView.Location(name, latitude, altitude));
+            }
+
+            return result;
+        }
+        catch (FileNotFoundException e) {
+            e.getCause();
+            e.printStackTrace();
+        }
+
+        return result;
     }
 
 //    private String countryCodeToCountryName(String code) throws FileNotFoundException {

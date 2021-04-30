@@ -1,4 +1,3 @@
-CountryName,CapitalName,CapitalLatitude,CapitalLongitude,CountryCode,ContinentName
 Somaliland,Hargeisa,9.55,44.050000,NULL,Africa
 South Georgia and South Sandwich Islands,King Edward Point,-54.283333,-36.500000,GS,Antarctica
 French Southern and Antarctic Lands,Port-aux-Français,-49.35,70.216667,TF,Antarctica
@@ -226,7 +225,7 @@ Uganda,Kampala,0.31666666666666665,32.550000,UG,Africa
 Ukraine,Kyiv,50.43333333333333,30.516667,UA,Europe
 United Arab Emirates,Abu Dhabi,24.466666666666665,54.366667,AE,Asia
 United Kingdom,London,51.5,-0.083333,GB,Europe
-United States,Washington, D.C.,38.883333,-77.000000,US,Central America
+United States,Washington D.C.,38.883333,-77.000000,US,Central America
 Uruguay,Montevideo,-34.85,-56.166667,UY,South America
 Uzbekistan,Tashkent,41.31666666666667,69.250000,UZ,Asia
 Vanuatu,Port-Vila,-17.733333333333334,168.316667,VU,Australia
@@ -237,10 +236,5 @@ Wallis and Futuna,Mata-Utu,-13.95,-171.933333,WF,Australia
 Yemen,Sanaa,15.35,44.200000,YE,Asia
 Zambia,Lusaka,-15.416666666666666,28.283333,ZM,Africa
 Zimbabwe,Harare,-17.816666666666666,31.033333,ZW,Africa
-US Minor Outlying Islands,Washington, D.C.,38.883333,-77.000000,UM,Australia
-Antarctica,N/A,0,0.000000,AQ,Antarctica
+US Minor Outlying Islands,Washington D.C.,38.883333,-77.000000,UM,Australia
 Northern Cyprus,North Nicosia,35.183333,33.366667,NULL,Europe
-Hong Kong,N/A,0,0.000000,HK,Asia
-Heard Island and McDonald Islands,N/A,0,0.000000,HM,Antarctica
-British Indian Ocean Territory,Diego Garcia,-7.3,72.400000,IO,Africa
-Macau,N/A,0,0.000000,MO,Asia

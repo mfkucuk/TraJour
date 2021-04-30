@@ -514,7 +514,7 @@ public class MainController implements Initializable {
         return notificationBuilder;
     }
 
-    private boolean isNumeric(String str) {
+    public static boolean isNumeric(String str) {
         try {
             Integer.parseInt(str);
             return true;
