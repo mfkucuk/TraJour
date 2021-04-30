@@ -1,5 +1,6 @@
 package com.trajour.view;
 
+import com.trajour.model.DetailedLocation;
 import com.trajour.journey.Journey;
 import com.trajour.model.User;
 
@@ -69,9 +70,6 @@ public class MapController implements Initializable {
     private TextField selectedCountryField;
 
     @FXML
-    private CheckBox showLocationsCheckBox;
-
-    @FXML
     private Button pickRandomCountryButton;
 
     @FXML
@@ -80,7 +78,18 @@ public class MapController implements Initializable {
     @FXML
     private TextField journeyTitleTextField;
 
+    @FXML
+    private RadioButton showWorldCapitalsRadioBox;
+
+    @FXML
+    private RadioButton showLargestCities;
+
+
+    private ObservableList<WorldMapView.Location> capitals;
+    private ObservableList<WorldMapView.Location> largeCities;
     private User currentUser;
+    private Tooltip tooltip;
+    private boolean showLocationsView;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -105,26 +114,32 @@ public class MapController implements Initializable {
         showDistanceButton.setOnMouseEntered(mouseEvent -> showDistanceButton.setEffect(blackShadow));
         showDistanceButton.setOnMouseExited(mouseEvent -> showDistanceButton.setEffect(null));
 
-        ObservableList<WorldMapView.Location> locations = readCountryCapitals();
-        worldMapView.setLocations(locations);
+        capitals = readCountryCapitals();
+        worldMapView.setLocations(capitals);
 
-//        worldMapView.setCountryViewFactory(country -> {
-//            WorldMapView.CountryView view = new WorldMapView.CountryView(country);
-//            view.setOnMouseEntered(mouseEvent -> view.setStyle("-fx-background-color: #000000;"));
-//            return view; });
-//
-        Tooltip tooltip = new Tooltip();
+        showLocationsView = false;
+        worldMapView.setShowLocations(showLocationsView);
+
+        // Arrange the locations view factory
+        tooltip = new Tooltip();
         worldMapView.setLocationViewFactory(location -> {
             Circle circle = new Circle();
-            circle.setRadius(2);
+            circle.setRadius(3);
             circle.setTranslateX(-4);
             circle.setTranslateY(-4);
-            circle.setOnMouseEntered(mouseEvent -> tooltip.setText(location.getName() + " - " + location.getLatitude()));
+            circle.setOnMouseEntered(mouseEvent -> tooltip.setText(location.getName()));
             Tooltip.install(circle, tooltip);
-            return circle; });
+            return circle;
+        });
+
 
         // Zoom in and out
         zoomSlider.valueProperty().addListener((observableValue, number, t1) -> worldMapView.setZoomFactor(zoomSlider.getValue()));
+
+        // Radio buttons
+        final ToggleGroup group = new ToggleGroup();
+        showWorldCapitalsRadioBox.setToggleGroup(group);
+        showLargestCities.setToggleGroup(group);
     }
 
     public void initData(User user) {
@@ -178,8 +193,17 @@ public class MapController implements Initializable {
             zoomSlider.setValue(zoomSlider.getValue() + movement);
         });
     }
+    @FXML
+    void handleShowLocations(ActionEvent event) {
+        showLocationsView = !showLocationsView;
 
-//
+        worldMapView.setShowLocations(showLocationsView);
+    }
+
+    @FXML
+    void handleShowlargeCities(ActionEvent event) {
+        worldMapView.getLocations().addAll();
+    }
 
     @FXML
     void handleShowDistance(ActionEvent event) {
@@ -187,51 +211,49 @@ public class MapController implements Initializable {
     }
 
     @FXML
-    void handleShowLocations(ActionEvent event) {
-
-    }
-
-    @FXML
     void handleAddJourney(ActionEvent event) throws FileNotFoundException {
         ObservableList<WorldMapView.Country> selectedCountry = worldMapView.getSelectedCountries();
 
+        if (journeyTitleTextField.getText().isBlank() || journeyDescriptionTextArea.getText().isBlank()) {
+            Notifications notification = buildNotification("Journey Addition Error", "Please fill in all the " +
+                    "fields", 6, Pos.BASELINE_CENTER);
+            notification.showError();
+        }
         // Check whether the user chose only 1 country
-        if (selectedCountry.size() > 1) {
+        else if (selectedCountry.size() > 1) {
             Notifications notification = buildNotification("Selection Error", "Please choose only 1 country.", 8, Pos.BASELINE_CENTER);
             notification.showError();
-            return;
         }
-
-        if (selectedCountry.size() == 0) {
+        else if (selectedCountry.size() == 0) {
             Notifications notification = buildNotification("Selection Error", "Please choose at least" +
-                    " 1 country by left clicking on a country on the map.", 8, Pos.BASELINE_CENTER);
-            notification.showError();
-            return;
-        }
-
-        // Add the journey to the database
-        String journeyDesc = journeyDescriptionTextArea.getText();
-        String title = journeyTitleTextField.getText();
-        LocalDate start = startDatePicker.getValue();
-        LocalDate end = endDatePicker.getValue();
-        String location = selectedCountry.get(0).getLocale().getDisplayCountry();
-
-        Journey j = new Journey(location, title, journeyDesc, start, end);
-
-        if (findJourneyByUser(j, currentUser)) {
-            Notifications notification = buildNotification("Journey Already Exists", "A journey with the " +
-                    "exact same specifications already exists in your journeys list. ", 8, Pos.BASELINE_CENTER);
+                    " 1 country by left clicking on a country on the map.", 6, Pos.BASELINE_CENTER);
             notification.showError();
         }
         else {
-            insertNewJourney(j, currentUser);
+            // Add the journey to the database
+            String journeyDesc = journeyDescriptionTextArea.getText();
+            String title = journeyTitleTextField.getText();
+            LocalDate start = startDatePicker.getValue();
+            LocalDate end = endDatePicker.getValue();
+            String location = selectedCountry.get(0).getLocale().getDisplayCountry();
 
-            // Build notification
-            Notifications notificationBuilder = buildNotification("Added Journey!", "Journey is successfully " +
-                    "added. Journey details: \nCountry: " + j.getLocation() + ", Description: " + j.getDescription() +
-                    ", Dates: " + j.getStartDate() + " - " + j.getEndDate(), 8, Pos.BASELINE_CENTER);
+            Journey j = new Journey(location, title, journeyDesc, start, end);
 
-            notificationBuilder.showConfirm();
+            if (findJourneyByUser(j, currentUser)) {
+                Notifications notification = buildNotification("Journey Already Exists", "A journey with the " +
+                        "exact same specifications already exists in your journeys list. ", 6, Pos.BASELINE_CENTER);
+                notification.showError();
+            }
+            else {
+                insertNewJourney(j, currentUser);
+
+                // Build notification
+                Notifications notificationBuilder = buildNotification("Added Journey!", "Journey is successfully " +
+                        "added. Journey details: \nCountry: " + j.getLocation() + ", Description: " + j.getDescription() +
+                        ", Dates: " + j.getStartDate() + " - " + j.getEndDate(), 6, Pos.BASELINE_CENTER);
+
+                notificationBuilder.showConfirm();
+            }
         }
     }
 
@@ -310,11 +332,43 @@ public class MapController implements Initializable {
         }
     }
 
+    private ObservableList<WorldMapView.Location> readCities(int numberOfCities) {
+        ObservableList<WorldMapView.Location> result = FXCollections.observableArrayList();
+
+        try {
+            Scanner in = new Scanner(new File("src\\resources\\worldcities.csv"));
+
+            int count = 0;
+            while (in.hasNextLine() && count < numberOfCities) {
+                String line = in.nextLine();
+                String[] pieces = line.split(",");
+
+                String cityName = pieces[1].substring(1, pieces[1].length() - 1);
+                double latitude = Double.parseDouble(pieces[2].substring(1, pieces[2].length() - 1));
+                double longitude = Double.parseDouble((pieces[3].substring(1, pieces[3].length() - 1)));
+                String country = pieces[4].substring(1, pieces[4].length() - 1);
+                int population = Integer.parseInt(pieces[pieces.length - 2].substring(1, pieces[pieces.length - 2].length() - 1));
+
+                DetailedLocation detailedLocation = new DetailedLocation(cityName, latitude, longitude, country, population);
+                result.add(detailedLocation);
+
+                count++;
+            }
+        }
+        catch (FileNotFoundException e) {
+            System.out.println("Something wrong with 'worldcities.csv' file");
+            e.printStackTrace();
+            e.getCause();
+        }
+
+        return result;
+    }
+
     private ObservableList<WorldMapView.Location> readCountryCapitals() {
         ObservableList<WorldMapView.Location> result = FXCollections.observableArrayList();
 
         try {
-            Scanner in = new Scanner(new File("src/resources/country-capitals.csv"));
+            Scanner in = new Scanner(new File("src\\resources\\country-capitals.csv"));
 
             while (in.hasNextLine()) {
                 String line = in.nextLine();
@@ -327,7 +381,6 @@ public class MapController implements Initializable {
                 result.add(new WorldMapView.Location(name, latitude, altitude));
             }
 
-            return result;
         }
         catch (FileNotFoundException e) {
             e.getCause();
