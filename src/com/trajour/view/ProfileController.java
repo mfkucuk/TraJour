@@ -2,6 +2,7 @@ package com.trajour.view;
 
 import com.trajour.journey.Journey;
 import com.trajour.model.Friend;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -86,9 +87,8 @@ public class ProfileController {
 
     private User currentUser;
     private File profilePhotoFile;
-
-    private AutoCompletionBinding<String> autoComplete;
-    private ArrayList<String> suggestions = new ArrayList<String>();
+    // private AutoCompletionBinding autoComplete;
+    // private ObservableList<String> suggestions = FXCollections.observableArrayList();
 
     public void initData(User user) {
         currentUser = user;
@@ -127,18 +127,16 @@ public class ProfileController {
         Image profileImage = new Image(profilePhotoFile.toURI().toString(), 180, 180, false, false);
         profilePhotoView.setImage(profileImage);
 
-        ObservableList<Friend> friends = getAllFriendsOfUser(currentUser);
-        ObservableList<Journey> journeys = getAllJourneysOfUser(currentUser);
-
         // Adding search box suggestions
-        for (int i = 0; i < journeys.size() ; i++) {
-            suggestions.add( i, journeys.get(i).getTitle() );
-        }
+        //ObservableList<Journey> journeys = getAllJourneysOfUser(currentUser);
 
-        TextFields.bindAutoCompletion(searchJourneyTextField, suggestions);
+        //for (int i = 0; i < journeys.size() ; i++) {
+        //    suggestions.add( i, journeys.get(i).getTitle() );
+        //}
 
-        //TODO if we initialize searchedJourneysListView here, it shows all of the journeys
+        // autoComplete = TextFields.bindAutoCompletion(searchJourneyTextField, suggestions);
 
+        ObservableList<Friend> friends = getAllFriendsOfUser(currentUser);
         friendsListView.setItems(friends);
         friendsLabel.setText("Friends (" + friends.size() + ")");
 
@@ -163,18 +161,20 @@ public class ProfileController {
     @FXML
     void searchJourneyByTitle(ActionEvent e ){
         ObservableList<Journey> journeys = getAllJourneysOfUser(currentUser);
+        ObservableList<Journey> matchingJourneys = FXCollections.observableArrayList();
         String journeyTitle = searchJourneyTextField.getText();
 
         for( Journey j: journeys ){
-            if( j.getTitle().equals(journeyTitle) )
+            if( j.getTitle().contains(journeyTitle) )
             {
-                //TODO it don't show the searched journey
-                searchedJourneysListView.getItems().add(j);
+                matchingJourneys.add(j);
             }
         }
 
+        searchedJourneysListView.setItems(matchingJourneys);
         openProfilePage(e);
     }
+
     /**
      * Opens the home page.
      * @param event Event
