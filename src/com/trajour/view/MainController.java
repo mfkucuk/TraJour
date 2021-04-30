@@ -335,7 +335,7 @@ public class MainController implements Initializable {
 
         for (Journey j : allJourneys) {
             if (j.getEndDate().compareTo(LocalDate.now()) < 0) {
-                PastJourney pastJourney = new PastJourney(j.getLocation(), j.getDescription(), j.getStartDate(), j.getEndDate(), getJourneyRating(j, user));
+                PastJourney pastJourney = new PastJourney(j.getLocation(),j.getTitle(), j.getDescription(), j.getStartDate(), j.getEndDate(), getJourneyRating(j, user));
                 result.add(pastJourney);
             }
         }
@@ -349,7 +349,7 @@ public class MainController implements Initializable {
 
         for (Journey j : allJourneys) {
             if (j.getStartDate().compareTo(LocalDate.now()) > 0) {
-                FutureJourney futureJourney = new FutureJourney(j.getLocation(), j.getDescription(), j.getStartDate(), j.getEndDate());
+                FutureJourney futureJourney = new FutureJourney(j.getLocation(), j.getTitle(), j.getDescription(), j.getStartDate(), j.getEndDate());
                 result.add(futureJourney);
             }
         }
