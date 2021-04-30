@@ -8,8 +8,8 @@ public class CurrentJourney extends Journey {
     private int rating;
 
     // Constructor
-    public CurrentJourney(String location, String description, LocalDate startDate, LocalDate endDate) {
-        super(location, description, startDate, endDate);
+    public CurrentJourney(String location, String title, String description, LocalDate startDate, LocalDate endDate) {
+        super(location, title, description, startDate, endDate);
         rating = -1;
     }
 

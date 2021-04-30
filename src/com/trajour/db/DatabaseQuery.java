@@ -26,7 +26,7 @@ public final class DatabaseQuery {
 
         ObservableList<Journey> result = FXCollections.observableArrayList();
 
-        String query = "SELECT userId, location, description, startDate, endDate FROM journeys WHERE userId = " + user.getUserId();
+        String query = "SELECT userId, title, location, description, startDate, endDate FROM journeys WHERE userId = " + user.getUserId();
 
         try {
             Statement statement = conn.createStatement();
@@ -34,11 +34,12 @@ public final class DatabaseQuery {
 
             while (rs.next()) {
                 String country = rs.getString("location");
+                String title = rs.getString("title");
                 String description = rs.getString("description");
                 LocalDate startDate = rs.getDate("startDate").toLocalDate();
                 LocalDate endDate = rs.getDate("endDate").toLocalDate();
 
-                Journey j = new Journey(country, description, startDate, endDate);
+                Journey j = new Journey(country, title, description, startDate, endDate);
                 result.add(j);
             }
 
@@ -166,11 +167,12 @@ public final class DatabaseQuery {
 
             while(rs.next()) {
                 String location = rs.getString("location");
+                String title = rs.getString("title");
                 String description = rs.getString("description");
                 LocalDate startDate = rs.getDate("startDate").toLocalDate();
                 LocalDate endDate = rs.getDate("endDate").toLocalDate();
 
-                Journey j = new Journey(location, description, startDate, endDate);
+                Journey j = new Journey(location, title, description, startDate, endDate);
                 result.add(j);
             }
 
@@ -570,12 +572,13 @@ public final class DatabaseQuery {
 
         int userId = user.getUserId();
         String location = j.getLocation();
+        String title = j.getTitle();
         String description = j.getDescription();
         LocalDate startDate = j.getStartDate();
         LocalDate endDate = j.getEndDate();
 
-        String query = "INSERT INTO journeys(userId, location, description, startDate, endDate) VALUES(" + userId +
-                ", '" + location + "', '" + description + "', '" + Date.valueOf(startDate) + "', '" + Date.valueOf(endDate) + "')";
+        String query = "INSERT INTO journeys(userId, title, location, description, startDate, endDate) VALUES('" + userId + "', '" + title +
+                "', '" + location + "', '" + description + "', '" + Date.valueOf(startDate) + "', '" + Date.valueOf(endDate) + "')";
 
         try {
             Statement statement = conn.createStatement();
@@ -594,7 +597,8 @@ public final class DatabaseQuery {
         dbConnection = new DatabaseConnection();
         conn = dbConnection.getConnection();
 
-        String query = "DELETE FROM journeys WHERE userId = " + user.getUserId() + " AND location = '" + j.getLocation()
+        String query = "DELETE FROM journeys WHERE userId = " + user.getUserId() + " AND title = '" + j.getTitle() +
+                "' AND location = '" + j.getLocation()
                 + "' AND description = '" + j.getDescription() + "' AND startDate = '" + Date.valueOf(j.getStartDate())
                 + "' AND endDate = '" + Date.valueOf(j.getEndDate()) + "'";
 

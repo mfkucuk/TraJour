@@ -81,6 +81,9 @@ public class MapController implements Initializable {
     @FXML
     private TextField countryNumberTextField;
 
+    @FXML
+    private TextField journeyTitleTextField;
+
     private User currentUser;
 
     @Override
@@ -216,12 +219,13 @@ public class MapController implements Initializable {
 
         // Add the journey to the database
         String journeyDesc = journeyDescriptionTextArea.getText();
+        String title = journeyTitleTextField.getText();
         LocalDate start = startDatePicker.getValue();
         LocalDate end = endDatePicker.getValue();
 
         String country = countryCodeToCountryName(selectedCountry.get(0).name());
 
-        Journey j = new Journey(country, journeyDesc, start, end);
+        Journey j = new Journey(country, title, journeyDesc, start, end);
 
         if (findJourneyByUser(j, currentUser)) {
             Notifications notification = buildNotification("Journey Already Exists", "A journey with the " +
