@@ -152,8 +152,23 @@ public class MainController implements Initializable {
         profilePageButton.setOnMouseExited(mouseEvent -> profilePageButton.setEffect(null));
 
         DropShadow blackShadow = new DropShadow();
+        addFutureJourneyButton.setOnMouseEntered(mouseEvent -> addFutureJourneyButton.setEffect(blackShadow));
+        addFutureJourneyButton.setOnMouseExited(mouseEvent -> addFutureJourneyButton.setEffect(null));
+
+        removeFutureJourneyButton.setOnMouseEntered(mouseEvent -> removeFutureJourneyButton.setEffect(blackShadow));
+        removeFutureJourneyButton.setOnMouseExited(mouseEvent -> removeFutureJourneyButton.setEffect(null));
+
+        addPastJourneyButton.setOnMouseEntered(mouseEvent -> addPastJourneyButton.setEffect(blackShadow));
+        addPastJourneyButton.setOnMouseExited(mouseEvent -> addPastJourneyButton.setEffect(null));
+
         shareJourneyButton.setOnMouseEntered(mouseEvent -> shareJourneyButton.setEffect(blackShadow));
         shareJourneyButton.setOnMouseExited(mouseEvent -> shareJourneyButton.setEffect(null));
+
+        removePastJourneyButton.setOnMouseEntered(mouseEvent -> removePastJourneyButton.setEffect(blackShadow));
+        removePastJourneyButton.setOnMouseExited(mouseEvent -> removePastJourneyButton.setEffect(null));
+
+        setPastJourneyRatingButton.setOnMouseEntered(mouseEvent -> setPastJourneyRatingButton.setEffect(blackShadow));
+        setPastJourneyRatingButton.setOnMouseExited(mouseEvent -> setPastJourneyRatingButton.setEffect(null));
 
         mainScrollPane.setFitToWidth(false);
     }
@@ -167,6 +182,7 @@ public class MainController implements Initializable {
 
         // Init future journeys table
         futureJourneysList = selectFutureJourneys(currentUser);
+        System.out.println(futureJourneysList.toString());
 
         futureJourneysCountryColumn.setCellValueFactory(new PropertyValueFactory<FutureJourney, String>("location"));
         futureJourneysTitleColumn.setCellValueFactory(new PropertyValueFactory<FutureJourney, String >("title"));
@@ -354,6 +370,7 @@ public class MainController implements Initializable {
     private ObservableList<FutureJourney> selectFutureJourneys(User user) {
         ObservableList<FutureJourney> result = FXCollections.observableArrayList();
         ObservableList<Journey> allJourneys = getAllJourneysOfUser(user);
+        System.out.println(allJourneys.toString());
 
         for (Journey j : allJourneys) {
             if (j.getStartDate().compareTo(LocalDate.now()) > 0) {

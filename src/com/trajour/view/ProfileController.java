@@ -87,8 +87,8 @@ public class ProfileController {
 
     private User currentUser;
     private File profilePhotoFile;
-    // private AutoCompletionBinding autoComplete;
-    // private ObservableList<String> suggestions = FXCollections.observableArrayList();
+     private AutoCompletionBinding autoComplete;
+     private ObservableList<String> suggestions = FXCollections.observableArrayList();
 
     public void initData(User user) {
         currentUser = user;
@@ -128,13 +128,13 @@ public class ProfileController {
         profilePhotoView.setImage(profileImage);
 
         // Adding search box suggestions
-        //ObservableList<Journey> journeys = getAllJourneysOfUser(currentUser);
+        ObservableList<Journey> journeys = getAllJourneysOfUser(currentUser);
 
-        //for (int i = 0; i < journeys.size() ; i++) {
-        //    suggestions.add( i, journeys.get(i).getTitle() );
-        //}
+        for (int i = 0; i < journeys.size() ; i++) {
+            suggestions.add( i, journeys.get(i).getTitle() );
+        }
 
-        // autoComplete = TextFields.bindAutoCompletion(searchJourneyTextField, suggestions);
+         autoComplete = TextFields.bindAutoCompletion(searchJourneyTextField, suggestions);
 
         ObservableList<Friend> friends = getAllFriendsOfUser(currentUser);
         friendsListView.setItems(friends);

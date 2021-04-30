@@ -33,11 +33,6 @@
                   <Font name="System Bold" size="13.0" />
                </font>
             </Button>
-            <Label fx:id="registrationFeedbackLabel" alignment="CENTER" layoutX="147.0" layoutY="294.0" textFill="RED" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-               <font>
-                  <Font size="13.0" />
-               </font>
-            </Label>
             <Line endX="100.0" layoutX="175.0" layoutY="63.0" startX="-100.0" />
             <Line endX="100.0" layoutX="175.0" layoutY="302.0" startX="-100.0" />
          </children>

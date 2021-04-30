@@ -1,12 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ContextMenu?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.trajour.view.MainController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.trajour.view.MainController">
    <top>
       <ToolBar prefHeight="80.0" prefWidth="839.0" style="-fx-background-color: #00203FFF;" BorderPane.alignment="CENTER">
          <items>
@@ -117,9 +132,10 @@
             </Label>
             <TableView fx:id="futureJourneysTable" prefHeight="330.0" prefWidth="495.0" style="-fx-border-width: 2; -fx-border-color: #000;" VBox.vgrow="ALWAYS">
               <columns>
-                <TableColumn fx:id="futureJourneysCountryColumn" prefWidth="123.0" text="Country" />
-                <TableColumn fx:id="futureJourneysDescriptionColumn" prefWidth="123.0" text="Description" />
-                  <TableColumn fx:id="futureJourneysStartDateColumn" prefWidth="123.0" text="Start Date" />
+                <TableColumn fx:id="futureJourneysCountryColumn" prefWidth="120.0" text="Location" />
+                  <TableColumn fx:id="futureJourneysTitleColumn" prefWidth="120.0" text="Title" />
+                <TableColumn fx:id="futureJourneysDescriptionColumn" prefWidth="170.0" text="Description" />
+                  <TableColumn fx:id="futureJourneysStartDateColumn" prefWidth="120.0" text="Start Date" />
                   <TableColumn fx:id="futureJourneysEndDateColumn" prefWidth="123.0" text="End Date" />
               </columns>
                <VBox.margin>
@@ -174,7 +190,8 @@
             </Label>
             <TableView fx:id="pastJourneysTable" prefHeight="328.0" prefWidth="495.0" style="-fx-border-width: 2; -fx-border-color: #000;" VBox.vgrow="ALWAYS">
               <columns>
-                <TableColumn fx:id="pastJourneysCountryColumn" prefWidth="98.0" text="Country" />
+                <TableColumn fx:id="pastJourneysCountryColumn" prefWidth="98.0" text="Location" />
+                  <TableColumn fx:id="pastJourneysTitleColumn" prefWidth="120.0" text="Title" />
                 <TableColumn fx:id="pastJourneysRatingColumn" prefWidth="98.0" text="Rating" />
                   <TableColumn fx:id="pastJourneysDescriptionColumn" prefWidth="98.0" text="Description" />
                   <TableColumn fx:id="pastJourneysStartDateColumn" prefWidth="98.0" text="Start Date" />

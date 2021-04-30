@@ -24,15 +24,12 @@ import javafx.util.Callback;
 import org.controlsfx.control.Notifications;
 import org.controlsfx.control.WorldMapView;
 
-import javax.tools.Tool;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 
@@ -315,26 +312,26 @@ public class MapController implements Initializable {
         }
     }
 
-    private String countryCodeToCountryName(String code) throws FileNotFoundException {
-        Scanner in = new Scanner(new File("src/resources/countries_with_codes.csv"));
-        StringBuilder result = new StringBuilder();
-
-        // TODO Possible errors with countries with multiple names
-        while (in.hasNextLine()) {
-            String line = in.nextLine();
-            String[] pieces = line.split(",");
-
-            if (pieces.length > 1) {
-                if (pieces[pieces.length - 1].equals(code)) {
-                    for (int i = 0; i < pieces.length - 1; i++) {
-                        result.append(pieces[i]).append(" ");
-                    }
-                }
-            }
-        }
-
-        return result.toString();
-    }
+//    private String countryCodeToCountryName(String code) throws FileNotFoundException {
+//        Scanner in = new Scanner(new File("src/resources/countries_with_codes.csv"));
+//        StringBuilder result = new StringBuilder();
+//
+//        // TODO Possible errors with countries with multiple names
+//        while (in.hasNextLine()) {
+//            String line = in.nextLine();
+//            String[] pieces = line.split(",");
+//
+//            if (pieces.length > 1) {
+//                if (pieces[pieces.length - 1].equals(code)) {
+//                    for (int i = 0; i < pieces.length - 1; i++) {
+//                        result.append(pieces[i]).append(" ");
+//                    }
+//                }
+//            }
+//        }
+//
+//        return result.toString();
+//    }
 
 //    @FXML
 //    void handlePickRandomCountry(ActionEvent event) {

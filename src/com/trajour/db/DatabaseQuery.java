@@ -155,42 +155,12 @@ public final class DatabaseQuery {
         return -1;
     }
 
-    public static ObservableList<Journey> getJourneysOfTheUser(User user) {
-        dbConnection = new DatabaseConnection();
-        conn = dbConnection.getConnection();
-
-        ObservableList<Journey> result = FXCollections.observableArrayList();
-        try {
-            Statement statement = conn.createStatement();
-            String query = "SELECT * FROM journeys WHERE userId = " + user.getUserId();
-            ResultSet rs = statement.executeQuery(query);
-
-            while(rs.next()) {
-                String location = rs.getString("location");
-                String title = rs.getString("title");
-                String description = rs.getString("description");
-                LocalDate startDate = rs.getDate("startDate").toLocalDate();
-                LocalDate endDate = rs.getDate("endDate").toLocalDate();
-
-                Journey j = new Journey(location, title, description, startDate, endDate);
-                result.add(j);
-            }
-
-            return result;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            e.getCause();
-        }
-
-        return null;
-    }
-
     public static String getJourneyRating(Journey j, User user) {
         dbConnection = new DatabaseConnection();
         conn = dbConnection.getConnection();
 
-        String query = "SELECT rating FROM journeys WHERE userId = " + user.getUserId() + " AND location = '" +
-                j.getLocation() + "' AND description = '" + j.getDescription() + "' AND startDate = '" +
+        String query = "SELECT rating FROM journeys WHERE userId = " + user.getUserId() + "AND title = '" + j.getTitle()
+                + "' AND location = '" + j.getLocation() + "' AND description = '" + j.getDescription() + "' AND startDate = '" +
                 Date.valueOf(j.getStartDate()) + "' AND endDate = '" + Date.valueOf(j.getEndDate()) + "'";
         try {
             Statement statement = conn.createStatement();
@@ -247,8 +217,9 @@ public final class DatabaseQuery {
         conn = dbConnection.getConnection();
 
         String query = "UPDATE journeys SET rating = '" + rating + "' WHERE userId = " + user.getUserId() +
-                " AND location = '" + j.getLocation() + "' AND description = '" + j.getDescription() + "' AND startDate = '" +
-                Date.valueOf(j.getStartDate()) + "' AND endDate = '" + Date.valueOf(j.getEndDate()) + "'";
+                "AND title = '" + j.getTitle() + "' AND location = '" + j.getLocation() + "' AND description = '"
+                + j.getDescription() + "' AND startDate = '" + Date.valueOf(j.getStartDate()) + "' AND endDate = '" +
+                Date.valueOf(j.getEndDate()) + "'";
         try {
             Statement statement = conn.createStatement();
             return statement.executeUpdate(query) > 0;
@@ -392,8 +363,8 @@ public final class DatabaseQuery {
         conn = dbConnection.getConnection();
 
         String query = "SELECT COUNT(*) journeyId FROM journeys WHERE userId = " + u.getUserId() + " AND location = '" +
-                j.getLocation() + "' AND description = '" + j.getDescription() + "' AND startDate = '" +
-                Date.valueOf(j.getStartDate()) + "' AND endDate = '" + Date.valueOf(j.getEndDate()) + "'";
+                j.getLocation() + "' AND title = '" + j.getTitle() + "' AND description = '" + j.getDescription() + "' " +
+                "AND startDate = '" + Date.valueOf(j.getStartDate()) + "' AND endDate = '" + Date.valueOf(j.getEndDate()) + "'";
 
         try {
             Statement statement = conn.createStatement();
@@ -592,15 +563,13 @@ public final class DatabaseQuery {
         return false;
     }
 
-    // TODO How the hell are we going to do this???
     public static boolean deleteJourney(Journey j, User user) {
         dbConnection = new DatabaseConnection();
         conn = dbConnection.getConnection();
 
         String query = "DELETE FROM journeys WHERE userId = " + user.getUserId() + " AND title = '" + j.getTitle() +
-                "' AND location = '" + j.getLocation()
-                + "' AND description = '" + j.getDescription() + "' AND startDate = '" + Date.valueOf(j.getStartDate())
-                + "' AND endDate = '" + Date.valueOf(j.getEndDate()) + "'";
+                "' AND location = '" + j.getLocation() + "' AND description = '" + j.getDescription() +
+                "' AND startDate = '" + Date.valueOf(j.getStartDate()) + "' AND endDate = '" + Date.valueOf(j.getEndDate()) + "'";
 
         try {
             Statement statement = conn.createStatement();

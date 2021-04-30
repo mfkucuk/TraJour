@@ -42,9 +42,6 @@ public class RegisterController implements Initializable {
     @FXML
     private Button registerButton;
 
-    @FXML
-    private Label registrationFeedbackLabel;
-
     @Override
     public void initialize( URL url, ResourceBundle resourceBundle){
         //Event listeners for buttons
@@ -77,7 +74,6 @@ public class RegisterController implements Initializable {
                     .position(Pos.CENTER);
             notificationBuilder.showError();
 
-            registrationFeedbackLabel.setText("Passwords do not match.");
         } else {
             register();
         }
@@ -101,7 +97,6 @@ public class RegisterController implements Initializable {
                         .position(Pos.CENTER);
                 notificationBuilder.showConfirm();
 
-                registrationFeedbackLabel.setText("Welcome to TraJour!");
             }
             else if (validateRegistry(username, email, password) == -1) {
                 Notifications notificationBuilder = Notifications.create()
@@ -112,7 +107,6 @@ public class RegisterController implements Initializable {
                         .position(Pos.CENTER);
                 notificationBuilder.showError();
 
-                registrationFeedbackLabel.setText("Username is already used. Please try again.");
             }
             else if (validateRegistry(username, email, password) == -2) {
                 Notifications notificationBuilder = Notifications.create()
@@ -123,10 +117,6 @@ public class RegisterController implements Initializable {
                         .position(Pos.CENTER);
                 notificationBuilder.showError();
 
-                registrationFeedbackLabel.setText("Email is already used. Please try again.");
-            }
-            else {
-                registrationFeedbackLabel.setText("Registration was unsuccessful for some reason even the programmer couldn't understand!!!");
             }
 
         } else {
@@ -137,8 +127,6 @@ public class RegisterController implements Initializable {
                     .hideAfter(Duration.seconds(5))
                     .position(Pos.CENTER);
             notificationBuilder.showError();
-
-            registrationFeedbackLabel.setText("Please complete all of the text fields.");
         }
     }
 

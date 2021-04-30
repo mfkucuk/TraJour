@@ -20,7 +20,7 @@ import com.trajour.model.User;
 
 import java.io.File;
 
-import static com.trajour.db.DatabaseQuery.getJourneysOfTheUser;
+import static com.trajour.db.DatabaseQuery.getAllJourneysOfUser;
 
 public class ShareJourneyController {
     @FXML
@@ -54,9 +54,7 @@ public class ShareJourneyController {
         vbox = v;
 
         journeysOfCurrentUser = FXCollections.observableArrayList();
-        journeysOfCurrentUser = getJourneysOfTheUser(currentUser);
-        System.out.println(journeysOfCurrentUser.toString());
-
+        journeysOfCurrentUser = getAllJourneysOfUser(currentUser);
         journeyComboBox.setItems(journeysOfCurrentUser);
     }
 
