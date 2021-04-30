@@ -17,14 +17,16 @@ import static com.trajour.db.DatabaseQuery.insertNewJourney;
 public class Journey implements Comparable<Journey>, Postable {
     // Properties
     private String location;
+    private String title;
     private String description;
     private LocalDate startDate;
     private LocalDate endDate;
     private static int id;
 
     // Constructors
-    public Journey(String location, String description, LocalDate startDate, LocalDate endDate) {
+    public Journey(String location, String title, String description, LocalDate startDate, LocalDate endDate) {
         this.location = location;
+        this.title = title;
         this.description = description;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -50,6 +52,12 @@ public class Journey implements Comparable<Journey>, Postable {
     public void setLocation(String location) {
         this.location = location;
     }
+
+    /**
+     * This method returns the title.
+     * @return title
+     */
+    public String getTitle(){ return title; }
 
     /**
      * This method returns the startDate.

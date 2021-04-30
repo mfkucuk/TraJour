@@ -8,8 +8,8 @@ public class PastJourney extends Journey {
     private String rating;
 
     // Constructor
-    public PastJourney(String location, String description, LocalDate startDate, LocalDate endDate, String rating) {
-        super(location, description, startDate, endDate);
+    public PastJourney(String location, String title, String description, LocalDate startDate, LocalDate endDate, String rating) {
+        super(location, title, description, startDate, endDate);
         this.rating = rating;
     }
 

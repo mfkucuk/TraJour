@@ -8,14 +8,14 @@ import java.time.LocalDate;
 public class FutureJourney extends Journey {
     
     // Constructor
-    public FutureJourney(String location, String description, LocalDate startDate, LocalDate endDate) {
-        super(location, description, startDate, endDate);
+    public FutureJourney(String location, String title, String description, LocalDate startDate, LocalDate endDate) {
+        super(location, title, description, startDate, endDate);
     }
 
     /**
      * Converts future journey to a current one.
      */
     public CurrentJourney convertToCurrentJourney() {
-        return new CurrentJourney(getLocation(), getDescription(), getStartDate(), getEndDate());
+        return new CurrentJourney(getLocation(), getTitle(), getDescription(), getStartDate(), getEndDate());
     }
 }
