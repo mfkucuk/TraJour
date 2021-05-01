@@ -32,7 +32,7 @@ public class Post extends GridPane implements Shareable {
     private Label usernameLabel;
     private Label dateLabel;
     private Label commentLabel;
-    private Label ratingLabel;
+    private Label journeyNameLabel;
     private VBox userVBox;
     private ColumnConstraints cc;
 
@@ -80,6 +80,7 @@ public class Post extends GridPane implements Shareable {
         for (int i = 0; i < 4; i++) {
             this.getColumnConstraints().add(cc);
         }
+
     }
 
     @Override
@@ -88,26 +89,24 @@ public class Post extends GridPane implements Shareable {
         usernameLabel = new Label(user.getUsername());
         commentLabel = new Label("Comment: " + text);
         dateLabel = new Label("Date: " + theJourney.getStartDate() + " / " + theJourney.getEndDate());
-        // ratingLabel = new Label( "" + ((PastJourney) theJourney).getRating());
+        journeyNameLabel = new Label("Name: " + theJourney.getTitle());
         journeyPhotoView.setImage(journeyPhoto);
         userPhotoView.setImage(new Image(DatabaseQuery.getProfilePhotoFile(user).toURI().toString(), 40, 40, false, false));
         userVBox.getChildren().add(userPhotoView);
         userVBox.getChildren().add(usernameLabel);
 
         journeyLocationLabel.setFont(new Font("Arial Bold", 12));
+        journeyNameLabel.setFont(new Font("Arial Bold", 12));
         usernameLabel.setFont(new Font("Arial Bold", 12));
         commentLabel.setFont(new Font("Arial Bold", 12));
         dateLabel.setFont(new Font("Arial Bold", 12));
 
-
-
-
         add(userVBox, 0, 0);
-        add(journeyLocationLabel, 0, 1);
-        add(dateLabel, 1, 1);
-        add(journeyPhotoView, 2, 1);
-        add(commentLabel, 3, 1);
-        // getChildren().add(ratingLabel);
+        add(journeyNameLabel, 0, 1);
+        add(journeyLocationLabel, 1, 1);
+        add(dateLabel, 2, 1);
+        add(journeyPhotoView, 3, 1);
+        add(commentLabel, 4, 1);
 
         mainFeed.getChildren().add(this);
         return this;

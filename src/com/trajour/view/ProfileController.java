@@ -1,6 +1,7 @@
 package com.trajour.view;
 
 import com.trajour.journey.Journey;
+import com.trajour.journey.Wish;
 import com.trajour.model.Friend;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -84,6 +85,7 @@ public class ProfileController {
 
     @FXML
     private Button searchButton;
+
 
     private User currentUser;
     private File profilePhotoFile;
@@ -351,4 +353,15 @@ public class ProfileController {
             e.printStackTrace();
         }
     }
+
+    @FXML
+    public void addWish() {
+
+    }
+
+    @FXML
+    public void removeWish() {
+
+    }
+
 }
