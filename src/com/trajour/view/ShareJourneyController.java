@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -21,6 +22,7 @@ import com.trajour.model.User;
 import java.io.File;
 
 import static com.trajour.db.DatabaseQuery.*;
+import static com.trajour.view.MainController.buildNotification;
 
 public class ShareJourneyController {
     @FXML
@@ -86,7 +88,12 @@ public class ShareJourneyController {
             // TODO Add the post to database
             if (newPost.share(currentUser, vbox)) {
                 insertPost(currentUser, newPost);
-                updateImageOfPost(selectedFile, currentUser, newPost.getTheJourney().getTitle());
+                if (!updateImageOfPost(selectedFile, currentUser, newPost.getTheJourney().getTitle())) {
+                    buildNotification("Image Too Large", "Please upload a picture less than 1 MB", 5, Pos.BASELINE_CENTER);
+                }
+                else {
+                    updateImageOfPost(selectedFile, currentUser, newPost.getTheJourney().getTitle());
+                }
             }
             ((Stage) ((Node) event.getSource()).getScene().getWindow()).close();
         }

@@ -123,14 +123,15 @@ public class ProfileController {
         Image profileImage = new Image(profilePhotoFile.toURI().toString(), 80, 80, false, false);
         profilePhotoView.setImage(profileImage);
 
-        // Adding search box suggestions
-        ObservableList<Journey> journeys = getAllJourneysOfUser(currentUser);
 
-        for (int i = 0; i < journeys.size() ; i++) {
-            suggestions.add( i, journeys.get(i).getTitle() );
+        ObservableList<Journey> allJourneys = getAllJourneysOfUser(currentUser);
+
+        // Adding search box suggestions
+        for (int i = 0; i < allJourneys.size() ; i++) {
+            suggestions.add( i, allJourneys.get(i).getTitle() );
         }
 
-         autoComplete = TextFields.bindAutoCompletion(searchJourneyTextField, suggestions);
+        autoComplete = TextFields.bindAutoCompletion(searchJourneyTextField, suggestions);
 
         ObservableList<Friend> friends = getAllFriendsOfUser(currentUser);
         friendsListView.setItems(friends);
@@ -296,11 +297,13 @@ public class ProfileController {
 
             profilePhotoView.setImage(img);
 
-            updateImage(selectedFile, currentUser);
+            if (!updateImage(selectedFile, currentUser)) {
+                buildNotification("Image Too Large.", "Please upload an image less than 1 mb's", 5, Pos.BASELINE_CENTER);
+            }
         }
         else {
             // TODO Warn the user with a popup or use ControlsFX notifications?
-            Notifications notifications = buildNotification("File Corrupted", "Couldn't Upload Picture", 5, Pos.BASELINE_CENTER);
+            Notifications notifications = buildNotification("File Upload Issue", "Couldn't Upload Picture", 5, Pos.BASELINE_CENTER);
         }
     }
 

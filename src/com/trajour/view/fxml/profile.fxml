@@ -19,35 +19,51 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.trajour.view.ProfileController">
    <top>
-      <ToolBar prefHeight="60.0" prefWidth="1920.0" style="-fx-background-color: #00203FFF;" BorderPane.alignment="CENTER">
+      <ToolBar prefHeight="80.0" prefWidth="1920.0" style="-fx-background-color: #00203FFF;" BorderPane.alignment="CENTER">
         <items>
-          <Button fx:id="homePageButton" mnemonicParsing="false" onAction="#openHomePage" prefHeight="32.0" prefWidth="67.0" style="-fx-background-radius: 10; -fx-background-color: #ffff;">
+            <Separator orientation="VERTICAL" prefHeight="80.0">
+               <padding>
+                  <Insets right="50.0" />
+               </padding></Separator>
+          <Button fx:id="homePageButton" mnemonicParsing="false" onAction="#openHomePage" prefHeight="55.0" prefWidth="90.0" style="-fx-background-radius: 10; -fx-background-color: #ffff;">
                <graphic>
-                  <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="36.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../../../resources/home_icon.png" />
                      </image>
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="mapPageButton" layoutX="10.0" layoutY="13.0" mnemonicParsing="false" onAction="#openMapPage" prefHeight="32.0" prefWidth="67.0" style="-fx-background-radius: 10; -fx-background-color: #ffff;">
+            <Separator orientation="VERTICAL" prefHeight="80.0">
+               <padding>
+                  <Insets left="50.0" right="50.0" />
+               </padding></Separator>
+            <Button fx:id="mapPageButton" layoutX="10.0" layoutY="13.0" mnemonicParsing="false" onAction="#openMapPage" prefHeight="55.0" prefWidth="90.0" style="-fx-background-radius: 10; -fx-background-color: #ffff;">
                <graphic>
-                  <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="36.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../../../resources/map_pin.png" />
                      </image>
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="profilePageButton" layoutX="122.0" layoutY="13.0" mnemonicParsing="false" onAction="#openProfilePage" prefHeight="32.0" prefWidth="67.0" style="-fx-background-radius: 10; -fx-background-color: #ffff;">
+            <Separator orientation="VERTICAL" prefHeight="80.0">
+               <padding>
+                  <Insets left="50.0" right="50.0" />
+               </padding></Separator>
+            <Button fx:id="profilePageButton" layoutX="122.0" layoutY="13.0" mnemonicParsing="false" onAction="#openProfilePage" prefHeight="55.0" prefWidth="90.0" style="-fx-background-radius: 10; -fx-background-color: #ffff;">
                <graphic>
-                  <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="36.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../../../resources/user_account_icon.png" />
                      </image>
                   </ImageView>
                </graphic>
             </Button>
+            <Separator orientation="VERTICAL" prefHeight="80.0">
+               <padding>
+                  <Insets left="50.0" />
+               </padding></Separator>
         </items>
       </ToolBar>
    </top>

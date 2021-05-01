@@ -576,6 +576,8 @@ public final class DatabaseQuery {
         conn = dbConnection.getConnection();
 
         // File too large
+        if (img.length() > 1048576)
+            return false;
 
         String query = "UPDATE posts SET post_image=? WHERE userId = " + user.getUserId() + " AND post_title = '" + postTitle + "'";
         try {
@@ -588,7 +590,8 @@ public final class DatabaseQuery {
 
             ps.executeUpdate();
             return true;
-        } catch (SQLException | FileNotFoundException e) {
+        }
+        catch (SQLException | FileNotFoundException e) {
             e.getCause();
             e.printStackTrace();
         }
@@ -621,8 +624,10 @@ public final class DatabaseQuery {
         dbConnection = new DatabaseConnection();
         conn = dbConnection.getConnection();
 
+        System.out.println(img.length());
+
         // File too large
-        if (img.length() > 5000000)
+        if (img.length() > 1048576)
             return false;
 
         String query = "UPDATE users SET profile_photo=? WHERE userId = " + user.getUserId();
