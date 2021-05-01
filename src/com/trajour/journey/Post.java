@@ -11,8 +11,7 @@ import javafx.scene.text.Font;
 
 import java.io.File;
 
-import static com.trajour.db.DatabaseQuery.insertPost;
-import static com.trajour.db.DatabaseQuery.updateImageOfPost;
+import static com.trajour.db.DatabaseQuery.*;
 
 
 /**
@@ -53,6 +52,7 @@ public class Post extends GridPane implements Shareable {
         this.theJourney = theJourney;
         this.text = text;
         this.journeyPhoto = journeyPhoto;
+
         journeyPhotoView = new ImageView();
         userPhotoView = new ImageView();
         userVBox = new VBox();
@@ -71,13 +71,20 @@ public class Post extends GridPane implements Shareable {
     }
 
     @Override
-    public boolean share(User user, VBox mainFeed) {
+    public Post share(User user, VBox mainFeed) {
         journeyLocationLabel = new Label("Location: " + theJourney.getLocation());
         usernameLabel = new Label(user.getUsername());
         commentLabel = new Label("Comment: " + text);
         dateLabel = new Label("Date: " + theJourney.getStartDate() + " / " + theJourney.getEndDate());
         journeyNameLabel = new Label("Name: " + theJourney.getTitle());
+
         journeyPhotoView.setImage(journeyPhoto);
+
+        if (journeyPhotoView.getImage() == null) {
+            File file = getPostPhoto(user, getTheJourney().getTitle());
+            journeyPhotoView.setImage(new Image(file.toURI().toString(), 40, 40, false, false));
+        }
+
         userPhotoView.setImage(new Image(DatabaseQuery.getProfilePhotoFile(user).toURI().toString(), 40, 40, false, false));
         userVBox.getChildren().add(userPhotoView);
         userVBox.getChildren().add(usernameLabel);
@@ -97,18 +104,10 @@ public class Post extends GridPane implements Shareable {
 
         mainFeed.getChildren().add(this);
 
-        insertPost(user, this);
-        return true;
-    }
-
-    public boolean updatePostImage(File file, User user, String journeyTitle) {
-        if (!updateImageOfPost(file, user, journeyTitle)) {
-            return false;
+        if (!findPostByTitle(this, user)) {
+            insertPost(user, this);
         }
-        else {
-            updateImageOfPost(file, user, journeyTitle);
-            return true;
-        }
-    }
 
+        return this;
+    }
 }

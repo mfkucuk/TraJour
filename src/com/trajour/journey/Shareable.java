@@ -4,5 +4,5 @@ import com.trajour.model.User;
 import javafx.scene.layout.VBox;
 
 public interface Shareable {
-    boolean share(User u, VBox mainFeed);
+    Post share(User u, VBox mainFeed);
 }

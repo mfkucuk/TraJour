@@ -509,10 +509,30 @@ public final class DatabaseQuery {
         return result;
    }
 
-   public static boolean insertPost(User user, Post post) {
+   public static boolean findPostByTitle(Post post, User user) {
        dbConnection = new DatabaseConnection();
        conn = dbConnection.getConnection();
 
+       String query = "SELECT COUNT(*) FROM posts WHERE post_title = '" + post.getTheJourney().getTitle() + "' AND userId = " + user.getUserId();
+
+       try {
+           Statement statement = conn.createStatement();
+           ResultSet rs = statement.executeQuery(query);
+
+           if (rs.next()) {
+               return rs.getInt(1) == 1;
+           }
+       }
+       catch (SQLException e) {
+           e.printStackTrace();
+           e.getCause();
+       }
+
+       return false;
+   }
+   public static boolean insertPost(User user, Post post) {
+       dbConnection = new DatabaseConnection();
+       conn = dbConnection.getConnection();
 
        String query  = "INSERT INTO posts(userId, post_title, post_location, post_start_date, post_end_date, " +
                "post_comments) VALUES(" + user.getUserId() + ", '" + post.getTheJourney().getTitle() + "', '" +
@@ -570,13 +590,12 @@ public final class DatabaseQuery {
         return null;
     }
 
-
     public static boolean updateImageOfPost(File img, User user, String postTitle) {
         dbConnection = new DatabaseConnection();
         conn = dbConnection.getConnection();
 
         // File too large
-        if (img.length() > 1048576)
+        if (img.length() > 5242880)
             return false;
 
         String query = "UPDATE posts SET post_image=? WHERE userId = " + user.getUserId() + " AND post_title = '" + postTitle + "'";
@@ -627,7 +646,7 @@ public final class DatabaseQuery {
         System.out.println(img.length());
 
         // File too large
-        if (img.length() > 1048576)
+        if (img.length() > 5242880)
             return false;
 
         String query = "UPDATE users SET profile_photo=? WHERE userId = " + user.getUserId();

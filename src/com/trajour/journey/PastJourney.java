@@ -24,4 +24,11 @@ public class PastJourney extends Journey {
     public void deleteJourney(User currentUser) {
         DatabaseQuery.deleteJourney(this, currentUser);
     }
+
+    public String getRating() {
+        return rating;
+    }
+    public void setRating(String rating) {
+        this.rating = rating;
+    }
 }

@@ -88,9 +88,6 @@ public class MainController implements Initializable {
     private Label welcomeMessage;
 
     @FXML
-    private Button achievementsButton;
-
-    @FXML
     private ScrollPane mainScrollPane;
 
     @FXML
@@ -220,22 +217,22 @@ public class MainController implements Initializable {
         ObservableList<PastJourney> chosenJourneys = pastJourneysTable.getSelectionModel().getSelectedItems();
 
         if ( ! isNumeric(ratingTextField.getText())) {
-            Notifications notificationBuilder = buildNotification("Couldn't Rate Journey", "Please write a nuemric value between 0 and 10,",
+            Notifications notificationBuilder = buildNotification("Couldn't Rate Journey", "Please write a numeric value between 0 and 10.",
                     5, Pos.BASELINE_CENTER);
             notificationBuilder.showWarning();
         }
         else if (ratingTextField.getText().isBlank()) {
-            Notifications notificationBuilder = buildNotification("Couldn't Rate Journey", "Please write a value between 0 and 10,",
+            Notifications notificationBuilder = buildNotification("Couldn't Rate Journey", "Please write a value between 0 and 10.",
                     5, Pos.BASELINE_CENTER);
             notificationBuilder.showWarning();
         }
         else if (Integer.parseInt(ratingTextField.getText()) > 10 || Integer.parseInt(ratingTextField.getText()) < 0) {
-            Notifications notificationBuilder = buildNotification("Couldn't Rate Journey", "Please write a value between 0 and 10,",
+            Notifications notificationBuilder = buildNotification("Couldn't Rate Journey", "Please write a value between 0 and 10.",
                     5, Pos.BASELINE_CENTER);
             notificationBuilder.showWarning();
         }
         else if (chosenJourneys.isEmpty()) {
-            Notifications notificationBuilder = buildNotification("Couldn't Rate Journey", "Please choose a country",
+            Notifications notificationBuilder = buildNotification("Couldn't Rate Journey", "Please choose a location",
                     5, Pos.BASELINE_CENTER);
             notificationBuilder.showWarning();
         }
@@ -244,14 +241,12 @@ public class MainController implements Initializable {
                 pj.updateJourneyRating(currentUser, ratingTextField.getText());
             }
 
-            pastJourneysTable.getItems().removeAll(chosenJourneys);
-
             Notifications notificationBuilder = buildNotification("Rated Journey", "Rated the journey successfully!",
                     5, Pos.BASELINE_CENTER);
             notificationBuilder.showConfirm();
-        }
 
-        handleOpenMainPage();
+            handleOpenMainPage();
+        }
     }
 
     private void handleDeleteJourneyFromFutureJourneys() {
@@ -367,19 +362,19 @@ public class MainController implements Initializable {
         // Init past journeys table
         pastJourneysList = selectPastJourneys(currentUser);
 
-        pastJourneysCountryColumn.setCellValueFactory(new PropertyValueFactory<>("location"));
-        pastJourneysTitleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
-        pastJourneysRatingColumn.setCellValueFactory(new PropertyValueFactory<>("rating"));
-        pastJourneysDescriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
-        pastJourneysStartDateColumn.setCellValueFactory(new PropertyValueFactory<>("startDate"));
-        pastJourneysEndDateColumn.setCellValueFactory(new PropertyValueFactory<>("endDate"));
+        pastJourneysCountryColumn.setCellValueFactory(new PropertyValueFactory<PastJourney, String>("location"));
+        pastJourneysTitleColumn.setCellValueFactory(new PropertyValueFactory<PastJourney, String>("title"));
+        pastJourneysRatingColumn.setCellValueFactory(new PropertyValueFactory<PastJourney, String>("rating"));
+        pastJourneysDescriptionColumn.setCellValueFactory(new PropertyValueFactory<PastJourney, String>("description"));
+        pastJourneysStartDateColumn.setCellValueFactory(new PropertyValueFactory<PastJourney, LocalDate>("startDate"));
+        pastJourneysEndDateColumn.setCellValueFactory(new PropertyValueFactory<PastJourney, LocalDate>("endDate"));
 
         pastJourneysTable.setItems(pastJourneysList);
     }
 
     private void setContextItems() {
-        contextItemRefreshPastTable.setOnAction(actionEvent -> initData(currentUser));
-        contextItemRefreshFutureTable.setOnAction(actionEvent -> initData(currentUser));
+        contextItemRefreshPastTable.setOnAction(actionEvent -> setPastJourneyTableViewCells());
+        contextItemRefreshFutureTable.setOnAction(actionEvent -> setFutureJourneyTableViewCells());
 
         contextItemAddFutureJourney.setOnAction(actionEvent -> handleOpenMapPage());
         contextItemAddPastJourney.setOnAction(actionEvent -> handleOpenMapPage());

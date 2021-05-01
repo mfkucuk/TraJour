@@ -87,9 +87,12 @@ public class ShareJourneyController {
 
             newPost.share(currentUser, vbox);
 
-            if (!newPost.updatePostImage(selectedFile, currentUser, newPost.getTheJourney().getTitle())) {
+             if (!updateImageOfPost(selectedFile, currentUser, newPost.getTheJourney().getTitle())) {
                 Notifications notification = buildNotification("Image Too Large", "Please upload a picture less than 1 MB", 5, Pos.BASELINE_CENTER);
                 notification.showError();
+            }
+            else {
+                updateImageOfPost(selectedFile, currentUser, newPost.getTheJourney().getTitle());
             }
 
             ((Stage) ((Node) event.getSource()).getScene().getWindow()).close();

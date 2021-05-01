@@ -131,9 +131,9 @@ public class ProfileController {
         String input = searchJourneyTextField.getText();
 
         for( Journey j: journeys ) {
-            if( j.getTitle().toLowerCase().contains(input) || j.getLocation().toLowerCase().contains(input) ||
-                    j.getDescription().toLowerCase().contains(input) || j.getEndDate().toString().toLowerCase().contains(input)
-                    || j.getStartDate().toString().toLowerCase().contains(input)) {
+            if( j.getTitle().toLowerCase().contains(input.toLowerCase()) || j.getLocation().toLowerCase().contains(input.toLowerCase()) ||
+                    j.getDescription().toLowerCase().contains(input.toLowerCase()) || j.getEndDate().toString().toLowerCase().contains(input.toLowerCase())
+                    || j.getStartDate().toString().toLowerCase().contains(input.toLowerCase())) {
                 matchingJourneys.add(j);
             }
         }
