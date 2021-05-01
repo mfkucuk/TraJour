@@ -4,6 +4,8 @@ import com.trajour.model.DetailedLocation;
 import com.trajour.journey.Journey;
 import com.trajour.model.User;
 
+import javafx.beans.binding.BooleanBinding;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -19,6 +21,7 @@ import javafx.scene.effect.DropShadow;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.SVGPath;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -67,7 +70,7 @@ public class MapController implements Initializable {
     private TextArea journeyDescriptionTextArea;
 
     @FXML
-    private TextField selectedCountryField;
+    private TextField selectedLocationField;
 
     @FXML
     private Button pickRandomCountryButton;
@@ -81,15 +84,11 @@ public class MapController implements Initializable {
     @FXML
     private RadioButton showWorldCapitalsRadioBox;
 
-    @FXML
-    private RadioButton showLargestCities;
-
-
     private ObservableList<WorldMapView.Location> capitals;
-    private ObservableList<WorldMapView.Location> largeCities;
     private User currentUser;
     private Tooltip tooltip;
-    private boolean showLocationsView;
+    private BooleanBinding showLocationsBinded;
+    private SimpleBooleanProperty showLocationsView;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -114,11 +113,29 @@ public class MapController implements Initializable {
         showDistanceButton.setOnMouseEntered(mouseEvent -> showDistanceButton.setEffect(blackShadow));
         showDistanceButton.setOnMouseExited(mouseEvent -> showDistanceButton.setEffect(null));
 
-        capitals = readCountryCapitals();
+        // Map view
         worldMapView.setLocations(capitals);
+        showLocationsView = new SimpleBooleanProperty(false);
+        worldMapView.setShowLocations(showLocationsView.get());
+        worldMapView.setLocationSelectionMode(WorldMapView.SelectionMode.SINGLE);
+        worldMapView.setCountrySelectionMode(WorldMapView.SelectionMode.SINGLE);
 
-        showLocationsView = false;
-        worldMapView.setShowLocations(showLocationsView);
+        worldMapView.setOnMouseClicked(mouseEvent -> {
+            if (!worldMapView.getSelectedLocations().isEmpty()) {
+                if (mouseEvent.getTarget() instanceof SVGPath) {
+                    selectedLocationField.setText(worldMapView.getSelectedCountries().get(0).getLocale().getDisplayCountry());
+                    worldMapView.getSelectedLocations().removeAll(worldMapView.getSelectedLocations());
+                }
+                else {
+                    selectedLocationField.setText(worldMapView.getSelectedLocations().get(0).getName());
+                    worldMapView.getSelectedCountries().removeAll(worldMapView.getSelectedCountries());
+                }
+            }
+            if (!worldMapView.getSelectedCountries().isEmpty()) {
+                selectedLocationField.setText(worldMapView.getSelectedCountries().get(0).getLocale().getDisplayCountry());
+                worldMapView.getSelectedLocations().removeAll(worldMapView.getSelectedLocations());
+            }
+        });
 
         // Arrange the locations view factory
         tooltip = new Tooltip();
@@ -132,14 +149,9 @@ public class MapController implements Initializable {
             return circle;
         });
 
-
         // Zoom in and out
         zoomSlider.valueProperty().addListener((observableValue, number, t1) -> worldMapView.setZoomFactor(zoomSlider.getValue()));
 
-        // Radio buttons
-        final ToggleGroup group = new ToggleGroup();
-        showWorldCapitalsRadioBox.setToggleGroup(group);
-        showLargestCities.setToggleGroup(group);
     }
 
     public void initData(User user) {
@@ -181,28 +193,22 @@ public class MapController implements Initializable {
 
         endDatePicker.setValue(startDatePicker.getValue().plusDays(1));
 
-        // Map zoom functionality
-        worldMapView.setOnMouseClicked(mouseEvent -> {
-            if (!worldMapView.getSelectedCountries().isEmpty()) {
-                    selectedCountryField.setText(worldMapView.getSelectedCountries().get(0).getLocale().getDisplayCountry());
-            }
-        });
-
         worldMapView.addEventHandler(ScrollEvent.SCROLL, scrollEvent -> {
             double movement = scrollEvent.getDeltaY() / 40;
             zoomSlider.setValue(zoomSlider.getValue() + movement);
         });
+
+        capitals = readCountryCapitals();
+        worldMapView.setLocations(capitals);
+
+        showLocationsView.set(false);
+        worldMapView.setShowLocations(showLocationsView.get());
     }
     @FXML
     void handleShowLocations(ActionEvent event) {
-        showLocationsView = !showLocationsView;
+        showLocationsView.set(!showLocationsView.get());
 
-        worldMapView.setShowLocations(showLocationsView);
-    }
-
-    @FXML
-    void handleShowlargeCities(ActionEvent event) {
-        worldMapView.getLocations().addAll();
+        worldMapView.setShowLocations(showLocationsView.get());
     }
 
     @FXML

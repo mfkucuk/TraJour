@@ -3,9 +3,7 @@ package com.trajour.model;
 import org.controlsfx.control.WorldMapView;
 
 public class DetailedLocation extends WorldMapView.Location {
-    private String language;
     private String countryName;
-    private String continent;
     private int population;
 
     public DetailedLocation(double latitude, double longitude) {

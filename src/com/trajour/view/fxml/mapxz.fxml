@@ -148,7 +148,7 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="selectedCountryField" editable="false" layoutX="20.0" layoutY="14.0" promptText="Selected Country" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="14.0" />
+                  <TextField fx:id="selectedLocationField" editable="false" layoutX="20.0" layoutY="14.0" promptText="Selected Country" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="14.0" />
                   <TextField fx:id="journeyTitleTextField" layoutX="20.0" layoutY="54.0" prefHeight="25.0" prefWidth="201.0" promptText="Title of journey" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="44.0" AnchorPane.topAnchor="54.0" />
                </children>
             </AnchorPane>
@@ -166,11 +166,6 @@
                </tooltip>
             </Button>
             <RadioButton fx:id="showWorldCapitalsRadioBox" layoutX="14.0" layoutY="28.0" mnemonicParsing="false" onAction="#handleShowLocations" text="Show World Capitals">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </RadioButton>
-            <RadioButton fx:id="showLargestCities" layoutX="14.0" layoutY="69.0" mnemonicParsing="false" onAction="#handleShowLargeCities" text="Show Largest Cities">
                <font>
                   <Font size="14.0" />
                </font>
