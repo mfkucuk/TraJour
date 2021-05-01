@@ -2,18 +2,17 @@ package com.trajour.journey;
 
 import com.trajour.db.DatabaseQuery;
 import com.trajour.model.User;
-import com.trajour.view.MapController;
-import javafx.fxml.FXML;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 
-import java.io.FileNotFoundException;
+import java.io.File;
+
+import static com.trajour.db.DatabaseQuery.insertPost;
+import static com.trajour.db.DatabaseQuery.updateImageOfPost;
 
 
 /**
@@ -47,18 +46,6 @@ public class Post extends GridPane implements Shareable {
 
     public Journey getTheJourney() {
         return theJourney;
-    }
-
-    public void setTheJourney(Journey theJourney) {
-        this.theJourney = theJourney;
-    }
-
-    public Image getJourneyPhoto() {
-        return journeyPhoto;
-    }
-
-    public void setJourneyPhoto(Image journeyPhoto) {
-        this.journeyPhoto = journeyPhoto;
     }
 
     // Constructor
@@ -109,9 +96,19 @@ public class Post extends GridPane implements Shareable {
         add(commentLabel, 4, 1);
 
         mainFeed.getChildren().add(this);
+
+        insertPost(user, this);
         return true;
     }
 
-
+    public boolean updatePostImage(File file, User user, String journeyTitle) {
+        if (!updateImageOfPost(file, user, journeyTitle)) {
+            return false;
+        }
+        else {
+            updateImageOfPost(file, user, journeyTitle);
+            return true;
+        }
+    }
 
 }

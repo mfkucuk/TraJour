@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 import com.trajour.journey.Journey;
 import com.trajour.journey.Post;
 import com.trajour.model.User;
+import org.controlsfx.control.Notifications;
 
 import java.io.File;
 
@@ -63,7 +64,6 @@ public class ShareJourneyController {
 
     @FXML
     public void addJourneyPicture(ActionEvent event) {
-        // TODO Multiple files
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Resource File");
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg"));
@@ -85,16 +85,13 @@ public class ShareJourneyController {
             Journey selectedJourney = journeyComboBox.getSelectionModel().getSelectedItem();
             Post newPost = selectedJourney.post(commentsTextArea.getText(), journeyImageView.getImage());
 
-            // TODO Add the post to database
-            if (newPost.share(currentUser, vbox)) {
-                insertPost(currentUser, newPost);
-                if (!updateImageOfPost(selectedFile, currentUser, newPost.getTheJourney().getTitle())) {
-                    buildNotification("Image Too Large", "Please upload a picture less than 1 MB", 5, Pos.BASELINE_CENTER);
-                }
-                else {
-                    updateImageOfPost(selectedFile, currentUser, newPost.getTheJourney().getTitle());
-                }
+            newPost.share(currentUser, vbox);
+
+            if (!newPost.updatePostImage(selectedFile, currentUser, newPost.getTheJourney().getTitle())) {
+                Notifications notification = buildNotification("Image Too Large", "Please upload a picture less than 1 MB", 5, Pos.BASELINE_CENTER);
+                notification.showError();
             }
+
             ((Stage) ((Node) event.getSource()).getScene().getWindow()).close();
         }
         else {
