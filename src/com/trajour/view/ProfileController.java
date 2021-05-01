@@ -1,7 +1,6 @@
 package com.trajour.view;
 
 import com.trajour.journey.Journey;
-import com.trajour.journey.Wish;
 import com.trajour.model.Friend;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -24,7 +23,6 @@ import org.controlsfx.control.textfield.TextFields;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 
 import static com.trajour.db.DatabaseQuery.*;
 
