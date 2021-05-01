@@ -98,7 +98,7 @@ public class Journey implements Comparable<Journey>, Postable {
 
     @Override
     public String toString() {
-        return "Location: " + getLocation() + ", Title: " + getTitle() + "Start-End Date: " + startDate + " - " + endDate;
+        return "Location: " + getLocation() + ", Title: " + getTitle() + ", Start-End Date: " + startDate + " - " + endDate;
     }
 	@Override
 	public int compareTo(Journey o) {

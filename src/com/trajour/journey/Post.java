@@ -84,7 +84,7 @@ public class Post extends GridPane implements Shareable {
     }
 
     @Override
-    public Post share(User user, VBox mainFeed) {
+    public boolean share(User user, VBox mainFeed) {
         journeyLocationLabel = new Label("Location: " + theJourney.getLocation());
         usernameLabel = new Label(user.getUsername());
         commentLabel = new Label("Comment: " + text);
@@ -109,7 +109,7 @@ public class Post extends GridPane implements Shareable {
         add(commentLabel, 4, 1);
 
         mainFeed.getChildren().add(this);
-        return this;
+        return true;
     }
 
 

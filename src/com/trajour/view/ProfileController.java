@@ -7,6 +7,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -17,6 +18,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.controlsfx.control.Notifications;
 import org.controlsfx.control.textfield.AutoCompletionBinding;
 import com.trajour.model.User;
 import org.controlsfx.control.textfield.TextFields;
@@ -25,6 +27,7 @@ import java.io.File;
 import java.io.IOException;
 
 import static com.trajour.db.DatabaseQuery.*;
+import static com.trajour.view.MainController.buildNotification;
 
 public class ProfileController {
     @FXML
@@ -87,8 +90,8 @@ public class ProfileController {
 
     private User currentUser;
     private File profilePhotoFile;
-     private AutoCompletionBinding autoComplete;
-     private ObservableList<String> suggestions = FXCollections.observableArrayList();
+    private AutoCompletionBinding autoComplete;
+    private ObservableList<String> suggestions = FXCollections.observableArrayList();
 
     public void initData(User user) {
         currentUser = user;
@@ -113,9 +116,6 @@ public class ProfileController {
 
         changePasswordButton.setOnMouseEntered(mouseEvent -> changePasswordButton.setEffect(blackShadow));
         changePasswordButton.setOnMouseExited(mouseEvent -> changePasswordButton.setEffect(null));
-
-        privacyButton.setOnMouseEntered(mouseEvent -> privacyButton.setEffect(blackShadow));
-        privacyButton.setOnMouseExited(mouseEvent -> privacyButton.setEffect(null));
 
         addPictureButton.setOnMouseEntered(mouseEvent -> addPictureButton.setEffect(blackShadow));
         addPictureButton.setOnMouseExited(mouseEvent -> addPictureButton.setEffect(null));
@@ -291,12 +291,12 @@ public class ProfileController {
     public void openAddPicturePage(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Choose Profile Image");
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif"));
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg"));
 
         Stage stage = new Stage();
         File selectedFile = fileChooser.showOpenDialog(stage);
         if (selectedFile != null) {
-            Image img = new Image(selectedFile.toURI().toString(), 180, 180, false, false);
+            Image img = new Image(selectedFile.toURI().toString(), 80, 80, false, false);
 
             profilePhotoView.setImage(img);
 
@@ -304,6 +304,7 @@ public class ProfileController {
         }
         else {
             // TODO Warn the user with a popup or use ControlsFX notifications?
+            Notifications notifications = buildNotification("File Corrupted", "Couldn't Upload Picture", 5, Pos.BASELINE_CENTER);
         }
     }
 

@@ -20,7 +20,7 @@ import com.trajour.model.User;
 
 import java.io.File;
 
-import static com.trajour.db.DatabaseQuery.getAllJourneysOfUser;
+import static com.trajour.db.DatabaseQuery.*;
 
 public class ShareJourneyController {
     @FXML
@@ -44,6 +44,7 @@ public class ShareJourneyController {
     @FXML
     private Label feedBackLabel;
 
+    private File selectedFile;
     private VBox vbox;
 
     private User currentUser;
@@ -63,13 +64,13 @@ public class ShareJourneyController {
         // TODO Multiple files
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Resource File");
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif"));
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg"));
 
         Stage stage = new Stage();
-        File selectedFile = fileChooser.showOpenDialog(stage);
+        this.selectedFile = fileChooser.showOpenDialog(stage);
 
-        if (selectedFile != null) {
-            Image img = new Image(selectedFile.toURI().toString(), 180, 180, false, false);
+        if (this.selectedFile != null) {
+            Image img = new Image(this.selectedFile.toURI().toString(), 90,90, false, false);
 
             journeyImageView.setImage(img);
             pictureFeedBackLabel.setText("");
@@ -83,7 +84,10 @@ public class ShareJourneyController {
             Post newPost = selectedJourney.post(commentsTextArea.getText(), journeyImageView.getImage());
 
             // TODO Add the post to database
-            newPost.share(currentUser, vbox);
+            if (newPost.share(currentUser, vbox)) {
+                insertPost(currentUser, newPost);
+                updateImageOfPost(selectedFile, currentUser, newPost.getTheJourney().getTitle());
+            }
             ((Stage) ((Node) event.getSource()).getScene().getWindow()).close();
         }
         else {

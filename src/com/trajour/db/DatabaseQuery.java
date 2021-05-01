@@ -492,8 +492,8 @@ public final class DatabaseQuery {
                 LocalDate startDate = rs.getDate("post_start_date").toLocalDate();
                 LocalDate endDate = rs.getDate("post_end_date").toLocalDate();
                 String postComments = rs.getString("post_comments");
-                File image = getPostPhoto(currentUser);
-                Image realImage = new Image(image.toURI().toString(), 40, 40, false, false);
+                File image = getPostPhoto(currentUser, postTitle);
+                Image realImage = new Image(image.toURI().toString(), 90, 90, false, false);
 
                 Journey postJourney = new Journey(postLocation, postTitle, postComments, startDate, endDate);
                 Post newPost = new Post(postJourney, postComments, realImage);
@@ -509,27 +509,47 @@ public final class DatabaseQuery {
         return result;
    }
 
-   public static boolean insertPost(User user) {
-        return false;
+   public static boolean insertPost(User user, Post post) {
+       dbConnection = new DatabaseConnection();
+       conn = dbConnection.getConnection();
+
+
+       String query  = "INSERT INTO posts(userId, post_title, post_location, post_start_date, post_end_date, " +
+               "post_comments) VALUES(" + user.getUserId() + ", '" + post.getTheJourney().getTitle() + "', '" +
+               post.getTheJourney().getLocation() + "', '" + Date.valueOf(post.getTheJourney().getStartDate()) + "', '"
+               + Date.valueOf(post.getTheJourney().getEndDate()) + "', '" + post.getText() + "')";
+
+       try {
+           Statement statement = conn.createStatement();
+           int result = statement.executeUpdate(query);
+
+           return result > 0;
+       }
+       catch (SQLException e) {
+           e.printStackTrace();
+           e.getCause();
+       }
+
+       return false;
    }
 
-    public static File getPostPhoto(User user) {
+    public static File getPostPhoto(User user, String postTitle) {
         dbConnection = new DatabaseConnection();
         conn = dbConnection.getConnection();
 
         InputStream input;
         FileOutputStream output;
-        String query = "SELECT profile_photo FROM users where userId = " + user.getUserId() + " AND profile_photo IS NOT NULL";
+        String query = "SELECT post_image FROM posts where userId = " + user.getUserId() + " AND post_title = '" + postTitle + "' AND post_image IS NOT NULL";
 
         try {
             Statement statement = conn.createStatement();
             ResultSet rs = statement.executeQuery(query);
 
-            File newFile = new File("src/resources/profile_photo_" + user.getUserId() + ".png");
+            File newFile = new File("src/resources/post_photo_" + LocalDate.now() + ".png");
             output = new FileOutputStream(newFile);
 
             if (rs.next()) {
-                input = rs.getBinaryStream("profile_photo");
+                input = rs.getBinaryStream("post_image");
 
                 byte[] buffer = new byte[1024];
                 while (input.read(buffer) > 0) {
@@ -551,15 +571,13 @@ public final class DatabaseQuery {
     }
 
 
-    public static boolean updateImageOfPost(File img, User user) {
+    public static boolean updateImageOfPost(File img, User user, String postTitle) {
         dbConnection = new DatabaseConnection();
         conn = dbConnection.getConnection();
 
         // File too large
-        if (img.length() > 5000000)
-            return false;
 
-        String query = "UPDATE users SET profile_photo=? WHERE userId = " + user.getUserId();
+        String query = "UPDATE posts SET post_image=? WHERE userId = " + user.getUserId() + " AND post_title = '" + postTitle + "'";
         try {
             PreparedStatement ps = conn.prepareStatement(query);
 
