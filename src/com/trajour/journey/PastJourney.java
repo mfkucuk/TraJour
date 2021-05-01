@@ -1,5 +1,9 @@
 package com.trajour.journey;
 
+import com.trajour.db.DatabaseQuery;
+import com.trajour.model.User;
+
+import javax.xml.crypto.Data;
 import java.time.LocalDate;
 
 public class PastJourney extends Journey {
@@ -13,20 +17,11 @@ public class PastJourney extends Journey {
         this.rating = rating;
     }
 
-    /**
-     * Returns the rating of the past journey.
-     * @return is the rating.
-     */
-    public String getRating() {
-        return rating;
+    public void updateJourneyRating(User user, String rating) {
+        DatabaseQuery.updateJourneyRating(this, user, rating);
     }
 
-    /**
-     * Sets the rating of the past journey.
-     * @param rating is the rating.
-     */
-    public void setRating(String rating) {
-        this.rating = rating;
+    public void deleteJourney(User currentUser) {
+        DatabaseQuery.deleteJourney(this, currentUser);
     }
-    
 }

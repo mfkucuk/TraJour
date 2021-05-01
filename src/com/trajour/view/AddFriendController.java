@@ -1,14 +1,12 @@
 package com.trajour.view;
 
 import com.trajour.db.DatabaseQuery;
-import com.trajour.model.Friend;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import com.trajour.model.User;
 import javafx.scene.effect.DropShadow;
-import javafx.scene.paint.Color;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -37,6 +35,7 @@ public class AddFriendController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        // Button effects
         DropShadow shadow = new DropShadow();
         addFriendButton.setOnMouseEntered(mouseEvent -> addFriendButton.setEffect(shadow));
         addFriendButton.setOnMouseExited(mouseEvent -> addFriendButton.setEffect(null));
@@ -62,8 +61,7 @@ public class AddFriendController implements Initializable {
                     addFriendFeedbackLabel.setText("I'm afraid you cannot be friends with yourself.");
                 }
                 else if ( ! findFriendByUsername(friendUsernameTextField.getText(), currentUser)) {
-                    Friend friend = new Friend(friendUsernameTextField.getText(), getEmailByUsername(friendUsernameTextField.getText()));
-                    DatabaseQuery.insertFriendByUsername(friend, currentUser);
+                    currentUser.addFriendByName(friendUsernameTextField.getText(), getEmailByUsername(friendUsernameTextField.getText()));
                     addFriendFeedbackLabel.setText("Friend successfully added.");
                 }
                 else {
@@ -80,8 +78,7 @@ public class AddFriendController implements Initializable {
                     addFriendFeedbackLabel.setText("I'm afraid you cannot be friends with yourself.");
                 }
                 else if ( ! findFriendByEmail(friendEmailTextField.getText(), currentUser)) {
-                    Friend friend = new Friend(getUsernameByEmail(friendEmailTextField.getText()), friendEmailTextField.getText());
-                    insertFriendByEmail(friend, currentUser.getUsername());
+                    currentUser.addFriendByEmail(getUsernameByEmail(friendEmailTextField.getText()), friendEmailTextField.getText());
                     addFriendFeedbackLabel.setText("Friend successfully added.");
                 }
                 else {
@@ -93,6 +90,4 @@ public class AddFriendController implements Initializable {
             }
         }
     }
-
-
 }

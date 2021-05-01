@@ -37,6 +37,7 @@ public class ChangePasswordController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        // Init buttons
         DropShadow shadow = new DropShadow();
         changeButton.setOnMouseEntered(mouseEvent -> changeButton.setEffect(shadow));
         changeButton.setOnMouseExited(mouseEvent -> changeButton.setEffect(null));
@@ -53,9 +54,7 @@ public class ChangePasswordController implements Initializable {
                 feedbackLabel.setText("Your new passwords do not match.");
             }
             else {
-                boolean result = findPasswordByUsername(currentUser.getUsername(), oldPasswordTextField.getText());
-                if (result) {
-                    updatePassword(currentUser.getUsername(), newPasswordTextField.getText());
+                if (currentUser.updatePassword(oldPasswordTextField.getText(), newPasswordTextField.getText())) {
                     feedbackLabel.setText("Password successfully changed.");
                 }
                 else {
@@ -67,6 +66,4 @@ public class ChangePasswordController implements Initializable {
             feedbackLabel.setText("Please fill in all the text fields");
         }
     }
-
-
 }

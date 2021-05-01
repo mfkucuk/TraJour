@@ -1,5 +1,6 @@
 package com.trajour.view;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -25,6 +26,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import static com.trajour.db.DatabaseQuery.*;
+import static com.trajour.view.MainController.buildNotification;
 
 /**
  * Controller for the login process
@@ -54,41 +56,10 @@ public class LoginController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        initSetNodesOnAction();
 
-        dbConnection = new DatabaseConnection();
-        // Button effects
-        DropShadow shadow = new DropShadow();
-
-        // Event listeners for text fields and buttons
-        emailTextField.requestFocus();
-
-//        loginButton.setOnMouseEntered(mouseEvent -> loginButton.setTextFill(Color.BLACK) );
-//        loginButton.setOnMouseExited(mouseEvent -> loginButton.setTextFill(Color.WHITE));
-        loginButton.setOnMouseEntered(mouseEvent -> loginButton.setEffect(shadow));
-        loginButton.setOnMouseExited(mouseEvent -> loginButton.setEffect(null));
-
-//        registerButton.setOnMouseEntered(mouseEvent -> registerButton.setTextFill(Color.BLACK) );
-//        registerButton.setOnMouseExited(mouseEvent -> registerButton.setTextFill(Color.WHITE));
-        registerButton.setOnMouseEntered(mouseEvent -> registerButton.setEffect(shadow));
-        registerButton.setOnMouseExited(mouseEvent -> registerButton.setEffect(null));
-
-        passwordField.setOnAction((ActionEvent e) -> {
-            if (!emailTextField.getText().isBlank() && !passwordField.getText().isBlank()) {
-                handleLogin(e);
-            }
-            else {
-                loginFeedbackLabel.setText("Please enter your email and password.");
-            }
-        });
-
-        emailTextField.setOnAction((ActionEvent e) -> {
-            if (!emailTextField.getText().isBlank() && !passwordField.getText().isBlank()) {
-                handleLogin(e);
-            }
-            else {
-                loginFeedbackLabel.setText("Please enter your email and password.");
-            }
-        });
+        // Set the initial focus to email text field.
+        Platform.runLater(() -> emailTextField.requestFocus());
     }
 
     /**
@@ -108,16 +79,9 @@ public class LoginController implements Initializable {
                 User currentUser = new User(userId, username, email);
 
                 // Build and show notification
-                Notifications notificationBuilder = Notifications.create()
-                        .title("Login Successful!")
-                        .text("Welcome to TraJour, " + currentUser.getUsername() + ", you can navigate through the main page, map page and your profile via" +
-                                " the menu bar at the top!")
-                        .graphic(null)
-                        .hideAfter(Duration.seconds(8))
-                        .position(Pos.CENTER)
-                        .onAction(actionEvent -> {});
-                notificationBuilder.darkStyle();
-                notificationBuilder.showConfirm();
+                Notifications notification = buildNotification("Login Successful!", "Welcome to TraJour, " + currentUser.getUsername() + ", you can navigate through the main page, map page and your profile via" +
+                        " the menu bar at the top!", 6, Pos.CENTER);
+                notification.showConfirm();
 
                 // Redirect to main page
                 openMainPage(event, currentUser);
@@ -186,5 +150,35 @@ public class LoginController implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void initSetNodesOnAction() {
+        // Button effects
+        DropShadow shadow = new DropShadow();
+
+        loginButton.setOnMouseEntered(mouseEvent -> loginButton.setEffect(shadow));
+        loginButton.setOnMouseExited(mouseEvent -> loginButton.setEffect(null));
+
+        registerButton.setOnMouseEntered(mouseEvent -> registerButton.setEffect(shadow));
+        registerButton.setOnMouseExited(mouseEvent -> registerButton.setEffect(null));
+
+        // Event listeners for text fields and buttons
+        passwordField.setOnAction((ActionEvent e) -> {
+            if (!emailTextField.getText().isBlank() && !passwordField.getText().isBlank()) {
+                handleLogin(e);
+            }
+            else {
+                loginFeedbackLabel.setText("Please enter your email and password.");
+            }
+        });
+
+        emailTextField.setOnAction((ActionEvent e) -> {
+            if (!emailTextField.getText().isBlank() && !passwordField.getText().isBlank()) {
+                handleLogin(e);
+            }
+            else {
+                loginFeedbackLabel.setText("Please enter your email and password.");
+            }
+        });
     }
 }

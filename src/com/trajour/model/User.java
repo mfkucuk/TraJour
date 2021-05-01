@@ -9,7 +9,7 @@ import org.controlsfx.control.Notifications;
 import java.awt.*;
 import java.io.File;
 
-import static com.trajour.db.DatabaseQuery.removeFriend;
+import static com.trajour.db.DatabaseQuery.*;
 import static com.trajour.view.MainController.buildNotification;
 
 /**
@@ -37,8 +37,27 @@ public class User {
         }
     }
 
+    public void addFriendByEmail(String nameOfFriend, String emailOfFriend) {
+        Friend friend = new Friend(nameOfFriend, emailOfFriend);
+        insertFriendByEmail(friend, getUsername());
+    }
+
+    public void addFriendByName(String nameOfFriend, String emailOfFriend) {
+        Friend friend = new Friend(nameOfFriend, emailOfFriend);
+        insertFriendByUsername(friend, this);
+    }
+
     public boolean addPicture(File img) {
         return DatabaseQuery.updateImage(img, this);
+    }
+
+    public boolean updatePassword(String oldPassword, String newPassword) {
+        if (!findPasswordByUsername(getUsername(), oldPassword)) {
+            return false;
+        } else {
+            DatabaseQuery.updatePassword(getUsername(), newPassword);
+            return true;
+        }
     }
 
     public boolean addWish() {
@@ -48,19 +67,6 @@ public class User {
     public boolean removeWish() {
         return false;
     }
-
-    // Methods
-    public boolean addFriendByUsername(String username) {
-        // TODO Search the database, check whether a user with the given username exists or the user is already a friend
-        return false;
-    }
-    
-
-    public boolean addFriendByEmail(String email) {
-        // TODO Search the database, check whether a user with the given username exists or the user is already a friend
-        return false;
-    }
-
 
     /**
      * Returns username.

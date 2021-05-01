@@ -1,14 +1,17 @@
 package com.trajour.journey;
 
 import com.trajour.model.User;
+import javafx.geometry.Pos;
 import javafx.scene.image.Image;
 import com.trajour.db.DatabaseQuery;
 import javafx.scene.image.ImageView;
+import org.controlsfx.control.Notifications;
 
 import java.time.LocalDate;
 
+import static com.trajour.db.DatabaseQuery.findJourneyByUser;
 import static com.trajour.db.DatabaseQuery.insertNewJourney;
-
+import static com.trajour.view.MainController.buildNotification;
 
 
 /**
@@ -32,8 +35,15 @@ public class Journey implements Comparable<Journey>, Postable {
         this.endDate = endDate;
     }
 
-    public void addNewJourney(User user) {
-        insertNewJourney(this, user);
+    public boolean addNewJourney(User currentUser) {
+        if (findJourneyByUser(this, currentUser)) {
+            return false;
+
+        }
+        else {
+            insertNewJourney(this, currentUser);
+            return true;
+        }
     }
 
     // Methods
@@ -67,11 +77,6 @@ public class Journey implements Comparable<Journey>, Postable {
         return startDate;
     }
 
-    public void setStartDate(LocalDate startDate) {
-        this.startDate = startDate;
-    }
-
-
     /**
      * This method returns the endDate.
      * @return endDate
@@ -80,9 +85,6 @@ public class Journey implements Comparable<Journey>, Postable {
         return endDate;
     }
 
-    public void setEndDate(LocalDate endDate) {
-        this.endDate = endDate;
-    }
 
     /**
      * This method returns the description.

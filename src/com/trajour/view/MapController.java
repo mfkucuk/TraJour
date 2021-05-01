@@ -93,64 +93,12 @@ public class MapController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // Initialize button styling
-        DropShadow shadow = new DropShadow(7, Color.WHITE);
-        homePageButton.setOnMouseEntered(mouseEvent -> homePageButton.setEffect(shadow));
-        homePageButton.setOnMouseExited(mouseEvent -> homePageButton.setEffect(null));
+        initButtons();
 
-        mapPageButton.setOnMouseEntered(mouseEvent -> mapPageButton.setEffect(shadow));
-        mapPageButton.setOnMouseExited(mouseEvent -> mapPageButton.setEffect(null));
-
-        profilePageButton.setOnMouseEntered(mouseEvent -> profilePageButton.setEffect(shadow));
-        profilePageButton.setOnMouseExited(mouseEvent -> profilePageButton.setEffect(null));
-
-        DropShadow blackShadow = new DropShadow();
-        addJourneyButton.setOnMouseEntered(mouseEvent -> addJourneyButton.setEffect(blackShadow));
-        addJourneyButton.setOnMouseExited(mouseEvent -> addJourneyButton.setEffect(null));
-
-        pickRandomCountryButton.setOnMouseEntered(mouseEvent -> pickRandomCountryButton.setEffect(blackShadow));
-        pickRandomCountryButton.setOnMouseExited(mouseEvent -> pickRandomCountryButton.setEffect(null));
-
-        showDistanceButton.setOnMouseEntered(mouseEvent -> showDistanceButton.setEffect(blackShadow));
-        showDistanceButton.setOnMouseExited(mouseEvent -> showDistanceButton.setEffect(null));
-
-        // Map view
-        worldMapView.setLocations(capitals);
-        showLocationsView = new SimpleBooleanProperty(false);
-        worldMapView.setShowLocations(showLocationsView.get());
-
-        worldMapView.setOnMouseClicked(mouseEvent -> {
-            if (worldMapView.getSelectedLocations().size() >= 1) {
-                if (mouseEvent.getTarget() instanceof SVGPath) {
-                    selectedLocationField.setText(worldMapView.getSelectedCountries().get(worldMapView.getSelectedCountries().size() - 1).getLocale().getDisplayCountry());
-                    worldMapView.getSelectedLocations().removeAll(worldMapView.getSelectedLocations());
-                }
-                else {
-                    selectedLocationField.setText(worldMapView.getSelectedLocations().get(worldMapView.getSelectedLocations().size() - 1).getName());
-                    worldMapView.getSelectedCountries().removeAll(worldMapView.getSelectedCountries());
-                }
-            }
-            if (worldMapView.getSelectedCountries().size() >= 1) {
-                selectedLocationField.setText(worldMapView.getSelectedCountries().get(worldMapView.getSelectedCountries().size() - 1).getLocale().getDisplayCountry());
-                worldMapView.getSelectedLocations().removeAll(worldMapView.getSelectedLocations());
-            }
-        });
-
-        // Arrange the locations view factory
-        tooltip = new Tooltip();
-        worldMapView.setLocationViewFactory(location -> {
-            Circle circle = new Circle();
-            circle.setRadius(3);
-            circle.setTranslateX(-4);
-            circle.setTranslateY(-4);
-            circle.setOnMouseEntered(mouseEvent -> tooltip.setText(location.getName()));
-            Tooltip.install(circle, tooltip);
-            return circle;
-        });
+        initWorldMapView();
 
         // Zoom in and out
         zoomSlider.valueProperty().addListener((observableValue, number, t1) -> worldMapView.setZoomFactor(zoomSlider.getValue()));
-
     }
 
     public void initData(User user) {
@@ -159,6 +107,7 @@ public class MapController implements Initializable {
         // From the JavaFX tutorial in Oracle's website, disables the cells that corresponds to the date
         // selected in the startDate and all the cells corresponding to the preceding dates
         // https://docs.oracle.com/javase/8/javafx/user-interface-tutorial/date-picker.htm#CCHHJBEA
+        // Inits date picker
         startDatePicker.setValue(LocalDate.now());
         final Callback<DatePicker, DateCell> dayCellFactory =
                 new Callback<DatePicker, DateCell>() {
@@ -187,11 +136,10 @@ public class MapController implements Initializable {
                         };
                     }
                 };
-
         endDatePicker.setDayCellFactory(dayCellFactory);
-
         endDatePicker.setValue(startDatePicker.getValue().plusDays(1));
 
+        // Inits the zoom handler and location view
         worldMapView.addEventHandler(ScrollEvent.SCROLL, scrollEvent -> {
             double movement = (scrollEvent.getDeltaY()) / ((double) 40);
             zoomSlider.setValue(zoomSlider.getValue() + movement);
@@ -259,19 +207,16 @@ public class MapController implements Initializable {
 
             Journey j = new Journey(location, title, journeyDesc, start, end);
 
-            if (findJourneyByUser(j, currentUser)) {
+            if (!j.addNewJourney(currentUser)) {
                 Notifications notification = buildNotification("Journey Already Exists", "A journey with the " +
                         "exact same specifications already exists in your journeys list. ", 6, Pos.BASELINE_CENTER);
                 notification.showError();
             }
             else {
-                insertNewJourney(j, currentUser);
-
                 // Build notification
                 Notifications notificationBuilder = buildNotification("Added Journey!", "Journey is successfully " +
                         "added. Journey details: \nCountry: " + j.getLocation() + ", Description: " + j.getDescription() +
                         ", Dates: " + j.getStartDate() + " - " + j.getEndDate(), 6, Pos.BASELINE_CENTER);
-
                 notificationBuilder.showConfirm();
             }
         }
@@ -405,6 +350,67 @@ public class MapController implements Initializable {
         distance = 2 * radiusOfEarth * Math.asin(Math.sqrt(h));
 
         return distance;
+    }
+
+    private void initButtons() {
+        DropShadow shadow = new DropShadow(7, Color.WHITE);
+        homePageButton.setOnMouseEntered(mouseEvent -> homePageButton.setEffect(shadow));
+        homePageButton.setOnMouseExited(mouseEvent -> homePageButton.setEffect(null));
+
+        mapPageButton.setOnMouseEntered(mouseEvent -> mapPageButton.setEffect(shadow));
+        mapPageButton.setOnMouseExited(mouseEvent -> mapPageButton.setEffect(null));
+
+        profilePageButton.setOnMouseEntered(mouseEvent -> profilePageButton.setEffect(shadow));
+        profilePageButton.setOnMouseExited(mouseEvent -> profilePageButton.setEffect(null));
+
+        DropShadow blackShadow = new DropShadow();
+        addJourneyButton.setOnMouseEntered(mouseEvent -> addJourneyButton.setEffect(blackShadow));
+        addJourneyButton.setOnMouseExited(mouseEvent -> addJourneyButton.setEffect(null));
+
+        pickRandomCountryButton.setOnMouseEntered(mouseEvent -> pickRandomCountryButton.setEffect(blackShadow));
+        pickRandomCountryButton.setOnMouseExited(mouseEvent -> pickRandomCountryButton.setEffect(null));
+
+        showDistanceButton.setOnMouseEntered(mouseEvent -> showDistanceButton.setEffect(blackShadow));
+        showDistanceButton.setOnMouseExited(mouseEvent -> showDistanceButton.setEffect(null));
+    }
+
+    private void initWorldMapView() {
+        // Set locations to display
+        worldMapView.setLocations(capitals);
+        showLocationsView = new SimpleBooleanProperty(false);
+        worldMapView.setShowLocations(showLocationsView.get());
+
+        // Set what happens when clicked on a location or country. The latest chosen location or country is assumed as
+        // the travel destination and the location text field is changed accordingly
+        worldMapView.setOnMouseClicked(mouseEvent -> {
+            if (worldMapView.getSelectedLocations().size() >= 1) {
+                if (mouseEvent.getTarget() instanceof SVGPath) {
+                    selectedLocationField.setText(worldMapView.getSelectedCountries().get(worldMapView.getSelectedCountries().size() - 1).getLocale().getDisplayCountry());
+                    worldMapView.getSelectedLocations().removeAll(worldMapView.getSelectedLocations());
+                }
+                else {
+                    selectedLocationField.setText(worldMapView.getSelectedLocations().get(worldMapView.getSelectedLocations().size() - 1).getName());
+                    worldMapView.getSelectedCountries().removeAll(worldMapView.getSelectedCountries());
+                }
+            }
+            if (worldMapView.getSelectedCountries().size() >= 1) {
+                selectedLocationField.setText(worldMapView.getSelectedCountries().get(worldMapView.getSelectedCountries().size() - 1).getLocale().getDisplayCountry());
+                worldMapView.getSelectedLocations().removeAll(worldMapView.getSelectedLocations());
+            }
+        });
+
+        // Set the view of locations
+        tooltip = new Tooltip();
+        worldMapView.setLocationViewFactory(location -> {
+            Circle circle = new Circle();
+            circle.setRadius(3);
+            circle.setTranslateX(-4);
+            circle.setTranslateY(-4);
+            circle.setOnMouseEntered(mouseEvent -> tooltip.setText(location.getName()));
+            Tooltip.install(circle, tooltip);
+            return circle;
+        });
+
     }
 
 
