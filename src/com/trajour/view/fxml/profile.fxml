@@ -84,7 +84,7 @@
                </font>
             </Label>
             <TextField fx:id="searchJourneyTextField" layoutX="200.0" layoutY="122.0" onAction="#searchJourneyByTitle" prefHeight="30.0" prefWidth="270.0" promptText="Enter journey" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="492.0" AnchorPane.topAnchor="122.0" />
-            <Button fx:id="searchButton" layoutX="441.0" layoutY="122.0" mnemonicParsing="false" onAction="#searchJourneyByTitle" prefHeight="3.0" style="-fx-background-color: #C00000; -fx-background-radius: 10;" text="Search" textFill="WHITE" AnchorPane.leftAnchor="441.0" AnchorPane.rightAnchor="413.0" AnchorPane.topAnchor="122.0">
+            <Button fx:id="searchButton" layoutX="441.0" layoutY="122.0" mnemonicParsing="false" onAction="#searchJourney" prefHeight="25.0" prefWidth="85.0" style="-fx-background-color: #C00000; -fx-background-radius: 10;" text="Search" textFill="WHITE" AnchorPane.leftAnchor="441.0" AnchorPane.rightAnchor="374.0" AnchorPane.topAnchor="122.0">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>

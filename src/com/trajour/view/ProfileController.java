@@ -113,7 +113,7 @@ public class ProfileController {
 
 
     @FXML
-    void searchJourneyByTitle(ActionEvent e ){
+    void searchJourney(ActionEvent e ){
         searchedJourneysListView.getItems().removeAll(searchedJourneysListView.getItems());
 
         ObservableList<Journey> journeys = getAllJourneysOfUser(currentUser);
