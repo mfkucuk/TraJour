@@ -1,5 +1,6 @@
 package com.trajour.db;
 
+import com.trajour.journey.Wish;
 import com.trajour.model.Friend;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -7,6 +8,7 @@ import com.trajour.journey.Journey;
 import com.trajour.journey.Post;
 import com.trajour.model.User;
 
+import javax.swing.plaf.nimbus.State;
 import java.io.*;
 import java.sql.*;
 import java.time.LocalDate;
@@ -202,10 +204,12 @@ public final class DatabaseQuery {
             }
 
             return newFile;
-        } catch (SQLException | FileNotFoundException e) {
+        }
+        catch (SQLException | FileNotFoundException e) {
             e.printStackTrace();
             e.getCause();
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             e.printStackTrace();
         }
 
@@ -381,6 +385,80 @@ public final class DatabaseQuery {
 
         return false;
     }
+
+    public static boolean insertWishByUser(Wish newWish, User user) {
+        dbConnection = new DatabaseConnection();
+        conn = dbConnection.getConnection();
+
+        String query = "INSERT INTO wishlist(location, startDate, userId) VALUES('" + newWish.getLocation() + "', " +
+                Date.valueOf(newWish.getStartDate()) + ", " + user.getUserId() +")";
+
+        try {
+            Statement statement = conn.createStatement();
+            int result = statement.executeUpdate(query);
+
+            return result > 0;
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            e.getCause();
+        }
+
+        return false;
+    }
+
+    public static boolean deleteWishByUser(Wish wish, User user) {
+        dbConnection = new DatabaseConnection();
+        conn = dbConnection.getConnection();
+
+        String query = "DELETE FROM wishlist WHERE location = '" + wish.getLocation() + "' AND startDate = '" +
+                Date.valueOf(wish.getStartDate()) + "' AND userId = " + user.getUserId();
+
+        try {
+            Statement statement = conn.createStatement();
+            int result = statement.executeUpdate(query);
+
+            return result > 0;
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            e.getCause();
+        }
+
+        return false;
+    }
+
+    public static ObservableList<Wish> getAllWishesOfUser(User user) {
+        dbConnection = new DatabaseConnection();
+        conn = dbConnection.getConnection();
+
+        ObservableList<Wish> result = FXCollections.observableArrayList();
+
+        String query = "SELECT * FROM wishlist WHERE userId = " + user.getUserId();
+
+        try {
+            Statement statement = conn.createStatement();
+            ResultSet rs = statement.executeQuery(query);
+
+            while (rs.next()) {
+                String location = rs.getString("location");
+                LocalDate startDate = rs.getDate("startDate").toLocalDate();
+
+                Wish wish = new Wish(location, startDate);
+                result.add(wish);
+            }
+
+            return result;
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            e.getCause();
+        }
+
+        return result;
+    }
+
+
 
     public static void insertFriendByUsername(Friend friend, User currentUser) {
         dbConnection = new DatabaseConnection();

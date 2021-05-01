@@ -1,10 +1,8 @@
 package com.trajour.view;
 
-import com.trajour.model.DetailedLocation;
 import com.trajour.journey.Journey;
 import com.trajour.model.User;
 
-import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -28,7 +26,6 @@ import javafx.util.Callback;
 import org.controlsfx.control.Notifications;
 import org.controlsfx.control.WorldMapView;
 
-import javax.swing.text.NumberFormatter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -196,7 +193,7 @@ public class MapController implements Initializable {
         endDatePicker.setValue(startDatePicker.getValue().plusDays(1));
 
         worldMapView.addEventHandler(ScrollEvent.SCROLL, scrollEvent -> {
-            double movement = scrollEvent.getDeltaY() / 40;
+            double movement = (scrollEvent.getDeltaY()) / ((double) 40);
             zoomSlider.setValue(zoomSlider.getValue() + movement);
         });
 
@@ -221,7 +218,7 @@ public class MapController implements Initializable {
             double distance = calculateDistanceBetweenTwoLocations(l1, l2);
 
             // Format the distance, show only 3 decimals
-            DecimalFormat df = new DecimalFormat("#.###,###");
+            DecimalFormat df = new DecimalFormat("#,###.##");
             String formattedDistance = df.format(distance);
 
             distanceResultLabel.setText("Distance between " + l1.getName() + " and " + l2.getName() + " is " + formattedDistance + " kilometers.");
@@ -234,7 +231,7 @@ public class MapController implements Initializable {
     }
 
     @FXML
-    void handleAddJourney(ActionEvent event) throws FileNotFoundException {
+    void handleAddJourney(ActionEvent event)  {
         ObservableList<WorldMapView.Country> selectedCountry = worldMapView.getSelectedCountries();
 
         if (journeyTitleTextField.getText().isBlank() || journeyDescriptionTextArea.getText().isBlank()) {
@@ -443,6 +440,4 @@ public class MapController implements Initializable {
 //
 //        return result;
 //    }
-
-
 }
