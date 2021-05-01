@@ -25,6 +25,7 @@ import org.controlsfx.control.textfield.TextFields;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
 
 import static com.trajour.db.DatabaseQuery.*;
 import static com.trajour.view.MainController.buildNotification;
@@ -49,7 +50,7 @@ public class ProfileController {
     private ImageView profilePhotoView;
 
     @FXML
-    private ListView<?> upcomingJourneysListView;
+    private ListView<Journey> currentJourneyListView;
 
     @FXML
     private Button addFriendButton;
@@ -93,55 +94,45 @@ public class ProfileController {
         currentUser = user;
         usernameLabel.setText(currentUser.getUsername());
 
-        DropShadow shadow = new DropShadow(5, Color.WHITE);
-        homePageButton.setOnMouseEntered(mouseEvent -> homePageButton.setEffect(shadow));
-        homePageButton.setOnMouseExited(mouseEvent -> homePageButton.setEffect(null));
+        initButtons();
 
-        mapPageButton.setOnMouseEntered(mouseEvent -> mapPageButton.setEffect(shadow));
-        mapPageButton.setOnMouseExited(mouseEvent -> mapPageButton.setEffect(null));
+        setProfilePic();
 
-        profilePageButton.setOnMouseEntered(mouseEvent -> profilePageButton.setEffect(shadow));
-        profilePageButton.setOnMouseExited(mouseEvent -> profilePageButton.setEffect(null));
-
-        DropShadow blackShadow = new DropShadow();
-        addFriendButton.setOnMouseEntered(mouseEvent -> addFriendButton.setEffect(blackShadow));
-        addFriendButton.setOnMouseExited(mouseEvent -> addFriendButton.setEffect(null));
-
-        signOutButton.setOnMouseEntered(mouseEvent -> signOutButton.setEffect(blackShadow));
-        signOutButton.setOnMouseExited(mouseEvent -> signOutButton.setEffect(null));
-
-        changePasswordButton.setOnMouseEntered(mouseEvent -> changePasswordButton.setEffect(blackShadow));
-        changePasswordButton.setOnMouseExited(mouseEvent -> changePasswordButton.setEffect(null));
-
-        addPictureButton.setOnMouseEntered(mouseEvent -> addPictureButton.setEffect(blackShadow));
-        addPictureButton.setOnMouseExited(mouseEvent -> addPictureButton.setEffect(null));
-
-        removeFriendButton.setOnMouseEntered(mouseEvent -> removeFriendButton.setEffect(blackShadow));
-        removeFriendButton.setOnMouseExited(mouseEvent -> removeFriendButton.setEffect(null));
-
-        profilePhotoFile = getProfilePhotoFile(currentUser);
-        Image profileImage = new Image(profilePhotoFile.toURI().toString(), 80, 80, false, false);
-        profilePhotoView.setImage(profileImage);
-
-
+        // Get all journeys
         ObservableList<Journey> allJourneys = getAllJourneysOfUser(currentUser);
 
-        // Adding search box suggestions
-        for (int i = 0; i < allJourneys.size() ; i++) {
-            suggestions.add( i, allJourneys.get(i).getTitle() );
-        }
+        setCurrentJourneys(allJourneys);
 
-        autoComplete = TextFields.bindAutoCompletion(searchJourneyTextField, suggestions);
+        setFriendsList();
 
-        ObservableList<Friend> friends = getAllFriendsOfUser(currentUser);
-        friendsListView.setItems(friends);
-        friendsLabel.setText("Friends (" + friends.size() + ")");
+        setSearchSuggestions(allJourneys);
 
+        // Context menu item
         refreshMenuItem.setOnAction(actionEvent -> initData(currentUser));
     }
 
+
     @FXML
-    void handleRemoveFriend(ActionEvent e) {
+    void searchJourneyByTitle(ActionEvent e ){
+        searchedJourneysListView.getItems().removeAll(searchedJourneysListView.getItems());
+
+        ObservableList<Journey> journeys = getAllJourneysOfUser(currentUser);
+        ObservableList<Journey> matchingJourneys = FXCollections.observableArrayList();
+        String input = searchJourneyTextField.getText();
+
+        for( Journey j: journeys ){
+            if( j.getTitle().contains(input) || j.getLocation().contains(input) || j.getDescription().contains(input)
+                    || j.getEndDate().toString().contains(input) || j.getStartDate().toString().contains(input)) {
+                matchingJourneys.add(j);
+            }
+        }
+
+        searchedJourneysListView.getItems().addAll(matchingJourneys);
+    }
+
+
+    @FXML
+    public void handleRemoveFriend(ActionEvent e) {
         ObservableList<Friend> friends = friendsListView.getSelectionModel().getSelectedItems();
 
         if ( ! friends.isEmpty()) {
@@ -154,22 +145,29 @@ public class ProfileController {
 
         openProfilePage(e);
     }
-
     @FXML
-    void searchJourneyByTitle(ActionEvent e ){
-        ObservableList<Journey> journeys = getAllJourneysOfUser(currentUser);
-        ObservableList<Journey> matchingJourneys = FXCollections.observableArrayList();
-        String journeyTitle = searchJourneyTextField.getText();
+    public void openAddFriendPage(ActionEvent event) {
+        try {
+            // Get the parent and create the scene
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/com/trajour/view/fxml/add_friend.fxml"));
+            Parent addFriendPageParent = loader.load();
+            Scene addFriendPageScene = new Scene(addFriendPageParent, 480, 327);
 
-        for( Journey j: journeys ){
-            if( j.getTitle().contains(journeyTitle) )
-            {
-                matchingJourneys.add(j);
-            }
+            // Get access to the main windows controller
+            AddFriendController addFriendController = loader.getController();
+            addFriendController.initData(currentUser);
+
+            // Get the stage and change the scene
+            Stage window = new Stage();
+
+            window.setScene(addFriendPageScene);
+            window.show();
         }
-
-        searchedJourneysListView.setItems(matchingJourneys);
-        openProfilePage(e);
+        catch (Exception e) {
+            e.printStackTrace();
+            e.getCause();
+        }
     }
 
     /**
@@ -228,6 +226,7 @@ public class ProfileController {
             e.getCause();
         }
     }
+
     /**
      * Opens the map page
      * @param event Event
@@ -254,33 +253,6 @@ public class ProfileController {
         catch (IOException e) {
             e.getCause();
             e.printStackTrace();
-        }
-    }
-
-    @FXML
-    public void openAddFriendPage(ActionEvent event) {
-        // TODO add remove friend
-
-        try {
-            // Get the parent and create the scene
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/com/trajour/view/fxml/add_friend.fxml"));
-            Parent addFriendPageParent = loader.load();
-            Scene addFriendPageScene = new Scene(addFriendPageParent, 480, 327);
-
-            // Get access to the main windows controller
-            AddFriendController addFriendController = loader.getController();
-            addFriendController.initData(currentUser);
-
-            // Get the stage and change the scene
-            Stage window = new Stage();
-
-            window.setScene(addFriendPageScene);
-            window.show();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-            e.getCause();
         }
     }
 
@@ -350,6 +322,70 @@ public class ProfileController {
         catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+
+    private void initButtons() {
+        DropShadow shadow = new DropShadow(5, Color.WHITE);
+        homePageButton.setOnMouseEntered(mouseEvent -> homePageButton.setEffect(shadow));
+        homePageButton.setOnMouseExited(mouseEvent -> homePageButton.setEffect(null));
+
+        mapPageButton.setOnMouseEntered(mouseEvent -> mapPageButton.setEffect(shadow));
+        mapPageButton.setOnMouseExited(mouseEvent -> mapPageButton.setEffect(null));
+
+        profilePageButton.setOnMouseEntered(mouseEvent -> profilePageButton.setEffect(shadow));
+        profilePageButton.setOnMouseExited(mouseEvent -> profilePageButton.setEffect(null));
+
+        DropShadow blackShadow = new DropShadow();
+        addFriendButton.setOnMouseEntered(mouseEvent -> addFriendButton.setEffect(blackShadow));
+        addFriendButton.setOnMouseExited(mouseEvent -> addFriendButton.setEffect(null));
+
+        signOutButton.setOnMouseEntered(mouseEvent -> signOutButton.setEffect(blackShadow));
+        signOutButton.setOnMouseExited(mouseEvent -> signOutButton.setEffect(null));
+
+        changePasswordButton.setOnMouseEntered(mouseEvent -> changePasswordButton.setEffect(blackShadow));
+        changePasswordButton.setOnMouseExited(mouseEvent -> changePasswordButton.setEffect(null));
+
+        addPictureButton.setOnMouseEntered(mouseEvent -> addPictureButton.setEffect(blackShadow));
+        addPictureButton.setOnMouseExited(mouseEvent -> addPictureButton.setEffect(null));
+
+        removeFriendButton.setOnMouseEntered(mouseEvent -> removeFriendButton.setEffect(blackShadow));
+        removeFriendButton.setOnMouseExited(mouseEvent -> removeFriendButton.setEffect(null));
+    }
+
+    private void setProfilePic() {
+        profilePhotoFile = getProfilePhotoFile(currentUser);
+        Image profileImage = new Image(profilePhotoFile.toURI().toString(), 80, 80, false, false);
+        profilePhotoView.setImage(profileImage);
+
+    }
+
+    private void setCurrentJourneys(ObservableList<Journey> allJourneys) {
+
+        ObservableList<Journey> currentJourneys = FXCollections.observableArrayList();
+        for (Journey j : allJourneys) {
+            if (j.getStartDate().compareTo(LocalDate.now()) <= 0 && j.getEndDate().compareTo(LocalDate.now()) >= 0) {
+                currentJourneys.add(j);
+            }
+        }
+
+        currentJourneyListView.setItems(currentJourneys);
+    }
+
+    private void setFriendsList() {
+        ObservableList<Friend> friends = getAllFriendsOfUser(currentUser);
+        friendsListView.setItems(friends);
+        friendsLabel.setText("Friends (" + friends.size() + ")");
+    }
+
+    private void setSearchSuggestions(ObservableList<Journey> allJourneys) {
+
+        for (int i = 0; i < allJourneys.size() ; i++) {
+            suggestions.add( i, allJourneys.get(i).getTitle() );
+        }
+
+        autoComplete = TextFields.bindAutoCompletion(searchJourneyTextField, suggestions);
+
     }
 
     @FXML

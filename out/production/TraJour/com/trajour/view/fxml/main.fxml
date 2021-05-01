@@ -96,14 +96,6 @@
                         <Insets left="25.0" top="10.0" />
                      </HBox.margin>
                   </Label>
-                  <Button fx:id="achievementsButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="135.0" style="-fx-background-radius: 10; -fx-background-color: #C00000;" text="Achievements" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets left="200.0" right="35.0" top="10.0" />
-                     </HBox.margin>
-                  </Button>
                </children>
             </HBox>
          </top>
