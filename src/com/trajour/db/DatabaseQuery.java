@@ -7,8 +7,9 @@ import javafx.collections.ObservableList;
 import com.trajour.journey.Journey;
 import com.trajour.journey.Post;
 import com.trajour.model.User;
+import javafx.scene.image.Image;
 
-import javax.swing.plaf.nimbus.State;
+import java.awt.*;
 import java.io.*;
 import java.sql.*;
 import java.time.LocalDate;
@@ -458,8 +459,6 @@ public final class DatabaseQuery {
         return result;
     }
 
-
-
     public static void insertFriendByUsername(Friend friend, User currentUser) {
         dbConnection = new DatabaseConnection();
         conn = dbConnection.getConnection();
@@ -473,7 +472,116 @@ public final class DatabaseQuery {
             e.printStackTrace();
             e.getCause();
         }
+    }
 
+    public static ObservableList<Post> getAllPostsOfUser(User currentUser) {
+        dbConnection = new DatabaseConnection();
+        conn = dbConnection.getConnection();
+
+        ObservableList<Post> result = FXCollections.observableArrayList();
+
+        String query = "SELECT * FROM posts WHERE userId = " + currentUser.getUserId();
+
+        try {
+            Statement statement = conn.createStatement();
+            ResultSet rs = statement.executeQuery(query);
+
+            while (rs.next()) {
+                String postTitle = rs.getString("post_title");
+                String postLocation = rs.getString("post_location");
+                LocalDate startDate = rs.getDate("post_start_date").toLocalDate();
+                LocalDate endDate = rs.getDate("post_end_date").toLocalDate();
+                String postComments = rs.getString("post_comments");
+                File image = getPostPhoto(currentUser);
+                Image realImage = new Image(image.toURI().toString(), 40, 40, false, false);
+
+                Journey postJourney = new Journey(postLocation, postTitle, postComments, startDate, endDate);
+                Post newPost = new Post(postJourney, postComments, realImage);
+
+                result.add(newPost);
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            e.getCause();
+        }
+
+        return result;
+   }
+
+   public static boolean insertPost(User user) {
+        return false;
+   }
+
+    public static File getPostPhoto(User user) {
+        dbConnection = new DatabaseConnection();
+        conn = dbConnection.getConnection();
+
+        InputStream input;
+        FileOutputStream output;
+        String query = "SELECT profile_photo FROM users where userId = " + user.getUserId() + " AND profile_photo IS NOT NULL";
+
+        try {
+            Statement statement = conn.createStatement();
+            ResultSet rs = statement.executeQuery(query);
+
+            File newFile = new File("src/resources/profile_photo_" + user.getUserId() + ".png");
+            output = new FileOutputStream(newFile);
+
+            if (rs.next()) {
+                input = rs.getBinaryStream("profile_photo");
+
+                byte[] buffer = new byte[1024];
+                while (input.read(buffer) > 0) {
+                    output.write(buffer);
+                }
+            }
+
+            return newFile;
+        }
+        catch (SQLException | FileNotFoundException e) {
+            e.printStackTrace();
+            e.getCause();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+
+    public static boolean updateImageOfPost(File img, User user) {
+        dbConnection = new DatabaseConnection();
+        conn = dbConnection.getConnection();
+
+        // File too large
+        if (img.length() > 5000000)
+            return false;
+
+        String query = "UPDATE users SET profile_photo=? WHERE userId = " + user.getUserId();
+        try {
+            PreparedStatement ps = conn.prepareStatement(query);
+
+            File theFile = new File(img.getAbsolutePath());
+            FileInputStream inputStream = new FileInputStream(theFile);
+
+            ps.setBinaryStream(1, inputStream);
+
+            ps.executeUpdate();
+            return true;
+        } catch (SQLException | FileNotFoundException e) {
+            e.getCause();
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+    public static ObservableList<Post> getAllPostsOfUsersFriends(User currentUser) {
+        ObservableList<Friend> friends;
+
+        return null;
     }
 
     public static void insertFriendByEmail(Friend friend, String username) {
@@ -489,17 +597,6 @@ public final class DatabaseQuery {
             e.printStackTrace();
             e.getCause();
         }
-    }
-
-    public static void insertPost(Post post, User user) {
-        // TODO
-//        dbConnection = new DatabaseConnection();
-//        conn = dbConnection.getConnection();
-//
-//        String imageQuery = "UPDATE posts SET post_image=? WHERE "
-//        String query = "INSERT INTO posts(userId, postComments, postRating) VALUES(" + user.getUserId() + ", '"
-//                + post.getText() + "', " +  post.getRating();
-
     }
 
     public static boolean updateImage(File img, User user) {

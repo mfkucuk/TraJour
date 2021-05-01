@@ -15,7 +15,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.trajour.view.ProfileController">
@@ -53,35 +52,33 @@
       </ToolBar>
    </top>
    <center>
-      <AnchorPane prefHeight="1038.0" prefWidth="1400.0" style="-fx-background-color: #BFFCC6;" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="940.0" prefWidth="910.0" style="-fx-background-color: #BFFCC6;" BorderPane.alignment="CENTER">
          <children>
             <Separator orientation="VERTICAL" prefHeight="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="300.0" layoutX="163.0" layoutY="46.0" stroke="BLACK" strokeType="INSIDE" width="500.0" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="70.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="300.0" layoutX="50.0" layoutY="493.0" stroke="BLACK" strokeType="INSIDE" width="500.0" AnchorPane.bottomAnchor="147.0" AnchorPane.leftAnchor="50.0" />
-            <ListView fx:id="wishlistListView" layoutX="632.0" layoutY="492.0" prefHeight="303.0" prefWidth="272.0" AnchorPane.bottomAnchor="145.0" AnchorPane.leftAnchor="632.0" AnchorPane.rightAnchor="86.0" />
-            <Label layoutX="633.0" layoutY="458.0" text="Your Wishlist" AnchorPane.bottomAnchor="457.0" AnchorPane.rightAnchor="257.0">
+            <ListView fx:id="wishlistListView" layoutX="219.0" layoutY="498.0" prefHeight="303.0" prefWidth="574.0" AnchorPane.bottomAnchor="139.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="200.0" />
+            <Label alignment="CENTER" layoutX="633.0" layoutY="458.0" text="Your Wishlist" AnchorPane.bottomAnchor="457.0" AnchorPane.leftAnchor="257.0" AnchorPane.rightAnchor="257.0">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
             </Label>
-            <ListView fx:id="searchedJourneysListView" layoutX="633.0" layoutY="161.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.leftAnchor="633.0" AnchorPane.rightAnchor="85.0" />
-            <Label layoutX="633.0" layoutY="86.0" text="Search a Journey:">
+            <ListView fx:id="searchedJourneysListView" layoutX="368.0" layoutY="165.0" prefHeight="231.0" prefWidth="508.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="200.0" />
+            <Label layoutX="200.0" layoutY="89.0" text="Search a Journey:" AnchorPane.topAnchor="90.0">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
             </Label>
-            <TextField fx:id="searchJourneyTextField" layoutX="633.0" layoutY="122.0" onAction="#searchJourneyByTitle" prefHeight="25.0" prefWidth="270.0" promptText="Enter journey" AnchorPane.rightAnchor="87.0" />
-            <Button fx:id="searchButton" layoutX="914.0" layoutY="122.0" mnemonicParsing="false" onAction="#searchJourneyByTitle" style="-fx-background-color: #C00000; -fx-background-radius: 10;" text="Search" textFill="WHITE" AnchorPane.leftAnchor="914.0" AnchorPane.rightAnchor="22.0">
+            <TextField fx:id="searchJourneyTextField" layoutX="200.0" layoutY="122.0" onAction="#searchJourneyByTitle" prefHeight="30.0" prefWidth="270.0" promptText="Enter journey" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="492.0" AnchorPane.topAnchor="122.0" />
+            <Button fx:id="searchButton" layoutX="441.0" layoutY="122.0" mnemonicParsing="false" onAction="#searchJourneyByTitle" prefHeight="3.0" style="-fx-background-color: #C00000; -fx-background-radius: 10;" text="Search" textFill="WHITE" AnchorPane.leftAnchor="441.0" AnchorPane.rightAnchor="413.0" AnchorPane.topAnchor="122.0">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
-            <Button fx:id="addWishButton" alignment="CENTER" layoutX="639.0" layoutY="847.0" mnemonicParsing="false" onAction="#addWish" prefHeight="30.0" prefWidth="120.0" style="-fx-background-radius: 10; -fx-background-color: #C00000;" text="Add Wish" textFill="WHITE">
+            <Button fx:id="addWishButton" alignment="CENTER" layoutX="370.0" layoutY="832.0" mnemonicParsing="false" onAction="#addWish" prefHeight="35.0" prefWidth="120.0" style="-fx-background-radius: 10; -fx-background-color: #C00000;" text="Add Wish" textFill="WHITE" AnchorPane.leftAnchor="330.0">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <Button fx:id="removeWishButton" alignment="CENTER" layoutX="783.0" layoutY="847.0" mnemonicParsing="false" onAction="#removeWish" prefHeight="30.0" prefWidth="120.0" style="-fx-background-radius: 10; -fx-background-color: #C00000;" text="Remove Wish" textFill="WHITE">
+            <Button fx:id="removeWishButton" alignment="CENTER" layoutX="573.0" layoutY="832.0" mnemonicParsing="false" onAction="#removeWish" prefHeight="35.0" prefWidth="120.0" style="-fx-background-radius: 10; -fx-background-color: #C00000;" text="Remove Wish" textFill="WHITE" AnchorPane.rightAnchor="300.0">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
@@ -90,23 +87,23 @@
       </AnchorPane>
    </center>
    <left>
-      <AnchorPane prefHeight="940.0" prefWidth="410.0" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="940.0" prefWidth="492.0" BorderPane.alignment="CENTER">
          <children>
             <VBox maxWidth="1.7976931348623157E308" prefHeight="989.0" prefWidth="382.0" style="-fx-background-color: #BFFCC6;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <AnchorPane minHeight="-Infinity" prefHeight="201.0" prefWidth="330.0" VBox.vgrow="ALWAYS">
                      <children>
-                        <Label id="userName" fx:id="usernameLabel" alignment="CENTER" layoutX="127.0" layoutY="142.0" prefHeight="25.0" prefWidth="80.0" text="Username" AnchorPane.bottomAnchor="38.0" AnchorPane.leftAnchor="127.0" AnchorPane.rightAnchor="123.0" AnchorPane.topAnchor="142.0">
+                        <Label id="userName" fx:id="usernameLabel" alignment="CENTER" layoutX="125.0" layoutY="145.0" prefHeight="25.0" prefWidth="80.0" text="Username" AnchorPane.bottomAnchor="35.0" AnchorPane.leftAnchor="125.0" AnchorPane.rightAnchor="125.0">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <ImageView id="profileImage" fx:id="profilePhotoView" fitHeight="180.0" fitWidth="180.0" layoutX="103.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="59.0" AnchorPane.leftAnchor="103.0" AnchorPane.rightAnchor="99.0" AnchorPane.topAnchor="14.0">
+                        <ImageView id="profileImage" fx:id="profilePhotoView" fitHeight="160.0" fitWidth="160.0" layoutX="166.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="63.0" AnchorPane.leftAnchor="166.0" AnchorPane.rightAnchor="166.0">
                            <viewport>
                               <Rectangle2D height="50.0" minX="5.0" minY="5.0" width="50.0" />
                            </viewport>
                         </ImageView>
-                        <Button fx:id="addPictureButton" layoutX="109.0" layoutY="176.0" mnemonicParsing="false" onAction="#openAddPicturePage" prefHeight="25.0" prefWidth="135.0" style="-fx-background-radius: 10; -fx-background-color: #C00000;" text="Add Profile Picture" textFill="WHITE" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="110.0" AnchorPane.rightAnchor="110.0">
+                        <Button fx:id="addPictureButton" layoutX="109.0" layoutY="176.0" mnemonicParsing="false" onAction="#openAddPicturePage" prefHeight="25.0" prefWidth="135.0" style="-fx-background-radius: 10; -fx-background-color: #C00000;" text="Add Profile Picture" textFill="WHITE" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="145.0" AnchorPane.rightAnchor="145.0">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
@@ -118,14 +115,14 @@
                         <Insets top="5.0" />
                      </VBox.margin>
                   </Separator>
-                  <AnchorPane minHeight="-Infinity" prefHeight="211.0" prefWidth="330.0">
+                  <AnchorPane minHeight="-Infinity" prefHeight="197.0" prefWidth="492.0">
                      <children>
                         <Label alignment="CENTER" layoutX="87.0" layoutY="25.0" prefHeight="25.0" prefWidth="156.0" text="Current Journey" AnchorPane.bottomAnchor="161.0" AnchorPane.leftAnchor="87.0" AnchorPane.rightAnchor="87.0" AnchorPane.topAnchor="10.0">
                            <font>
                               <Font name="System Bold" size="16.0" />
                            </font>
                         </Label>
-                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="135.0" layoutX="50.0" layoutY="50.0" stroke="BLACK" strokeType="INSIDE" width="283.0" AnchorPane.bottomAnchor="26.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="49.0" />
+                        <ListView layoutX="122.0" layoutY="43.0" prefHeight="152.0" prefWidth="372.0" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="60.0" />
                      </children>
                   </AnchorPane>
                   <Separator layoutX="10.0" layoutY="183.0" prefWidth="200.0">
@@ -140,7 +137,7 @@
                               <Font name="System Bold" size="16.0" />
                            </font>
                         </Label>
-                        <Button fx:id="addFriendButton" alignment="CENTER" layoutX="58.0" layoutY="304.0" mnemonicParsing="false" onAction="#openAddFriendPage" prefHeight="30.0" prefWidth="120.0" style="-fx-background-radius: 10; -fx-background-color: #C00000;" text="Add Friend" textFill="WHITE" AnchorPane.leftAnchor="58.0" AnchorPane.topAnchor="304.0">
+                        <Button fx:id="addFriendButton" alignment="CENTER" layoutX="58.0" layoutY="304.0" mnemonicParsing="false" onAction="#openAddFriendPage" prefHeight="35.0" prefWidth="120.0" style="-fx-background-radius: 10; -fx-background-color: #C00000;" text="Add Friend" textFill="WHITE" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="110.0">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
@@ -153,7 +150,7 @@
                                 </items>
                               </ContextMenu>
                            </contextMenu></ListView>
-                        <Button fx:id="removeFriendButton" alignment="CENTER" layoutX="215.0" layoutY="304.0" mnemonicParsing="false" onAction="#handleRemoveFriend" prefHeight="30.0" prefWidth="120.0" style="-fx-background-radius: 10; -fx-background-color: #C00000;" text="Remove Friend" textFill="WHITE">
+                        <Button fx:id="removeFriendButton" alignment="CENTER" layoutX="215.0" layoutY="304.0" mnemonicParsing="false" onAction="#handleRemoveFriend" prefHeight="35.0" prefWidth="120.0" style="-fx-background-radius: 10; -fx-background-color: #C00000;" text="Remove Friend" textFill="WHITE" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="110.0">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
@@ -165,13 +162,13 @@
                         <Insets top="8.0" />
                      </VBox.margin>
                   </Separator>
-                  <AnchorPane minHeight="-Infinity" prefHeight="150.0" prefWidth="330.0" VBox.vgrow="ALWAYS">
+                  <AnchorPane minHeight="-Infinity" prefHeight="114.0" prefWidth="492.0" VBox.vgrow="ALWAYS">
                      <children>
-                        <Button fx:id="signOutButton" alignment="CENTER" layoutX="85.0" layoutY="89.0" mnemonicParsing="false" onAction="#signOut" prefHeight="35.0" prefWidth="110.0" style="-fx-background-radius: 10; -fx-background-color: #C00000;" text="Sign Out" textFill="WHITE" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="85.0" AnchorPane.rightAnchor="115.0">
+                        <Button fx:id="signOutButton" alignment="CENTER" layoutX="85.0" layoutY="89.0" mnemonicParsing="false" onAction="#signOut" prefHeight="35.0" prefWidth="145.0" style="-fx-background-radius: 10; -fx-background-color: #C00000;" text="Sign Out" textFill="WHITE" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="170.0" AnchorPane.rightAnchor="170.0">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font></Button>
-                        <Button fx:id="changePasswordButton" alignment="CENTER" layoutX="85.0" layoutY="22.0" mnemonicParsing="false" onAction="#openChangePasswordPage" prefHeight="35.0" prefWidth="110.0" style="-fx-background-radius: 10; -fx-background-color: #C00000;" text="Change Password" textFill="WHITE" AnchorPane.leftAnchor="85.0" AnchorPane.rightAnchor="115.0" AnchorPane.topAnchor="25.0">
+                        <Button fx:id="changePasswordButton" alignment="CENTER" layoutX="85.0" layoutY="22.0" mnemonicParsing="false" onAction="#openChangePasswordPage" prefHeight="35.0" prefWidth="145.0" style="-fx-background-radius: 10; -fx-background-color: #C00000;" text="Change Password" textFill="WHITE" AnchorPane.leftAnchor="170.0" AnchorPane.rightAnchor="170.0" AnchorPane.topAnchor="25.0">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font></Button>

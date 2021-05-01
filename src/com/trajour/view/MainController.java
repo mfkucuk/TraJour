@@ -3,6 +3,7 @@ package com.trajour.view;
 import com.trajour.journey.FutureJourney;
 import com.trajour.journey.Journey;
 import com.trajour.journey.PastJourney;
+import com.trajour.journey.Post;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -214,6 +215,11 @@ public class MainController implements Initializable {
 
         contextItemDeleteFutureJourney.setOnAction(actionEvent -> handleDeleteJourneyFromFutureJourneys());
         contextItemDeletePastJourney.setOnAction(actionEvent -> handleDeleteJourneyFromPastJourneys());
+
+        ObservableList<Post> allPostsOfUser = getAllPostsOfUser(currentUser);
+        for (Post p : allPostsOfUser) {
+            p.share(currentUser, vboxMainFeed);
+        }
 
         // Shared journeys should be saved into the database and shown in the main feed
     }
