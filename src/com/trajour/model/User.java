@@ -1,8 +1,16 @@
 package com.trajour.model;
 
+import com.trajour.db.DatabaseQuery;
 import com.trajour.journey.Journey;
+import javafx.collections.ObservableList;
+import javafx.geometry.Pos;
+import org.controlsfx.control.Notifications;
 
 import java.awt.*;
+import java.io.File;
+
+import static com.trajour.db.DatabaseQuery.removeFriend;
+import static com.trajour.view.MainController.buildNotification;
 
 /**
  * User class.
@@ -21,25 +29,57 @@ public class User {
         this.email = email;
     }
 
-    public User(int userId, String username, String email, Image profilePhoto) {
-        this(userId, username, email);
-        this.profilePhoto = profilePhoto;
+    public void removeFriend(ObservableList<Friend> friendsToRemove) {
+        if ( ! friendsToRemove.isEmpty()) {
+            for (Friend f : friendsToRemove) {
+                DatabaseQuery.removeFriend(f, this);
+            }
+        }
+    }
+
+    public boolean addPicture(File img) {
+        return DatabaseQuery.updateImage(img, this);
+    }
+
+    public boolean addWish() {
+        return false;
+    }
+
+    public boolean removeWish() {
+        return false;
     }
 
     // Methods
-    /**
-     * Adds a user to the friends list.
-     * @param username is username of the user to be added.
-     * @return is the object with that username.
-     */
     public boolean addFriendByUsername(String username) {
         // TODO Search the database, check whether a user with the given username exists or the user is already a friend
         return false;
     }
+    
 
     public boolean addFriendByEmail(String email) {
         // TODO Search the database, check whether a user with the given username exists or the user is already a friend
         return false;
+    }
+
+
+    /**
+     * Returns username.
+     * @return is the username.  
+     */
+    public String getUsername() {
+        return username;
+    }
+    
+    /**
+     * Returns email.
+     * @return is the email.
+     */
+    public String getEmail() {
+        return email;
+    }
+
+    public int getUserId() {
+        return userId;
     }
 
     /**
@@ -60,47 +100,4 @@ public class User {
         return true;
     }
 
-    /**
-     * Returns username.
-     * @return is the username.  
-     */
-    public String getUsername() {
-        return username;
-    }
-    
-    /**
-     * Returns email.
-     * @return is the email.
-     */
-    public String getEmail() {
-        return email;
-    }
-
-    /**
-     * Sets the username.
-     * @param username is the username.
-     */
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    /**
-     * Sets the email.
-     * @param email is the email.
-     */
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    /**
-     * Sets the profile photo.
-     * @param profilePhoto Profile photo of the user
-     */
-    public void setProfilePhoto(Image profilePhoto) {
-        this.profilePhoto = profilePhoto;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
 }

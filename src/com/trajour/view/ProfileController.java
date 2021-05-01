@@ -26,6 +26,7 @@ import org.controlsfx.control.textfield.TextFields;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.Locale;
 
 import static com.trajour.db.DatabaseQuery.*;
 import static com.trajour.view.MainController.buildNotification;
@@ -111,6 +112,15 @@ public class ProfileController {
         refreshMenuItem.setOnAction(actionEvent -> initData(currentUser));
     }
 
+    @FXML
+    public void addWish() {
+        // TODO
+    }
+
+    @FXML
+    public void removeWish() {
+        // TODO
+    }
 
     @FXML
     void searchJourney(ActionEvent e ){
@@ -120,9 +130,10 @@ public class ProfileController {
         ObservableList<Journey> matchingJourneys = FXCollections.observableArrayList();
         String input = searchJourneyTextField.getText();
 
-        for( Journey j: journeys ){
-            if( j.getTitle().contains(input) || j.getLocation().contains(input) || j.getDescription().contains(input)
-                    || j.getEndDate().toString().contains(input) || j.getStartDate().toString().contains(input)) {
+        for( Journey j: journeys ) {
+            if( j.getTitle().toLowerCase().contains(input) || j.getLocation().toLowerCase().contains(input) ||
+                    j.getDescription().toLowerCase().contains(input) || j.getEndDate().toString().toLowerCase().contains(input)
+                    || j.getStartDate().toString().toLowerCase().contains(input)) {
                 matchingJourneys.add(j);
             }
         }
@@ -130,21 +141,16 @@ public class ProfileController {
         searchedJourneysListView.getItems().addAll(matchingJourneys);
     }
 
-
     @FXML
     public void handleRemoveFriend(ActionEvent e) {
         ObservableList<Friend> friends = friendsListView.getSelectionModel().getSelectedItems();
 
-        if ( ! friends.isEmpty()) {
-            for (Friend f : friends) {
-                removeFriend(f, currentUser);
-            }
+        currentUser.removeFriend(friends);
 
-            friendsListView.getItems().removeAll(friends);
-        }
-
+        friendsListView.getItems().removeAll(friends);
         openProfilePage(e);
     }
+
     @FXML
     public void openAddFriendPage(ActionEvent event) {
         try {
@@ -265,17 +271,21 @@ public class ProfileController {
         Stage stage = new Stage();
         File selectedFile = fileChooser.showOpenDialog(stage);
         if (selectedFile != null) {
-            Image img = new Image(selectedFile.toURI().toString(), 80, 80, false, false);
 
-            profilePhotoView.setImage(img);
+            if (!currentUser.addPicture(selectedFile)) {
+                Notifications notification = buildNotification("Image Too Large.", "Please upload an image less than 1 mb's", 5, Pos.BASELINE_CENTER);
+                notification.showWarning();
+            }
+            else {
+                Image img = new Image(selectedFile.toURI().toString(), 80, 80, false, false);
 
-            if (!updateImage(selectedFile, currentUser)) {
-                buildNotification("Image Too Large.", "Please upload an image less than 1 mb's", 5, Pos.BASELINE_CENTER);
+                profilePhotoView.setImage(img);
+                currentUser.addPicture(selectedFile);
             }
         }
         else {
-            // TODO Warn the user with a popup or use ControlsFX notifications?
             Notifications notifications = buildNotification("File Upload Issue", "Couldn't Upload Picture", 5, Pos.BASELINE_CENTER);
+            notifications.showWarning();
         }
     }
 
@@ -324,7 +334,6 @@ public class ProfileController {
         }
     }
 
-
     private void initButtons() {
         DropShadow shadow = new DropShadow(5, Color.WHITE);
         homePageButton.setOnMouseEntered(mouseEvent -> homePageButton.setEffect(shadow));
@@ -357,11 +366,9 @@ public class ProfileController {
         profilePhotoFile = getProfilePhotoFile(currentUser);
         Image profileImage = new Image(profilePhotoFile.toURI().toString(), 80, 80, false, false);
         profilePhotoView.setImage(profileImage);
-
     }
 
     private void setCurrentJourneys(ObservableList<Journey> allJourneys) {
-
         ObservableList<Journey> currentJourneys = FXCollections.observableArrayList();
         for (Journey j : allJourneys) {
             if (j.getStartDate().compareTo(LocalDate.now()) <= 0 && j.getEndDate().compareTo(LocalDate.now()) >= 0) {
@@ -387,15 +394,4 @@ public class ProfileController {
         autoComplete = TextFields.bindAutoCompletion(searchJourneyTextField, suggestions);
 
     }
-
-    @FXML
-    public void addWish() {
-
-    }
-
-    @FXML
-    public void removeWish() {
-
-    }
-
 }

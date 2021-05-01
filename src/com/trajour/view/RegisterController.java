@@ -17,6 +17,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import static com.trajour.db.DatabaseQuery.validateRegistry;
+import static com.trajour.view.MainController.buildNotification;
 
 /**
  * Controller for the register process
@@ -66,15 +67,10 @@ public class RegisterController implements Initializable {
      */
     public void registerButtonOnAction(ActionEvent event) {
         if ( ! passwordTextField.getText().equals(confirmPasswordField.getText())) {
-            Notifications notificationBuilder = Notifications.create()
-                    .title("Registration Unsuccessful!")
-                    .text("Passwords do not match.")
-                    .graphic(null)
-                    .hideAfter(Duration.seconds(5))
-                    .position(Pos.CENTER);
-            notificationBuilder.showError();
-
-        } else {
+            Notifications notification = buildNotification("Registration Unsuccessful!", "Passwords do not match.", 5, Pos.BOTTOM_CENTER);
+            notification.showWarning();
+        }
+        else {
             register();
         }
     }
@@ -89,44 +85,21 @@ public class RegisterController implements Initializable {
 
         if ( ! username.isBlank() && ! email.isBlank() && ! password.isBlank()) {
             if (validateRegistry(username, email, password) == 1) {
-                Notifications notificationBuilder = Notifications.create()
-                        .title("Registration Successful!")
-                        .text("Welcome to TraJour, fellow traveler!")
-                        .graphic(null)
-                        .hideAfter(Duration.seconds(5))
-                        .position(Pos.CENTER);
-                notificationBuilder.showConfirm();
-
+                Notifications notification = buildNotification("Registration Successful!", "Welcome to TraJour, fellow traveler!", 5, Pos.BOTTOM_CENTER);
+                notification.showConfirm();
             }
             else if (validateRegistry(username, email, password) == -1) {
-                Notifications notificationBuilder = Notifications.create()
-                        .title("Registration Unsuccessful!")
-                        .text("Username is already used. Please try again.")
-                        .graphic(null)
-                        .hideAfter(Duration.seconds(5))
-                        .position(Pos.CENTER);
-                notificationBuilder.showError();
-
+                Notifications notification = buildNotification("Registration Unsuccessful!", "Username is already used. Please try again.", 5, Pos.BOTTOM_CENTER);
+                notification.showWarning();
             }
             else if (validateRegistry(username, email, password) == -2) {
-                Notifications notificationBuilder = Notifications.create()
-                        .title("Registration Unsuccessful!")
-                        .text("Email is already used. Please try again.")
-                        .graphic(null)
-                        .hideAfter(Duration.seconds(5))
-                        .position(Pos.CENTER);
-                notificationBuilder.showError();
-
+                Notifications notification = buildNotification("Registration Unsuccessful!", "Email is already used. Please try again.", 5, Pos.BOTTOM_CENTER);
+                notification.showWarning();
             }
-
-        } else {
-            Notifications notificationBuilder = Notifications.create()
-                    .title("Registration Unsuccessful!")
-                    .text("Please complete all of the text fields.")
-                    .graphic(null)
-                    .hideAfter(Duration.seconds(5))
-                    .position(Pos.CENTER);
-            notificationBuilder.showError();
+        }
+        else {
+            Notifications notification = buildNotification("Registration Unsuccessful!", "Please complete all of the text fields.", 5, Pos.BOTTOM_CENTER);
+            notification.showWarning();
         }
     }
 
