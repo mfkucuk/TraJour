@@ -28,10 +28,12 @@ import javafx.util.Callback;
 import org.controlsfx.control.Notifications;
 import org.controlsfx.control.WorldMapView;
 
+import javax.swing.text.NumberFormatter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ResourceBundle;
@@ -84,10 +86,12 @@ public class MapController implements Initializable {
     @FXML
     private RadioButton showWorldCapitalsRadioBox;
 
+    @FXML
+    private Label distanceResultLabel;
+
     private ObservableList<WorldMapView.Location> capitals;
     private User currentUser;
     private Tooltip tooltip;
-    private BooleanBinding showLocationsBinded;
     private SimpleBooleanProperty showLocationsView;
 
     @Override
@@ -117,22 +121,20 @@ public class MapController implements Initializable {
         worldMapView.setLocations(capitals);
         showLocationsView = new SimpleBooleanProperty(false);
         worldMapView.setShowLocations(showLocationsView.get());
-        worldMapView.setLocationSelectionMode(WorldMapView.SelectionMode.SINGLE);
-        worldMapView.setCountrySelectionMode(WorldMapView.SelectionMode.SINGLE);
 
         worldMapView.setOnMouseClicked(mouseEvent -> {
-            if (!worldMapView.getSelectedLocations().isEmpty()) {
+            if (worldMapView.getSelectedLocations().size() >= 1) {
                 if (mouseEvent.getTarget() instanceof SVGPath) {
-                    selectedLocationField.setText(worldMapView.getSelectedCountries().get(0).getLocale().getDisplayCountry());
+                    selectedLocationField.setText(worldMapView.getSelectedCountries().get(worldMapView.getSelectedCountries().size() - 1).getLocale().getDisplayCountry());
                     worldMapView.getSelectedLocations().removeAll(worldMapView.getSelectedLocations());
                 }
                 else {
-                    selectedLocationField.setText(worldMapView.getSelectedLocations().get(0).getName());
+                    selectedLocationField.setText(worldMapView.getSelectedLocations().get(worldMapView.getSelectedLocations().size() - 1).getName());
                     worldMapView.getSelectedCountries().removeAll(worldMapView.getSelectedCountries());
                 }
             }
-            if (!worldMapView.getSelectedCountries().isEmpty()) {
-                selectedLocationField.setText(worldMapView.getSelectedCountries().get(0).getLocale().getDisplayCountry());
+            if (worldMapView.getSelectedCountries().size() >= 1) {
+                selectedLocationField.setText(worldMapView.getSelectedCountries().get(worldMapView.getSelectedCountries().size() - 1).getLocale().getDisplayCountry());
                 worldMapView.getSelectedLocations().removeAll(worldMapView.getSelectedLocations());
             }
         });
@@ -213,7 +215,22 @@ public class MapController implements Initializable {
 
     @FXML
     void handleShowDistance(ActionEvent event) {
+        if (worldMapView.getSelectedLocations().size() == 2) {
+            WorldMapView.Location l1 = worldMapView.getSelectedLocations().get(0);
+            WorldMapView.Location l2 = worldMapView.getSelectedLocations().get(1);
+            double distance = calculateDistanceBetweenTwoLocations(l1, l2);
 
+            // Format the distance, show only 3 decimals
+            DecimalFormat df = new DecimalFormat("#.###,###");
+            String formattedDistance = df.format(distance);
+
+            distanceResultLabel.setText("Distance between " + l1.getName() + " and " + l2.getName() + " is " + formattedDistance + " kilometers.");
+        }
+        else {
+            Notifications notification = buildNotification("Unable to Calculate Distance", "In order to " +
+                    "calculate the distance you must choose  2 locations. To select locations change map view from top left.", 8, Pos.TOP_CENTER);
+            notification.showWarning();
+        }
     }
 
     @FXML
@@ -365,6 +382,35 @@ public class MapController implements Initializable {
 
         return result;
     }
+    private double calculateDistanceBetweenTwoLocations(WorldMapView.Location fromLocation, WorldMapView.Location toLocation) {
+        double fromLatitude;
+        double toLatitude;
+        double fromLongitude;
+        double toLongitude;
+        double deltaLongitude;
+        double deltaLatitude;
+        double radiusOfEarth;
+        double h;
+        double distance;
+
+        fromLatitude = Math.toRadians(fromLocation.getLatitude());
+        toLatitude =  Math.toRadians(toLocation.getLatitude());
+        fromLongitude =  Math.toRadians(fromLocation.getLongitude());
+        toLongitude =  Math.toRadians(toLocation.getLongitude());
+
+        // The formula for finding the distance between two locations. For further info check:
+        // https://en.wikipedia.org/wiki/Haversine_formula#:~:text=The%20haversine%20formula%20determines%20the,and%20angles%20of%20spherical%20triangles.
+        deltaLongitude = toLongitude - fromLongitude;
+        deltaLatitude = toLatitude - fromLatitude;
+        h = Math.pow(Math.sin(deltaLatitude / 2), 2) + Math.cos(fromLatitude) * Math.cos(toLatitude) * Math.pow(Math.sin(deltaLongitude / 2), 2);
+        radiusOfEarth = 6371;
+
+        distance = 2 * radiusOfEarth * Math.asin(Math.sqrt(h));
+
+        return distance;
+    }
+
+
 
 //   private ObservableList<WorldMapView.Location> readCities(int numberOfCities) {
 //        ObservableList<WorldMapView.Location> result = FXCollections.observableArrayList();
@@ -398,128 +444,5 @@ public class MapController implements Initializable {
 //        return result;
 //    }
 
-//    private String countryCodeToCountryName(String code) throws FileNotFoundException {
-//        Scanner in = new Scanner(new File("src/resources/countries_with_codes.csv"));
-//        StringBuilder result = new StringBuilder();
-//
-//        // TODO Possible errors with countries with multiple names
-//        while (in.hasNextLine()) {
-//            String line = in.nextLine();
-//            String[] pieces = line.split(",");
-//
-//            if (pieces.length > 1) {
-//                if (pieces[pieces.length - 1].equals(code)) {
-//                    for (int i = 0; i < pieces.length - 1; i++) {
-//                        result.append(pieces[i]).append(" ");
-//                    }
-//                }
-//            }
-//        }
-//
-//        return result.toString();
-//    }
 
-//    @FXML
-//    void handlePickRandomCountry(ActionEvent event) {
-//        String selectedCountryName = getRandomCountry();
-//        ObservableList<WorldMapView.Country> selectedCountries = FXCollections.observableArrayList();
-//        selectedCountries.add(WorldMapView.Country.valueOf(selectedCountryName));
-//
-//        worldMapView.setSelectedCountries(selectedCountries);
-//        selectedCountryField.setText(selectedCountryName);
-//    }
-
-//    @FXML
-//    void handlePickRandomCountry(ActionEvent event) {
-//        ObservableList<WorldMapView.Country> selectedCountries = FXCollections.observableArrayList();
-//        ObservableList<String> selectedCountryNames = getRandomCountries(Integer.valueOf(countryNumberTextField.getText()));
-//
-//        for (String s : selectedCountryNames) {
-//            selectedCountries.add(WorldMapView.Country.valueOf(s));
-//        }
-//
-//        worldMapView.setCountrySelectionMode(WorldMapView.SelectionMode.MULTIPLE);
-//        worldMapView.setSelectedCountries(selectedCountries);
-//    }
-//
-//    private int getRandomNumber() {
-//        return getRandomNumber(173, 2);
-//    }
-//
-//    private int getRandomNumber(final int MAX, final int MIN) {
-//        ArrayList<Integer> result = new ArrayList<>();
-//        Random rand = new Random();
-//
-//        final int MAX_NUM = MAX;
-//        final int MIN_NUM = MIN;
-//
-//        int randNum = rand.nextInt(MAX - MIN + 1) + MIN;
-//
-//        return randNum;
-//    }
-//
-//
-//    private String getRandomCountry() {
-//        try {
-//            ObservableList<String> countries = FXCollections.observableArrayList();
-//            int randomNum = getRandomNumber();
-//
-//            Scanner in = new Scanner(new File("src/resources/countries.csv"));
-//            while (in.hasNextLine()) {
-//                for (int i = 1; i < randomNum; i++) {
-//                    in.nextLine();
-//                }
-//
-//                String line = in.nextLine();
-//                String[] pieces = line.split(",");
-//                return pieces[3];
-//            }
-//        } catch (FileNotFoundException e) {
-//            e.getCause();
-//            e.printStackTrace();
-//        }
-//
-//        return "";
-//    }
-
-//    private ObservableList<String> getRandomCountries(int numberOfRandomCountries) {
-//        try {
-//            if (numberOfRandomCountries > 246) {
-//                throw new IllegalArgumentException("There are only 246 countries");
-//            }
-//
-//            ObservableList<String> countries = FXCollections.observableArrayList();
-//            ArrayList<Integer> randomNums = getRandomNumber(numberOfRandomCountries);
-//
-//            Scanner in = new Scanner(new File("src/resources/countries.csv"));
-//            while (in.hasNextLine()) {
-//                for (int i = 0; i < numberOfRandomCountries; i++) {
-//                    in = new Scanner(new File("src/resources/countries.csv"));
-//                    int j = randomNums.get(i);
-//
-//                    while (j > 1) {
-//                        in.nextLine();
-//                        j--;
-//                    }
-//
-//                    String line = in.nextLine();
-//                    String[] pieces = line.split(",");
-//                    countries.add(pieces[3]);
-//
-//                    if (i == numberOfRandomCountries - 1)
-//                        break;
-//                }
-//
-//                break;
-//            }
-//
-//            in.close();
-//            return countries;
-//        } catch (FileNotFoundException e) {
-//            e.getCause();
-//            e.printStackTrace();
-//        }
-//
-//        return FXCollections.observableArrayList();
-//    }
 }
