@@ -58,9 +58,6 @@ public class ProfileController {
     private Button signOutButton;
 
     @FXML
-    private Button privacyButton;
-
-    @FXML
     private Button changePasswordButton;
 
     @FXML
@@ -86,7 +83,6 @@ public class ProfileController {
 
     @FXML
     private Button searchButton;
-
 
     private User currentUser;
     private File profilePhotoFile;
@@ -124,7 +120,7 @@ public class ProfileController {
         removeFriendButton.setOnMouseExited(mouseEvent -> removeFriendButton.setEffect(null));
 
         profilePhotoFile = getProfilePhotoFile(currentUser);
-        Image profileImage = new Image(profilePhotoFile.toURI().toString(), 180, 180, false, false);
+        Image profileImage = new Image(profilePhotoFile.toURI().toString(), 80, 80, false, false);
         profilePhotoView.setImage(profileImage);
 
         // Adding search box suggestions
