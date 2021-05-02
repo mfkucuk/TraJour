@@ -18,4 +18,9 @@ public class Wish {
     public LocalDate getStartDate() {
         return startDate;
     }
+
+    @Override
+    public String toString() {
+        return getLocation() + " - " + getStartDate();
+    }
 }
