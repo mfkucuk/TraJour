@@ -39,6 +39,9 @@ public class AddFriendController implements Initializable {
         DropShadow shadow = new DropShadow();
         addFriendButton.setOnMouseEntered(mouseEvent -> addFriendButton.setEffect(shadow));
         addFriendButton.setOnMouseExited(mouseEvent -> addFriendButton.setEffect(null));
+
+        friendEmailTextField.setOnAction(event -> addFriend(event));
+        friendUsernameTextField.setOnAction(event -> addFriend(event));
     }
 
     /**

@@ -415,13 +415,11 @@ public class MapController implements Initializable {
 
     }
 
-
-
 //   private ObservableList<WorldMapView.Location> readCities(int numberOfCities) {
 //        ObservableList<WorldMapView.Location> result = FXCollections.observableArrayList();
 //
 //        try {
-//            Scanner in = new Scanner(new File("src\\resources\\worldcities.csv"));
+//            Scanner in = new Scanner(new File("/resources/worldcities.csv"));
 //
 //            int count = 0;
 //            while (in.hasNextLine() && count < numberOfCities) {

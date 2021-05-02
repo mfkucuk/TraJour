@@ -215,7 +215,7 @@ public class ProfileController {
     public void openProfilePage(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("src/com/trajour/profile/profile.fxml"));
+            loader.setLocation(getClass().getResource("/com/trajour/profile/profile.fxml"));
             Parent profilePageParent = loader.load();
             Scene profilePageScene = new Scene(profilePageParent, Main.APPLICATION_WIDTH, Main.APPLICATION_HEIGHT);
 
