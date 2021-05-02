@@ -152,8 +152,11 @@ public class ProfileController {
                 }
                 else {
                     currentUser.addWish(locationLabel.getText(), startDatePicker.getValue());
+
                     Notifications notification = buildNotification("Wish added", "Your wish is successfully added to your wishlist", 6, Pos.BASELINE_CENTER);
                     notification.showConfirm();
+
+                    initData(currentUser);
                 }
             }
         });
@@ -426,7 +429,7 @@ public class ProfileController {
     }
 
     private void setProfilePic() {
-        profilePhotoFile = getProfilePhotoFile(currentUser);
+        profilePhotoFile = getProfilePhotoFile(currentUser.getUserId());
         Image profileImage = new Image(profilePhotoFile.toURI().toString(), 80, 80, false, false);
         profilePhotoView.setImage(profileImage);
     }

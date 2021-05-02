@@ -1,6 +1,7 @@
 package com.trajour.journey;
 
 import com.trajour.db.DatabaseQuery;
+import com.trajour.user.Friend;
 import com.trajour.user.User;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
@@ -81,11 +82,11 @@ public class Post extends GridPane implements Shareable {
         journeyPhotoView.setImage(journeyPhoto);
 
         if (journeyPhotoView.getImage() == null) {
-            File file = getPostPhoto(user, getTheJourney().getTitle());
+            File file = getPostPhoto(user.getUserId(), getTheJourney().getTitle());
             journeyPhotoView.setImage(new Image(file.toURI().toString(), 40, 40, false, false));
         }
 
-        userPhotoView.setImage(new Image(DatabaseQuery.getProfilePhotoFile(user).toURI().toString(), 40, 40, false, false));
+        userPhotoView.setImage(new Image(DatabaseQuery.getProfilePhotoFile(user.getUserId()).toURI().toString(), 40, 40, false, false));
         userVBox.getChildren().add(userPhotoView);
         userVBox.getChildren().add(usernameLabel);
 
@@ -107,6 +108,42 @@ public class Post extends GridPane implements Shareable {
         if (!findPostByTitle(this, user)) {
             insertPost(user, this);
         }
+
+        return this;
+    }
+
+    public Post share(Friend f, VBox mainFeed) {
+        journeyLocationLabel = new Label("Location: " + theJourney.getLocation());
+        usernameLabel = new Label(f.getFriendName());
+        commentLabel = new Label("Comment: " + text);
+        dateLabel = new Label("Date: " + theJourney.getStartDate() + " / " + theJourney.getEndDate());
+        journeyNameLabel = new Label("Name: " + theJourney.getTitle());
+
+        journeyPhotoView.setImage(journeyPhoto);
+
+        if (journeyPhotoView.getImage() == null) {
+            File file = getPostPhoto(f.getFriendUserId(), getTheJourney().getTitle());
+            journeyPhotoView.setImage(new Image(file.toURI().toString(), 40, 40, false, false));
+        }
+
+        userPhotoView.setImage(new Image(DatabaseQuery.getProfilePhotoFile(f.getFriendUserId()).toURI().toString(), 40, 40, false, false));
+        userVBox.getChildren().add(userPhotoView);
+        userVBox.getChildren().add(usernameLabel);
+
+        journeyLocationLabel.setFont(new Font("Arial Bold", 12));
+        journeyNameLabel.setFont(new Font("Arial Bold", 12));
+        usernameLabel.setFont(new Font("Arial Bold", 12));
+        commentLabel.setFont(new Font("Arial Bold", 12));
+        dateLabel.setFont(new Font("Arial Bold", 12));
+
+        add(userVBox, 0, 0);
+        add(journeyNameLabel, 0, 1);
+        add(journeyLocationLabel, 1, 1);
+        add(dateLabel, 2, 1);
+        add(journeyPhotoView, 3, 1);
+        add(commentLabel, 4, 1);
+
+        mainFeed.getChildren().add(this);
 
         return this;
     }

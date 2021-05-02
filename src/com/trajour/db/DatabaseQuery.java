@@ -54,37 +54,6 @@ public final class DatabaseQuery {
         return result;
     }
 
-    public static ObservableList<Journey> getAllJourneysOfFriend(String friendName) {
-        dbConnection = new DatabaseConnection();
-        conn = dbConnection.getConnection();
-
-        ObservableList<Journey> result = FXCollections.observableArrayList();
-
-        String query = "SELECT userId, title, location, description, startDate, endDate FROM journeys WHERE userId =";
-
-        try {
-            Statement statement = conn.createStatement();
-            ResultSet rs = statement.executeQuery(query);
-
-            while (rs.next()) {
-                String country = rs.getString("location");
-                String title = rs.getString("title");
-                String description = rs.getString("description");
-                LocalDate startDate = rs.getDate("startDate").toLocalDate();
-                LocalDate endDate = rs.getDate("endDate").toLocalDate();
-
-                Journey j = new Journey(country, title, description, startDate, endDate);
-                result.add(j);
-            }
-
-            return result;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            e.getCause();
-        }
-
-        return result;
-    }
 
     public static ObservableList<Friend> getAllFriendsOfUser(User user) {
         dbConnection = new DatabaseConnection();
@@ -211,19 +180,19 @@ public final class DatabaseQuery {
         return "-";
     }
 
-    public static File getProfilePhotoFile(User user) {
+    public static File getProfilePhotoFile(int userId) {
         dbConnection = new DatabaseConnection();
         conn = dbConnection.getConnection();
 
         InputStream input;
         FileOutputStream output;
-        String query = "SELECT profile_photo FROM users where userId = " + user.getUserId() + " AND profile_photo IS NOT NULL";
+        String query = "SELECT profile_photo FROM users where userId = " + userId + " AND profile_photo IS NOT NULL";
 
         try {
             Statement statement = conn.createStatement();
             ResultSet rs = statement.executeQuery(query);
 
-            File newFile = new File("src/resources/profile_photo_" + user.getUserId() + ".png");
+            File newFile = new File("src/resources/profile_photo_" + userId + ".png");
             output = new FileOutputStream(newFile);
 
             if (rs.next()) {
@@ -531,7 +500,7 @@ public final class DatabaseQuery {
                 LocalDate startDate = rs.getDate("post_start_date").toLocalDate();
                 LocalDate endDate = rs.getDate("post_end_date").toLocalDate();
                 String postComments = rs.getString("post_comments");
-                File image = getPostPhoto(currentUser, postTitle);
+                File image = getPostPhoto(currentUser.getUserId(), postTitle);
                 Image realImage = new Image(image.toURI().toString(), 90, 90, false, false);
 
                 Journey postJourney = new Journey(postLocation, postTitle, postComments, startDate, endDate);
@@ -547,15 +516,40 @@ public final class DatabaseQuery {
 
         return result;
    }
+    public static ObservableList<Post> getAllPostsOfFriend(Friend friend) {
+        dbConnection = new DatabaseConnection();
+        conn = dbConnection.getConnection();
 
-//   public static ObservableList<Post> getAllPostsOfFriend(Friend friend, User currentUser) {
-//       dbConnection = new DatabaseConnection();
-//       conn = dbConnection.getConnection();
-//
-//       ObservableList<Post> result = FXCollections.observableArrayList();
-//
-//       String query = ""
-//   }
+        ObservableList<Post> result = FXCollections.observableArrayList();
+
+        String query = "SELECT * FROM posts WHERE userId = " + friend.getFriendUserId();
+
+        try {
+            Statement statement = conn.createStatement();
+            ResultSet rs = statement.executeQuery(query);
+
+            while (rs.next()) {
+                String postTitle = rs.getString("post_title");
+                String postLocation = rs.getString("post_location");
+                LocalDate startDate = rs.getDate("post_start_date").toLocalDate();
+                LocalDate endDate = rs.getDate("post_end_date").toLocalDate();
+                String postComments = rs.getString("post_comments");
+                File image = getPostPhoto(friend.getFriendUserId(), postTitle);
+                Image realImage = new Image(image.toURI().toString(), 90, 90, false, false);
+
+                Journey postJourney = new Journey(postLocation, postTitle, postComments, startDate, endDate);
+                Post newPost = new Post(postJourney, postComments, realImage);
+
+                result.add(newPost);
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            e.getCause();
+        }
+
+        return result;
+    }
 
    public static boolean findPostByTitle(Post post, User user) {
        dbConnection = new DatabaseConnection();
@@ -601,13 +595,13 @@ public final class DatabaseQuery {
        return false;
    }
 
-    public static File getPostPhoto(User user, String postTitle) {
+    public static File getPostPhoto(int userId, String postTitle) {
         dbConnection = new DatabaseConnection();
         conn = dbConnection.getConnection();
 
         InputStream input;
         FileOutputStream output;
-        String query = "SELECT post_image FROM posts where userId = " + user.getUserId() + " AND post_title = '" + postTitle + "' AND post_image IS NOT NULL";
+        String query = "SELECT post_image FROM posts where userId = " + userId + " AND post_title = '" + postTitle + "' AND post_image IS NOT NULL";
 
         try {
             Statement statement = conn.createStatement();

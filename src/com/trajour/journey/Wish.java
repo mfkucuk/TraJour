@@ -21,6 +21,8 @@ public class Wish {
 
     @Override
     public String toString() {
-        return getLocation() + " - " + getStartDate();
+
+        return "Location: " + getLocation() + " - Start Date: " + getStartDate();
+
     }
 }

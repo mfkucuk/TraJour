@@ -5,6 +5,7 @@ import com.trajour.journey.Journey;
 import com.trajour.journey.PastJourney;
 import com.trajour.journey.Post;
 import com.trajour.map.MapController;
+import com.trajour.user.Friend;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -160,6 +161,18 @@ public class MainController implements Initializable {
         setContextItems();
 
         setInitialMainFeedPosts();
+
+        setFriendsMainFeedPosts();
+    }
+
+    private void setFriendsMainFeedPosts() {
+        ObservableList<Friend> allFriendsOfUser = getAllFriendsOfUser(currentUser);
+        for (Friend f : allFriendsOfUser) {
+            ObservableList<Post> allPostsOfFriend = getAllPostsOfFriend(f);
+            for (Post p : allPostsOfFriend) {
+                p.share(f, vboxMainFeed);
+            }
+        }
     }
 
     /**
