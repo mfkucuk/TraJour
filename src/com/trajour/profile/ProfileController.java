@@ -24,6 +24,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.controlsfx.control.Notifications;
@@ -102,9 +103,24 @@ public class ProfileController {
 
     private VBox wishlistMenu;
     private PopOver wishlistPopOver;
+    private Label wishlistLabel;
     private TextField locationLabel;
     private DatePicker startDatePicker;
     private Button confirmWishButton;
+
+    @FXML
+    private TextField friendEmailTextField;
+
+    @FXML
+    private TextField friendUsernameTextField;
+
+    @FXML
+    private Button addButton;
+
+    private Label addFriendLabel;
+    private Label addFriendOrLabel;
+    private VBox addFriendMenu;
+    private PopOver addFriendPopOver;
 
     private User currentUser;
     private File profilePhotoFile;
@@ -137,6 +153,8 @@ public class ProfileController {
         refresh2MenuItem.setOnAction(actionEvent -> initData(currentUser));
 
         // Wishlist pop over
+        wishlistLabel = new Label("Add Wish");
+        wishlistLabel.setFont(new Font("Arial Bold", 24));
         locationLabel = new TextField();
         locationLabel.setPromptText("Location");
         startDatePicker = new DatePicker();
@@ -160,7 +178,7 @@ public class ProfileController {
                 }
             }
         });
-        wishlistMenu = new VBox(locationLabel, startDatePicker, confirmWishButton);
+        wishlistMenu = new VBox(wishlistLabel, locationLabel, startDatePicker, confirmWishButton);
         wishlistMenu.setPadding(new Insets(10));
         wishlistMenu.setAlignment(Pos.CENTER);
         wishlistMenu.setPrefHeight(150.0);
@@ -170,6 +188,80 @@ public class ProfileController {
         wishlistPopOver = new PopOver(wishlistMenu);
 
         wishlistListView.setContextMenu(new ContextMenu(refresh2MenuItem));
+
+        addFriendLabel = new Label("Add Friend");
+        addFriendLabel.setFont(new Font("Arial Bold", 24));
+        addFriendOrLabel = new Label("OR");
+        addFriendOrLabel.setFont(new Font("Arial Bold", 16));
+        friendEmailTextField = new TextField();
+        friendEmailTextField.setPromptText("Email");
+        friendUsernameTextField = new TextField();
+        friendUsernameTextField.setPromptText("Username");
+        addButton = new Button("Add");
+        addButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                if (friendEmailTextField.getText().isBlank() && friendUsernameTextField.getText().isBlank()) {
+                    Notifications notification = buildNotification("Text field error", "Fill out one of the text fields.", 4, Pos.BASELINE_CENTER);
+                    notification.showError();
+                }
+                else if ( ! friendEmailTextField.getText().isBlank() && ! friendUsernameTextField.getText().isBlank()) {
+                    Notifications notification = buildNotification("Text field error", "Use only one of the text fields.", 4, Pos.BASELINE_CENTER);
+                    notification.showError();
+                }
+                else if ( ! friendUsernameTextField.getText().isBlank()) {
+                    if (DatabaseQuery.findUserByUsername(friendUsernameTextField.getText())) {
+                        if (friendUsernameTextField.getText().equals(currentUser.getUsername())) {
+                            Notifications notification = buildNotification("Text field error", "I'm afraid you cannot be friends with yourself.", 4, Pos.BASELINE_CENTER);
+                            notification.showError();
+                        }
+                        else if ( ! findFriendByUsername(friendUsernameTextField.getText(), currentUser)) {
+                            currentUser.addFriendByName(friendUsernameTextField.getText(), getEmailByUsername(friendUsernameTextField.getText()));
+                            Notifications notification = buildNotification("Confirmation", "Friend successfully added.", 4, Pos.BASELINE_CENTER);
+                            notification.showConfirm();
+                        }
+                        else {
+                            Notifications notification = buildNotification("Text field error", "You are already friends.", 4, Pos.BASELINE_CENTER);
+                            notification.showError();
+                        }
+                    }
+                    else {
+                        Notifications notification = buildNotification("Text field error", "No such user exists.", 4, Pos.BASELINE_CENTER);
+                        notification.showError();
+                    }
+                }
+                else if ( ! friendEmailTextField.getText().isBlank()) {
+                    if (findUserByEmail(friendEmailTextField.getText())) {
+                        if (friendEmailTextField.getText().equals(currentUser.getEmail())) {
+                            Notifications notification = buildNotification("Text field error", "I'm afraid you cannot be friends with yourself.", 4, Pos.BASELINE_CENTER);
+                            notification.showError();
+                        }
+                        else if ( ! findFriendByEmail(friendEmailTextField.getText(), currentUser)) {
+                            currentUser.addFriendByEmail(getUsernameByEmail(friendEmailTextField.getText()), friendEmailTextField.getText());
+                            Notifications notification = buildNotification("Confirmation", "Friend successfully added.", 4, Pos.BASELINE_CENTER);
+                            notification.showConfirm();
+                        }
+                        else {
+                            Notifications notification = buildNotification("Text field error", "You are already friends.", 4, Pos.BASELINE_CENTER);
+                            notification.showError();
+                        }
+                    }
+                    else {
+                        Notifications notification = buildNotification("Text field error", "No such user exists.", 4, Pos.BASELINE_CENTER);
+                        notification.showError();
+                    }
+                }
+            }
+        });
+        addButton.setStyle("-fx-background-radius: 10; -fx-background-color: #C00000; -fx-text-fill: #FFFFFF");
+        addFriendMenu = new VBox(addFriendLabel, friendEmailTextField, addFriendOrLabel, friendUsernameTextField, addButton);
+        addFriendMenu.setPadding(new Insets(10));
+        addFriendMenu.setAlignment(Pos.CENTER);
+        addFriendMenu.setPrefHeight(272);
+        addFriendMenu.setPrefWidth(450);
+        addFriendMenu.setSpacing(20);
+        addFriendMenu.setStyle("-fx-background-color:#BFFCC6");
+        addFriendPopOver = new PopOver(addFriendMenu);
 
     }
 
@@ -219,27 +311,7 @@ public class ProfileController {
 
     @FXML
     public void openAddFriendPage(ActionEvent event) {
-        try {
-            // Get the parent and create the scene
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/com/trajour/profile/add_friend.fxml"));
-            Parent addFriendPageParent = loader.load();
-            Scene addFriendPageScene = new Scene(addFriendPageParent, 480, 327);
-
-            // Get access to the main windows controller
-            AddFriendController addFriendController = loader.getController();
-            addFriendController.initData(currentUser);
-
-            // Get the stage and change the scene
-            Stage window = new Stage();
-
-            window.setScene(addFriendPageScene);
-            window.show();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-            e.getCause();
-        }
+        addFriendPopOver.show(addFriendButton);
     }
 
     /**
