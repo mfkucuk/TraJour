@@ -262,7 +262,6 @@ public class ProfileController {
         addFriendMenu.setSpacing(20);
         addFriendMenu.setStyle("-fx-background-color:#BFFCC6");
         addFriendPopOver = new PopOver(addFriendMenu);
-
     }
 
     @FXML

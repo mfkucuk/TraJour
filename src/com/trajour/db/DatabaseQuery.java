@@ -121,13 +121,13 @@ public final class DatabaseQuery {
         return result;
     }
 
-    public static ObservableList<Journey> getAllJourneysOfUser(User user) {
+    public static ObservableList<Journey> getAllJourneysOfUser(User currentUser) {
         dbConnection = new DatabaseConnection();
         conn = dbConnection.getConnection();
 
         ObservableList<Journey> result = FXCollections.observableArrayList();
 
-        String query = "SELECT userId, title, location, description, startDate, endDate FROM journeys WHERE userId = " + user.getUserId();
+        String query = "SELECT userId, title, location, description, startDate, endDate FROM journeys WHERE userId = " + currentUser.getUserId();
 
         try {
             Statement statement = conn.createStatement();
@@ -154,14 +154,14 @@ public final class DatabaseQuery {
     }
 
 
-    public static ObservableList<Friend> getAllFriendsOfUser(User user) {
+    public static ObservableList<Friend> getAllFriendsOfUser(User currentUser) {
         dbConnection = new DatabaseConnection();
         conn = dbConnection.getConnection();
 
         ObservableList<Friend> result = FXCollections.observableArrayList();
         try {
             Statement statement = conn.createStatement();
-            String query = "SELECT friendName, friendEmail FROM friends WHERE userID = " + user.getUserId();
+            String query = "SELECT friendName, friendEmail FROM friends WHERE userID = " + currentUser.getUserId();
             ResultSet rs = statement.executeQuery(query);
 
             while (rs.next()) {
@@ -294,11 +294,11 @@ public final class DatabaseQuery {
         return null;
     }
 
-    public static String getJourneyRating(Journey j, User user) {
+    public static String getJourneyRating(Journey j, User currentUser) {
         dbConnection = new DatabaseConnection();
         conn = dbConnection.getConnection();
 
-        String query = "SELECT rating FROM journeys WHERE userId = " + user.getUserId() + " AND title = '" + j.getTitle()
+        String query = "SELECT rating FROM journeys WHERE userId = " + currentUser.getUserId() + " AND title = '" + j.getTitle()
                 + "' AND location = '" + j.getLocation() + "' AND description = '" + j.getDescription() + "' AND startDate = '" +
                 Date.valueOf(j.getStartDate()) + "' AND endDate = '" + Date.valueOf(j.getEndDate()) + "'";
         try {
@@ -430,11 +430,11 @@ public final class DatabaseQuery {
      * @param friendName Name of the searched friend
      * @return True if a friend with the given username exists, false otherwise
      */
-    public static boolean findFriendByUsername(String friendName, User u) {
+    public static boolean findFriendByUsername(String friendName, User user) {
         dbConnection = new DatabaseConnection();
         conn = dbConnection.getConnection();
 
-        String query = "SELECT COUNT(*) friendName FROM friends WHERE userId = " + u.getUserId() + " AND friendName = '" + friendName + "'";
+        String query = "SELECT COUNT(*) friendName FROM friends WHERE userId = " + user.getUserId() + " AND friendName = '" + friendName + "'";
         try {
             Statement statement = conn.createStatement();
             ResultSet rs = statement.executeQuery(query);
@@ -455,11 +455,11 @@ public final class DatabaseQuery {
      * @param email Email of the searched friend
      * @return True if the other user is a friend of the current user, false otherwise
      */
-    public static boolean findFriendByEmail(String email, User u) {
+    public static boolean findFriendByEmail(String email, User user) {
         dbConnection = new DatabaseConnection();
         conn = dbConnection.getConnection();
 
-        String query = "SELECT COUNT(*) friendName FROM friends WHERE userId = " + u.getUserId() + " AND friendName = '" + email + "'";
+        String query = "SELECT COUNT(*) friendName FROM friends WHERE userId = " + user.getUserId() + " AND friendName = '" + email + "'";
         try {
             Statement statement = conn.createStatement();
             ResultSet rs = statement.executeQuery(query);
@@ -475,13 +475,13 @@ public final class DatabaseQuery {
         return false;
     }
 
-    public static boolean findJourneyByUser(Journey j, User u) {
+    public static boolean findJourneyByUser(Journey journey, User user) {
         dbConnection = new DatabaseConnection();
         conn = dbConnection.getConnection();
 
-        String query = "SELECT COUNT(*) journeyId FROM journeys WHERE userId = " + u.getUserId() + " AND location = '" +
-                j.getLocation() + "' AND title = '" + j.getTitle() + "' AND description = '" + j.getDescription() + "' " +
-                "AND startDate = '" + Date.valueOf(j.getStartDate()) + "' AND endDate = '" + Date.valueOf(j.getEndDate()) + "'";
+        String query = "SELECT COUNT(*) journeyId FROM journeys WHERE userId = " + user.getUserId() + " AND location = '" +
+                journey.getLocation() + "' AND title = '" + journey.getTitle() + "' AND description = '" + journey.getDescription() + "' " +
+                "AND startDate = '" + Date.valueOf(journey.getStartDate()) + "' AND endDate = '" + Date.valueOf(journey.getEndDate()) + "'";
 
         try {
             Statement statement = conn.createStatement();
@@ -652,7 +652,6 @@ public final class DatabaseQuery {
         return false;
     }
 
-
     public static boolean updateJourneyRating(Journey j, User user, String rating) {
         dbConnection = new DatabaseConnection();
         conn = dbConnection.getConnection();
@@ -808,13 +807,13 @@ public final class DatabaseQuery {
         return 0;
     }
 
-    public static boolean deleteJourney(Journey j, User user) {
+    public static boolean deleteJourney(Journey journey, User user) {
         dbConnection = new DatabaseConnection();
         conn = dbConnection.getConnection();
 
-        String query = "DELETE FROM journeys WHERE userId = " + user.getUserId() + " AND title = '" + j.getTitle() +
-                "' AND location = '" + j.getLocation() + "' AND description = '" + j.getDescription() +
-                "' AND startDate = '" + Date.valueOf(j.getStartDate()) + "' AND endDate = '" + Date.valueOf(j.getEndDate()) + "'";
+        String query = "DELETE FROM journeys WHERE userId = " + user.getUserId() + " AND title = '" + journey.getTitle() +
+                "' AND location = '" + journey.getLocation() + "' AND description = '" + journey.getDescription() +
+                "' AND startDate = '" + Date.valueOf(journey.getStartDate()) + "' AND endDate = '" + Date.valueOf(journey.getEndDate()) + "'";
 
         try {
             Statement statement = conn.createStatement();
@@ -829,12 +828,12 @@ public final class DatabaseQuery {
         return false;
     }
 
-    public static boolean deleteFriend(Friend f, User user) {
+    public static boolean deleteFriend(Friend friend, User user) {
         dbConnection = new DatabaseConnection();
         conn = dbConnection.getConnection();
 
         String query = "DELETE FROM friends WHERE userId = " + user.getUserId() + " AND friendName = '"
-                + f.getFriendName() + "' AND friendEmail = '" + f.getFriendEmail() + "' AND friendUserId = " + f.getFriendUserId();
+                + friend.getFriendName() + "' AND friendEmail = '" + friend.getFriendEmail() + "' AND friendUserId = " + friend.getFriendUserId();
 
         try {
             Statement statement = conn.createStatement();

@@ -382,12 +382,6 @@ public class MapController implements Initializable {
         showLocationsView = new SimpleBooleanProperty(false);
         worldMapView.setShowLocations(showLocationsView.get());
 
-
-//        worldMapView.setLocations(capitals);
-//
-//        showLocationsView.set(false);
-//        worldMapView.setShowLocations(showLocationsView.get());
-
         // Set what happens when clicked on a location or country. The latest chosen location or country is assumed as
         // the travel destination and the location text field is changed accordingly
         worldMapView.setOnMouseClicked(mouseEvent -> {
@@ -420,36 +414,4 @@ public class MapController implements Initializable {
         });
 
     }
-
-//   private ObservableList<WorldMapView.Location> readCities(int numberOfCities) {
-//        ObservableList<WorldMapView.Location> result = FXCollections.observableArrayList();
-//
-//        try {
-//            Scanner in = new Scanner(new File("/resources/worldcities.csv"));
-//
-//            int count = 0;
-//            while (in.hasNextLine() && count < numberOfCities) {
-//                String line = in.nextLine();
-//                String[] pieces = line.split(",");
-//
-//                String cityName = pieces[1].substring(1, pieces[1].length() - 1);
-//                double latitude = Double.parseDouble(pieces[2].substring(1, pieces[2].length() - 1));
-//                double longitude = Double.parseDouble((pieces[3].substring(1, pieces[3].length() - 1)));
-//                String country = pieces[4].substring(1, pieces[4].length() - 1);
-//                int population = Integer.parseInt(pieces[pieces.length - 2].substring(1, pieces[pieces.length - 2].length() - 1));
-//
-//                DetailedLocation detailedLocation = new DetailedLocation(cityName, latitude, longitude, country, population);
-//                result.add(detailedLocation);
-//
-//                count++;
-//            }
-//        }
-//        catch (FileNotFoundException e) {
-//            System.out.println("Something wrong with 'worldcities.csv' file");
-//            e.printStackTrace();
-//            e.getCause();
-//        }
-//
-//        return result;
-//    }
 }
