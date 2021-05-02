@@ -1,7 +1,7 @@
 package com.trajour.journey;
 
 import com.trajour.db.DatabaseQuery;
-import com.trajour.model.User;
+import com.trajour.user.User;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;

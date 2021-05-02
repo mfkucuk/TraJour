@@ -1,4 +1,4 @@
-package com.trajour.model;
+package com.trajour.user;
 
 public class Friend {
     private String friendName;

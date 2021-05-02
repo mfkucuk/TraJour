@@ -1,5 +1,7 @@
-package com.trajour.view;
+package com.trajour.login;
 
+import com.trajour.main.Main;
+import com.trajour.main.MainController;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -16,9 +18,9 @@ import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
 import javafx.stage.Stage;
 import com.trajour.db.DatabaseConnection;
-import com.trajour.model.User;
-import javafx.util.Duration;
+import com.trajour.user.User;
 import org.controlsfx.control.Notifications;
+import com.trajour.main.Main;
 
 import java.awt.*;
 import java.net.URI;
@@ -26,7 +28,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import static com.trajour.db.DatabaseQuery.*;
-import static com.trajour.view.MainController.buildNotification;
+import static com.trajour.main.MainController.buildNotification;
 
 /**
  * Controller for the login process
@@ -102,7 +104,7 @@ public class LoginController implements Initializable {
     @FXML
     private void openRegisterPage(ActionEvent event) {
         try {
-            Parent root = FXMLLoader.load((getClass().getResource("/com/trajour/view/fxml/register.fxml")));
+            Parent root = FXMLLoader.load((getClass().getResource("/com/trajour/login/register.fxml")));
 
             Stage registerStage = new Stage();
             registerStage.setTitle("Register");
@@ -122,7 +124,7 @@ public class LoginController implements Initializable {
     private void openMainPage(ActionEvent event, User user)  {
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/com/trajour/view/fxml/main.fxml"));
+            loader.setLocation(getClass().getResource("/com/trajour/main/main.fxml"));
             Parent mainPageParent = loader.load();
             Scene mainPageScene = new Scene(mainPageParent, Main.APPLICATION_WIDTH, Main.APPLICATION_HEIGHT);
 

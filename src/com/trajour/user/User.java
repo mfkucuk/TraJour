@@ -1,16 +1,13 @@
-package com.trajour.model;
+package com.trajour.user;
 
 import com.trajour.db.DatabaseQuery;
 import com.trajour.journey.Journey;
 import javafx.collections.ObservableList;
-import javafx.geometry.Pos;
-import org.controlsfx.control.Notifications;
 
 import java.awt.*;
 import java.io.File;
 
 import static com.trajour.db.DatabaseQuery.*;
-import static com.trajour.view.MainController.buildNotification;
 
 /**
  * User class.

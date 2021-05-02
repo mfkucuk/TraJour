@@ -1,9 +1,10 @@
-package com.trajour.view;
+package com.trajour.main;
 
 import com.trajour.journey.FutureJourney;
 import com.trajour.journey.Journey;
 import com.trajour.journey.PastJourney;
 import com.trajour.journey.Post;
+import com.trajour.map.MapController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -20,9 +21,10 @@ import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import com.trajour.model.User;
+import com.trajour.user.User;
 import javafx.util.Duration;
 import org.controlsfx.control.Notifications;
+import com.trajour.profile.ProfileController;
 
 import java.io.IOException;
 import java.net.URL;
@@ -168,7 +170,7 @@ public class MainController implements Initializable {
         try {
             // Get the parent and create the scene
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/com/trajour/view/fxml/profile.fxml"));
+            loader.setLocation(getClass().getResource("/com/trajour/profile/profile.fxml"));
             Parent profilePageParent = loader.load();
             Scene profilePageScene = new Scene(profilePageParent, Main.APPLICATION_WIDTH, Main.APPLICATION_HEIGHT);
 
@@ -416,7 +418,7 @@ public class MainController implements Initializable {
 
     private void handleOpenMapPage() {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/com/trajour/view/fxml/mapxz.fxml"));
+        loader.setLocation(getClass().getResource("/com/trajour/map/mapxz.fxml"));
 
         try {
             Parent mapPageParent = loader.load();
@@ -440,7 +442,7 @@ public class MainController implements Initializable {
 
     private void handleOpenMainPage() {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/com/trajour/view/fxml/main.fxml"));
+        loader.setLocation(getClass().getResource("/com/trajour/main/main.fxml"));
 
         try {
             Parent mapPageParent = loader.load();
@@ -469,7 +471,7 @@ public class MainController implements Initializable {
     @FXML
     public void openHomePage(ActionEvent event) {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/com/trajour/view/fxml/main.fxml"));
+        loader.setLocation(getClass().getResource("/com/trajour/main/main.fxml"));
 
         try {
             Parent mainPageParent = loader.load();
@@ -497,7 +499,7 @@ public class MainController implements Initializable {
     @FXML
     public void openMapPage(ActionEvent event) {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/com/trajour/view/fxml/mapxz.fxml"));
+        loader.setLocation(getClass().getResource("/com/trajour/map/mapxz.fxml"));
 
         try {
             Parent mapPageParent = loader.load();
@@ -523,7 +525,7 @@ public class MainController implements Initializable {
     public void openShareJourneyPage(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/com/trajour/view/fxml/share_journey.fxml"));
+            loader.setLocation(getClass().getResource("/com/trajour/main/share_journey.fxml"));
 
             Parent shareJourneyPageParent = loader.load();
             Scene shareJourneyPageScene = new Scene(shareJourneyPageParent, 480, 800);

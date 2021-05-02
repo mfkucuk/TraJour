@@ -1,15 +1,14 @@
 package com.trajour.db;
 
 import com.trajour.journey.Wish;
-import com.trajour.model.Friend;
+import com.trajour.user.Friend;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import com.trajour.journey.Journey;
 import com.trajour.journey.Post;
-import com.trajour.model.User;
+import com.trajour.user.User;
 import javafx.scene.image.Image;
 
-import java.awt.*;
 import java.io.*;
 import java.sql.*;
 import java.time.LocalDate;
@@ -565,7 +564,7 @@ public final class DatabaseQuery {
             Statement statement = conn.createStatement();
             ResultSet rs = statement.executeQuery(query);
 
-            File newFile = new File("src/resources/post_photo_" + LocalDate.now() + ".png");
+            File newFile = new File("src/resources/post_photo_" + postTitle + ".png");
             output = new FileOutputStream(newFile);
 
             if (rs.next()) {

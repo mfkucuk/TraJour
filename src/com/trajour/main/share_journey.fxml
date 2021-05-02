@@ -38,7 +38,7 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="480.0" style="-fx-background-color: #E0FFFF;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.trajour.view.ShareJourneyController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="480.0" style="-fx-background-color: #E0FFFF;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.trajour.main.ShareJourneyController">
    <children>
       <Label layoutX="38.0" prefHeight="39.0" prefWidth="165.0" text="Share Journey" textFill="#00203f" AnchorPane.bottomAnchor="761.0" AnchorPane.leftAnchor="38.0" AnchorPane.rightAnchor="277.0" AnchorPane.topAnchor="0.0">
          <font>

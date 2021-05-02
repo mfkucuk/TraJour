@@ -1,11 +1,11 @@
-package com.trajour.view;
+package com.trajour.profile;
 
 import com.trajour.db.DatabaseQuery;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import com.trajour.model.User;
+import com.trajour.user.User;
 import javafx.scene.effect.DropShadow;
 
 import java.net.URL;

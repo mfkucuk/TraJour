@@ -1,17 +1,12 @@
 package com.trajour.journey;
 
-import com.trajour.model.User;
-import javafx.geometry.Pos;
+import com.trajour.user.User;
 import javafx.scene.image.Image;
-import com.trajour.db.DatabaseQuery;
-import javafx.scene.image.ImageView;
-import org.controlsfx.control.Notifications;
 
 import java.time.LocalDate;
 
 import static com.trajour.db.DatabaseQuery.findJourneyByUser;
 import static com.trajour.db.DatabaseQuery.insertNewJourney;
-import static com.trajour.view.MainController.buildNotification;
 
 
 /**

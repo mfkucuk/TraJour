@@ -1,6 +1,6 @@
 package com.trajour.journey;
 
-import com.trajour.model.User;
+import com.trajour.user.User;
 import javafx.scene.layout.VBox;
 
 public interface Shareable {

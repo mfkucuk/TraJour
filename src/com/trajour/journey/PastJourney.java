@@ -1,9 +1,8 @@
 package com.trajour.journey;
 
 import com.trajour.db.DatabaseQuery;
-import com.trajour.model.User;
+import com.trajour.user.User;
 
-import javax.xml.crypto.Data;
 import java.time.LocalDate;
 
 public class PastJourney extends Journey {

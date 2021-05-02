@@ -1,4 +1,4 @@
-package com.trajour.view;
+package com.trajour.main;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -12,8 +12,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class Main extends Application {
-    protected final static int APPLICATION_WIDTH = 1400;
-    protected final static int APPLICATION_HEIGHT = 1000;
+    public final static int APPLICATION_WIDTH = 1400;
+    public final static int APPLICATION_HEIGHT = 1000;
     private final String dbName = "trajour";
 
     /**
@@ -71,7 +71,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("/com/trajour/view/fxml/login.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/com/trajour/login/login.fxml"));
         primaryStage.setTitle("TraJour");
         primaryStage.setScene(new Scene(root, APPLICATION_WIDTH, APPLICATION_HEIGHT));
         primaryStage.show();

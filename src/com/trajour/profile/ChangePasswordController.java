@@ -1,4 +1,4 @@
-package com.trajour.view;
+package com.trajour.profile;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -6,14 +6,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
-import com.trajour.model.User;
+import com.trajour.user.User;
 import javafx.scene.effect.DropShadow;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-
-import static com.trajour.db.DatabaseQuery.findPasswordByUsername;
-import static com.trajour.db.DatabaseQuery.updatePassword;
 
 public class ChangePasswordController implements Initializable {
 

@@ -50,7 +50,7 @@
 <?import javafx.scene.text.Font?>
 <?import org.controlsfx.control.WorldMapView?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.trajour.view.MapController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.trajour.map.MapController">
    <top>
       <ToolBar prefHeight="80.0" prefWidth="1400.0" style="-fx-background-color: #00203FFF;" BorderPane.alignment="CENTER">
          <items>
@@ -170,7 +170,7 @@
                   <Font size="14.0" />
                </font>
             </RadioButton>
-            <Label fx:id="distanceResultLabel" alignment="CENTER" layoutX="450.0" layoutY="858.0" prefHeight="17.0" prefWidth="500.0" text="Label">
+            <Label fx:id="distanceResultLabel" alignment="CENTER" layoutX="450.0" layoutY="858.0" prefHeight="17.0" prefWidth="500.0" text="">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>

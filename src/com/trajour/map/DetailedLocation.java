@@ -1,4 +1,4 @@
-package com.trajour.model;
+package com.trajour.map;
 
 import org.controlsfx.control.WorldMapView;
 

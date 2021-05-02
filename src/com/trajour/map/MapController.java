@@ -1,7 +1,9 @@
-package com.trajour.view;
+package com.trajour.map;
 
 import com.trajour.journey.Journey;
-import com.trajour.model.User;
+import com.trajour.main.Main;
+import com.trajour.main.MainController;
+import com.trajour.user.User;
 
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
@@ -25,6 +27,7 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 import org.controlsfx.control.Notifications;
 import org.controlsfx.control.WorldMapView;
+import com.trajour.profile.ProfileController;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -36,9 +39,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 
-import static com.trajour.db.DatabaseQuery.findJourneyByUser;
-import static com.trajour.db.DatabaseQuery.insertNewJourney;
-import static com.trajour.view.MainController.buildNotification;
+import static com.trajour.main.MainController.buildNotification;
 
 public class MapController implements Initializable {
     @FXML
@@ -144,12 +145,6 @@ public class MapController implements Initializable {
             double movement = (scrollEvent.getDeltaY()) / ((double) 40);
             zoomSlider.setValue(zoomSlider.getValue() + movement);
         });
-
-        capitals = readCountryCapitals();
-        worldMapView.setLocations(capitals);
-
-        showLocationsView.set(false);
-        worldMapView.setShowLocations(showLocationsView.get());
     }
     @FXML
     void handleShowLocations(ActionEvent event) {
@@ -227,7 +222,7 @@ public class MapController implements Initializable {
         try {
             // Get the parent and create the scene
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/com/trajour/view/fxml/main.fxml"));
+            loader.setLocation(getClass().getResource("/com/trajour/main/main.fxml"));
             Parent mainPageParent = loader.load();
             Scene mainPageScene = new Scene(mainPageParent, Main.APPLICATION_WIDTH, Main.APPLICATION_HEIGHT);
 
@@ -250,7 +245,7 @@ public class MapController implements Initializable {
     @FXML
     void openMapPage(ActionEvent event) {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/com/trajour/view/fxml/mapxz.fxml"));
+        loader.setLocation(getClass().getResource("/com/trajour/map/mapxz.fxml"));
 
         try {
             Parent mapPageParent = loader.load();
@@ -277,7 +272,7 @@ public class MapController implements Initializable {
         try {
             // Get the parent and create the scene
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/com/trajour/view/fxml/profile.fxml"));
+            loader.setLocation(getClass().getResource("/com/trajour/profile/profile.fxml"));
             Parent profilePageParent = loader.load();
             Scene profilePageScene = new Scene(profilePageParent, Main.APPLICATION_WIDTH, Main.APPLICATION_HEIGHT);
 
@@ -303,7 +298,7 @@ public class MapController implements Initializable {
         ObservableList<WorldMapView.Location> result = FXCollections.observableArrayList();
 
         try {
-            Scanner in = new Scanner(new File("src\\resources\\country-capitals.csv"));
+            Scanner in = new Scanner(new File("src/resources/country-capitals.csv"));
 
             while (in.hasNextLine()) {
                 String line = in.nextLine();
@@ -376,9 +371,16 @@ public class MapController implements Initializable {
 
     private void initWorldMapView() {
         // Set locations to display
+        capitals = readCountryCapitals();
         worldMapView.setLocations(capitals);
         showLocationsView = new SimpleBooleanProperty(false);
         worldMapView.setShowLocations(showLocationsView.get());
+
+
+//        worldMapView.setLocations(capitals);
+//
+//        showLocationsView.set(false);
+//        worldMapView.setShowLocations(showLocationsView.get());
 
         // Set what happens when clicked on a location or country. The latest chosen location or country is assumed as
         // the travel destination and the location text field is changed accordingly

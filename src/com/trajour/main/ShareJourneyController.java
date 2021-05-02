@@ -1,4 +1,4 @@
-package com.trajour.view;
+package com.trajour.main;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -17,13 +17,13 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import com.trajour.journey.Journey;
 import com.trajour.journey.Post;
-import com.trajour.model.User;
+import com.trajour.user.User;
 import org.controlsfx.control.Notifications;
 
 import java.io.File;
 
 import static com.trajour.db.DatabaseQuery.*;
-import static com.trajour.view.MainController.buildNotification;
+import static com.trajour.main.MainController.buildNotification;
 
 public class ShareJourneyController {
     @FXML
