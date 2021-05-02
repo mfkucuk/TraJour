@@ -2,10 +2,12 @@ package com.trajour.user;
 
 import com.trajour.db.DatabaseQuery;
 import com.trajour.journey.Journey;
+import com.trajour.journey.Wish;
 import javafx.collections.ObservableList;
 
 import java.awt.*;
 import java.io.File;
+import java.time.LocalDate;
 
 import static com.trajour.db.DatabaseQuery.*;
 
@@ -57,12 +59,19 @@ public class User {
         }
     }
 
-    public boolean addWish() {
-        return false;
+    public boolean addWish(String location, LocalDate startDate) {
+        Wish wish = new Wish(location, startDate);
+        return DatabaseQuery.insertWishByUser(wish, this);
     }
 
-    public boolean removeWish() {
-        return false;
+    public boolean removeWish(ObservableList<Wish> wishlist) {
+        if (! wishlist.isEmpty()) {
+            for (Wish w : wishlist) {
+                DatabaseQuery.deleteWishByUser(w, this);
+            }
+        }
+
+        return true;
     }
 
     /**

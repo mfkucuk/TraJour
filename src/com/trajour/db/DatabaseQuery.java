@@ -390,8 +390,8 @@ public final class DatabaseQuery {
         dbConnection = new DatabaseConnection();
         conn = dbConnection.getConnection();
 
-        String query = "INSERT INTO wishlist(location, startDate, userId) VALUES('" + newWish.getLocation() + "', " +
-                Date.valueOf(newWish.getStartDate()) + ", " + user.getUserId() +")";
+        String query = "INSERT INTO wishlist(location, startDate, userId) VALUES('" + newWish.getLocation() + "', '" +
+                Date.valueOf(newWish.getStartDate()) + "', " + user.getUserId() +")";
 
         try {
             Statement statement = conn.createStatement();

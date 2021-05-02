@@ -1,6 +1,8 @@
 package com.trajour.profile;
 
+import com.trajour.db.DatabaseQuery;
 import com.trajour.journey.Journey;
+import com.trajour.journey.Wish;
 import com.trajour.user.Friend;
 import com.trajour.main.Main;
 import com.trajour.main.MainController;
@@ -8,8 +10,10 @@ import com.trajour.map.MapController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -18,10 +22,12 @@ import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.controlsfx.control.Notifications;
+import org.controlsfx.control.PopOver;
 import org.controlsfx.control.textfield.AutoCompletionBinding;
 import com.trajour.user.User;
 import org.controlsfx.control.textfield.TextFields;
@@ -71,10 +77,13 @@ public class ProfileController {
     private MenuItem refreshMenuItem;
 
     @FXML
+    private MenuItem refresh2MenuItem;
+
+    @FXML
     private Label friendsLabel;
 
     @FXML
-    private ListView<?> wishlistListView;
+    private ListView<Wish> wishlistListView;
 
     @FXML
     private ListView<Journey> searchedJourneysListView;
@@ -87,6 +96,15 @@ public class ProfileController {
 
     @FXML
     private Button searchButton;
+
+    @FXML
+    private Button addWishButton;
+
+    private VBox wishlistMenu;
+    private PopOver wishlistPopOver;
+    private TextField locationLabel;
+    private DatePicker startDatePicker;
+    private Button confirmWishButton;
 
     private User currentUser;
     private File profilePhotoFile;
@@ -110,18 +128,61 @@ public class ProfileController {
 
         setSearchSuggestions(allJourneys);
 
+        // Get all wishes
+        setWishlist();
+
         // Context menu item
+        refresh2MenuItem = new MenuItem("Refresh");
         refreshMenuItem.setOnAction(actionEvent -> initData(currentUser));
+        refresh2MenuItem.setOnAction(actionEvent -> initData(currentUser));
+
+        // Wishlist pop over
+        locationLabel = new TextField();
+        locationLabel.setPromptText("Location");
+        startDatePicker = new DatePicker();
+        startDatePicker.setValue(LocalDate.now());
+        confirmWishButton = new Button("Add");
+        confirmWishButton.setStyle("-fx-background-radius: 10; -fx-background-color: #C00000; -fx-text-fill: #FFFFFF");
+        confirmWishButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                if (locationLabel.getText().isBlank()) {
+                    Notifications notification = buildNotification("Empty Field Error", "Please fill in the location field", 6, Pos.BASELINE_CENTER);
+                    notification.showError();
+                }
+                else {
+                    currentUser.addWish(locationLabel.getText(), startDatePicker.getValue());
+                    Notifications notification = buildNotification("Wish added", "Your wish is successfully added to your wishlist", 6, Pos.BASELINE_CENTER);
+                    notification.showConfirm();
+                }
+            }
+        });
+        wishlistMenu = new VBox(locationLabel, startDatePicker, confirmWishButton);
+        wishlistMenu.setPadding(new Insets(10));
+        wishlistMenu.setAlignment(Pos.CENTER);
+        wishlistMenu.setPrefHeight(150.0);
+        wishlistMenu.setPrefWidth(200.0);
+        wishlistMenu.setSpacing(20);
+        wishlistMenu.setStyle("-fx-background-color:#BFFCC6");
+        wishlistPopOver = new PopOver(wishlistMenu);
+
+        wishlistListView.setContextMenu(new ContextMenu(refresh2MenuItem));
+
     }
 
     @FXML
-    public void addWish() {
-        // TODO
+    public void addWish(ActionEvent event) {
+        wishlistPopOver.show(addWishButton);
     }
 
     @FXML
-    public void removeWish() {
-        // TODO
+    public void removeWish(ActionEvent event) {
+        ObservableList<Wish> wishes = wishlistListView.getSelectionModel().getSelectedItems();
+
+        currentUser.removeWish(wishes);
+
+        friendsListView.getItems().removeAll(wishes);
+        openProfilePage(event);
     }
 
     @FXML
@@ -385,6 +446,11 @@ public class ProfileController {
         ObservableList<Friend> friends = getAllFriendsOfUser(currentUser);
         friendsListView.setItems(friends);
         friendsLabel.setText("Friends (" + friends.size() + ")");
+    }
+
+    private void setWishlist() {
+        ObservableList<Wish> wishes = getAllWishesOfUser(currentUser);
+        wishlistListView.setItems(wishes);
     }
 
     private void setSearchSuggestions(ObservableList<Journey> allJourneys) {
