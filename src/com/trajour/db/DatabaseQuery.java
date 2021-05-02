@@ -22,6 +22,105 @@ public final class DatabaseQuery {
     private static DatabaseConnection dbConnection;
     private static Connection conn;
 
+    public static ObservableList<Wish> getAllWishesOfUser(User user) {
+        dbConnection = new DatabaseConnection();
+        conn = dbConnection.getConnection();
+
+        ObservableList<Wish> result = FXCollections.observableArrayList();
+
+        String query = "SELECT * FROM wishlist WHERE userId = " + user.getUserId();
+
+        try {
+            Statement statement = conn.createStatement();
+            ResultSet rs = statement.executeQuery(query);
+
+            while (rs.next()) {
+                String location = rs.getString("location");
+                LocalDate startDate = rs.getDate("startDate").toLocalDate();
+
+                Wish wish = new Wish(location, startDate);
+                result.add(wish);
+            }
+
+            return result;
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            e.getCause();
+        }
+
+        return result;
+    }
+
+    public static ObservableList<Post> getAllPostsOfUser(User currentUser) {
+        dbConnection = new DatabaseConnection();
+        conn = dbConnection.getConnection();
+
+        ObservableList<Post> result = FXCollections.observableArrayList();
+
+        String query = "SELECT * FROM posts WHERE userId = " + currentUser.getUserId();
+
+        try {
+            Statement statement = conn.createStatement();
+            ResultSet rs = statement.executeQuery(query);
+
+            while (rs.next()) {
+                String postTitle = rs.getString("post_title");
+                String postLocation = rs.getString("post_location");
+                LocalDate startDate = rs.getDate("post_start_date").toLocalDate();
+                LocalDate endDate = rs.getDate("post_end_date").toLocalDate();
+                String postComments = rs.getString("post_comments");
+                File image = getPostPhoto(currentUser.getUserId(), postTitle);
+                Image realImage = new Image(image.toURI().toString(), 90, 90, false, false);
+
+                Journey postJourney = new Journey(postLocation, postTitle, postComments, startDate, endDate);
+                Post newPost = new Post(postJourney, postComments, realImage);
+
+                result.add(newPost);
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            e.getCause();
+        }
+
+        return result;
+    }
+    public static ObservableList<Post> getAllPostsOfFriend(Friend friend) {
+        dbConnection = new DatabaseConnection();
+        conn = dbConnection.getConnection();
+
+        ObservableList<Post> result = FXCollections.observableArrayList();
+
+        String query = "SELECT * FROM posts WHERE userId = " + friend.getFriendUserId();
+
+        try {
+            Statement statement = conn.createStatement();
+            ResultSet rs = statement.executeQuery(query);
+
+            while (rs.next()) {
+                String postTitle = rs.getString("post_title");
+                String postLocation = rs.getString("post_location");
+                LocalDate startDate = rs.getDate("post_start_date").toLocalDate();
+                LocalDate endDate = rs.getDate("post_end_date").toLocalDate();
+                String postComments = rs.getString("post_comments");
+                File image = getPostPhoto(friend.getFriendUserId(), postTitle);
+                Image realImage = new Image(image.toURI().toString(), 90, 90, false, false);
+
+                Journey postJourney = new Journey(postLocation, postTitle, postComments, startDate, endDate);
+                Post newPost = new Post(postJourney, postComments, realImage);
+
+                result.add(newPost);
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            e.getCause();
+        }
+
+        return result;
+    }
+
     public static ObservableList<Journey> getAllJourneysOfUser(User user) {
         dbConnection = new DatabaseConnection();
         conn = dbConnection.getConnection();
@@ -158,6 +257,43 @@ public final class DatabaseQuery {
         return -1;
     }
 
+    public static File getPostPhoto(int userId, String postTitle) {
+        dbConnection = new DatabaseConnection();
+        conn = dbConnection.getConnection();
+
+        InputStream input;
+        FileOutputStream output;
+        String query = "SELECT post_image FROM posts where userId = " + userId + " AND post_title = '" + postTitle + "' AND post_image IS NOT NULL";
+
+        try {
+            Statement statement = conn.createStatement();
+            ResultSet rs = statement.executeQuery(query);
+
+            File newFile = new File("src/resources/post_photo_" + postTitle + ".png");
+            output = new FileOutputStream(newFile);
+
+            if (rs.next()) {
+                input = rs.getBinaryStream("post_image");
+
+                byte[] buffer = new byte[1024];
+                while (input.read(buffer) > 0) {
+                    output.write(buffer);
+                }
+            }
+
+            return newFile;
+        }
+        catch (SQLException | FileNotFoundException e) {
+            e.printStackTrace();
+            e.getCause();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
     public static String getJourneyRating(Journey j, User user) {
         dbConnection = new DatabaseConnection();
         conn = dbConnection.getConnection();
@@ -205,38 +341,15 @@ public final class DatabaseQuery {
             }
 
             return newFile;
-        }
-        catch (SQLException | FileNotFoundException e) {
+        } catch (SQLException | FileNotFoundException e) {
             e.printStackTrace();
             e.getCause();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
         return null;
     }
-
-    public static boolean updateJourneyRating(Journey j, User user, String rating) {
-        dbConnection = new DatabaseConnection();
-        conn = dbConnection.getConnection();
-
-        String query = "UPDATE journeys SET rating = '" + rating + "' WHERE userId = " + user.getUserId() +
-                " AND title = '" + j.getTitle() + "' AND location = '" + j.getLocation() + "' AND description = '"
-                + j.getDescription() + "' AND startDate = '" + Date.valueOf(j.getStartDate()) + "' AND endDate = '" +
-                Date.valueOf(j.getEndDate()) + "'";
-        try {
-            Statement statement = conn.createStatement();
-            return statement.executeUpdate(query) > 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            e.getCause();
-        }
-
-        return false;
-    }
-
-
 
     /**
      * Finds a user by checking a certain username in the database.
@@ -285,7 +398,6 @@ public final class DatabaseQuery {
 
         return false;
     }
-
 
     /**
      * Compares the password parameter with the actual password stored in the database that is specific to user.
@@ -409,6 +521,28 @@ public final class DatabaseQuery {
         return false;
     }
 
+    public static boolean findPostByTitle(Post post, User user) {
+        dbConnection = new DatabaseConnection();
+        conn = dbConnection.getConnection();
+
+        String query = "SELECT COUNT(*) FROM posts WHERE post_title = '" + post.getTheJourney().getTitle() + "' AND userId = " + user.getUserId();
+
+        try {
+            Statement statement = conn.createStatement();
+            ResultSet rs = statement.executeQuery(query);
+
+            if (rs.next()) {
+                return rs.getInt(1) == 1;
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            e.getCause();
+        }
+
+        return false;
+    }
+
     public static boolean insertWishByUser(Wish newWish, User user) {
         dbConnection = new DatabaseConnection();
         conn = dbConnection.getConnection();
@@ -430,12 +564,14 @@ public final class DatabaseQuery {
         return false;
     }
 
-    public static boolean deleteWishByUser(Wish wish, User user) {
+    public static boolean insertPost(User user, Post post) {
         dbConnection = new DatabaseConnection();
         conn = dbConnection.getConnection();
 
-        String query = "DELETE FROM wishlist WHERE location = '" + wish.getLocation() + "' AND startDate = '" +
-                Date.valueOf(wish.getStartDate()) + "' AND userId = " + user.getUserId();
+        String query  = "INSERT INTO posts(userId, post_title, post_location, post_start_date, post_end_date, " +
+                "post_comments) VALUES(" + user.getUserId() + ", '" + post.getTheJourney().getTitle() + "', '" +
+                post.getTheJourney().getLocation() + "', '" + Date.valueOf(post.getTheJourney().getStartDate()) + "', '"
+                + Date.valueOf(post.getTheJourney().getEndDate()) + "', '" + post.getText() + "')";
 
         try {
             Statement statement = conn.createStatement();
@@ -449,219 +585,6 @@ public final class DatabaseQuery {
         }
 
         return false;
-    }
-
-    public static ObservableList<Wish> getAllWishesOfUser(User user) {
-        dbConnection = new DatabaseConnection();
-        conn = dbConnection.getConnection();
-
-        ObservableList<Wish> result = FXCollections.observableArrayList();
-
-        String query = "SELECT * FROM wishlist WHERE userId = " + user.getUserId();
-
-        try {
-            Statement statement = conn.createStatement();
-            ResultSet rs = statement.executeQuery(query);
-
-            while (rs.next()) {
-                String location = rs.getString("location");
-                LocalDate startDate = rs.getDate("startDate").toLocalDate();
-
-                Wish wish = new Wish(location, startDate);
-                result.add(wish);
-            }
-
-            return result;
-        }
-        catch (SQLException e) {
-            e.printStackTrace();
-            e.getCause();
-        }
-
-        return result;
-    }
-
-
-    public static ObservableList<Post> getAllPostsOfUser(User currentUser) {
-        dbConnection = new DatabaseConnection();
-        conn = dbConnection.getConnection();
-
-        ObservableList<Post> result = FXCollections.observableArrayList();
-
-        String query = "SELECT * FROM posts WHERE userId = " + currentUser.getUserId();
-
-        try {
-            Statement statement = conn.createStatement();
-            ResultSet rs = statement.executeQuery(query);
-
-            while (rs.next()) {
-                String postTitle = rs.getString("post_title");
-                String postLocation = rs.getString("post_location");
-                LocalDate startDate = rs.getDate("post_start_date").toLocalDate();
-                LocalDate endDate = rs.getDate("post_end_date").toLocalDate();
-                String postComments = rs.getString("post_comments");
-                File image = getPostPhoto(currentUser.getUserId(), postTitle);
-                Image realImage = new Image(image.toURI().toString(), 90, 90, false, false);
-
-                Journey postJourney = new Journey(postLocation, postTitle, postComments, startDate, endDate);
-                Post newPost = new Post(postJourney, postComments, realImage);
-
-                result.add(newPost);
-            }
-        }
-        catch (SQLException e) {
-            e.printStackTrace();
-            e.getCause();
-        }
-
-        return result;
-   }
-    public static ObservableList<Post> getAllPostsOfFriend(Friend friend) {
-        dbConnection = new DatabaseConnection();
-        conn = dbConnection.getConnection();
-
-        ObservableList<Post> result = FXCollections.observableArrayList();
-
-        String query = "SELECT * FROM posts WHERE userId = " + friend.getFriendUserId();
-
-        try {
-            Statement statement = conn.createStatement();
-            ResultSet rs = statement.executeQuery(query);
-
-            while (rs.next()) {
-                String postTitle = rs.getString("post_title");
-                String postLocation = rs.getString("post_location");
-                LocalDate startDate = rs.getDate("post_start_date").toLocalDate();
-                LocalDate endDate = rs.getDate("post_end_date").toLocalDate();
-                String postComments = rs.getString("post_comments");
-                File image = getPostPhoto(friend.getFriendUserId(), postTitle);
-                Image realImage = new Image(image.toURI().toString(), 90, 90, false, false);
-
-                Journey postJourney = new Journey(postLocation, postTitle, postComments, startDate, endDate);
-                Post newPost = new Post(postJourney, postComments, realImage);
-
-                result.add(newPost);
-            }
-        }
-        catch (SQLException e) {
-            e.printStackTrace();
-            e.getCause();
-        }
-
-        return result;
-    }
-
-   public static boolean findPostByTitle(Post post, User user) {
-       dbConnection = new DatabaseConnection();
-       conn = dbConnection.getConnection();
-
-       String query = "SELECT COUNT(*) FROM posts WHERE post_title = '" + post.getTheJourney().getTitle() + "' AND userId = " + user.getUserId();
-
-       try {
-           Statement statement = conn.createStatement();
-           ResultSet rs = statement.executeQuery(query);
-
-           if (rs.next()) {
-               return rs.getInt(1) == 1;
-           }
-       }
-       catch (SQLException e) {
-           e.printStackTrace();
-           e.getCause();
-       }
-
-       return false;
-   }
-   public static boolean insertPost(User user, Post post) {
-       dbConnection = new DatabaseConnection();
-       conn = dbConnection.getConnection();
-
-       String query  = "INSERT INTO posts(userId, post_title, post_location, post_start_date, post_end_date, " +
-               "post_comments) VALUES(" + user.getUserId() + ", '" + post.getTheJourney().getTitle() + "', '" +
-               post.getTheJourney().getLocation() + "', '" + Date.valueOf(post.getTheJourney().getStartDate()) + "', '"
-               + Date.valueOf(post.getTheJourney().getEndDate()) + "', '" + post.getText() + "')";
-
-       try {
-           Statement statement = conn.createStatement();
-           int result = statement.executeUpdate(query);
-
-           return result > 0;
-       }
-       catch (SQLException e) {
-           e.printStackTrace();
-           e.getCause();
-       }
-
-       return false;
-   }
-
-    public static File getPostPhoto(int userId, String postTitle) {
-        dbConnection = new DatabaseConnection();
-        conn = dbConnection.getConnection();
-
-        InputStream input;
-        FileOutputStream output;
-        String query = "SELECT post_image FROM posts where userId = " + userId + " AND post_title = '" + postTitle + "' AND post_image IS NOT NULL";
-
-        try {
-            Statement statement = conn.createStatement();
-            ResultSet rs = statement.executeQuery(query);
-
-            File newFile = new File("src/resources/post_photo_" + postTitle + ".png");
-            output = new FileOutputStream(newFile);
-
-            if (rs.next()) {
-                input = rs.getBinaryStream("post_image");
-
-                byte[] buffer = new byte[1024];
-                while (input.read(buffer) > 0) {
-                    output.write(buffer);
-                }
-            }
-
-            return newFile;
-        }
-        catch (SQLException | FileNotFoundException e) {
-            e.printStackTrace();
-            e.getCause();
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-
-    public static boolean updateImageOfPost(File img, User user, String postTitle) {
-        dbConnection = new DatabaseConnection();
-        conn = dbConnection.getConnection();
-
-        // File too large
-
-        String query = "UPDATE posts SET post_image=? WHERE userId = " + user.getUserId() + " AND post_title = '" + postTitle + "'";
-        try {
-            PreparedStatement ps = conn.prepareStatement(query);
-
-            File theFile = new File(img.getAbsolutePath());
-            FileInputStream inputStream = new FileInputStream(theFile);
-
-            ps.setBinaryStream(1, inputStream);
-
-            ps.executeUpdate();
-            return true;
-        }
-        catch (SQLException | FileNotFoundException e) {
-            e.getCause();
-            e.printStackTrace();
-        }
-
-        return false;
-    }
-
-    public static ObservableList<Post> getAllPostsOfUsersFriends(User currentUser) {
-        ObservableList<Friend> friends;
-
-        return null;
     }
 
     public static void insertFriendByUsername(Friend friend, User currentUser) {
@@ -702,6 +625,79 @@ public final class DatabaseQuery {
             e.getCause();
         }
     }
+
+    public static boolean insertNewJourney(Journey j, User user) {
+        dbConnection = new DatabaseConnection();
+        conn = dbConnection.getConnection();
+
+        int userId = user.getUserId();
+        String location = j.getLocation();
+        String title = j.getTitle();
+        String description = j.getDescription();
+        LocalDate startDate = j.getStartDate();
+        LocalDate endDate = j.getEndDate();
+
+        String query = "INSERT INTO journeys(userId, title, location, description, startDate, endDate) VALUES('" + userId + "', '" + title +
+                "', '" + location + "', '" + description + "', '" + Date.valueOf(startDate) + "', '" + Date.valueOf(endDate) + "')";
+
+        try {
+            Statement statement = conn.createStatement();
+            int result = statement.executeUpdate(query);
+            return result > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            e.getCause();
+        }
+
+        return false;
+    }
+
+
+    public static boolean updateJourneyRating(Journey j, User user, String rating) {
+        dbConnection = new DatabaseConnection();
+        conn = dbConnection.getConnection();
+
+        String query = "UPDATE journeys SET rating = '" + rating + "' WHERE userId = " + user.getUserId() +
+                " AND title = '" + j.getTitle() + "' AND location = '" + j.getLocation() + "' AND description = '"
+                + j.getDescription() + "' AND startDate = '" + Date.valueOf(j.getStartDate()) + "' AND endDate = '" +
+                Date.valueOf(j.getEndDate()) + "'";
+        try {
+            Statement statement = conn.createStatement();
+            return statement.executeUpdate(query) > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            e.getCause();
+        }
+
+        return false;
+    }
+
+    public static boolean updateImageOfPost(File img, User user, String postTitle) {
+        dbConnection = new DatabaseConnection();
+        conn = dbConnection.getConnection();
+
+        // File too large
+
+        String query = "UPDATE posts SET post_image=? WHERE userId = " + user.getUserId() + " AND post_title = '" + postTitle + "'";
+        try {
+            PreparedStatement ps = conn.prepareStatement(query);
+
+            File theFile = new File(img.getAbsolutePath());
+            FileInputStream inputStream = new FileInputStream(theFile);
+
+            ps.setBinaryStream(1, inputStream);
+
+            ps.executeUpdate();
+            return true;
+        }
+        catch (SQLException | FileNotFoundException e) {
+            e.getCause();
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
 
     public static boolean updateImage(File img, User user) {
         dbConnection = new DatabaseConnection();
@@ -745,7 +741,6 @@ public final class DatabaseQuery {
             e.getCause();
         }
     }
-
     /**
      * Validates the login attempt by checking the entered email and password in the database.
      * @param email Entered email
@@ -813,32 +808,6 @@ public final class DatabaseQuery {
         return 0;
     }
 
-    public static boolean insertNewJourney(Journey j, User user) {
-        dbConnection = new DatabaseConnection();
-        conn = dbConnection.getConnection();
-
-        int userId = user.getUserId();
-        String location = j.getLocation();
-        String title = j.getTitle();
-        String description = j.getDescription();
-        LocalDate startDate = j.getStartDate();
-        LocalDate endDate = j.getEndDate();
-
-        String query = "INSERT INTO journeys(userId, title, location, description, startDate, endDate) VALUES('" + userId + "', '" + title +
-                "', '" + location + "', '" + description + "', '" + Date.valueOf(startDate) + "', '" + Date.valueOf(endDate) + "')";
-
-        try {
-            Statement statement = conn.createStatement();
-            int result = statement.executeUpdate(query);
-            return result > 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            e.getCause();
-        }
-
-        return false;
-    }
-
     public static boolean deleteJourney(Journey j, User user) {
         dbConnection = new DatabaseConnection();
         conn = dbConnection.getConnection();
@@ -860,7 +829,7 @@ public final class DatabaseQuery {
         return false;
     }
 
-    public static boolean removeFriend(Friend f, User user) {
+    public static boolean deleteFriend(Friend f, User user) {
         dbConnection = new DatabaseConnection();
         conn = dbConnection.getConnection();
 
@@ -873,6 +842,27 @@ public final class DatabaseQuery {
 
             return result > 0;
         } catch (SQLException e) {
+            e.printStackTrace();
+            e.getCause();
+        }
+
+        return false;
+    }
+
+    public static boolean deleteWishByUser(Wish wish, User user) {
+        dbConnection = new DatabaseConnection();
+        conn = dbConnection.getConnection();
+
+        String query = "DELETE FROM wishlist WHERE location = '" + wish.getLocation() + "' AND startDate = '" +
+                Date.valueOf(wish.getStartDate()) + "' AND userId = " + user.getUserId();
+
+        try {
+            Statement statement = conn.createStatement();
+            int result = statement.executeUpdate(query);
+
+            return result > 0;
+        }
+        catch (SQLException e) {
             e.printStackTrace();
             e.getCause();
         }
