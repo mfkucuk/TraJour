@@ -464,9 +464,14 @@ public final class DatabaseQuery {
 
         String query = "INSERT INTO friends(userId, friendName, friendEmail) VALUES(" + currentUser.getUserId() + ", "
                 + "'" + friend.getFriendName() + "', " + "'" + friend.getFriendEmail() + "')";
+
+        String query2 = "INSERT INTO friends(userId, friendName, friendEmail) VALUES(" + getUserIdByUsername(friend.getFriendName())
+                + ", '" + currentUser.getUsername() + "', '" + currentUser.getEmail() + "')";
+
         try {
             Statement statement = conn.createStatement();
             statement.executeUpdate(query);
+            statement.executeUpdate(query2);
         } catch (SQLException e) {
             e.printStackTrace();
             e.getCause();
@@ -623,15 +628,19 @@ public final class DatabaseQuery {
         return null;
     }
 
-    public static void insertFriendByEmail(Friend friend, String username) {
+    public static void insertFriendByEmail(Friend friend, User user) {
         dbConnection = new DatabaseConnection();
         conn = dbConnection.getConnection();
 
-        String query = "INSERT INTO friends(userId, friendName, friendEmail) VALUES(" + getUserIdByUsername(username) + ", "
-                + "'" + friend.getFriendEmail() + "', " + "'" + friend.getFriendName() + "')";
+        String query = "INSERT INTO friends(userId, friendName, friendEmail) VALUES(" + user.getUserId() + ", "
+                + "'" + friend.getFriendName() + "', " + "'" + friend.getFriendEmail() + "')";
+
+        String query2 = "INSERT INTO friends(userId, friendName, friendEmail) VALUES(" + getUserIdByUsername(friend.getFriendName())
+                + ", '" + user.getUsername() + "', '" + user.getEmail() + "')";
         try {
             Statement statement = conn.createStatement();
             statement.executeUpdate(query);
+            statement.executeUpdate(query2);
         } catch (SQLException e) {
             e.printStackTrace();
             e.getCause();

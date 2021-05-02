@@ -36,7 +36,7 @@ public class User {
 
     public void addFriendByEmail(String nameOfFriend, String emailOfFriend) {
         Friend friend = new Friend(nameOfFriend, emailOfFriend);
-        insertFriendByEmail(friend, getUsername());
+        insertFriendByEmail(friend, this);
     }
 
     public void addFriendByName(String nameOfFriend, String emailOfFriend) {
