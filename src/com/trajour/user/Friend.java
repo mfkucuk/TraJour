@@ -3,10 +3,12 @@ package com.trajour.user;
 public class Friend {
     private String friendName;
     private String friendEmail;
+    private int friendUserId;
 
-    public Friend(String friendName, String friendEmail) {
+    public Friend(String friendName, String friendEmail, int friendUserId) {
         this.friendEmail = friendEmail;
         this.friendName = friendName;
+        this.friendUserId = friendUserId;
     }
 
     public String getFriendName() {
@@ -15,6 +17,10 @@ public class Friend {
 
     public String getFriendEmail() {
         return friendEmail;
+    }
+
+    public int getFriendUserId() {
+        return friendUserId;
     }
 
     @Override

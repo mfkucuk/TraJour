@@ -71,7 +71,7 @@ public class ShareJourneyController {
         Stage stage = new Stage();
         this.selectedFile = fileChooser.showOpenDialog(stage);
 
-        if (this.selectedFile != null) {
+        if (this.selectedFile != null && this.selectedFile.length() < 1048576) {
             Image img = new Image(this.selectedFile.toURI().toString(), 90,90, false, false);
 
             journeyImageView.setImage(img);
@@ -88,7 +88,7 @@ public class ShareJourneyController {
             newPost.share(currentUser, vbox);
 
              if (!updateImageOfPost(selectedFile, currentUser, newPost.getTheJourney().getTitle())) {
-                Notifications notification = buildNotification("Image Too Large", "Please upload a picture less than 1 MB", 5, Pos.BASELINE_CENTER);
+                Notifications notification = buildNotification("Image Too Large", "Please upload a picture less than 5 MB", 5, Pos.BASELINE_CENTER);
                 notification.showError();
             }
             else {
@@ -98,7 +98,8 @@ public class ShareJourneyController {
             ((Stage) ((Node) event.getSource()).getScene().getWindow()).close();
         }
         else {
-            feedBackLabel.setText("Make sure that you have completed all the forms.");
+            Notifications notification = buildNotification("Couldn't Share Journey", "Please complete all the necessary forms.", 5, Pos.BASELINE_CENTER);
+            notification.showError();
         }
     }
 }

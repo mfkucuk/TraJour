@@ -54,6 +54,38 @@ public final class DatabaseQuery {
         return result;
     }
 
+    public static ObservableList<Journey> getAllJourneysOfFriend(String friendName) {
+        dbConnection = new DatabaseConnection();
+        conn = dbConnection.getConnection();
+
+        ObservableList<Journey> result = FXCollections.observableArrayList();
+
+        String query = "SELECT userId, title, location, description, startDate, endDate FROM journeys WHERE userId =";
+
+        try {
+            Statement statement = conn.createStatement();
+            ResultSet rs = statement.executeQuery(query);
+
+            while (rs.next()) {
+                String country = rs.getString("location");
+                String title = rs.getString("title");
+                String description = rs.getString("description");
+                LocalDate startDate = rs.getDate("startDate").toLocalDate();
+                LocalDate endDate = rs.getDate("endDate").toLocalDate();
+
+                Journey j = new Journey(country, title, description, startDate, endDate);
+                result.add(j);
+            }
+
+            return result;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            e.getCause();
+        }
+
+        return result;
+    }
+
     public static ObservableList<Friend> getAllFriendsOfUser(User user) {
         dbConnection = new DatabaseConnection();
         conn = dbConnection.getConnection();
@@ -68,7 +100,7 @@ public final class DatabaseQuery {
                 String name = rs.getString("friendName");
                 String email = rs.getString("friendEmail");
 
-                Friend f = new Friend(name, email);
+                Friend f = new Friend(name, email, getUserIdByUsername(name));
                 result.add(f);
             }
 
@@ -386,12 +418,34 @@ public final class DatabaseQuery {
         return false;
     }
 
+    public static boolean findJourneyByJourneyTitle(String title, User currentUser) {
+        dbConnection = new DatabaseConnection();
+        conn = dbConnection.getConnection();
+
+        String query = "SELECT COUNT(*) title FROM journeys WHERE title = '" + title + "' AND userId = " + currentUser.getUserId();
+
+        try {
+            Statement statement = conn.createStatement();
+            ResultSet rs = statement.executeQuery(query);
+
+            if (rs.next()) {
+                return rs.getInt(1) >= 1;
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            e.getCause();
+        }
+
+        return false;
+    }
+
     public static boolean insertWishByUser(Wish newWish, User user) {
         dbConnection = new DatabaseConnection();
         conn = dbConnection.getConnection();
 
-        String query = "INSERT INTO wishlist(location, startDate, userId) VALUES('" + newWish.getLocation() + "', " +
-                Date.valueOf(newWish.getStartDate()) + ", " + user.getUserId() +")";
+        String query = "INSERT INTO wishlist(location, startDate, userId) VALUES('" + newWish.getLocation() + "', '" +
+                Date.valueOf(newWish.getStartDate()) + "', " + user.getUserId() +")";
 
         try {
             Statement statement = conn.createStatement();
@@ -458,25 +512,6 @@ public final class DatabaseQuery {
         return result;
     }
 
-    public static void insertFriendByUsername(Friend friend, User currentUser) {
-        dbConnection = new DatabaseConnection();
-        conn = dbConnection.getConnection();
-
-        String query = "INSERT INTO friends(userId, friendName, friendEmail) VALUES(" + currentUser.getUserId() + ", "
-                + "'" + friend.getFriendName() + "', " + "'" + friend.getFriendEmail() + "')";
-
-        String query2 = "INSERT INTO friends(userId, friendName, friendEmail) VALUES(" + getUserIdByUsername(friend.getFriendName())
-                + ", '" + currentUser.getUsername() + "', '" + currentUser.getEmail() + "')";
-
-        try {
-            Statement statement = conn.createStatement();
-            statement.executeUpdate(query);
-            statement.executeUpdate(query2);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            e.getCause();
-        }
-    }
 
     public static ObservableList<Post> getAllPostsOfUser(User currentUser) {
         dbConnection = new DatabaseConnection();
@@ -512,6 +547,15 @@ public final class DatabaseQuery {
 
         return result;
    }
+
+//   public static ObservableList<Post> getAllPostsOfFriend(Friend friend, User currentUser) {
+//       dbConnection = new DatabaseConnection();
+//       conn = dbConnection.getConnection();
+//
+//       ObservableList<Post> result = FXCollections.observableArrayList();
+//
+//       String query = ""
+//   }
 
    public static boolean findPostByTitle(Post post, User user) {
        dbConnection = new DatabaseConnection();
@@ -599,8 +643,6 @@ public final class DatabaseQuery {
         conn = dbConnection.getConnection();
 
         // File too large
-        if (img.length() > 5242880)
-            return false;
 
         String query = "UPDATE posts SET post_image=? WHERE userId = " + user.getUserId() + " AND post_title = '" + postTitle + "'";
         try {
@@ -628,14 +670,34 @@ public final class DatabaseQuery {
         return null;
     }
 
+    public static void insertFriendByUsername(Friend friend, User currentUser) {
+        dbConnection = new DatabaseConnection();
+        conn = dbConnection.getConnection();
+
+        String query = "INSERT INTO friends(friendUserId, userId, friendName, friendEmail) VALUES(" + friend.getFriendUserId() + ", " + currentUser.getUserId() + ", "
+                + "'" + friend.getFriendName() + "', " + "'" + friend.getFriendEmail() + "')";
+
+        String query2 = "INSERT INTO friends(friendUserId, userId, friendName, friendEmail) VALUES(" + currentUser.getUserId() + ", " + friend.getFriendUserId()
+                + ", '" + currentUser.getUsername() + "', '" + currentUser.getEmail() + "')";
+
+        try {
+            Statement statement = conn.createStatement();
+            statement.executeUpdate(query);
+            statement.executeUpdate(query2);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            e.getCause();
+        }
+    }
+
     public static void insertFriendByEmail(Friend friend, User user) {
         dbConnection = new DatabaseConnection();
         conn = dbConnection.getConnection();
 
-        String query = "INSERT INTO friends(userId, friendName, friendEmail) VALUES(" + user.getUserId() + ", "
+        String query = "INSERT INTO friends(friendUserId, userId, friendName, friendEmail) VALUES(" + friend.getFriendUserId() + ", "  + user.getUserId() + ", "
                 + "'" + friend.getFriendName() + "', " + "'" + friend.getFriendEmail() + "')";
 
-        String query2 = "INSERT INTO friends(userId, friendName, friendEmail) VALUES(" + getUserIdByUsername(friend.getFriendName())
+        String query2 = "INSERT INTO friends(friendUserId, userId, friendName, friendEmail) VALUES(" +  user.getUserId() +  friend.getFriendUserId()
                 + ", '" + user.getUsername() + "', '" + user.getEmail() + "')";
         try {
             Statement statement = conn.createStatement();
@@ -651,12 +713,7 @@ public final class DatabaseQuery {
         dbConnection = new DatabaseConnection();
         conn = dbConnection.getConnection();
 
-        System.out.println(img.length());
-
         // File too large
-        if (img.length() > 5242880)
-            return false;
-
         String query = "UPDATE users SET profile_photo=? WHERE userId = " + user.getUserId();
         try {
             PreparedStatement ps = conn.prepareStatement(query);
@@ -814,7 +871,7 @@ public final class DatabaseQuery {
         conn = dbConnection.getConnection();
 
         String query = "DELETE FROM friends WHERE userId = " + user.getUserId() + " AND friendName = '"
-                + f.getFriendName() + "' AND friendEmail = '" + f.getFriendEmail() + "'";
+                + f.getFriendName() + "' AND friendEmail = '" + f.getFriendEmail() + "' AND friendUserId = " + f.getFriendUserId();
 
         try {
             Statement statement = conn.createStatement();

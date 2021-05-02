@@ -35,12 +35,12 @@ public class User {
     }
 
     public void addFriendByEmail(String nameOfFriend, String emailOfFriend) {
-        Friend friend = new Friend(nameOfFriend, emailOfFriend);
+        Friend friend = new Friend(nameOfFriend, emailOfFriend, getUserIdByUsername(nameOfFriend));
         insertFriendByEmail(friend, this);
     }
 
     public void addFriendByName(String nameOfFriend, String emailOfFriend) {
-        Friend friend = new Friend(nameOfFriend, emailOfFriend);
+        Friend friend = new Friend(nameOfFriend, emailOfFriend, getUserIdByUsername(nameOfFriend));
         insertFriendByUsername(friend, this);
     }
 

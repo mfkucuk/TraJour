@@ -39,6 +39,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 
+import static com.trajour.db.DatabaseQuery.findJourneyByJourneyTitle;
 import static com.trajour.main.MainController.buildNotification;
 
 public class MapController implements Initializable {
@@ -193,6 +194,7 @@ public class MapController implements Initializable {
             notification.showError();
         }
         else {
+
             // Add the journey to the database
             String journeyDesc = journeyDescriptionTextArea.getText();
             String title = journeyTitleTextField.getText();
@@ -201,8 +203,12 @@ public class MapController implements Initializable {
             String location = selectedCountry.get(0).getLocale().getDisplayCountry();
 
             Journey j = new Journey(location, title, journeyDesc, start, end);
-
-            if (!j.addNewJourney(currentUser)) {
+            if (findJourneyByJourneyTitle(title, currentUser)) {
+                Notifications notification = buildNotification("Journey Already Exists", "A journey with the " +
+                        "exact same title already exists in your journeys list. I'm afraid we cannot allow this for your pleasure.", 6, Pos.BASELINE_CENTER);
+                notification.showError();
+            }
+            else if (!j.addNewJourney(currentUser)) {
                 Notifications notification = buildNotification("Journey Already Exists", "A journey with the " +
                         "exact same specifications already exists in your journeys list. ", 6, Pos.BASELINE_CENTER);
                 notification.showError();
