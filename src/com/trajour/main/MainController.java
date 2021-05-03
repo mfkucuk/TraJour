@@ -40,6 +40,8 @@ import static com.trajour.db.DatabaseQuery.*;
  * future journey informations and lastly, past journey table that contains user's past journey which
  * also enables users to rate their journeys.
  * @version 3 May 2021
+ *  * @author Selim Can Güler
+ *  * @author Mehmet Feyyaz Küçük
  */
 public class MainController implements Initializable {
 
@@ -534,7 +536,6 @@ public class MainController implements Initializable {
             e.printStackTrace();
         }
     }
-
 
     /**
      * Opens the home page.

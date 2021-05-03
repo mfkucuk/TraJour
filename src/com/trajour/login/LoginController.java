@@ -32,7 +32,8 @@ import static com.trajour.main.MainController.buildNotification;
 /**
  * Controller for the login process
  * @author Selim Can Güler
- * @version 16 April 2021
+ * @author Mehmet Feyyaz Küçük
+ * @version 03 May 2021
  */
 public class LoginController implements Initializable {
     @FXML

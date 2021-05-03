@@ -44,7 +44,9 @@ import static com.trajour.main.MainController.buildNotification;
  * User can add friends from profile page, see their current journey, search from their
  * past and future journeys and create wishes for their possible travels. User also can add
  * profile picture and change their current passwords in profile page.
- * @version final 3 May 2021
+ * @author Selim Can Güler
+ * @author Mehmet Feyyaz Küçük
+ * @version 03 May 2021
  */
 public class ProfileController {
     @FXML
@@ -392,7 +394,7 @@ public class ProfileController {
 
     /**
      * Opens the map page
-     * @param event
+     * @param event Event
      */
     @FXML
     public void openMapPage(ActionEvent event) {

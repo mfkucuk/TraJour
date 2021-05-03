@@ -13,6 +13,8 @@ import static com.trajour.db.DatabaseQuery.*;
 /**
  * User class.
  * @author Mehmet Feyyaz Kucuk
+ * @author Selim Can Güler
+ * @version 03 May 2021
  */
 public class User {
     // Properties

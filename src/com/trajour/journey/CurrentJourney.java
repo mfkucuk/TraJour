@@ -2,6 +2,9 @@ package com.trajour.journey;
 
 import java.time.LocalDate;
 
+/**
+ * @author
+ */
 public class CurrentJourney extends Journey {
     
     // Properties
@@ -12,5 +15,4 @@ public class CurrentJourney extends Journey {
         super(location, title, description, startDate, endDate);
         rating = "-";
     }
-
 }

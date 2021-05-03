@@ -29,7 +29,9 @@ import static com.trajour.main.MainController.buildNotification;
  * Share journey page allows users to upload their journeys as a post.
  * It contains combo box to choose which journey will be uploaded. Users can upload
  * journey images and write a comment for their journeys and can share it as a post.
- * @version 3 May 2021
+ * @author Selim Can Güler
+ * @author Mehmet Feyyaz Küçük
+ * @version 03 May 2021
  */
 public class ShareJourneyController {
     @FXML

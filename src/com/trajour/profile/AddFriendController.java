@@ -14,8 +14,9 @@ import java.util.ResourceBundle;
 import static com.trajour.db.DatabaseQuery.*;
 
 /**
- * Controller class for adding friends
- * @version 3 May 2021
+ * @author Selim Can Güler
+ * @author Mehmet Feyyaz Küçük
+ * @version 03 May 2021
  */
 public class AddFriendController implements Initializable {
 
