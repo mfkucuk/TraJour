@@ -868,6 +868,10 @@ public final class DatabaseQuery {
         dbConnection = new DatabaseConnection();
         conn = dbConnection.getConnection();
 
+        if (img.length() > 4194304) {
+            return false;
+        }
+
         // File too large
         String query = "UPDATE users SET profile_photo=? WHERE userId = " + user.getUserId();
         try {

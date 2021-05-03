@@ -404,11 +404,11 @@ public class ProfileController {
         if (selectedFile != null) {
 
             if (!currentUser.addPicture(selectedFile)) {
-                Notifications notification = buildNotification("Image Too Large.", "Please upload an image less than 1 mb's", 5, Pos.BASELINE_CENTER);
+                Notifications notification = buildNotification("Image Too Large.", "Please upload an image less than 4 mb's", 5, Pos.BASELINE_CENTER);
                 notification.showWarning();
             }
             else {
-                Image img = new Image(selectedFile.toURI().toString(), 80, 80, false, false);
+                Image img = new Image(selectedFile.toURI().toString(), 70, 70, true, false);
 
                 profilePhotoView.setImage(img);
                 currentUser.addPicture(selectedFile);
