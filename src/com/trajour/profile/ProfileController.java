@@ -39,6 +39,13 @@ import java.time.LocalDate;
 import static com.trajour.db.DatabaseQuery.*;
 import static com.trajour.main.MainController.buildNotification;
 
+/**
+ * Profile page contains curren journeys list, friends list and wish list.
+ * User can add friends from profile page, see their current journey, search from their
+ * past and future journeys and create wishes for their possible travels. User also can add
+ * profile picture and change their current passwords in profile page.
+ * @version final 3 May 2021
+ */
 public class ProfileController {
     @FXML
     private Button homePageButton;
@@ -257,11 +264,19 @@ public class ProfileController {
         addFriendPopOver = new PopOver(addFriendMenu);
     }
 
+    /**
+     * Adds wish to wishlist
+     * @param event
+     */
     @FXML
     public void addWish(ActionEvent event) {
         wishlistPopOver.show(addWishButton);
     }
 
+    /**
+     * Removes wish from wishlist
+     * @param event
+     */
     @FXML
     public void removeWish(ActionEvent event) {
         ObservableList<Wish> wishes = wishlistListView.getSelectionModel().getSelectedItems();
@@ -272,6 +287,10 @@ public class ProfileController {
         openProfilePage(event);
     }
 
+    /**
+     * Searches journey from db and adds results to listview
+     * @param e
+     */
     @FXML
     void searchJourney(ActionEvent e ){
         searchedJourneysListView.getItems().removeAll(searchedJourneysListView.getItems());
@@ -291,6 +310,10 @@ public class ProfileController {
         searchedJourneysListView.getItems().addAll(matchingJourneys);
     }
 
+    /**
+     * Button handler for removing friend
+     * @param e
+     */
     @FXML
     public void handleRemoveFriend(ActionEvent e) {
         ObservableList<Friend> friends = friendsListView.getSelectionModel().getSelectedItems();
@@ -301,6 +324,10 @@ public class ProfileController {
         openProfilePage(e);
     }
 
+    /**
+     * Opens add friend pop-over
+     * @param event
+     */
     @FXML
     public void openAddFriendPage(ActionEvent event) {
         addFriendPopOver.show(addFriendButton);
@@ -365,7 +392,7 @@ public class ProfileController {
 
     /**
      * Opens the map page
-     * @param event Event
+     * @param event
      */
     @FXML
     public void openMapPage(ActionEvent event) {
@@ -392,6 +419,10 @@ public class ProfileController {
         }
     }
 
+    /**
+     * Opens add picture page
+     * @param event
+     */
     @FXML
     public void openAddPicturePage(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
@@ -419,6 +450,10 @@ public class ProfileController {
         }
     }
 
+    /**
+     * Opens change picture page
+     * @param event
+     */
     @FXML
     public void openChangePasswordPage(ActionEvent event) {
         try {
@@ -492,12 +527,19 @@ public class ProfileController {
         removeFriendButton.setOnMouseExited(mouseEvent -> removeFriendButton.setEffect(null));
     }
 
+    /**
+     * Sets profile picture
+     */
     private void setProfilePic() {
         profilePhotoFile = getProfilePhotoFile(currentUser.getUserId());
         Image profileImage = new Image(profilePhotoFile.toURI().toString(), 80, 80, false, false);
         profilePhotoView.setImage(profileImage);
     }
 
+    /**
+     * Sets currents journeys to current journey listview if there are any
+     * @param allJourneys
+     */
     private void setCurrentJourneys(ObservableList<Journey> allJourneys) {
         ObservableList<Journey> currentJourneys = FXCollections.observableArrayList();
         for (Journey j : allJourneys) {
@@ -509,17 +551,27 @@ public class ProfileController {
         currentJourneyListView.setItems(currentJourneys);
     }
 
+    /**
+     * Sets list of friends in friends listview
+     */
     private void setFriendsList() {
         ObservableList<Friend> friends = getAllFriendsOfUser(currentUser);
         friendsListView.setItems(friends);
         friendsLabel.setText("Friends (" + friends.size() + ")");
     }
 
+    /**
+     * Sets list of wishes in wishlist listview
+     */
     private void setWishlist() {
         ObservableList<Wish> wishes = getAllWishesOfUser(currentUser);
         wishlistListView.setItems(wishes);
     }
 
+    /**
+     * Gets journey information and set autocomplete search suggestions for search journey bar
+     * @param allJourneys
+     */
     private void setSearchSuggestions(ObservableList<Journey> allJourneys) {
 
         for (int i = 0; i < allJourneys.size() ; i++) {

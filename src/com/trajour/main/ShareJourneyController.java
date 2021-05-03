@@ -25,6 +25,12 @@ import java.io.File;
 import static com.trajour.db.DatabaseQuery.*;
 import static com.trajour.main.MainController.buildNotification;
 
+/**
+ * Share journey page allows users to upload their journeys as a post.
+ * It contains combo box to choose which journey will be uploaded. Users can upload
+ * journey images and write a comment for their journeys and can share it as a post.
+ * @version 3 May 2021
+ */
 public class ShareJourneyController {
     @FXML
     private ComboBox<Journey> journeyComboBox;
@@ -53,6 +59,11 @@ public class ShareJourneyController {
     private User currentUser;
     private ObservableList<Journey> journeysOfCurrentUser;
 
+    /**
+     * Initalize share journey page
+     * @param user Current user
+     * @param v Post vBox
+     */
     public void initData(User user, VBox v) {
         currentUser = user;
         vbox = v;
@@ -62,6 +73,10 @@ public class ShareJourneyController {
         journeyComboBox.setItems(journeysOfCurrentUser);
     }
 
+    /**
+     * Opens file to add journey picture
+     * @param event
+     */
     @FXML
     public void addJourneyPicture(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
@@ -79,6 +94,12 @@ public class ShareJourneyController {
         }
     }
 
+    /**
+     * Adds journey to main feed as post which contains journey picture and user comment.
+     * If necessary places did not filled by user or image size is larger than 5 MB user is warned by
+     * notification
+     * @param event
+     */
     @FXML
     public void shareJourney(ActionEvent event) {
         if (!commentsTextArea.getText().isBlank() && !journeyComboBox.getSelectionModel().isEmpty() && journeyImageView.getImage() != null) {
