@@ -10,9 +10,17 @@ import static com.trajour.db.DatabaseQuery.insertNewJourney;
 
 
 /**
- * A simple Java class!
+ * Journey class implements Comparable<Journey> and Postable, this class
+ * has the properties of journeys including location, title, description,
+ * start and end dates and auto generated id's. It has the methods to alter
+ * the journey.
+ *
+ *@author Ahmet Alperen YılmazYıldız
+ *@version 4.05.2021
+ *
 */
 public class Journey implements Comparable<Journey>, Postable {
+
     // Properties
     private String location;
     private String title;
@@ -21,7 +29,7 @@ public class Journey implements Comparable<Journey>, Postable {
     private LocalDate endDate;
     private static int id;
 
-    // Constructors
+    // Constructor
     public Journey(String location, String title, String description, LocalDate startDate, LocalDate endDate) {
         this.location = location;
         this.title = title;
@@ -30,6 +38,15 @@ public class Journey implements Comparable<Journey>, Postable {
         this.endDate = endDate;
     }
 
+    //Methods
+
+    /**
+     * A method that checks if the specified journey exists,
+     * if not create the journey if it exists return false.
+     *
+     * @param currentUser
+     * @return false if the journey exists
+     */
     public boolean addNewJourney(User currentUser) {
         if (findJourneyByUser(this, currentUser)) {
             return false;
@@ -41,7 +58,13 @@ public class Journey implements Comparable<Journey>, Postable {
         }
     }
 
-    // Methods
+    /**
+     * Method that posts the designated journey
+     *
+     * @param comments
+     * @param image
+     * @return Post
+     */
     public Post post(String comments, Image image) {
         return new Post(this, comments, image);
     }
@@ -94,10 +117,19 @@ public class Journey implements Comparable<Journey>, Postable {
     }
 
     @Override
+    /**
+     * @return String representation of the journey
+     */
     public String toString() {
         return "Location: " + getLocation() + ", Title: " + getTitle() + ", Start-End Date: " + startDate + " - " + endDate;
     }
+
 	@Override
+    /**
+     * Compare journeys startDate with endDate
+     *
+     * @return true if start and ent dates are the same
+     */
 	public int compareTo(Journey o) {
         return startDate.compareTo(endDate);
 	}

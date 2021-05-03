@@ -4,6 +4,9 @@ import java.time.LocalDate;
 
 /**
  * A subclass of journey for future journeys of the user.
+ *
+ *@author Ahmet Alperen YılmazYıldız
+ *@version 4.05.2021
  */
 public class FutureJourney extends Journey {
     

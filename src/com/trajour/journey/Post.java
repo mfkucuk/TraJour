@@ -16,7 +16,11 @@ import static com.trajour.db.DatabaseQuery.*;
 
 
 /**
- * A simple Java class!
+ * A class that defines how posts are and extends GridPane
+ * for constructing the post and implements Shareable.
+ *
+ *@author Ahmet Alperen Yılmazyıldız
+ *@version 4.05.2021
 */
 public class Post extends GridPane implements Shareable {
     // Properties
@@ -35,15 +39,29 @@ public class Post extends GridPane implements Shareable {
     private VBox userVBox;
     private ColumnConstraints cc;
 
-
+    /**
+     * Getter method to get text.
+     *
+     * @return text
+     */
     public String getText() {
         return text;
     }
 
+    /**
+     * Setter method to set text.
+     *
+     * @param text
+     */
     public void setText(String text) {
         this.text = text;
     }
 
+    /**
+     * Getter method to get Journey.
+     *
+     * @return Journey
+     */
     public Journey getTheJourney() {
         return theJourney;
     }
@@ -72,6 +90,11 @@ public class Post extends GridPane implements Shareable {
     }
 
     @Override
+    /**
+     * This method defines how the posts will look and where they will appear to the user,
+     * Sets the location, texts, photo, and inserts it to main feed of the user.
+     * It also includes the users image, adjusts the fonts, and outlays.
+     */
     public Post share(User user, VBox mainFeed) {
         journeyLocationLabel = new Label("Location: " + theJourney.getLocation());
         usernameLabel = new Label(user.getUsername());
@@ -112,6 +135,15 @@ public class Post extends GridPane implements Shareable {
         return this;
     }
 
+    /**
+     * Creates friend post as a vBox by getting friend's journey,
+     * photo of journey and friends' comment about the journey and
+     * adds the post to main feed of the user.
+     *
+     * @param f
+     * @param mainFeed
+     * @return FriendsPost
+     */
     public Post share(Friend f, VBox mainFeed) {
         journeyLocationLabel = new Label("Location: " + theJourney.getLocation());
         usernameLabel = new Label(f.getFriendName());
