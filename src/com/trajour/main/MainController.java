@@ -364,11 +364,11 @@ public class MainController implements Initializable {
         // Init future journeys table
         futureJourneysList = selectFutureJourneys(currentUser);
 
-        futureJourneysCountryColumn.setCellValueFactory(new PropertyValueFactory<FutureJourney, String>("location"));
-        futureJourneysTitleColumn.setCellValueFactory(new PropertyValueFactory<FutureJourney, String >("title"));
-        futureJourneysDescriptionColumn.setCellValueFactory(new PropertyValueFactory<FutureJourney, String>("description"));
-        futureJourneysStartDateColumn.setCellValueFactory(new PropertyValueFactory<FutureJourney, LocalDate>("startDate"));
-        futureJourneysEndDateColumn.setCellValueFactory(new PropertyValueFactory<FutureJourney, LocalDate>("endDate"));
+        futureJourneysCountryColumn.setCellValueFactory(new PropertyValueFactory<>("location"));
+        futureJourneysTitleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+        futureJourneysDescriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
+        futureJourneysStartDateColumn.setCellValueFactory(new PropertyValueFactory<>("startDate"));
+        futureJourneysEndDateColumn.setCellValueFactory(new PropertyValueFactory<>("endDate"));
 
         futureJourneysTable.setItems(futureJourneysList);
     }
@@ -377,12 +377,12 @@ public class MainController implements Initializable {
         // Init past journeys table
         pastJourneysList = selectPastJourneys(currentUser);
 
-        pastJourneysCountryColumn.setCellValueFactory(new PropertyValueFactory<PastJourney, String>("location"));
-        pastJourneysTitleColumn.setCellValueFactory(new PropertyValueFactory<PastJourney, String>("title"));
-        pastJourneysRatingColumn.setCellValueFactory(new PropertyValueFactory<PastJourney, String>("rating"));
-        pastJourneysDescriptionColumn.setCellValueFactory(new PropertyValueFactory<PastJourney, String>("description"));
-        pastJourneysStartDateColumn.setCellValueFactory(new PropertyValueFactory<PastJourney, LocalDate>("startDate"));
-        pastJourneysEndDateColumn.setCellValueFactory(new PropertyValueFactory<PastJourney, LocalDate>("endDate"));
+        pastJourneysCountryColumn.setCellValueFactory(new PropertyValueFactory<>("location"));
+        pastJourneysTitleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+        pastJourneysRatingColumn.setCellValueFactory(new PropertyValueFactory<>("rating"));
+        pastJourneysDescriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
+        pastJourneysStartDateColumn.setCellValueFactory(new PropertyValueFactory<>("startDate"));
+        pastJourneysEndDateColumn.setCellValueFactory(new PropertyValueFactory<>("endDate"));
 
         pastJourneysTable.setItems(pastJourneysList);
     }
@@ -431,7 +431,7 @@ public class MainController implements Initializable {
 
     private void handleOpenMapPage() {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/com/trajour/map/mapxz.fxml"));
+        loader.setLocation(getClass().getResource("/com/trajour/map/map.fxml"));
 
         try {
             Parent mapPageParent = loader.load();
@@ -512,7 +512,7 @@ public class MainController implements Initializable {
     @FXML
     public void openMapPage(ActionEvent event) {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/com/trajour/map/mapxz.fxml"));
+        loader.setLocation(getClass().getResource("/com/trajour/map/map.fxml"));
 
         try {
             Parent mapPageParent = loader.load();

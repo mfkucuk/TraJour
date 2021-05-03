@@ -161,21 +161,18 @@ public class ProfileController {
         startDatePicker.setValue(LocalDate.now());
         confirmWishButton = new Button("Add");
         confirmWishButton.setStyle("-fx-background-radius: 10; -fx-background-color: #C00000; -fx-text-fill: #FFFFFF");
-        confirmWishButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                if (locationLabel.getText().isBlank()) {
-                    Notifications notification = buildNotification("Empty Field Error", "Please fill in the location field", 6, Pos.BASELINE_CENTER);
-                    notification.showError();
-                }
-                else {
-                    currentUser.addWish(locationLabel.getText(), startDatePicker.getValue());
+        confirmWishButton.setOnAction(event -> {
+            if (locationLabel.getText().isBlank()) {
+                Notifications notification = buildNotification("Empty Field Error", "Please fill in the location field", 6, Pos.BASELINE_CENTER);
+                notification.showError();
+            }
+            else {
+                currentUser.addWish(locationLabel.getText(), startDatePicker.getValue());
 
-                    Notifications notification = buildNotification("Wish added", "Your wish is successfully added to your wishlist", 6, Pos.BASELINE_CENTER);
-                    notification.showConfirm();
+                Notifications notification = buildNotification("Wish added", "Your wish is successfully added to your wishlist", 6, Pos.BASELINE_CENTER);
+                notification.showConfirm();
 
-                    initData(currentUser);
-                }
+                initData(currentUser);
             }
         });
         wishlistMenu = new VBox(wishlistLabel, locationLabel, startDatePicker, confirmWishButton);
@@ -198,58 +195,55 @@ public class ProfileController {
         friendUsernameTextField = new TextField();
         friendUsernameTextField.setPromptText("Username");
         addButton = new Button("Add");
-        addButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                if (friendEmailTextField.getText().isBlank() && friendUsernameTextField.getText().isBlank()) {
-                    Notifications notification = buildNotification("Text field error", "Fill out one of the text fields.", 4, Pos.BASELINE_CENTER);
-                    notification.showError();
-                }
-                else if ( ! friendEmailTextField.getText().isBlank() && ! friendUsernameTextField.getText().isBlank()) {
-                    Notifications notification = buildNotification("Text field error", "Use only one of the text fields.", 4, Pos.BASELINE_CENTER);
-                    notification.showError();
-                }
-                else if ( ! friendUsernameTextField.getText().isBlank()) {
-                    if (DatabaseQuery.findUserByUsername(friendUsernameTextField.getText())) {
-                        if (friendUsernameTextField.getText().equals(currentUser.getUsername())) {
-                            Notifications notification = buildNotification("Text field error", "I'm afraid you cannot be friends with yourself.", 4, Pos.BASELINE_CENTER);
-                            notification.showError();
-                        }
-                        else if ( ! findFriendByUsername(friendUsernameTextField.getText(), currentUser)) {
-                            currentUser.addFriendByName(friendUsernameTextField.getText(), getEmailByUsername(friendUsernameTextField.getText()));
-                            Notifications notification = buildNotification("Confirmation", "Friend successfully added.", 4, Pos.BASELINE_CENTER);
-                            notification.showConfirm();
-                        }
-                        else {
-                            Notifications notification = buildNotification("Text field error", "You are already friends.", 4, Pos.BASELINE_CENTER);
-                            notification.showError();
-                        }
+        addButton.setOnAction(event -> {
+            if (friendEmailTextField.getText().isBlank() && friendUsernameTextField.getText().isBlank()) {
+                Notifications notification = buildNotification("Text field error", "Fill out one of the text fields.", 4, Pos.BASELINE_CENTER);
+                notification.showError();
+            }
+            else if ( ! friendEmailTextField.getText().isBlank() && ! friendUsernameTextField.getText().isBlank()) {
+                Notifications notification = buildNotification("Text field error", "Use only one of the text fields.", 4, Pos.BASELINE_CENTER);
+                notification.showError();
+            }
+            else if ( ! friendUsernameTextField.getText().isBlank()) {
+                if (DatabaseQuery.findUserByUsername(friendUsernameTextField.getText())) {
+                    if (friendUsernameTextField.getText().equals(currentUser.getUsername())) {
+                        Notifications notification = buildNotification("Text field error", "I'm afraid you cannot be friends with yourself.", 4, Pos.BASELINE_CENTER);
+                        notification.showError();
+                    }
+                    else if ( ! findFriendByUsername(friendUsernameTextField.getText(), currentUser)) {
+                        currentUser.addFriendByName(friendUsernameTextField.getText(), getEmailByUsername(friendUsernameTextField.getText()));
+                        Notifications notification = buildNotification("Confirmation", "Friend successfully added.", 4, Pos.BASELINE_CENTER);
+                        notification.showConfirm();
                     }
                     else {
-                        Notifications notification = buildNotification("Text field error", "No such user exists.", 4, Pos.BASELINE_CENTER);
+                        Notifications notification = buildNotification("Text field error", "You are already friends.", 4, Pos.BASELINE_CENTER);
                         notification.showError();
                     }
                 }
-                else if ( ! friendEmailTextField.getText().isBlank()) {
-                    if (findUserByEmail(friendEmailTextField.getText())) {
-                        if (friendEmailTextField.getText().equals(currentUser.getEmail())) {
-                            Notifications notification = buildNotification("Text field error", "I'm afraid you cannot be friends with yourself.", 4, Pos.BASELINE_CENTER);
-                            notification.showError();
-                        }
-                        else if ( ! findFriendByEmail(friendEmailTextField.getText(), currentUser)) {
-                            currentUser.addFriendByEmail(getUsernameByEmail(friendEmailTextField.getText()), friendEmailTextField.getText());
-                            Notifications notification = buildNotification("Confirmation", "Friend successfully added.", 4, Pos.BASELINE_CENTER);
-                            notification.showConfirm();
-                        }
-                        else {
-                            Notifications notification = buildNotification("Text field error", "You are already friends.", 4, Pos.BASELINE_CENTER);
-                            notification.showError();
-                        }
-                    }
-                    else {
-                        Notifications notification = buildNotification("Text field error", "No such user exists.", 4, Pos.BASELINE_CENTER);
+                else {
+                    Notifications notification = buildNotification("Text field error", "No such user exists.", 4, Pos.BASELINE_CENTER);
+                    notification.showError();
+                }
+            }
+            else if ( ! friendEmailTextField.getText().isBlank()) {
+                if (findUserByEmail(friendEmailTextField.getText())) {
+                    if (friendEmailTextField.getText().equals(currentUser.getEmail())) {
+                        Notifications notification = buildNotification("Text field error", "I'm afraid you cannot be friends with yourself.", 4, Pos.BASELINE_CENTER);
                         notification.showError();
                     }
+                    else if ( ! findFriendByEmail(friendEmailTextField.getText(), currentUser)) {
+                        currentUser.addFriendByEmail(getUsernameByEmail(friendEmailTextField.getText()), friendEmailTextField.getText());
+                        Notifications notification = buildNotification("Confirmation", "Friend successfully added.", 4, Pos.BASELINE_CENTER);
+                        notification.showConfirm();
+                    }
+                    else {
+                        Notifications notification = buildNotification("Text field error", "You are already friends.", 4, Pos.BASELINE_CENTER);
+                        notification.showError();
+                    }
+                }
+                else {
+                    Notifications notification = buildNotification("Text field error", "No such user exists.", 4, Pos.BASELINE_CENTER);
+                    notification.showError();
                 }
             }
         });
@@ -275,7 +269,7 @@ public class ProfileController {
 
         currentUser.removeWish(wishes);
 
-        friendsListView.getItems().removeAll(wishes);
+        wishlistListView.getItems().removeAll(wishes);
         openProfilePage(event);
     }
 
@@ -377,7 +371,7 @@ public class ProfileController {
     @FXML
     public void openMapPage(ActionEvent event) {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/com/trajour/map/mapxz.fxml"));
+        loader.setLocation(getClass().getResource("/com/trajour/map/map.fxml"));
 
         try {
             Parent mapPageParent = loader.load();
