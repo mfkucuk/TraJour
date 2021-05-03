@@ -1,6 +1,6 @@
 package com.trajour.login;
 
-import com.trajour.main.Main;
+import com.trajour.Main;
 import com.trajour.main.MainController;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;

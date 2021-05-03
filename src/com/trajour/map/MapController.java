@@ -1,7 +1,7 @@
 package com.trajour.map;
 
 import com.trajour.journey.Journey;
-import com.trajour.main.Main;
+import com.trajour.Main;
 import com.trajour.main.MainController;
 import com.trajour.user.User;
 

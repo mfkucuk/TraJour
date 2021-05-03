@@ -1,5 +1,6 @@
 package com.trajour.main;
 
+import com.trajour.Main;
 import com.trajour.journey.FutureJourney;
 import com.trajour.journey.Journey;
 import com.trajour.journey.PastJourney;
