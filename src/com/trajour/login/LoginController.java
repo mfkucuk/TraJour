@@ -20,7 +20,6 @@ import javafx.stage.Stage;
 import com.trajour.db.DatabaseConnection;
 import com.trajour.user.User;
 import org.controlsfx.control.Notifications;
-import com.trajour.main.Main;
 
 import java.awt.*;
 import java.net.URI;

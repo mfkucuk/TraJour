@@ -6,6 +6,8 @@ import java.sql.DriverManager;
 
 /**
  * Creates a connection between the database and the program.
+ * @author Selim Can Güler
+ * @version 03 May 2021
  */
 public final class DatabaseConnection {
     public Connection databaseLink;
