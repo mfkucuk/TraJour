@@ -23,6 +23,7 @@ import static com.trajour.db.DatabaseQuery.*;
  *@version 4.05.2021
 */
 public class Post extends GridPane implements Shareable {
+
     // Properties
     private String text;
     private Journey theJourney;

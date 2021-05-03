@@ -50,7 +50,6 @@ public class Journey implements Comparable<Journey>, Postable {
     public boolean addNewJourney(User currentUser) {
         if (findJourneyByUser(this, currentUser)) {
             return false;
-
         }
         else {
             insertNewJourney(this, currentUser);
@@ -117,20 +116,12 @@ public class Journey implements Comparable<Journey>, Postable {
     }
 
     @Override
-    /**
-     * @return String representation of the journey
-     */
     public String toString() {
         return "Location: " + getLocation() + ", Title: " + getTitle() + ", Start-End Date: " + startDate + " - " + endDate;
     }
 
 	@Override
-    /**
-     * Compare journeys startDate with endDate
-     *
-     * @return true if start and ent dates are the same
-     */
-	public int compareTo(Journey o) {
+    public int compareTo(Journey o) {
         return startDate.compareTo(endDate);
 	}
 }

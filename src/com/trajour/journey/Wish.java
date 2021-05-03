@@ -2,11 +2,13 @@ package com.trajour.journey;
 
 import java.time.LocalDate;
 
+
 /**
  * A class that has the properties of users wish places to go
  * It has a start date but no end date unlike future journey.
  */
 public class Wish {
+
     //Properties
     private String location;
     private LocalDate startDate;
@@ -36,9 +38,6 @@ public class Wish {
     }
 
     @Override
-    /**
-     * String representation of the wish
-     */
     public String toString() {
 
         return "Location: " + getLocation() + " - Start Date: " + getStartDate();

@@ -2,6 +2,7 @@ package com.trajour.journey;
 
 import java.time.LocalDate;
 
+
 /**
  * A subclass of journey for current journeys of the user.
  *

@@ -3,6 +3,7 @@ package com.trajour.journey;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+
 /**
  * Interface post
  *
@@ -10,5 +11,6 @@ import javafx.scene.image.ImageView;
  * @version 1.05.2021
  */
 public interface Postable {
+
    Post post(String text, Image image);
 }

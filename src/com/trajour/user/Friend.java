@@ -1,5 +1,6 @@
 package com.trajour.user;
 
+
 /**
  * Friend class that has the properties of friend
  *
@@ -7,6 +8,7 @@ package com.trajour.user;
  * @version 03 May 2021
  */
 public class Friend {
+
     //Properties
     private String friendName;
     private String friendEmail;
@@ -47,9 +49,6 @@ public class Friend {
     }
 
     @Override
-    /**
-     * @return String representation of friend
-     */
     public String toString() {
         return getFriendName() + " - " + getFriendEmail();
     }
