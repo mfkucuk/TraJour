@@ -11,6 +11,11 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+/**
+ * Launches the app
+ * @author Selim Can Güler
+ * @version 04 May 2021
+ */
 public class Main extends Application {
     public final static int APPLICATION_WIDTH = 1400;
     public final static int APPLICATION_HEIGHT = 1000;
