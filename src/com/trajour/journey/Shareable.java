@@ -8,7 +8,7 @@ import javafx.scene.layout.VBox;
  * Interface Shareable
  *
  * @author Ahmet Alperen Yılmazyıldız
- * @version 1.05.2021
+ * @version 2.05.2021
  */
 public interface Shareable {
 

@@ -10,7 +10,7 @@ import java.time.LocalDate;
  * It extends from Journey class.
  *
  * @author Ahmet Alperen Yılmazyıldız
- * @version 4.05.2021
+ * @version 3.05.2021
  */
 public class PastJourney extends Journey {
 

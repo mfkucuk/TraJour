@@ -15,7 +15,7 @@ import static com.trajour.db.DatabaseQuery.insertNewJourney;
  * the journey.
  *
  *@author Ahmet Alperen YılmazYıldız
- *@version 4.05.2021
+ *@version 3.05.2021
  *
 */
 public class Journey implements Comparable<Journey>, Postable {

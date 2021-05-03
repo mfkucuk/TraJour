@@ -7,7 +7,7 @@ import javafx.scene.image.ImageView;
  * Interface post
  *
  * @author Ahmet Alperen Yılmazyıldız
- * @version 1.05.2021
+ * @version 2.05.2021
  */
 public interface Postable {
 

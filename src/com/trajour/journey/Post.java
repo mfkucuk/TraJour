@@ -19,7 +19,7 @@ import static com.trajour.db.DatabaseQuery.*;
  * for constructing the post and implements Shareable.
  *
  *@author Ahmet Alperen Yılmazyıldız
- *@version 4.05.2021
+ *@version 3.05.2021
 */
 public class Post extends GridPane implements Shareable {
 

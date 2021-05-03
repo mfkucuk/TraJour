@@ -1,5 +1,6 @@
 package com.trajour.user;
 
+
 /**
  * Friend class that has the properties of friend
  *
