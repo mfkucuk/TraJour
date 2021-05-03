@@ -22,6 +22,11 @@ public final class DatabaseQuery {
     private static DatabaseConnection dbConnection;
     private static Connection conn;
 
+    /**
+     * Returns all the journeys of the user.
+     * @param user is the owner of the journeys.
+     * @return is a list containing all the journeys.
+     */
     public static ObservableList<Journey> getAllJourneysOfUser(User user) {
         dbConnection = new DatabaseConnection();
         conn = dbConnection.getConnection();

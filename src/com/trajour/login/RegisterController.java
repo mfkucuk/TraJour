@@ -23,6 +23,7 @@ import static com.trajour.main.MainController.buildNotification;
  * @version 28 April 2021
  */
 public class RegisterController implements Initializable {
+
     @FXML
     private TextField usernameTextField;
 
@@ -42,6 +43,11 @@ public class RegisterController implements Initializable {
     private Button registerButton;
 
     @Override
+    /**
+     * Initializing method for register scene. Calls itself when register scene is opened.
+     * @param url
+     * @param resourceBundle
+     */
     public void initialize( URL url, ResourceBundle resourceBundle){
         //Event listeners for buttons
         registerButton.setOnMouseEntered( mouseEvent -> registerButton.setTextFill(Color.BLACK));
@@ -60,7 +66,7 @@ public class RegisterController implements Initializable {
     }
 
     /**
-     * Registers the user
+     * Action Listener for register button.
      * @param event Event
      */
     public void registerButtonOnAction(ActionEvent event) {
@@ -99,15 +105,5 @@ public class RegisterController implements Initializable {
             Notifications notification = buildNotification("Registration Unsuccessful!", "Please complete all of the text fields.", 5, Pos.BOTTOM_CENTER);
             notification.showWarning();
         }
-    }
-
-    private String encryptPassword(String password) {
-        // TODO A simple encryption of the registered passwords. Encrypted version will be saved in the DB.
-        return "";
-    }
-
-    private String decryptPassword(String password) {
-        // TODO Decryption of the password. This may be the wrong place for the method.
-        return "";
     }
 }
