@@ -8,7 +8,6 @@ import java.time.LocalDate;
 import static com.trajour.db.DatabaseQuery.findJourneyByUser;
 import static com.trajour.db.DatabaseQuery.insertNewJourney;
 
-
 /**
  * Journey class implements Comparable<Journey> and Postable, this class
  * has the properties of journeys including location, title, description,

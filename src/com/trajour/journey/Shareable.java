@@ -4,7 +4,6 @@ import com.trajour.user.Friend;
 import com.trajour.user.User;
 import javafx.scene.layout.VBox;
 
-
 /**
  * Interface Shareable
  *

@@ -5,7 +5,6 @@ import com.trajour.user.User;
 
 import java.time.LocalDate;
 
-
 /**
  * A class that has the past journey actions.
  * It extends from Journey class.

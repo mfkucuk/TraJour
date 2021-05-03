@@ -2,7 +2,6 @@ package com.trajour.journey;
 
 import java.time.LocalDate;
 
-
 /**
  * A class that has the properties of users wish places to go
  * It has a start date but no end date unlike future journey.

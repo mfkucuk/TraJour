@@ -14,7 +14,6 @@ import java.io.File;
 
 import static com.trajour.db.DatabaseQuery.*;
 
-
 /**
  * A class that defines how posts are and extends GridPane
  * for constructing the post and implements Shareable.

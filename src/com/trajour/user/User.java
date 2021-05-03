@@ -10,7 +10,6 @@ import java.time.LocalDate;
 
 import static com.trajour.db.DatabaseQuery.*;
 
-
 /**
  * User class.
  * @author Mehmet Feyyaz Kucuk
