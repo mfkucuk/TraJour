@@ -4,13 +4,12 @@ import com.trajour.db.DatabaseQuery;
 import com.trajour.journey.Journey;
 import com.trajour.journey.Wish;
 import com.trajour.user.Friend;
-import com.trajour.main.Main;
+import com.trajour.Main;
 import com.trajour.main.MainController;
 import com.trajour.map.MapController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -40,6 +39,15 @@ import java.time.LocalDate;
 import static com.trajour.db.DatabaseQuery.*;
 import static com.trajour.main.MainController.buildNotification;
 
+/**
+ * Profile page contains current journeys list, friends list and wish list.
+ * User can add friends from profile page, see their current journey, search from their
+ * past and future journeys and create wishes for their possible travels. User also can add
+ * profile picture and change their current passwords in profile page.
+ * @author Selim Can Güler
+ * @author Mehmet Feyyaz Küçük
+ * @version 03 May 2021
+ */
 public class ProfileController {
     @FXML
     private Button homePageButton;
@@ -127,6 +135,10 @@ public class ProfileController {
     private AutoCompletionBinding autoComplete;
     private ObservableList<String> suggestions = FXCollections.observableArrayList();
 
+    /**
+     * Initializes needed data
+     * @param user
+     */
     public void initData(User user) {
         currentUser = user;
         usernameLabel.setText(currentUser.getUsername());
@@ -155,27 +167,27 @@ public class ProfileController {
         // Wishlist pop over
         wishlistLabel = new Label("Add Wish");
         wishlistLabel.setFont(new Font("Arial Bold", 24));
+
         locationLabel = new TextField();
         locationLabel.setPromptText("Location");
+
         startDatePicker = new DatePicker();
         startDatePicker.setValue(LocalDate.now());
+
         confirmWishButton = new Button("Add");
         confirmWishButton.setStyle("-fx-background-radius: 10; -fx-background-color: #C00000; -fx-text-fill: #FFFFFF");
-        confirmWishButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                if (locationLabel.getText().isBlank()) {
-                    Notifications notification = buildNotification("Empty Field Error", "Please fill in the location field", 6, Pos.BASELINE_CENTER);
-                    notification.showError();
-                }
-                else {
-                    currentUser.addWish(locationLabel.getText(), startDatePicker.getValue());
+        confirmWishButton.setOnAction(event -> {
+            if (locationLabel.getText().isBlank()) {
+                Notifications notification = buildNotification("Empty Field Error", "Please fill in the location field", 6, Pos.BASELINE_CENTER);
+                notification.showError();
+            }
+            else {
+                currentUser.addWish(locationLabel.getText(), startDatePicker.getValue());
 
-                    Notifications notification = buildNotification("Wish added", "Your wish is successfully added to your wishlist", 6, Pos.BASELINE_CENTER);
-                    notification.showConfirm();
+                Notifications notification = buildNotification("Wish added", "Your wish is successfully added to your wishlist", 6, Pos.BASELINE_CENTER);
+                notification.showConfirm();
 
-                    initData(currentUser);
-                }
+                initData(currentUser);
             }
         });
         wishlistMenu = new VBox(wishlistLabel, locationLabel, startDatePicker, confirmWishButton);
@@ -185,74 +197,103 @@ public class ProfileController {
         wishlistMenu.setPrefWidth(200.0);
         wishlistMenu.setSpacing(20);
         wishlistMenu.setStyle("-fx-background-color:#BFFCC6");
+
         wishlistPopOver = new PopOver(wishlistMenu);
 
         wishlistListView.setContextMenu(new ContextMenu(refresh2MenuItem));
 
+        // Add friend pop over
         addFriendLabel = new Label("Add Friend");
         addFriendLabel.setFont(new Font("Arial Bold", 24));
+
         addFriendOrLabel = new Label("OR");
         addFriendOrLabel.setFont(new Font("Arial Bold", 16));
+
         friendEmailTextField = new TextField();
         friendEmailTextField.setPromptText("Email");
+
         friendUsernameTextField = new TextField();
         friendUsernameTextField.setPromptText("Username");
+
         addButton = new Button("Add");
-        addButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                if (friendEmailTextField.getText().isBlank() && friendUsernameTextField.getText().isBlank()) {
-                    Notifications notification = buildNotification("Text field error", "Fill out one of the text fields.", 4, Pos.BASELINE_CENTER);
-                    notification.showError();
-                }
-                else if ( ! friendEmailTextField.getText().isBlank() && ! friendUsernameTextField.getText().isBlank()) {
-                    Notifications notification = buildNotification("Text field error", "Use only one of the text fields.", 4, Pos.BASELINE_CENTER);
-                    notification.showError();
-                }
-                else if ( ! friendUsernameTextField.getText().isBlank()) {
-                    if (DatabaseQuery.findUserByUsername(friendUsernameTextField.getText())) {
-                        if (friendUsernameTextField.getText().equals(currentUser.getUsername())) {
-                            Notifications notification = buildNotification("Text field error", "I'm afraid you cannot be friends with yourself.", 4, Pos.BASELINE_CENTER);
-                            notification.showError();
-                        }
-                        else if ( ! findFriendByUsername(friendUsernameTextField.getText(), currentUser)) {
-                            currentUser.addFriendByName(friendUsernameTextField.getText(), getEmailByUsername(friendUsernameTextField.getText()));
-                            Notifications notification = buildNotification("Confirmation", "Friend successfully added.", 4, Pos.BASELINE_CENTER);
-                            notification.showConfirm();
-                        }
-                        else {
-                            Notifications notification = buildNotification("Text field error", "You are already friends.", 4, Pos.BASELINE_CENTER);
-                            notification.showError();
-                        }
+        addButton.setOnAction(event -> {
+            // Check if the text fields are blank
+            if (friendEmailTextField.getText().isBlank() && friendUsernameTextField.getText().isBlank()) {
+                Notifications notification = buildNotification("Text Field Error", "Fill out one of the text " +
+                        "fields.", 4, Pos.BASELINE_CENTER);
+                notification.showError();
+            }
+            // Check if only one of the text fields are used
+            else if ( ! friendEmailTextField.getText().isBlank() && ! friendUsernameTextField.getText().isBlank()) {
+                Notifications notification = buildNotification("Text Field Error", "Use only one of the text" +
+                        " fields.", 4, Pos.BASELINE_CENTER);
+                notification.showError();
+            }
+            // Username field is used
+            else if ( ! friendUsernameTextField.getText().isBlank()) {
+                // Check whether a user with the given username exists
+                if (DatabaseQuery.findUserByUsername(friendUsernameTextField.getText())) {
+                    // If the searched user exists check if the searched user is not the current user themselves
+                    if (friendUsernameTextField.getText().equals(currentUser.getUsername())) {
+                        Notifications notification = buildNotification("Self Friendship",
+                                "I'm afraid you cannot be friends with yourself.", 4, Pos.BASELINE_CENTER);
+                        notification.showError();
                     }
+                    // If they are not already friends add friends
+                    else if ( ! findFriendByUsername(friendUsernameTextField.getText(), currentUser)) {
+                        currentUser.addFriendByName(friendUsernameTextField.getText(), getEmailByUsername(friendUsernameTextField.getText()));
+                        Notifications notification = buildNotification("Confirmation", "Friend successfully " +
+                                "added.", 4, Pos.BASELINE_CENTER);
+                        notification.showConfirm();
+                    }
+                    // They are already friends, show error
                     else {
-                        Notifications notification = buildNotification("Text field error", "No such user exists.", 4, Pos.BASELINE_CENTER);
+                        Notifications notification = buildNotification("Already Friends", "You are already " +
+                                "friends.", 4, Pos.BASELINE_CENTER);
                         notification.showError();
                     }
                 }
-                else if ( ! friendEmailTextField.getText().isBlank()) {
-                    if (findUserByEmail(friendEmailTextField.getText())) {
-                        if (friendEmailTextField.getText().equals(currentUser.getEmail())) {
-                            Notifications notification = buildNotification("Text field error", "I'm afraid you cannot be friends with yourself.", 4, Pos.BASELINE_CENTER);
-                            notification.showError();
-                        }
-                        else if ( ! findFriendByEmail(friendEmailTextField.getText(), currentUser)) {
-                            currentUser.addFriendByEmail(getUsernameByEmail(friendEmailTextField.getText()), friendEmailTextField.getText());
-                            Notifications notification = buildNotification("Confirmation", "Friend successfully added.", 4, Pos.BASELINE_CENTER);
-                            notification.showConfirm();
-                        }
-                        else {
-                            Notifications notification = buildNotification("Text field error", "You are already friends.", 4, Pos.BASELINE_CENTER);
-                            notification.showError();
-                        }
-                    }
-                    else {
-                        Notifications notification = buildNotification("Text field error", "No such user exists.", 4, Pos.BASELINE_CENTER);
+                // There is no such user
+                else {
+                    Notifications notification = buildNotification("User Does Not Exist", "No such user exists." +
+                            " Try another username.", 4, Pos.BASELINE_CENTER);
+                    notification.showError();
+                }
+            }
+            // Email field is used
+            else if ( ! friendEmailTextField.getText().isBlank()) {
+                // Check whether a user with the given email exists
+                if (findUserByEmail(friendEmailTextField.getText())) {
+                    // If the searched user exists check if the searched user is not the current user themselves
+                    if (friendEmailTextField.getText().equals(currentUser.getEmail())) {
+                        Notifications notification = buildNotification("Text field error", "I'm afraid you " +
+                                "cannot be friends with yourself.", 4, Pos.BASELINE_CENTER);
                         notification.showError();
                     }
+                    // If they are not already friends add friends
+                    else if ( ! findFriendByEmail(friendEmailTextField.getText(), currentUser)) {
+                        currentUser.addFriendByEmail(getUsernameByEmail(friendEmailTextField.getText()),
+                                friendEmailTextField.getText());
+                        Notifications notification = buildNotification("Confirmation", "Friend successfully added.",
+                                4, Pos.BASELINE_CENTER);
+                        notification.showConfirm();
+                    }
+                    // They are already friends, show error
+                    else {
+                        Notifications notification = buildNotification("Already Friends", "You are already friends.",
+                                4, Pos.BASELINE_CENTER);
+                        notification.showError();
+                    }
+                }
+                // There is no such user
+                else {
+                    Notifications notification = buildNotification("User Does Not Exist", "No such user exists. " +
+                            "Try another email", 4, Pos.BASELINE_CENTER);
+                    notification.showError();
                 }
             }
         });
+
         addButton.setStyle("-fx-background-radius: 10; -fx-background-color: #C00000; -fx-text-fill: #FFFFFF");
         addFriendMenu = new VBox(addFriendLabel, friendEmailTextField, addFriendOrLabel, friendUsernameTextField, addButton);
         addFriendMenu.setPadding(new Insets(10));
@@ -262,24 +303,35 @@ public class ProfileController {
         addFriendMenu.setSpacing(20);
         addFriendMenu.setStyle("-fx-background-color:#BFFCC6");
         addFriendPopOver = new PopOver(addFriendMenu);
-
     }
 
+    /**
+     * Adds wish to wishlist
+     * @param event
+     */
     @FXML
     public void addWish(ActionEvent event) {
         wishlistPopOver.show(addWishButton);
     }
 
+    /**
+     * Removes wish from wishlist
+     * @param event
+     */
     @FXML
     public void removeWish(ActionEvent event) {
         ObservableList<Wish> wishes = wishlistListView.getSelectionModel().getSelectedItems();
 
         currentUser.removeWish(wishes);
 
-        friendsListView.getItems().removeAll(wishes);
+        wishlistListView.getItems().removeAll(wishes);
         openProfilePage(event);
     }
 
+    /**
+     * Searches journey from db and adds results to listview
+     * @param e
+     */
     @FXML
     void searchJourney(ActionEvent e ){
         searchedJourneysListView.getItems().removeAll(searchedJourneysListView.getItems());
@@ -299,6 +351,10 @@ public class ProfileController {
         searchedJourneysListView.getItems().addAll(matchingJourneys);
     }
 
+    /**
+     * Button handler for removing friend
+     * @param e
+     */
     @FXML
     public void handleRemoveFriend(ActionEvent e) {
         ObservableList<Friend> friends = friendsListView.getSelectionModel().getSelectedItems();
@@ -309,6 +365,10 @@ public class ProfileController {
         openProfilePage(e);
     }
 
+    /**
+     * Opens add friend pop-over
+     * @param event
+     */
     @FXML
     public void openAddFriendPage(ActionEvent event) {
         addFriendPopOver.show(addFriendButton);
@@ -378,7 +438,7 @@ public class ProfileController {
     @FXML
     public void openMapPage(ActionEvent event) {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/com/trajour/map/mapxz.fxml"));
+        loader.setLocation(getClass().getResource("/com/trajour/map/map.fxml"));
 
         try {
             Parent mapPageParent = loader.load();
@@ -400,6 +460,10 @@ public class ProfileController {
         }
     }
 
+    /**
+     * Opens add picture page
+     * @param event
+     */
     @FXML
     public void openAddPicturePage(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
@@ -411,11 +475,11 @@ public class ProfileController {
         if (selectedFile != null) {
 
             if (!currentUser.addPicture(selectedFile)) {
-                Notifications notification = buildNotification("Image Too Large.", "Please upload an image less than 1 mb's", 5, Pos.BASELINE_CENTER);
+                Notifications notification = buildNotification("Image Too Large.", "Please upload an image less than 4 mb's", 5, Pos.BASELINE_CENTER);
                 notification.showWarning();
             }
             else {
-                Image img = new Image(selectedFile.toURI().toString(), 80, 80, false, false);
+                Image img = new Image(selectedFile.toURI().toString(), 70, 70, true, false);
 
                 profilePhotoView.setImage(img);
                 currentUser.addPicture(selectedFile);
@@ -427,6 +491,10 @@ public class ProfileController {
         }
     }
 
+    /**
+     * Opens change picture page
+     * @param event
+     */
     @FXML
     public void openChangePasswordPage(ActionEvent event) {
         try {
@@ -500,12 +568,19 @@ public class ProfileController {
         removeFriendButton.setOnMouseExited(mouseEvent -> removeFriendButton.setEffect(null));
     }
 
+    /**
+     * Sets profile picture
+     */
     private void setProfilePic() {
         profilePhotoFile = getProfilePhotoFile(currentUser.getUserId());
         Image profileImage = new Image(profilePhotoFile.toURI().toString(), 80, 80, false, false);
         profilePhotoView.setImage(profileImage);
     }
 
+    /**
+     * Sets currents journeys to current journey listview if there are any
+     * @param allJourneys
+     */
     private void setCurrentJourneys(ObservableList<Journey> allJourneys) {
         ObservableList<Journey> currentJourneys = FXCollections.observableArrayList();
         for (Journey j : allJourneys) {
@@ -517,17 +592,27 @@ public class ProfileController {
         currentJourneyListView.setItems(currentJourneys);
     }
 
+    /**
+     * Sets list of friends in friends listview
+     */
     private void setFriendsList() {
         ObservableList<Friend> friends = getAllFriendsOfUser(currentUser);
         friendsListView.setItems(friends);
         friendsLabel.setText("Friends (" + friends.size() + ")");
     }
 
+    /**
+     * Sets list of wishes in wishlist listview
+     */
     private void setWishlist() {
         ObservableList<Wish> wishes = getAllWishesOfUser(currentUser);
         wishlistListView.setItems(wishes);
     }
 
+    /**
+     * Gets journey information and set autocomplete search suggestions for search journey bar
+     * @param allJourneys
+     */
     private void setSearchSuggestions(ObservableList<Journey> allJourneys) {
 
         for (int i = 0; i < allJourneys.size() ; i++) {

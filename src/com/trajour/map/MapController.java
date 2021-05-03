@@ -1,7 +1,7 @@
 package com.trajour.map;
 
 import com.trajour.journey.Journey;
-import com.trajour.main.Main;
+import com.trajour.Main;
 import com.trajour.main.MainController;
 import com.trajour.user.User;
 
@@ -42,6 +42,13 @@ import java.util.Scanner;
 import static com.trajour.db.DatabaseQuery.findJourneyByJourneyTitle;
 import static com.trajour.main.MainController.buildNotification;
 
+/**
+ * Sets and modifies the map view and adds additional features over the WorldMapView class such as zooming, showing
+ * world capitals, adding journeys by choosing locations or countries, calculating the distance between two locations.
+ * Controls all the events happening in the map page.
+ * @author Selim Can Güler
+ * @version 03 May 2021
+ */
 public class MapController implements Initializable {
     @FXML
     private Button homePageButton;
@@ -106,10 +113,10 @@ public class MapController implements Initializable {
     public void initData(User user) {
         currentUser = user;
 
-        // From the JavaFX tutorial in Oracle's website, disables the cells that corresponds to the date
-        // selected in the startDate and all the cells corresponding to the preceding dates
+        // From the JavaFX tutorial in Oracle's website, disables the cells on the end date date picke that corresponds
+        // to the date selected in the startDate and all the cells corresponding to the preceding dates.
         // https://docs.oracle.com/javase/8/javafx/user-interface-tutorial/date-picker.htm#CCHHJBEA
-        // Inits date picker
+        // Initializes date picker
         startDatePicker.setValue(LocalDate.now());
         final Callback<DatePicker, DateCell> dayCellFactory =
                 new Callback<DatePicker, DateCell>() {
@@ -139,7 +146,7 @@ public class MapController implements Initializable {
                     }
                 };
         endDatePicker.setDayCellFactory(dayCellFactory);
-        endDatePicker.setValue(startDatePicker.getValue().plusDays(1));
+        endDatePicker.setValue(startDatePicker.getValue().plusDays(1)); // End date is set as today + 1
 
         // Inits the zoom handler and location view
         worldMapView.addEventHandler(ScrollEvent.SCROLL, scrollEvent -> {
@@ -147,15 +154,27 @@ public class MapController implements Initializable {
             zoomSlider.setValue(zoomSlider.getValue() + movement);
         });
     }
+
+    /**
+     * Changes the view of the map by either showing the map with locations or the map without locations. The locations
+     * are shown when the radio box is selected and not shown when the radio box is not selected
+     * @param event ActionEvent
+     */
     @FXML
-    void handleShowLocations(ActionEvent event) {
+    private void handleShowLocations(ActionEvent event) {
         showLocationsView.set(!showLocationsView.get());
 
         worldMapView.setShowLocations(showLocationsView.get());
     }
 
+    /**
+     * Handles displaying the distance between selected locations. This method requires there to be exactly 2 selected
+     * locations to work. The result is formatted and displayed in the screen. Calculating the distance between
+     * 2 locations with longitude and altitude data is done in calculateDistanceBetweenTwoLocations method in this class.
+     * @param event ActionEvent
+     */
     @FXML
-    void handleShowDistance(ActionEvent event) {
+    private void handleShowDistance(ActionEvent event) {
         if (worldMapView.getSelectedLocations().size() == 2) {
             WorldMapView.Location l1 = worldMapView.getSelectedLocations().get(0);
             WorldMapView.Location l2 = worldMapView.getSelectedLocations().get(1);
@@ -174,10 +193,18 @@ public class MapController implements Initializable {
         }
     }
 
+    /**
+     * Handles adding journeys. A journey is successfully added when a country or location, start and end dates,
+     * journey description and title is provided. If any of these are missing, journey cannot be added to the database and
+     * corresponding error notifications are shown. Also, if the title of the journey is the same with another journey
+     * stored in the database, the action is unsuccessful.
+     * @param event ActionEvent
+     */
     @FXML
-    void handleAddJourney(ActionEvent event)  {
+    private void handleAddJourney(ActionEvent event)  {
         ObservableList<WorldMapView.Country> selectedCountry = worldMapView.getSelectedCountries();
 
+        // All fields must be filled
         if (journeyTitleTextField.getText().isBlank() || journeyDescriptionTextArea.getText().isBlank()) {
             Notifications notification = buildNotification("Journey Addition Error", "Please fill in all the " +
                     "fields", 6, Pos.BASELINE_CENTER);
@@ -195,7 +222,7 @@ public class MapController implements Initializable {
         }
         else {
 
-            // Add the journey to the database
+            // Get the info the create a journey and add the journey to the database
             String journeyDesc = journeyDescriptionTextArea.getText();
             String title = journeyTitleTextField.getText();
             LocalDate start = startDatePicker.getValue();
@@ -203,6 +230,8 @@ public class MapController implements Initializable {
             String location = selectedCountry.get(0).getLocale().getDisplayCountry();
 
             Journey j = new Journey(location, title, journeyDesc, start, end);
+
+            // If there is another journey with the same title, action is not successful
             if (findJourneyByJourneyTitle(title, currentUser)) {
                 Notifications notification = buildNotification("Journey Already Exists", "A journey with the " +
                         "exact same title already exists in your journeys list. I'm afraid we cannot allow this for your pleasure.", 6, Pos.BASELINE_CENTER);
@@ -214,7 +243,6 @@ public class MapController implements Initializable {
                 notification.showError();
             }
             else {
-                // Build notification
                 Notifications notificationBuilder = buildNotification("Added Journey!", "Journey is successfully " +
                         "added. Journey details: \nCountry: " + j.getLocation() + ", Description: " + j.getDescription() +
                         ", Dates: " + j.getStartDate() + " - " + j.getEndDate(), 6, Pos.BASELINE_CENTER);
@@ -223,6 +251,10 @@ public class MapController implements Initializable {
         }
     }
 
+    /**
+     * Opens the home page and initalizes the current user
+     * @param event ActionEvent
+     */
     @FXML
     void openHomePage(ActionEvent event) {
         try {
@@ -248,10 +280,14 @@ public class MapController implements Initializable {
         }
     }
 
+    /**
+     * Opens the map page and initializes the current user
+     * @param event ActionEvent
+     */
     @FXML
     void openMapPage(ActionEvent event) {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/com/trajour/map/mapxz.fxml"));
+        loader.setLocation(getClass().getResource("/com/trajour/map/map.fxml"));
 
         try {
             Parent mapPageParent = loader.load();
@@ -273,6 +309,10 @@ public class MapController implements Initializable {
         }
     }
 
+    /**
+     * Opens the profile page and initializes the current user
+     * @param event ActionEvent
+     */
     @FXML
     void openProfilePage(ActionEvent event) {
         try {
@@ -298,8 +338,11 @@ public class MapController implements Initializable {
         }
     }
 
-//
-
+    /**
+     * Reads the information related to country capitals from an .csv files and modifies this info to create
+     * locations on the world map.
+     * @return A list that contains word capitals and their locations as WorldMapView.Location objects
+     */
     private ObservableList<WorldMapView.Location> readCountryCapitals() {
         ObservableList<WorldMapView.Location> result = FXCollections.observableArrayList();
 
@@ -325,34 +368,36 @@ public class MapController implements Initializable {
 
         return result;
     }
-    private double calculateDistanceBetweenTwoLocations(WorldMapView.Location fromLocation, WorldMapView.Location toLocation) {
-        double fromLatitude;
-        double toLatitude;
-        double fromLongitude;
-        double toLongitude;
-        double deltaLongitude;
-        double deltaLatitude;
-        double radiusOfEarth;
-        double h;
-        double distance;
 
-        fromLatitude = Math.toRadians(fromLocation.getLatitude());
-        toLatitude =  Math.toRadians(toLocation.getLatitude());
-        fromLongitude =  Math.toRadians(fromLocation.getLongitude());
-        toLongitude =  Math.toRadians(toLocation.getLongitude());
+    /**
+     * Calculates the distance between two locations on earth using their latitude and longitude data. This information
+     * is then used to inform the user about the distance between two locations.
+     * @param fromLocation First location
+     * @param toLocation Second location
+     * @return The distance between two locations
+     */
+    private double calculateDistanceBetweenTwoLocations(WorldMapView.Location fromLocation, WorldMapView.Location toLocation) {
+        // Latitude and longitudes of the locations
+        double fromLatitude = Math.toRadians(fromLocation.getLatitude());
+        double toLatitude =  Math.toRadians(toLocation.getLatitude());
+        double fromLongitude =  Math.toRadians(fromLocation.getLongitude());
+        double toLongitude =  Math.toRadians(toLocation.getLongitude());
 
         // The formula for finding the distance between two locations. For further info check:
         // https://en.wikipedia.org/wiki/Haversine_formula#:~:text=The%20haversine%20formula%20determines%20the,and%20angles%20of%20spherical%20triangles.
-        deltaLongitude = toLongitude - fromLongitude;
-        deltaLatitude = toLatitude - fromLatitude;
-        h = Math.pow(Math.sin(deltaLatitude / 2), 2) + Math.cos(fromLatitude) * Math.cos(toLatitude) * Math.pow(Math.sin(deltaLongitude / 2), 2);
-        radiusOfEarth = 6371;
+        double deltaLongitude = toLongitude - fromLongitude;
+        double deltaLatitude = toLatitude - fromLatitude;
+        double h = Math.pow(Math.sin(deltaLatitude / 2), 2) + Math.cos(fromLatitude) * Math.cos(toLatitude) * Math.pow(Math.sin(deltaLongitude / 2), 2);
+        double radiusOfEarth = 6371;
 
-        distance = 2 * radiusOfEarth * Math.asin(Math.sqrt(h));
+        double distance = 2 * radiusOfEarth * Math.asin(Math.sqrt(h));
 
         return distance;
     }
 
+    /**
+     * Initializes button effects
+     */
     private void initButtons() {
         DropShadow shadow = new DropShadow(7, Color.WHITE);
         homePageButton.setOnMouseEntered(mouseEvent -> homePageButton.setEffect(shadow));
@@ -375,6 +420,9 @@ public class MapController implements Initializable {
         showDistanceButton.setOnMouseExited(mouseEvent -> showDistanceButton.setEffect(null));
     }
 
+    /**
+     * Initializes world map view, sets the locations their views, and action events
+     */
     private void initWorldMapView() {
         // Set locations to display
         capitals = readCountryCapitals();
@@ -382,16 +430,12 @@ public class MapController implements Initializable {
         showLocationsView = new SimpleBooleanProperty(false);
         worldMapView.setShowLocations(showLocationsView.get());
 
-
-//        worldMapView.setLocations(capitals);
-//
-//        showLocationsView.set(false);
-//        worldMapView.setShowLocations(showLocationsView.get());
-
         // Set what happens when clicked on a location or country. The latest chosen location or country is assumed as
         // the travel destination and the location text field is changed accordingly
         worldMapView.setOnMouseClicked(mouseEvent -> {
             if (worldMapView.getSelectedLocations().size() >= 1) {
+                // If a country is selected right after a location is selected, all the locations are deselected and
+                // The text field that shows which location or country is selected gets updated.
                 if (mouseEvent.getTarget() instanceof SVGPath) {
                     selectedLocationField.setText(worldMapView.getSelectedCountries().get(worldMapView.getSelectedCountries().size() - 1).getLocale().getDisplayCountry());
                     worldMapView.getSelectedLocations().removeAll(worldMapView.getSelectedLocations());
@@ -418,38 +462,5 @@ public class MapController implements Initializable {
             Tooltip.install(circle, tooltip);
             return circle;
         });
-
     }
-
-//   private ObservableList<WorldMapView.Location> readCities(int numberOfCities) {
-//        ObservableList<WorldMapView.Location> result = FXCollections.observableArrayList();
-//
-//        try {
-//            Scanner in = new Scanner(new File("/resources/worldcities.csv"));
-//
-//            int count = 0;
-//            while (in.hasNextLine() && count < numberOfCities) {
-//                String line = in.nextLine();
-//                String[] pieces = line.split(",");
-//
-//                String cityName = pieces[1].substring(1, pieces[1].length() - 1);
-//                double latitude = Double.parseDouble(pieces[2].substring(1, pieces[2].length() - 1));
-//                double longitude = Double.parseDouble((pieces[3].substring(1, pieces[3].length() - 1)));
-//                String country = pieces[4].substring(1, pieces[4].length() - 1);
-//                int population = Integer.parseInt(pieces[pieces.length - 2].substring(1, pieces[pieces.length - 2].length() - 1));
-//
-//                DetailedLocation detailedLocation = new DetailedLocation(cityName, latitude, longitude, country, population);
-//                result.add(detailedLocation);
-//
-//                count++;
-//            }
-//        }
-//        catch (FileNotFoundException e) {
-//            System.out.println("Something wrong with 'worldcities.csv' file");
-//            e.printStackTrace();
-//            e.getCause();
-//        }
-//
-//        return result;
-//    }
 }

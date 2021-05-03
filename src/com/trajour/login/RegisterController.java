@@ -20,7 +20,8 @@ import static com.trajour.main.MainController.buildNotification;
 /**
  * Controller for the register process
  * @author Selim Can Güler
- * @version 28 April 2021
+ * @author Mehmet Feyyaz Küçük
+ * @version 03 May 2021
  */
 public class RegisterController implements Initializable {
 

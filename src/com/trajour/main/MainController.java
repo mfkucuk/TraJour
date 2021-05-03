@@ -1,5 +1,6 @@
 package com.trajour.main;
 
+import com.trajour.Main;
 import com.trajour.journey.FutureJourney;
 import com.trajour.journey.Journey;
 import com.trajour.journey.PastJourney;
@@ -34,6 +35,14 @@ import java.util.ResourceBundle;
 
 import static com.trajour.db.DatabaseQuery.*;
 
+/**
+ * This class contain three main features: main feed for user posts, future journey table that contains user's
+ * future journey informations and lastly, past journey table that contains user's past journey which
+ * also enables users to rate their journeys.
+ * @version 3 May 2021
+ *  * @author Selim Can Güler
+ *  * @author Mehmet Feyyaz Küçük
+ */
 public class MainController implements Initializable {
 
     @FXML
@@ -165,6 +174,9 @@ public class MainController implements Initializable {
         setFriendsMainFeedPosts();
     }
 
+    /**
+     * Initializes user's friends' posts in the main feed
+     */
     private void setFriendsMainFeedPosts() {
         ObservableList<Friend> allFriendsOfUser = getAllFriendsOfUser(currentUser);
         for (Friend f : allFriendsOfUser) {
@@ -203,31 +215,52 @@ public class MainController implements Initializable {
         }
     }
 
+    /**
+     * Button handler for adding future journey which directs to map page
+     * @param event
+     */
     @FXML
     private void handleAddFutureJourney(ActionEvent event) {
         openMapPage(event);
     }
-
+    /**
+     * Button handler for adding past journey which directs to map page
+     * @param event
+     */
     @FXML
     private void handleAddPastJourney(ActionEvent event) {
         openMapPage(event);
     }
-
+    /**
+     * Button handler for removing future journey
+     * @param actionEvent
+     */
     @FXML
     public void handleRemoveFutureJourney(ActionEvent actionEvent) {
         handleDeleteJourneyFromFutureJourneys();
     }
-
+    /**
+     * Button handler for removing past journey
+     * @param event
+     */
     @FXML
     private void handleRemovePastJourney(ActionEvent event) {
         handleDeleteJourneyFromPastJourneys();
     }
-
+    /**
+     * Button handler for set rating for past journey
+     * @param event
+     */
     @FXML
     private void handleSetRatingOfPastJourney(ActionEvent event) {
         handleAddRatingToTable();
     }
 
+    /**
+     *  Adds journey ratings to the past journey table. Journey must be rated between 0 and 10,
+     *  user is warned if they do not enter a numeric value between 0 and 10. Also, user has to choose a journey in
+     *  order to rate their journey. Thus, if user did not choose any journey from table and try to rate, they are warned.
+     */
     private void handleAddRatingToTable() {
         ObservableList<PastJourney> chosenJourneys = pastJourneysTable.getSelectionModel().getSelectedItems();
 
@@ -264,6 +297,9 @@ public class MainController implements Initializable {
         }
     }
 
+    /**
+     * Deletes future journeys from future journey table
+     */
     private void handleDeleteJourneyFromFutureJourneys() {
         ObservableList<FutureJourney> chosenJourneys = futureJourneysTable.getSelectionModel().getSelectedItems();
 
@@ -283,6 +319,9 @@ public class MainController implements Initializable {
         handleOpenMainPage();
     }
 
+    /**
+     * Deletes past journeys from past journey table
+     */
     private void handleDeleteJourneyFromPastJourneys() {
         ObservableList<PastJourney> chosenJourneys = pastJourneysTable.getSelectionModel().getSelectedItems();
 
@@ -301,6 +340,9 @@ public class MainController implements Initializable {
         handleOpenMainPage();
     }
 
+    /**
+     * Initializes button effects
+     */
     private void initButtons() {
         DropShadow shadow = new DropShadow(7, Color.WHITE);
         homePageButton.setOnMouseEntered(mouseEvent -> homePageButton.setEffect(shadow));
@@ -360,33 +402,42 @@ public class MainController implements Initializable {
         return result;
     }
 
+    /**
+     * Adds cells to the future journey table when new journey added
+     */
     private void setFutureJourneyTableViewCells() {
         // Init future journeys table
         futureJourneysList = selectFutureJourneys(currentUser);
 
-        futureJourneysCountryColumn.setCellValueFactory(new PropertyValueFactory<FutureJourney, String>("location"));
-        futureJourneysTitleColumn.setCellValueFactory(new PropertyValueFactory<FutureJourney, String >("title"));
-        futureJourneysDescriptionColumn.setCellValueFactory(new PropertyValueFactory<FutureJourney, String>("description"));
-        futureJourneysStartDateColumn.setCellValueFactory(new PropertyValueFactory<FutureJourney, LocalDate>("startDate"));
-        futureJourneysEndDateColumn.setCellValueFactory(new PropertyValueFactory<FutureJourney, LocalDate>("endDate"));
+        futureJourneysCountryColumn.setCellValueFactory(new PropertyValueFactory<>("location"));
+        futureJourneysTitleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+        futureJourneysDescriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
+        futureJourneysStartDateColumn.setCellValueFactory(new PropertyValueFactory<>("startDate"));
+        futureJourneysEndDateColumn.setCellValueFactory(new PropertyValueFactory<>("endDate"));
 
         futureJourneysTable.setItems(futureJourneysList);
     }
 
+    /**
+     * Adds cells to the past journey table when new past journey added
+     */
     private void setPastJourneyTableViewCells() {
         // Init past journeys table
         pastJourneysList = selectPastJourneys(currentUser);
 
-        pastJourneysCountryColumn.setCellValueFactory(new PropertyValueFactory<PastJourney, String>("location"));
-        pastJourneysTitleColumn.setCellValueFactory(new PropertyValueFactory<PastJourney, String>("title"));
-        pastJourneysRatingColumn.setCellValueFactory(new PropertyValueFactory<PastJourney, String>("rating"));
-        pastJourneysDescriptionColumn.setCellValueFactory(new PropertyValueFactory<PastJourney, String>("description"));
-        pastJourneysStartDateColumn.setCellValueFactory(new PropertyValueFactory<PastJourney, LocalDate>("startDate"));
-        pastJourneysEndDateColumn.setCellValueFactory(new PropertyValueFactory<PastJourney, LocalDate>("endDate"));
+        pastJourneysCountryColumn.setCellValueFactory(new PropertyValueFactory<>("location"));
+        pastJourneysTitleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+        pastJourneysRatingColumn.setCellValueFactory(new PropertyValueFactory<>("rating"));
+        pastJourneysDescriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
+        pastJourneysStartDateColumn.setCellValueFactory(new PropertyValueFactory<>("startDate"));
+        pastJourneysEndDateColumn.setCellValueFactory(new PropertyValueFactory<>("endDate"));
 
         pastJourneysTable.setItems(pastJourneysList);
     }
 
+    /**
+     * Initializes context items
+     */
     private void setContextItems() {
         contextItemRefreshPastTable.setOnAction(actionEvent -> setPastJourneyTableViewCells());
         contextItemRefreshFutureTable.setOnAction(actionEvent -> setFutureJourneyTableViewCells());
@@ -400,6 +451,9 @@ public class MainController implements Initializable {
         contextItemDeletePastJourney.setOnAction(actionEvent -> handleDeleteJourneyFromPastJourneys());
     }
 
+    /**
+     * Initialize user's post in main feed
+     */
     private void setInitialMainFeedPosts() {
         ObservableList<Post> allPostsOfUser = getAllPostsOfUser(currentUser);
         for (Post p : allPostsOfUser) {
@@ -429,9 +483,12 @@ public class MainController implements Initializable {
         }
     }
 
+    /**
+     * Opens main page
+     */
     private void handleOpenMapPage() {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/com/trajour/map/mapxz.fxml"));
+        loader.setLocation(getClass().getResource("/com/trajour/map/map.fxml"));
 
         try {
             Parent mapPageParent = loader.load();
@@ -453,6 +510,9 @@ public class MainController implements Initializable {
         }
     }
 
+    /**
+     * Opens main page
+     */
     private void handleOpenMainPage() {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/com/trajour/main/main.fxml"));
@@ -476,7 +536,6 @@ public class MainController implements Initializable {
             e.printStackTrace();
         }
     }
-
 
     /**
      * Opens the home page.
@@ -512,7 +571,7 @@ public class MainController implements Initializable {
     @FXML
     public void openMapPage(ActionEvent event) {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/com/trajour/map/mapxz.fxml"));
+        loader.setLocation(getClass().getResource("/com/trajour/map/map.fxml"));
 
         try {
             Parent mapPageParent = loader.load();
@@ -534,6 +593,9 @@ public class MainController implements Initializable {
         }
     }
 
+    /**
+     * Opens share journey page
+     */
     @FXML
     public void openShareJourneyPage(ActionEvent event) {
         try {

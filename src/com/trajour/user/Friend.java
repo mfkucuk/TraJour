@@ -1,5 +1,9 @@
 package com.trajour.user;
 
+/**
+ * @author Selim Can Güler
+ * @version 03 May 2021
+ */
 public class Friend {
     private String friendName;
     private String friendEmail;

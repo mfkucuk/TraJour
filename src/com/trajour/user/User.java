@@ -1,7 +1,6 @@
 package com.trajour.user;
 
 import com.trajour.db.DatabaseQuery;
-import com.trajour.journey.Journey;
 import com.trajour.journey.Wish;
 import javafx.collections.ObservableList;
 
@@ -14,6 +13,8 @@ import static com.trajour.db.DatabaseQuery.*;
 /**
  * User class.
  * @author Mehmet Feyyaz Kucuk
+ * @author Selim Can Güler
+ * @version 03 May 2021
  */
 public class User {
     // Properties
@@ -31,7 +32,7 @@ public class User {
     public void removeFriend(ObservableList<Friend> friendsToRemove) {
         if ( ! friendsToRemove.isEmpty()) {
             for (Friend f : friendsToRemove) {
-                DatabaseQuery.removeFriend(f, this);
+                DatabaseQuery.deleteFriend(f, this);
             }
         }
     }
@@ -94,22 +95,7 @@ public class User {
         return userId;
     }
 
-    /**
-     * Adds a new journey.
-     * @param newJourney is the journey to be added.
-     * @return is the boolean indicating whether adding was successful.
-     */
-    public boolean addJourney(Journey newJourney) {
-        return true;
+    public Image getProfilePhoto() {
+        return profilePhoto;
     }
-
-    /**
-     * Shares the specified journey to friends.
-     * @param j is the shared journey.
-     * @return  is the boolean indicating whether sharing was successful.
-     */
-    public boolean shareJourney(Journey j) {
-        return true;
-    }
-
 }
