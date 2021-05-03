@@ -26,6 +26,11 @@ public final class DatabaseQuery {
     private static DatabaseConnection dbConnection;
     private static Connection conn;
 
+    /**
+     * Returns all the wishes of the user.
+     * @param user is the owner of the wishes.
+     * @return is a list of all the wishes.
+     */
     public static ObservableList<Wish> getAllWishesOfUser(User user) {
         dbConnection = new DatabaseConnection();
         conn = dbConnection.getConnection();
@@ -56,6 +61,11 @@ public final class DatabaseQuery {
         return result;
     }
 
+    /**
+     * Returns all the posts of the user.
+     * @param currentUser is the owner of the posts.
+     * @return is a list of all the posts.
+     */
     public static ObservableList<Post> getAllPostsOfUser(User currentUser) {
         dbConnection = new DatabaseConnection();
         conn = dbConnection.getConnection();
@@ -90,6 +100,12 @@ public final class DatabaseQuery {
 
         return result;
     }
+
+    /**
+     * Returns all the posts of the user's specified friend.
+     * @param friend is the owner of the posts.
+     * @return is a list of all the posts of that friend.
+     */
     public static ObservableList<Post> getAllPostsOfFriend(Friend friend) {
         dbConnection = new DatabaseConnection();
         conn = dbConnection.getConnection();
@@ -125,6 +141,11 @@ public final class DatabaseQuery {
         return result;
     }
 
+    /**
+     * Returns all the journeys of the user.
+     * @param currentUser is the owner of the journeys.
+     * @return is a list of all the journeys.
+     */
     public static ObservableList<Journey> getAllJourneysOfUser(User currentUser) {
         dbConnection = new DatabaseConnection();
         conn = dbConnection.getConnection();
@@ -157,7 +178,11 @@ public final class DatabaseQuery {
         return result;
     }
 
-
+    /**
+     * Returns all the friends of the user.
+     * @param currentUser is the owner of the friends.
+     * @return is a list of all the friends.
+     */
     public static ObservableList<Friend> getAllFriendsOfUser(User currentUser) {
         dbConnection = new DatabaseConnection();
         conn = dbConnection.getConnection();
@@ -261,6 +286,12 @@ public final class DatabaseQuery {
         return -1;
     }
 
+    /**
+     * Returns the post photo of the specified user and post.
+     * @param userId is the id of the specified user.
+     * @param postTitle is title of the specified post.
+     * @return is the file containing the post photo.
+     */
     public static File getPostPhoto(int userId, String postTitle) {
         dbConnection = new DatabaseConnection();
         conn = dbConnection.getConnection();
@@ -298,6 +329,12 @@ public final class DatabaseQuery {
         return null;
     }
 
+    /**
+     * Returns the rating of the journey.
+     * @param j is journey.
+     * @param currentUser is the user who has that journey.
+     * @return is the rating.
+     */
     public static String getJourneyRating(Journey j, User currentUser) {
         dbConnection = new DatabaseConnection();
         conn = dbConnection.getConnection();
@@ -320,6 +357,11 @@ public final class DatabaseQuery {
         return "-";
     }
 
+    /**
+     * Returns the profile photo of the specified user.
+     * @param userId is the id of the specified user.
+     * @return is the file containing the profile photo.
+     */
     public static File getProfilePhotoFile(int userId) {
         dbConnection = new DatabaseConnection();
         conn = dbConnection.getConnection();

@@ -17,7 +17,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
 import javafx.stage.Stage;
-import com.trajour.db.DatabaseConnection;
 import com.trajour.user.User;
 import org.controlsfx.control.Notifications;
 
@@ -36,6 +35,7 @@ import static com.trajour.main.MainController.buildNotification;
  * @version 03 May 2021
  */
 public class LoginController implements Initializable {
+
     @FXML
     private PasswordField passwordField;
 
@@ -49,14 +49,14 @@ public class LoginController implements Initializable {
     private Button registerButton;
 
     @FXML
-    private Hyperlink learnMoreHyperlink;
-
-    @FXML
     private Label loginFeedbackLabel;
 
-    private DatabaseConnection dbConnection;
-
     @Override
+    /**
+     * Initializes the login page.
+     * @param url
+     * @param resourceBundle
+     */
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initSetNodesOnAction();
 
@@ -154,6 +154,9 @@ public class LoginController implements Initializable {
         }
     }
 
+    /**
+     * Adds event listeners to text fields and buttons and adds style for buttons.
+     */
     private void initSetNodesOnAction() {
         // Button effects
         DropShadow shadow = new DropShadow();

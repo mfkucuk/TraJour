@@ -16,6 +16,8 @@ import java.util.ResourceBundle;
  * Controller class for changing password. User enter two times their new password.
  * First one is in new password newPasswordTextField and second is in reEnteredNewPasswordTextField.
  * User is also need to enter their old password.
+ * @author Selim Can Güler
+ * @author Mehmet Feyyaz Küçük
  * @version 3 May 2021
  */
 public class ChangePasswordController implements Initializable {
