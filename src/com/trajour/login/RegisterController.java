@@ -89,17 +89,23 @@ public class RegisterController implements Initializable {
         String password = passwordTextField.getText();
 
         if ( ! username.isBlank() && ! email.isBlank() && ! password.isBlank()) {
-            if (validateRegistry(username, email, password) == 1) {
-                Notifications notification = buildNotification("Registration Successful!", "Welcome to TraJour, fellow traveler!", 5, Pos.BOTTOM_CENTER);
+            if (username.length() > 40 || email.length() > 40 ||password.length() > 40) {
+                Notifications notification = buildNotification("Login Unsuccessful!", "Please use less than 40 chars", 6, Pos.CENTER);
                 notification.showConfirm();
             }
-            else if (validateRegistry(username, email, password) == -1) {
-                Notifications notification = buildNotification("Registration Unsuccessful!", "Username is already used. Please try again.", 5, Pos.BOTTOM_CENTER);
-                notification.showWarning();
-            }
-            else if (validateRegistry(username, email, password) == -2) {
-                Notifications notification = buildNotification("Registration Unsuccessful!", "Email is already used. Please try again.", 5, Pos.BOTTOM_CENTER);
-                notification.showWarning();
+            else {
+                if (validateRegistry(username, email, password) == 1) {
+                    Notifications notification = buildNotification("Registration Successful!", "Welcome to TraJour, fellow traveler!", 5, Pos.BOTTOM_CENTER);
+                    notification.showConfirm();
+                }
+                else if (validateRegistry(username, email, password) == -1) {
+                    Notifications notification = buildNotification("Registration Unsuccessful!", "Username is already used. Please try again.", 5, Pos.BOTTOM_CENTER);
+                    notification.showWarning();
+                }
+                else if (validateRegistry(username, email, password) == -2) {
+                    Notifications notification = buildNotification("Registration Unsuccessful!", "Email is already used. Please try again.", 5, Pos.BOTTOM_CENTER);
+                    notification.showWarning();
+                }
             }
         }
         else {

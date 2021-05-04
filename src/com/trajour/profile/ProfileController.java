@@ -159,8 +159,6 @@ public class ProfileController {
         // Get all wishes
         setWishlist();
 
-
-
         // Context menu item
         refresh2MenuItem = new MenuItem("Refresh");
         refreshMenuItem.setOnAction(actionEvent -> initData(currentUser));
@@ -188,11 +186,10 @@ public class ProfileController {
             else {
                 currentUser.addWish(locationLabel.getText(), startDatePicker.getValue());
 
-                Notifications notification = buildNotification("Wish added", "Your wish is successfully added to your wishlist", 6, Pos.BASELINE_CENTER);
+                Notifications notification = buildNotification("Wish Added", "Your wish is successfully added to your wishlist", 6, Pos.BASELINE_CENTER);
                 notification.showConfirm();
 
                 locationLabel.clear();
-                initData(currentUser);
             }
         });
         wishlistMenu = new VBox(wishlistLabel, locationLabel, startDatePicker, confirmWishButton);
@@ -236,65 +233,80 @@ public class ProfileController {
             }
             // Username field is used
             else if ( ! friendUsernameTextField.getText().isBlank()) {
-                // Check whether a user with the given username exists
-                if (DatabaseQuery.findUserByUsername(friendUsernameTextField.getText())) {
-                    // If the searched user exists check if the searched user is not the current user themselves
-                    if (friendUsernameTextField.getText().equals(currentUser.getUsername())) {
-                        Notifications notification = buildNotification("Self Friendship",
-                                "I'm afraid you cannot be friends with yourself.", 4, Pos.BASELINE_CENTER);
-                        notification.showError();
-                    }
-                    // If they are not already friends add friends
-                    else if ( ! findFriendByUsername(friendUsernameTextField.getText(), currentUser)) {
-                        currentUser.addFriendByName(friendUsernameTextField.getText(), getEmailByUsername(friendUsernameTextField.getText()));
-                        Notifications notification = buildNotification("Confirmation", "Friend successfully " +
-                                "added.", 4, Pos.BASELINE_CENTER);
-                        notification.showConfirm();
-                    }
-                    // They are already friends, show error
-                    else {
-                        Notifications notification = buildNotification("Already Friends", "You are already " +
-                                "friends.", 4, Pos.BASELINE_CENTER);
-                        notification.showError();
-                    }
-                }
-                // There is no such user
-                else {
-                    Notifications notification = buildNotification("User Does Not Exist", "No such user exists." +
-                            " Try another username.", 4, Pos.BASELINE_CENTER);
+                if (friendUsernameTextField.getText().length() > 40) {
+                    Notifications notification = buildNotification("Friend Name Error",
+                            "Please enter less than 40 chars.", 4, Pos.BASELINE_CENTER);
                     notification.showError();
                 }
+                else {
+                    // Check whether a user with the given username exists
+                    if (DatabaseQuery.findUserByUsername(friendUsernameTextField.getText())) {
+                        // If the searched user exists check if the searched user is not the current user themselves
+                        if (friendUsernameTextField.getText().equals(currentUser.getUsername())) {
+                            Notifications notification = buildNotification("Self Friendship",
+                                    "I'm afraid you cannot be friends with yourself.", 4, Pos.BASELINE_CENTER);
+                            notification.showError();
+                        }
+                        // If they are not already friends add friends
+                        else if ( ! findFriendByUsername(friendUsernameTextField.getText(), currentUser)) {
+                            currentUser.addFriendByName(friendUsernameTextField.getText(), getEmailByUsername(friendUsernameTextField.getText()));
+                            Notifications notification = buildNotification("Confirmation", "Friend successfully " +
+                                    "added.", 4, Pos.BASELINE_CENTER);
+                            notification.showConfirm();
+                        }
+                        // They are already friends, show error
+                        else {
+                            Notifications notification = buildNotification("Already Friends", "You are already " +
+                                    "friends.", 4, Pos.BASELINE_CENTER);
+                            notification.showError();
+                        }
+                    }
+                    // There is no such user
+                    else {
+                        Notifications notification = buildNotification("User Does Not Exist", "No such user exists." +
+                                " Try another username.", 4, Pos.BASELINE_CENTER);
+                        notification.showError();
+                    }
+                }
+
             }
             // Email field is used
             else if ( ! friendEmailTextField.getText().isBlank()) {
-                // Check whether a user with the given email exists
-                if (findUserByEmail(friendEmailTextField.getText())) {
-                    // If the searched user exists check if the searched user is not the current user themselves
-                    if (friendEmailTextField.getText().equals(currentUser.getEmail())) {
-                        Notifications notification = buildNotification("Text field error", "I'm afraid you " +
-                                "cannot be friends with yourself.", 4, Pos.BASELINE_CENTER);
-                        notification.showError();
-                    }
-                    // If they are not already friends add friends
-                    else if ( ! findFriendByEmail(friendEmailTextField.getText(), currentUser)) {
-                        currentUser.addFriendByEmail(getUsernameByEmail(friendEmailTextField.getText()),
-                                friendEmailTextField.getText());
-                        Notifications notification = buildNotification("Confirmation", "Friend successfully added.",
-                                4, Pos.BASELINE_CENTER);
-                        notification.showConfirm();
-                    }
-                    // They are already friends, show error
-                    else {
-                        Notifications notification = buildNotification("Already Friends", "You are already friends.",
-                                4, Pos.BASELINE_CENTER);
-                        notification.showError();
-                    }
-                }
-                // There is no such user
-                else {
-                    Notifications notification = buildNotification("User Does Not Exist", "No such user exists. " +
-                            "Try another email", 4, Pos.BASELINE_CENTER);
+                if (friendEmailTextField.getText().length() > 40) {
+                    Notifications notification = buildNotification("Friend Name Error",
+                            "Please enter less than 40 chars.", 4, Pos.BASELINE_CENTER);
                     notification.showError();
+                }
+                else {
+                    // Check whether a user with the given email exists
+                    if (findUserByEmail(friendEmailTextField.getText())) {
+                        // If the searched user exists check if the searched user is not the current user themselves
+                        if (friendEmailTextField.getText().equals(currentUser.getEmail())) {
+                            Notifications notification = buildNotification("Text field error", "I'm afraid you " +
+                                    "cannot be friends with yourself.", 4, Pos.BASELINE_CENTER);
+                            notification.showError();
+                        }
+                        // If they are not already friends add friends
+                        else if ( ! findFriendByEmail(friendEmailTextField.getText(), currentUser)) {
+                            currentUser.addFriendByEmail(getUsernameByEmail(friendEmailTextField.getText()),
+                                    friendEmailTextField.getText());
+                            Notifications notification = buildNotification("Confirmation", "Friend successfully added.",
+                                    4, Pos.BASELINE_CENTER);
+                            notification.showConfirm();
+                        }
+                        // They are already friends, show error
+                        else {
+                            Notifications notification = buildNotification("Already Friends", "You are already friends.",
+                                    4, Pos.BASELINE_CENTER);
+                            notification.showError();
+                        }
+                    }
+                    // There is no such user
+                    else {
+                        Notifications notification = buildNotification("User Does Not Exist", "No such user exists. " +
+                                "Try another email", 4, Pos.BASELINE_CENTER);
+                        notification.showError();
+                    }
                 }
             }
         });

@@ -148,11 +148,11 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="selectedLocationField" editable="false" layoutX="20.0" layoutY="14.0" promptText="Selected Country" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="14.0" />
+                  <TextField fx:id="selectedLocationField" editable="false" layoutX="20.0" layoutY="14.0" promptText="Selected Location" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="14.0" />
                   <TextField fx:id="journeyTitleTextField" layoutX="20.0" layoutY="54.0" prefHeight="25.0" prefWidth="201.0" promptText="Title of journey" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="44.0" AnchorPane.topAnchor="54.0" />
                </children>
             </AnchorPane>
-            <Button fx:id="pickRandomCountryButton" layoutX="167.0" layoutY="848.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="165.0" style="-fx-background-color: #C00000; -fx-background-radius: 10;" text="Pick Random Country" textFill="WHITE" AnchorPane.bottomAnchor="22.0" AnchorPane.leftAnchor="167.0">
+            <Button layoutX="167.0" layoutY="848.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="165.0" style="-fx-background-color: #C00000; -fx-background-radius: 10;" text="Pick Random Country" textFill="WHITE" AnchorPane.bottomAnchor="22.0" AnchorPane.leftAnchor="167.0">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>

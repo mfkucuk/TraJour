@@ -73,23 +73,29 @@ public class LoginController implements Initializable {
         String password = passwordField.getText();
         // Check if the text fields are empty or not
         if ( ! email.isBlank() && !  password.isBlank()) {
-            // Login is successful
-            if (validateLogin(email, password)) {
-                String username = getUsernameByEmail(email);
-                int userId = getUserIdByUsername(username);
-
-                User currentUser = new User(userId, username, email);
-
-                // Build and show notification
-                Notifications notification = buildNotification("Login Successful!", "Welcome to TraJour, " + currentUser.getUsername() + ", you can navigate through the main page, map page and your profile via" +
-                        " the menu bar at the top!", 6, Pos.CENTER);
+            if (email.length() > 40 || password.length() > 40) {
+                Notifications notification = buildNotification("Login Unsuccessful!", "Please use less than 40 chars", 6, Pos.CENTER);
                 notification.showConfirm();
-
-                // Redirect to main page
-                openMainPage(event, currentUser);
             }
             else {
-                loginFeedbackLabel.setText("Incorrect email or password.");
+                // Login is successful
+                if (validateLogin(email, password)) {
+                    String username = getUsernameByEmail(email);
+                    int userId = getUserIdByUsername(username);
+
+                    User currentUser = new User(userId, username, email);
+
+                    // Build and show notification
+                    Notifications notification = buildNotification("Login Successful!", "Welcome to TraJour, " + currentUser.getUsername() + ", you can navigate through the main page, map page and your profile via" +
+                            " the menu bar at the top!", 6, Pos.CENTER);
+                    notification.showConfirm();
+
+                    // Redirect to main page
+                    openMainPage(event, currentUser);
+                }
+                else {
+                    loginFeedbackLabel.setText("Incorrect email or password.");
+                }
             }
         }
         else {

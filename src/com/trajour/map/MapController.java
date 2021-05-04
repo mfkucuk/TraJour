@@ -36,6 +36,7 @@ import java.net.URL;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 
@@ -79,9 +80,6 @@ public class MapController implements Initializable {
 
     @FXML
     private TextField selectedLocationField;
-
-    @FXML
-    private Button pickRandomCountryButton;
 
     @FXML
     private Button showDistanceButton;
@@ -208,6 +206,11 @@ public class MapController implements Initializable {
         if (journeyTitleTextField.getText().isBlank() || journeyDescriptionTextArea.getText().isBlank()) {
             Notifications notification = buildNotification("Journey Addition Error", "Please fill in all the " +
                     "fields", 6, Pos.BASELINE_CENTER);
+            notification.showError();
+        }
+        else if (journeyTitleTextField.getText().length() > 60) {
+            Notifications notification = buildNotification("Journey Addition Error", "Please use less than 60  " +
+                    "characters for journey title.", 6, Pos.BASELINE_CENTER);
             notification.showError();
         }
         // Check whether the user chose only 1 country
@@ -412,9 +415,6 @@ public class MapController implements Initializable {
         DropShadow blackShadow = new DropShadow();
         addJourneyButton.setOnMouseEntered(mouseEvent -> addJourneyButton.setEffect(blackShadow));
         addJourneyButton.setOnMouseExited(mouseEvent -> addJourneyButton.setEffect(null));
-
-        pickRandomCountryButton.setOnMouseEntered(mouseEvent -> pickRandomCountryButton.setEffect(blackShadow));
-        pickRandomCountryButton.setOnMouseExited(mouseEvent -> pickRandomCountryButton.setEffect(null));
 
         showDistanceButton.setOnMouseEntered(mouseEvent -> showDistanceButton.setEffect(blackShadow));
         showDistanceButton.setOnMouseExited(mouseEvent -> showDistanceButton.setEffect(null));
