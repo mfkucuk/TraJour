@@ -177,6 +177,12 @@ public class Post extends GridPane implements Shareable {
         commentLabel.setFont(new Font("Arial Bold", 12));
         dateLabel.setFont(new Font("Arial Bold", 12));
 
+        journeyLocationLabel.setWrapText(true);
+        commentLabel.setWrapText(true);
+        journeyNameLabel.setWrapText(true);
+        usernameLabel.setWrapText(true);
+        dateLabel.setWrapText(true);
+
         add(userVBox, 0, 0);
         add(journeyNameLabel, 0, 1);
         add(journeyLocationLabel, 1, 1);
