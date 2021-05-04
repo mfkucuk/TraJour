@@ -182,6 +182,8 @@ public class ProfileController {
             if (locationLabel.getText().isBlank()) {
                 Notifications notification = buildNotification("Empty Field Error", "Please fill in the location field", 6, Pos.BASELINE_CENTER);
                 notification.showError();
+
+                locationLabel.clear();
             }
             else {
                 currentUser.addWish(locationLabel.getText(), startDatePicker.getValue());
@@ -189,6 +191,7 @@ public class ProfileController {
                 Notifications notification = buildNotification("Wish added", "Your wish is successfully added to your wishlist", 6, Pos.BASELINE_CENTER);
                 notification.showConfirm();
 
+                locationLabel.clear();
                 initData(currentUser);
             }
         });
