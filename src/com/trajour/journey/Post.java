@@ -4,6 +4,7 @@ import com.trajour.db.DatabaseQuery;
 import com.trajour.user.Friend;
 import com.trajour.user.User;
 import javafx.geometry.Insets;
+import javafx.geometry.VPos;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -86,7 +87,6 @@ public class Post extends GridPane implements Shareable {
         for (int i = 0; i < 4; i++) {
             this.getColumnConstraints().add(cc);
         }
-
     }
 
     @Override
@@ -102,11 +102,14 @@ public class Post extends GridPane implements Shareable {
         dateLabel = new Label("Date: " + theJourney.getStartDate() + " / " + theJourney.getEndDate());
         journeyNameLabel = new Label("Name: " + theJourney.getTitle());
 
+        this.setValignment(commentLabel, VPos.CENTER);
+        this.
+
         journeyPhotoView.setImage(journeyPhoto);
 
         if (journeyPhotoView.getImage() == null) {
             File file = getPostPhoto(user.getUserId(), getTheJourney().getTitle());
-            journeyPhotoView.setImage(new Image(file.toURI().toString(), 40, 40, false, false));
+            journeyPhotoView.setImage(new Image(file.toURI().toString(), 80, 80, false, false));
         }
 
         userPhotoView.setImage(new Image(DatabaseQuery.getProfilePhotoFile(user.getUserId()).toURI().toString(), 40, 40, false, false));
@@ -118,6 +121,12 @@ public class Post extends GridPane implements Shareable {
         usernameLabel.setFont(new Font("Arial Bold", 12));
         commentLabel.setFont(new Font("Arial Bold", 12));
         dateLabel.setFont(new Font("Arial Bold", 12));
+
+        journeyLocationLabel.setWrapText(true);
+        commentLabel.setWrapText(true);
+        journeyNameLabel.setWrapText(true);
+        usernameLabel.setWrapText(true);
+        dateLabel.setWrapText(true);
 
         add(userVBox, 0, 0);
         add(journeyNameLabel, 0, 1);
