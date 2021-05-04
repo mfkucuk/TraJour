@@ -7,7 +7,7 @@ import java.time.LocalDate;
  * It has a start date but no end date unlike future journey.
  *
  */
-public class Wish {
+public class Wish implements Comparable<Wish>{
 
     //Properties
     private String location;
@@ -39,8 +39,11 @@ public class Wish {
 
     @Override
     public String toString() {
-
         return "Location: " + getLocation() + " - Start Date: " + getStartDate();
+    }
 
+    @Override
+    public int compareTo(Wish w) {
+        return this.startDate.compareTo(w.startDate);
     }
 }

@@ -3,8 +3,8 @@ package com.trajour.user;
 import com.trajour.db.DatabaseQuery;
 import com.trajour.journey.Wish;
 import javafx.collections.ObservableList;
+import javafx.scene.image.Image;
 
-import java.awt.*;
 import java.io.File;
 import java.time.LocalDate;
 
@@ -37,9 +37,9 @@ public class User {
      *
      * @param friendsToRemove
      */
-    public void removeFriend(ObservableList<Friend> friendsToRemove) {
+    public void removeFriend(ObservableList<com.trajour.user.Friend> friendsToRemove) {
         if ( ! friendsToRemove.isEmpty()) {
-            for (Friend f : friendsToRemove) {
+            for (com.trajour.user.Friend f : friendsToRemove) {
                 DatabaseQuery.deleteFriend(f, this);
             }
         }
